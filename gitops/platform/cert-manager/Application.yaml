@@ -1,0 +1,36 @@
+# Argo CD Application — cert-manager (Helm chart v1.14.5) + ClusterIssuer manifest.
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> and patch values.yaml / cluster-issuer placeholders.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "15"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: v1.14.5
+      helm:
+        releaseName: cert-manager
+        valueFiles:
+          - $values/gitops/platform/cert-manager/values.yaml
+    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

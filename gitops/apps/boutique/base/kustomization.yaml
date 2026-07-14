@@ -1,0 +1,52 @@
+# Online Boutique v0.10.5 base — upstream manifests with ACR image refs.
+# SETUP: replace <ACR_LOGIN_SERVER> with terraform output acr_login_server (no https://).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - manifests.yaml
+
+images:
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice
+    newName: <ACR_LOGIN_SERVER>/adservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice
+    newName: <ACR_LOGIN_SERVER>/cartservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice
+    newName: <ACR_LOGIN_SERVER>/checkoutservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice
+    newName: <ACR_LOGIN_SERVER>/currencyservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice
+    newName: <ACR_LOGIN_SERVER>/emailservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend
+    newName: <ACR_LOGIN_SERVER>/frontend
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator
+    newName: <ACR_LOGIN_SERVER>/loadgenerator
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice
+    newName: <ACR_LOGIN_SERVER>/paymentservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice
+    newName: <ACR_LOGIN_SERVER>/productcatalogservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice
+    newName: <ACR_LOGIN_SERVER>/recommendationservice
+    newTag: v0.10.5
+  - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice
+    newName: <ACR_LOGIN_SERVER>/shippingservice
+    newTag: v0.10.5
+  # Auxiliary images (mirror + sign manually — see docs/setup/10-boutique-dev.md Step 10.2)
+  - name: redis
+    newName: <ACR_LOGIN_SERVER>/redis
+    newTag: 7.2-alpine
+  - name: busybox
+    newName: <ACR_LOGIN_SERVER>/busybox
+    newTag: 1.36.1
+
+patches:
+  - path: patches/remove-frontend-external.yaml

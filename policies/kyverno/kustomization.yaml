@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - cluster/00-registry-allowlist.yaml
+  - cluster/01-deny-latest-tag.yaml
+  - cluster/02-verify-image-signatures.yaml
+  - cluster/03-require-pod-security-baseline.yaml
+  - cluster/04-block-privileged-host-access.yaml
+  - namespace/dev-exceptions-example.yaml

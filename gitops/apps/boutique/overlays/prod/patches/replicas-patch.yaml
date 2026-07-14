@@ -1,0 +1,7 @@
+# Prod pilot — scale storefront for availability demo (single cluster lab).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2

@@ -1,0 +1,24 @@
+# Argo CD Application — Boutique prod (manual sync; Git digest update gated by ADO environment approval).
+# SETUP: replace <GITHUB_ORG> and <REPO_NAME> with your GitHub repository.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: boutique-prod
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "32"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    environment: prod
+spec:
+  project: applications
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/apps/boutique/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: boutique-prod
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

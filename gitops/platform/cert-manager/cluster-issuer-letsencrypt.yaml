@@ -1,0 +1,29 @@
+# ClusterIssuer — Let's Encrypt DNS-01 via Azure DNS + Workload Identity.
+# SETUP: replace placeholders before sync:
+#   <ACME_EMAIL>           — Let's Encrypt registration email
+#   <AZURE_SUBSCRIPTION_ID> — from az account show
+#   <PLATFORM_IDENTITY_CLIENT_ID> — terraform output platform_identity_client_id
+#   resourceGroupName / hostedZoneName — match Topic 02 Terraform
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: <ACME_EMAIL>
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+      - dns01:
+          azureDNS:
+            subscriptionID: <AZURE_SUBSCRIPTION_ID>
+            resourceGroupName: rg-boutique-dev-gwc
+            hostedZoneName: biroltilki.art
+            environment: AzurePublicCloud
+            managedIdentity:
+              clientID: <PLATFORM_IDENTITY_CLIENT_ID>

@@ -1,0 +1,20 @@
+# Copy to terraform.tfvars (gitignored). Do not commit real values.
+# See docs/setup/01-terraform-bootstrap.md Step 1.2.
+
+location = "germanywestcentral"
+
+# Resource group for state only — separate from the platform RG created in Topic 02.
+state_resource_group_name = "rg-tfstate-boutique-gwc"
+
+# MUST be globally unique across Azure. Change suffix if apply fails with NameAlreadyTaken.
+# Pattern: st + project + purpose + region hint (max 24 chars, lowercase alphanumeric).
+storage_account_name = "stboutiquetfgwc"
+
+container_name = "tfstate"
+
+tags = {
+  project     = "boutique-aks-devsecops"
+  environment = "shared"
+  managed_by  = "terraform-bootstrap"
+  owner       = "<YOUR_ALIAS>"
+}

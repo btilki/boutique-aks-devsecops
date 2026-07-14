@@ -1,0 +1,106 @@
+# Mirror Online Boutique images, Trivy scan (CRITICAL gate), cosign sign by digest.
+# Requires ADO OIDC service connection and cosign key pair in Key Vault (Topic 09 setup).
+stages:
+  - stage: MirrorScanSign
+    displayName: Mirror, scan, and sign
+    dependsOn: Validate
+    jobs:
+      - job: boutique_supply_chain
+        displayName: Boutique v0.10.5 supply chain
+        pool:
+          vmImage: ubuntu-22.04
+        steps:
+          - checkout: self
+            fetchDepth: 1
+
+          - task: AzureCLI@2
+            displayName: Mirror, Trivy scan, cosign sign
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                set -euo pipefail
+
+                echo "=== Install Trivy $(trivyVersion) ==="
+                curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin "v$(trivyVersion)"
+                trivy --version
+
+                echo "=== Install cosign $(cosignVersion) ==="
+                curl -fsSL -o /usr/local/bin/cosign "https://github.com/sigstore/cosign/releases/download/v$(cosignVersion)/cosign-linux-amd64"
+                chmod +x /usr/local/bin/cosign
+                cosign version
+
+                echo "=== Azure / ACR login ==="
+                az acr login --name "$(acrName)"
+
+                WORK_DIR="$(Agent.TempDirectory)/boutique-supply-chain"
+                mkdir -p "${WORK_DIR}"
+                DIGEST_MANIFEST="${WORK_DIR}/digest-manifest.json"
+                echo "{}" > "${DIGEST_MANIFEST}"
+
+                echo "=== Fetch cosign key from Key Vault ==="
+                COSIGN_KEY="${WORK_DIR}/cosign.key"
+                az keyvault secret show \
+                  --vault-name "$(keyVaultName)" \
+                  --name "$(cosignPrivateKeySecretName)" \
+                  --query value -o tsv > "${COSIGN_KEY}"
+                chmod 600 "${COSIGN_KEY}"
+
+                for SERVICE in $(boutiqueServices); do
+                  echo "========================================"
+                  echo "Service: ${SERVICE}"
+                  SRC_IMAGE="$(upstreamRegistry)/${SERVICE}:$(boutiqueVersion)"
+                  DEST_REPO="$(acrLoginServer)/${SERVICE}"
+                  DEST_VERSION_TAG="${DEST_REPO}:$(boutiqueVersion)"
+
+                  echo "Pull ${SRC_IMAGE}"
+                  docker pull "${SRC_IMAGE}"
+
+                  echo "Tag and push ${DEST_VERSION_TAG}"
+                  docker tag "${SRC_IMAGE}" "${DEST_VERSION_TAG}"
+                  docker push "${DEST_VERSION_TAG}"
+
+                  DIGEST="$(az acr repository show-manifests \
+                    --name "$(acrName)" \
+                    --repository "${SERVICE}" \
+                    --query "[?contains(tags, '$(boutiqueVersion)')].digest | [0]" -o tsv)"
+                  if [[ -z "${DIGEST}" || "${DIGEST}" == "null" ]]; then
+                    echo "ERROR: Could not resolve digest for ${SERVICE}" >&2
+                    exit 1
+                  fi
+                  DEST_DIGEST_REF="${DEST_REPO}@${DIGEST}"
+                  echo "Digest: ${DEST_DIGEST_REF}"
+
+                  echo "Trivy scan (CRITICAL gate)"
+                  trivy image --severity CRITICAL --exit-code 1 "${DEST_DIGEST_REF}"
+
+                  echo "cosign sign"
+                  cosign sign --key "${COSIGN_KEY}" --tlog-upload=false -y "${DEST_DIGEST_REF}"
+
+                  echo "cosign verify (pipeline gate)"
+                  PUB_KEY="${WORK_DIR}/cosign.pub"
+                  az keyvault secret show \
+                    --vault-name "$(keyVaultName)" \
+                    --name "$(cosignPublicKeySecretName)" \
+                    --query value -o tsv > "${PUB_KEY}"
+                  cosign verify --key "${PUB_KEY}" --tlog-upload=false "${DEST_DIGEST_REF}"
+
+                  jq --arg svc "${SERVICE}" --arg digest "${DIGEST}" \
+                    '. + {($svc): $digest}' "${DIGEST_MANIFEST}" > "${DIGEST_MANIFEST}.tmp"
+                  mv "${DIGEST_MANIFEST}.tmp" "${DIGEST_MANIFEST}"
+                done
+
+                echo "=== Digest manifest ==="
+                cat "${DIGEST_MANIFEST}"
+
+                cp "${DIGEST_MANIFEST}" "$(Build.ArtifactStagingDirectory)/digest-manifest.json"
+            env:
+              boutiqueServices: $(boutiqueServices)
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish digest manifest
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)/digest-manifest.json
+              artifact: digest-manifest
+              publishLocation: pipeline

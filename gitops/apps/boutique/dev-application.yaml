@@ -1,0 +1,27 @@
+# Argo CD Application — Boutique dev (auto-sync).
+# SETUP: replace <GITHUB_ORG> and <REPO_NAME> with your GitHub repository.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: boutique-dev
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "30"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    environment: dev
+spec:
+  project: applications
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/apps/boutique/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: boutique-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

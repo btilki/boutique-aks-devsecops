@@ -1,0 +1,3 @@
+resources:
+  - Application.yaml
+  - policies-application.yaml

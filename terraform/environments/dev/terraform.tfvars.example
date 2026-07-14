@@ -1,0 +1,50 @@
+# Copy to terraform.tfvars (gitignored). See docs/setup/02-azure-foundation.md.
+
+location = "germanywestcentral"
+
+resource_group_name = "rg-boutique-dev-gwc"
+
+vnet_name           = "vnet-boutique-dev-gwc"
+vnet_address_space  = ["10.0.0.0/16"]
+aks_subnet_name     = "aks-subnet"
+aks_subnet_prefixes = ["10.0.0.0/20"]
+
+dns_zone_name = "biroltilki.art"
+
+log_analytics_workspace_name = "law-boutique-dev-gwc"
+log_analytics_retention_days   = 30
+
+tags = {
+  project     = "boutique-aks-devsecops"
+  environment = "platform"
+  managed_by  = "terraform"
+  owner       = "<YOUR_ALIAS>"
+}
+
+# --- Topic 03: must be globally unique where noted ---
+
+acr_name = "acrboutiquedevgwc"
+acr_sku  = "Standard"
+
+key_vault_name = "kv-boutique-dev-gwc"
+
+aks_cluster_name = "aks-boutique-dev-gwc"
+aks_dns_prefix   = "aksboutiquedevgwc"
+
+kubernetes_version  = "1.29"
+system_node_vm_size = "Standard_D2s_v5"
+system_node_count   = 1
+user_node_vm_size   = "Standard_D4s_v5"
+user_node_count     = 1
+user_node_min_count = 1
+user_node_max_count = 3
+
+platform_identity_name = "uami-boutique-platform"
+
+# --- Topic 04: ADO OIDC (replace with your org/project) ---
+# Organization GUID: Azure DevOps → Organization settings → Overview (or dev.azure.com/{org}/_apis/connectionData)
+ado_organization_id   = "00000000-0000-0000-0000-000000000000"
+ado_organization_name = "<ADO_ORG_NAME>"
+ado_project_name      = "boutique-aks-devsecops"
+ado_service_connection_name = "azure-boutique-oidc"
+ado_pipeline_identity_name  = "uami-ado-pipeline"

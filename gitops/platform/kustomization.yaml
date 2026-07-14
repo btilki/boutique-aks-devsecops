@@ -1,0 +1,16 @@
+# Platform GitOps — Topics 06–08, 11 add components via this kustomization.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ingress-nginx/Application.yaml
+  - cert-manager/Application.yaml
+  - cert-manager/cluster-issuer-letsencrypt.yaml
+  - argocd-ingress.yaml
+  - secrets-store-csi/Application.yaml
+  - secrets-store-csi/namespace-csi-test.yaml
+  - secrets-store-csi/secretproviderclass-example.yaml
+  - secrets-store-csi/test-serviceaccount.yaml
+  - secrets-store-csi/test-pod.yaml
+  - kyverno/
+  - monitoring/

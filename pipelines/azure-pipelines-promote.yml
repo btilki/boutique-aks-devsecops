@@ -1,0 +1,36 @@
+# Manual promotion pipeline — copy signed digests to stage/prod overlays after dev validation.
+# Requires ADO Environments: stage (no approval), prod (approval required).
+# SETUP: docs/setup/12-promotion-stage-prod.md
+
+trigger: none
+
+pr: none
+
+variables:
+  - template: templates/variables.yml
+
+stages:
+  - stage: Validate
+    displayName: Validate configuration
+    jobs:
+      - job: validate
+        displayName: Validate variables
+        pool:
+          vmImage: ubuntu-22.04
+        steps:
+          - bash: echo "Promotion target selected at queue time via parameter"
+            displayName: Ready
+
+  # Re-run supply chain only when promoting a fresh mirror build.
+  # Comment out MirrorScanSign and set dependsOnStage: Validate when re-promoting existing digest-manifest artifact.
+  - template: templates/build-scan-sign.yml
+
+  - template: templates/promote-digest.yml
+    parameters:
+      targetEnvironment: stage
+      dependsOnStage: MirrorScanSign
+
+  - template: templates/promote-digest.yml
+    parameters:
+      targetEnvironment: prod
+      dependsOnStage: Promote_stage

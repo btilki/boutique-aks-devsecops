@@ -1,0 +1,50 @@
+# Child applications managed by the root app-of-apps (included via directory filter).
+# SETUP: replace <GIT_REPO_URL> in both Applications with your repository remote.
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-root
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/platform
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-root
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  project: applications
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    # Boutique env apps use per-overlay sync policy (dev auto in Topic 10).
+    syncOptions:
+      - CreateNamespace=true

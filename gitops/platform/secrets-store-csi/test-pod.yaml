@@ -1,0 +1,38 @@
+# Test pod — verifies Key Vault secret mount at /mnt/secrets.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csi-test-pod
+  namespace: csi-test
+  annotations:
+    argocd.argoproj.io/sync-wave: "32"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    azure.workload.identity/use: "true"
+spec:
+  restartPolicy: Never
+  serviceAccountName: csi-test-sa
+  containers:
+    - name: test
+      image: mcr.microsoft.com/azure-cli:2.61.0
+      command:
+        - /bin/bash
+        - -c
+        - |
+          set -euo pipefail
+          echo "=== CSI mount listing ==="
+          ls -la /mnt/secrets/
+          echo "=== secret value (redacted length) ==="
+          wc -c /mnt/secrets/csi-test-secret
+          sleep 300
+      volumeMounts:
+        - name: secrets-store
+          mountPath: /mnt/secrets
+          readOnly: true
+  volumes:
+    - name: secrets-store
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: azure-kv-test

@@ -1,0 +1,21 @@
+# Stage overlay — namespace boutique-stage, manual Argo sync, same digest as dev after promotion.
+# SETUP: replace <ACR_LOGIN_SERVER> (must match base/kustomization.yaml).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: boutique-stage
+
+resources:
+  - namespace.yaml
+  - ingress.yaml
+  - ../../base
+
+patches:
+  - path: patches/recreate-deployment-strategy.yaml
+  - path: patches/reduce-resource-requests.yaml
+  - path: patches/container-run-as-non-root.yaml
+
+# Digest pins added by promote-digest pipeline or manual copy from dev overlay.
+# images:
+#   - name: <ACR_LOGIN_SERVER>/frontend
+#     digest: sha256:...

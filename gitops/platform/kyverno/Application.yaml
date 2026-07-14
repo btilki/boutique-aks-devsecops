@@ -1,0 +1,36 @@
+# Argo CD Application — Kyverno admission controller.
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kyverno
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "35"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  sources:
+    - repoURL: https://kyverno.github.io/kyverno/
+      chart: kyverno
+      targetRevision: 3.2.7
+      helm:
+        releaseName: kyverno
+        valueFiles:
+          - $values/gitops/platform/kyverno/values.yaml
+    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kyverno
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

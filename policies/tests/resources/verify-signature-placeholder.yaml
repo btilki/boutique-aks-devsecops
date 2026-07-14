@@ -1,0 +1,18 @@
+# Placeholder for signature verification CLI tests after Topic 09 cosign key generation.
+# Run: cosign verify --key cosign.pub <image>
+# Kyverno verifyImages integration tested in docs/setup/09-ci-pipeline.md
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unsigned-acr-pod
+  namespace: boutique-dev
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+  containers:
+    - name: app
+      image: acrboutiquedevgwc.azurecr.io/frontend@sha256:0000000000000000000000000000000000000000000000000000000000000002
+      securityContext:
+        runAsNonRoot: true
+        privileged: false

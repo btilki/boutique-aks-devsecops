@@ -1,0 +1,8 @@
+# Application workloads (Online Boutique). Populated in Topics 10 and 12.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - boutique/dev-application.yaml
+  - boutique/stage-application.yaml
+  - boutique/prod-application.yaml

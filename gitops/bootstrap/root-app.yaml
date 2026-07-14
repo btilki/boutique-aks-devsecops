@@ -1,0 +1,28 @@
+# Root app-of-apps — syncs child Application manifests from platform-apps.yaml.
+# SETUP: replace <GITHUB_ORG> and <REPO_NAME> with your GitHub repository before apply.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/bootstrap
+    directory:
+      include: platform-apps.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

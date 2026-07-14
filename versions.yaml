@@ -1,0 +1,89 @@
+# Single source of truth for pinned platform, tool, and application versions.
+# Referenced by docs/setup/, pipelines/templates/variables.yml, and Terraform/GitOps docs.
+
+azure:
+  region: germanywestcentral
+  location_display_name: Germany West Central
+
+terraform:
+  required_version: ">= 1.6.0"
+  azurerm_provider: "~> 3.100"
+
+aks:
+  kubernetes_version: "1.29"
+  node_pools:
+    system:
+      vm_size: Standard_D2s_v5
+      count: 1
+      min_count: 1
+      max_count: 1
+      mode: System
+    user:
+      vm_size: Standard_D4s_v5
+      count: 1
+      min_count: 1
+      max_count: 3
+      mode: User
+      enable_cluster_autoscaler: true
+
+dns:
+  zone_name: biroltilki.art
+
+hostnames:
+  argocd: argocd-boutique.biroltilki.art
+  grafana: grafana-boutique.biroltilki.art
+  boutique_dev: dev-boutique.biroltilki.art
+  boutique_stage: stage-boutique.biroltilki.art
+  boutique_prod: boutique.biroltilki.art
+
+gitops:
+  argocd: "2.10.7"
+  nginx_ingress_chart: "4.10.1"
+  cert_manager: "1.14.5"
+  kyverno: "1.12.6"
+  kyverno_chart: "3.2.7"
+  secrets_store_csi_driver: "1.4.0"
+  secrets_store_csi_azure_provider: "1.5.0"
+  kube_prometheus_stack_chart: "58.2.2"
+  opentelemetry_collector_chart: "0.95.0"
+
+supply_chain:
+  trivy: "0.51.4"
+  cosign: "2.2.4"
+  cosign_sign_args:
+    - "--tlog-upload=false"
+
+applications:
+  online_boutique:
+    version: "v0.10.5"
+    upstream_repo: GoogleCloudPlatform/microservices-demo
+    upstream_tag: "v0.10.5"
+    manifest_ref: release/kubernetes-manifests.yaml
+    source_registry: us-central1-docker.pkg.dev/google-samples/microservices-demo
+    services:
+      - frontend
+      - cartservice
+      - checkoutservice
+      - currencyservice
+      - emailservice
+      - paymentservice
+      - productcatalogservice
+      - recommendationservice
+      - shippingservice
+      - adservice
+      - loadgenerator
+
+environments:
+  logical:
+    - dev
+    - stage
+    - prod
+  kubernetes_namespaces:
+    dev: boutique-dev
+    stage: boutique-stage
+    prod: boutique-prod
+  argocd_sync:
+    dev: automatic
+    stage: manual
+    prod: manual
+  prod_promotion_gate: ado_environment_approval

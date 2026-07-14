@@ -1,0 +1,36 @@
+# Example PolicyException — NOT applied by default (documentation only).
+# Use when a documented, time-bound exception is required (e.g. debug init container).
+# Remove comment markers and customize before applying.
+#
+# apiVersion: kyverno.io/v2
+# kind: PolicyException
+# metadata:
+#   name: boutique-dev-redis-exception
+#   namespace: boutique-dev
+# spec:
+#   exceptions:
+#     - policyName: registry-allowlist
+#       ruleNames:
+#         - acr-allowlist
+#   match:
+#     any:
+#       - resources:
+#           kinds:
+#             - Pod
+#           names:
+#             - cartservice-*
+#           namespaces:
+#             - boutique-dev
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kyverno-policy-exceptions-readme
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+data:
+  README: |
+    PolicyException examples belong in Git with ticket reference and expiry.
+    Prefer Kustomize patches over exceptions for Online Boutique (ADR-0006).
+    See docs/setup/08-admission-policies.md

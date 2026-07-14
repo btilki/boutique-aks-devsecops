@@ -1,0 +1,62 @@
+# Azure DevOps — Online Boutique v0.10.5 supply chain pipeline
+# Mirror upstream GAR -> ACR, Trivy CRITICAL gate, cosign sign (--tlog-upload=false)
+# SETUP: docs/setup/09-ci-pipeline.md
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - pipelines/*
+      - versions.yaml
+      - gitops/apps/boutique/*
+
+pr: none
+
+variables:
+  - template: templates/variables.yml
+
+stages:
+  - stage: Validate
+    displayName: Validate configuration
+    jobs:
+      - job: validate
+        displayName: Validate pipeline variables
+        pool:
+          vmImage: ubuntu-22.04
+        steps:
+          - checkout: self
+            fetchDepth: 1
+          - bash: |
+              set -euo pipefail
+              BOUTIQUE_VERSION="$(boutiqueVersion)"
+              ACR_NAME="$(acrName)"
+              ACR_LOGIN="$(acrLoginServer)"
+              KV_NAME="$(keyVaultName)"
+              SC_NAME="$(azureServiceConnection)"
+              for name_val in \
+                "boutiqueVersion=${BOUTIQUE_VERSION}" \
+                "acrName=${ACR_NAME}" \
+                "acrLoginServer=${ACR_LOGIN}" \
+                "keyVaultName=${KV_NAME}" \
+                "azureServiceConnection=${SC_NAME}"; do
+                name="${name_val%%=*}"
+                val="${name_val#*=}"
+                if [[ -z "${val}" ]]; then
+                  echo "ERROR: variable ${name} is empty" >&2
+                  exit 1
+                fi
+              done
+              echo "Boutique version: ${BOUTIQUE_VERSION}"
+              echo "ACR: ${ACR_LOGIN}"
+              echo "Key Vault: ${KV_NAME}"
+              echo "Service connection: ${SC_NAME}"
+            displayName: Check required variables
+
+  - template: templates/build-scan-sign.yml
+
+  # Optional digest promotion — see pipelines/azure-pipelines-promote.yml (Topic 12)
+  # - template: templates/promote-digest.yml
+  #   parameters:
+  #     targetEnvironment: dev

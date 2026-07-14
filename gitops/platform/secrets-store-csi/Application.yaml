@@ -1,0 +1,42 @@
+# Argo CD Application — Secrets Store CSI driver + Azure Key Vault provider.
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: secrets-store-csi
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "25"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+      chart: secrets-store-csi-driver
+      targetRevision: 1.4.0
+      helm:
+        releaseName: secrets-store-csi-driver
+        valueFiles:
+          - $values/gitops/platform/secrets-store-csi/values.yaml
+    - repoURL: https://azure.github.io/secrets-store-csi-driver-provider-azure/charts
+      chart: csi-secrets-store-provider-azure
+      targetRevision: 1.5.0
+      helm:
+        releaseName: azure-csi-provider
+        valueFiles:
+          - $values/gitops/platform/secrets-store-csi/values-provider.yaml
+    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true

@@ -1,0 +1,20 @@
+# Secrets Store CSI driver Helm values — chart 1.4.0 per versions.yaml
+syncSecret:
+  enabled: true
+
+enableSecretRotation: true
+rotationPollInterval: 2m
+
+linux:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+windows:
+  enabled: false
+
+logVerbosity: 0

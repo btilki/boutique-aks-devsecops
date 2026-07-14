@@ -1,0 +1,22 @@
+# Dev overlay — namespace boutique-dev, ingress TLS, lab resource tuning.
+# SETUP: replace <ACR_LOGIN_SERVER> (must match base/kustomization.yaml).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: boutique-dev
+
+resources:
+  - namespace.yaml
+  - ingress.yaml
+  - ../../base
+
+patches:
+  - path: patches/recreate-deployment-strategy.yaml
+  - path: patches/reduce-resource-requests.yaml
+  - path: patches/container-run-as-non-root.yaml
+
+# Optional: pin digests from pipeline digest-manifest.json (Topic 09 artifact).
+# Example after promotion:
+# images:
+#   - name: <ACR_LOGIN_SERVER>/frontend
+#     digest: sha256:abc123...

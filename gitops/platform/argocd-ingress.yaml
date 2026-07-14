@@ -1,0 +1,30 @@
+# Argo CD HTTPS ingress — issued by cert-manager DNS-01.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "30"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - argocd-boutique.biroltilki.art
+      secretName: argocd-server-tls
+  rules:
+    - host: argocd-boutique.biroltilki.art
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80

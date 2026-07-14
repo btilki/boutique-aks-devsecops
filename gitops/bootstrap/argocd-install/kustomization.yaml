@@ -1,0 +1,18 @@
+# Argo CD install via Helm chart (requires kustomize --enable-helm).
+# Chart 6.7.18 deploys Argo CD application v2.10.7 per versions.yaml.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argocd
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+  - name: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    version: 6.7.18
+    releaseName: argocd
+    namespace: argocd
+    valuesFile: values.yaml
+    includeCRDs: true

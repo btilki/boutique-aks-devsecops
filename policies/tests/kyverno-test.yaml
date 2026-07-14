@@ -1,0 +1,45 @@
+apiVersion: cli.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: boutique-cluster-policies
+policies:
+  - ../kyverno/cluster/00-registry-allowlist.yaml
+  - ../kyverno/cluster/01-deny-latest-tag.yaml
+  - ../kyverno/cluster/03-require-pod-security-baseline.yaml
+  - ../kyverno/cluster/04-block-privileged-host-access.yaml
+resources:
+  - resources/allow-compliant-workload.yaml
+  - resources/deny-latest-tag.yaml
+  - resources/deny-non-acr-image.yaml
+  - resources/deny-privileged.yaml
+results:
+  - policy: registry-allowlist
+    rule: acr-allowlist
+    resources:
+      - compliant-pod
+    result: pass
+  - policy: registry-allowlist
+    rule: acr-allowlist
+    resources:
+      - non-acr-pod
+    result: fail
+  - policy: deny-latest-tag
+    rule: deny-latest
+    resources:
+      - latest-tag-pod
+    result: fail
+  - policy: deny-latest-tag
+    rule: deny-latest
+    resources:
+      - compliant-pod
+    result: pass
+  - policy: require-pod-security-baseline
+    rule: disallow-privileged
+    resources:
+      - privileged-pod
+    result: fail
+  - policy: block-privileged-host-access
+    rule: deny-host-namespaces
+    resources:
+      - compliant-pod
+    result: pass

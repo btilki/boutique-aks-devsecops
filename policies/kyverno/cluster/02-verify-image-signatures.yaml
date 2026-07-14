@@ -1,0 +1,51 @@
+# cosign signature verification for ACR images.
+# SETUP:
+#   1) Replace <ACR_NAME> with terraform output acr_name
+#   2) Replace <COSIGN_PUBLIC_KEY_PEM> with cosign public key after Topic 09 keygen
+#      (keep PEM block indentation exact)
+# Matches ADR-0005: cosign sign --tlog-upload=false → ignoreTlog / ignoreSCT in Kyverno.
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signatures
+  annotations:
+    policies.kyverno.io/title: Verify cosign Image Signatures
+    policies.kyverno.io/category: Supply Chain
+    policies.kyverno.io/severity: high
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: verify-signed-acr-images
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - kube-system
+                - kyverno
+                - argocd
+                - ingress-nginx
+                - cert-manager
+                - csi-test
+      verifyImages:
+        - imageReferences:
+            - "<ACR_NAME>.azurecr.io/*"
+          mutateDigest: true
+          required: true
+          verifyDigest: true
+          failureAction: Enforce
+          attestors:
+            - count: 1
+              entries:
+                - keys:
+                    publicKeys: |-
+                      <COSIGN_PUBLIC_KEY_PEM>
+                    rekor:
+                      ignoreTlog: true
+                    ctlog:
+                      ignoreSCT: true

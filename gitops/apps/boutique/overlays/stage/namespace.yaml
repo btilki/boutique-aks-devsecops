@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: boutique-stage
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    environment: stage

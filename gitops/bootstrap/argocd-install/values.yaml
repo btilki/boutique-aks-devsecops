@@ -1,0 +1,61 @@
+# Argo CD Helm values — pinned to app version 2.10.7 (Helm chart 6.7.18).
+# Hostname TLS is configured in Topic 06 (ingress). Until then, use port-forward.
+# See versions.yaml and docs/setup/05-gitops-bootstrap.md
+
+global:
+  domain: argocd-boutique.biroltilki.art
+
+configs:
+  cm:
+    # Allow Argo CD to manage resources in platform namespaces (lab scope).
+    application.resourceTrackingMethod: annotation
+    timeout.reconciliation: 180s
+  params:
+    # Terminate TLS at ingress (Topic 06); server runs HTTP behind ingress.
+    server.insecure: "true"
+
+server:
+  replicas: 1
+  service:
+    type: ClusterIP
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+
+controller:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+
+repoServer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+
+redis:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 256Mi
+
+applicationSet:
+  enabled: false
+
+notifications:
+  enabled: false
+
+dex:
+  enabled: false

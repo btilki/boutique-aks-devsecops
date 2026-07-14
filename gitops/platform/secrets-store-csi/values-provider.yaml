@@ -1,0 +1,15 @@
+# Azure Key Vault provider Helm values — chart 1.5.0 per versions.yaml
+# Driver is installed by the first helm source in Application.yaml.
+secrets-store-csi-driver:
+  install: false
+
+linux:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+logVerbosity: 0

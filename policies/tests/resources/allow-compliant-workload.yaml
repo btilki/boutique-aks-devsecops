@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: compliant-pod
+  namespace: boutique-dev
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+  containers:
+    - name: frontend
+      image: acrboutiquedevgwc.azurecr.io/frontend@sha256:0000000000000000000000000000000000000000000000000000000000000001
+      securityContext:
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        privileged: false

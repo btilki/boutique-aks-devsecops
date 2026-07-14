@@ -1,0 +1,41 @@
+# cert-manager Helm values — chart v1.14.5 per versions.yaml
+# SETUP: set azure.workload.identity/client-id to terraform output platform_identity_client_id
+crds:
+  enabled: true
+
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 256Mi
+
+serviceAccount:
+  labels:
+    azure.workload.identity/use: "true"
+  annotations:
+    azure.workload.identity/client-id: "<PLATFORM_IDENTITY_CLIENT_ID>"
+
+podLabels:
+  azure.workload.identity/use: "true"
+
+webhook:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+cainjector:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+startupapicheck:
+  enabled: true

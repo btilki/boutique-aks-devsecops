@@ -1,0 +1,24 @@
+# Argo CD Application — Boutique stage (manual sync).
+# SETUP: replace <GITHUB_ORG> and <REPO_NAME> with your GitHub repository.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: boutique-stage
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "31"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    environment: stage
+spec:
+  project: applications
+  source:
+    repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    targetRevision: main
+    path: gitops/apps/boutique/overlays/stage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: boutique-stage
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

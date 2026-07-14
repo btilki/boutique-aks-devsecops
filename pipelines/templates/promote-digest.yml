@@ -1,0 +1,84 @@
+# Promote signed image digests to GitOps Kustomize overlays (push to GitHub).
+# Stage: ADO environment (no approval). Prod: ADO environment with manual approval (ADR-0008).
+# Requires ADO pipeline connected to GitHub with push access to main (Topic 09 Step 9.5).
+parameters:
+  - name: targetEnvironment
+    type: string
+    default: stage
+    values:
+      - dev
+      - stage
+      - prod
+  - name: dependsOnStage
+    type: string
+    default: MirrorScanSign
+
+stages:
+  - stage: Promote_${{ parameters.targetEnvironment }}
+    displayName: Promote digests to ${{ parameters.targetEnvironment }}
+    dependsOn:
+      - ${{ parameters.dependsOnStage }}
+    jobs:
+      - deployment: promote_gitops
+        displayName: Update GitOps overlay
+        environment: ${{ parameters.targetEnvironment }}
+        pool:
+          vmImage: ubuntu-22.04
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                  persistCredentials: true
+                  fetchDepth: 0
+
+                - download: current
+                  artifact: digest-manifest
+
+                - bash: |
+                    set -euo pipefail
+                    curl -sSL "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.1 /usr/local/bin
+                    kustomize version
+
+                    TARGET_ENV="${{ parameters.targetEnvironment }}"
+                    OVERLAY_PATH="gitops/apps/boutique/overlays/${TARGET_ENV}"
+                    MANIFEST="$(Pipeline.Workspace)/digest-manifest/digest-manifest.json"
+                    ACR_SERVER="$(acrLoginServer)"
+
+                    if [[ ! -f "${MANIFEST}" ]]; then
+                      echo "ERROR: digest-manifest.json not found" >&2
+                      exit 1
+                    fi
+                    if [[ ! -d "${OVERLAY_PATH}" ]]; then
+                      echo "ERROR: overlay path missing: ${OVERLAY_PATH}" >&2
+                      exit 1
+                    fi
+
+                    echo "Updating images in ${OVERLAY_PATH} from ${MANIFEST}"
+
+                    for SERVICE in $(boutiqueServices); do
+                      DIGEST="$(jq -r --arg s "${SERVICE}" '.[$s]' "${MANIFEST}")"
+                      if [[ -z "${DIGEST}" || "${DIGEST}" == "null" ]]; then
+                        echo "ERROR: missing digest for ${SERVICE}" >&2
+                        exit 1
+                      fi
+                      IMAGE_REF="${ACR_SERVER}/${SERVICE}@${DIGEST}"
+                      echo "  ${SERVICE} -> ${IMAGE_REF}"
+                      (
+                        cd "${OVERLAY_PATH}"
+                        kustomize edit set image "${ACR_SERVER}/${SERVICE}=${IMAGE_REF}"
+                      )
+                    done
+
+                    git config user.email "pipeline@boutique-aks-devsecops.local"
+                    git config user.name "Azure DevOps Pipeline (GitHub push)"
+                    git add "${OVERLAY_PATH}/kustomization.yaml"
+                    if git diff --cached --quiet; then
+                      echo "No GitOps changes to commit"
+                      exit 0
+                    fi
+                    git commit -m "promote(${TARGET_ENV}): update Boutique digests from pipeline $(Build.BuildId)"
+                    git push origin HEAD:$(Build.SourceBranchName)
+                  displayName: Commit digest updates to overlay
+                  env:
+                    boutiqueServices: $(boutiqueServices)

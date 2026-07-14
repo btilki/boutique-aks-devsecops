@@ -1,0 +1,8 @@
+# redis-cart uses emptyDir — Recreate avoids multi-replica mount conflicts on small dev nodes.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-cart
+spec:
+  strategy:
+    type: Recreate

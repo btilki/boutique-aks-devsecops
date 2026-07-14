@@ -1,0 +1,25 @@
+# Pipeline variables — keep aligned with versions.yaml at repository root.
+# SETUP: override acrName/keyVaultName in ADO pipeline variables if different from Terraform tfvars.
+variables:
+  azureServiceConnection: azure-boutique-oidc
+  azureRegion: germanywestcentral
+
+  acrName: acrboutiquedevgwc
+  acrLoginServer: acrboutiquedevgwc.azurecr.io
+  keyVaultName: kv-boutique-dev-gwc
+
+  upstreamRegistry: us-central1-docker.pkg.dev/google-samples/microservices-demo
+  boutiqueVersion: v0.10.5
+
+  trivyVersion: 0.51.4
+  cosignVersion: 2.2.4
+  cosignSignArgs: --tlog-upload=false
+
+  cosignPrivateKeySecretName: cosign-private-key
+  cosignPublicKeySecretName: cosign-public-key
+
+  # Space-separated service list (11 Online Boutique v0.10.5 images)
+  boutiqueServices: >-
+    frontend cartservice checkoutservice currencyservice emailservice
+    paymentservice productcatalogservice recommendationservice shippingservice
+    adservice loadgenerator

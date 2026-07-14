@@ -1,0 +1,40 @@
+# Allow only images from the platform ACR.
+# SETUP: replace <ACR_NAME> with terraform output acr_name (no .azurecr.io suffix).
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: registry-allowlist
+  annotations:
+    policies.kyverno.io/title: ACR Registry Allowlist
+    policies.kyverno.io/category: Supply Chain
+    policies.kyverno.io/severity: high
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: acr-allowlist
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - kube-system
+                - kyverno
+                - argocd
+                - ingress-nginx
+                - cert-manager
+                - csi-test
+      validate:
+        message: "Only images from <ACR_NAME>.azurecr.io are allowed."
+        pattern:
+          spec:
+            =(ephemeralContainers):
+              - image: "<ACR_NAME>.azurecr.io/*"
+            =(initContainers):
+              - image: "<ACR_NAME>.azurecr.io/*"
+            containers:
+              - image: "<ACR_NAME>.azurecr.io/*"

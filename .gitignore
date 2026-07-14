@@ -1,0 +1,37 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+
+# Secrets and keys
+*.pem
+*.key
+cosign.key
+.env
+.env.*
+
+# OS and editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python / pre-commit
+__pycache__/
+.venv/
+
+# Build artifacts
+*.log
+dist/
+build/
+
+# Local kubeconfig copies
+kubeconfig
+kubeconfig.*
