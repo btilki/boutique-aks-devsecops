@@ -37,7 +37,8 @@ stages:
 
                 - bash: |
                     set -euo pipefail
-                    curl -sSL "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash -s -- 5.4.1 /usr/local/bin
+                    KUSTOMIZE_INSTALL="https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
+                    curl -sSL "${KUSTOMIZE_INSTALL}" | bash -s -- 5.4.1 /usr/local/bin
                     kustomize version
 
                     TARGET_ENV="${{ parameters.targetEnvironment }}"

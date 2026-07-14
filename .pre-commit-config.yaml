@@ -7,6 +7,11 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
         args: [--allow-multiple-documents]
+        exclude: |
+          (?x)^(
+            gitops/bootstrap/argocd-install/charts/|
+            gitops/apps/boutique/base/manifests\.yaml
+          )
       - id: check-added-large-files
         args: [--maxkb=512]
 
@@ -15,7 +20,8 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
-        files: ^terraform/
+        # Validate composed roots only — leaf modules inherit provider pins from environments.
+        files: ^terraform/(bootstrap|environments)/
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.35.1

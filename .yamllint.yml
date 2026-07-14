@@ -1,6 +1,10 @@
 ---
 extends: default
 
+ignore: |
+  gitops/bootstrap/argocd-install/charts/
+  gitops/apps/boutique/base/manifests.yaml
+
 rules:
   line-length:
     max: 140
