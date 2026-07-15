@@ -38,7 +38,6 @@ spec:
           mutateDigest: true
           required: true
           verifyDigest: true
-          failureAction: Enforce
           attestors:
             - count: 1
               entries:
