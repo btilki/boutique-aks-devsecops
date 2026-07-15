@@ -12,5 +12,9 @@ resources:
   - cert-manager/issuer-application.yaml
   - argocd-ingress.yaml
   - secrets-store-csi/Application.yaml
+  - secrets-store-csi/namespace-csi-test.yaml
+  - secrets-store-csi/secretproviderclass-example.yaml
+  - secrets-store-csi/test-serviceaccount.yaml
+  - secrets-store-csi/test-pod.yaml
   - kyverno/
   - monitoring/
