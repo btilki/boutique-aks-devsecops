@@ -28,7 +28,7 @@ spec:
         releaseName: azure-csi-provider
         valueFiles:
           - $values/gitops/platform/secrets-store-csi/values-provider.yaml
-    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    - repoURL: https://github.com/btilki/boutique-aks-devsecops
       targetRevision: main
       ref: values
   destination:

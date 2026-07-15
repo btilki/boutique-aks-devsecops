@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Declarative Kubernetes state managed by Argo CD: platform services and Online Boutique overlays. All manifests sync from **GitHub** (`https://github.com/<GITHUB_ORG>/<REPO_NAME>`).
+Declarative Kubernetes state managed by Argo CD: platform services and Online Boutique overlays. All manifests sync from **GitHub** (`https://github.com/btilki/boutique-aks-devsecops`).
 
 ## Contents
 

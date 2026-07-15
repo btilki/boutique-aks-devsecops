@@ -21,7 +21,7 @@ spec:
         releaseName: kyverno
         valueFiles:
           - $values/gitops/platform/kyverno/values.yaml
-    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+    - repoURL: https://github.com/btilki/boutique-aks-devsecops
       targetRevision: main
       ref: values
   destination:
