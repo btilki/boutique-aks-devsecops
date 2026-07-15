@@ -1,0 +1,8 @@
+# Azure UAMI client IDs in GitOps are public workload-identity config, not secrets.
+title = "boutique-aks-devsecops gitleaks config"
+
+[allowlist]
+paths = [
+  '''gitops/platform/cert-manager/''',
+  '''gitops/platform/secrets-store-csi/''',
+]

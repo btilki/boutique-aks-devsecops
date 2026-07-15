@@ -15,15 +15,15 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: <ACME_EMAIL>
+    email: btilki@gmail.com
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:
       - dns01:
           azureDNS:
-            subscriptionID: <AZURE_SUBSCRIPTION_ID>
+            subscriptionID: 6b047f8d-0c64-480b-85d3-21c09381cc3d
             resourceGroupName: rg-boutique-dev-gwc
             hostedZoneName: biroltilki.art
             environment: AzurePublicCloud
             managedIdentity:
-              clientID: <PLATFORM_IDENTITY_CLIENT_ID>
+              clientID: 7d372e00-f8ab-4f0d-9f1d-d3e4d9e24684

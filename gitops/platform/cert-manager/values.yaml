@@ -16,7 +16,7 @@ serviceAccount:
   labels:
     azure.workload.identity/use: "true"
   annotations:
-    azure.workload.identity/client-id: "<PLATFORM_IDENTITY_CLIENT_ID>"
+    azure.workload.identity/client-id: "7d372e00-f8ab-4f0d-9f1d-d3e4d9e24684"
 
 podLabels:
   azure.workload.identity/use: "true"
