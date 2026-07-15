@@ -21,4 +21,4 @@ reportsController:
   enabled: true
 
 config:
-  resourceFilters: "[*/*,kyverno,*] [Event,*,kyverno,*]"
+  excludeKyvernoNamespace: true
