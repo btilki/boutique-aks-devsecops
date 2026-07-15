@@ -49,6 +49,7 @@ stages:
                   --name "$(cosignPrivateKeySecretName)" \
                   --query value -o tsv > "${COSIGN_KEY}"
                 chmod 600 "${COSIGN_KEY}"
+                export COSIGN_PASSWORD=""
 
                 for SERVICE in $(boutiqueServices); do
                   echo "========================================"
