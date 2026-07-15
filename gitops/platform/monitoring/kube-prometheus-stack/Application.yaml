@@ -34,3 +34,5 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - SkipDryRunOnMissingResource=true
+      # Large Prometheus CRDs exceed last-applied-configuration annotation limit
+      - ServerSideApply=true

@@ -15,6 +15,7 @@ patches:
   - path: patches/reduce-resource-requests.yaml
   - path: patches/container-run-as-non-root.yaml
   - path: patches/loadgenerator-replicas.yaml
+  - path: patches/optional-services-replicas.yaml
 
 # Optional: pin digests from pipeline digest-manifest.json (Topic 09 artifact).
 # Example after promotion:
