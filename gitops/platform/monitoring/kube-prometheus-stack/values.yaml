@@ -90,7 +90,7 @@ kubeStateMetrics:
   enabled: true
 
 nodeExporter:
-  enabled: true
+  enabled: false
 
 # Lab sizing — disable components not needed on AKS
 kubeEtcd:

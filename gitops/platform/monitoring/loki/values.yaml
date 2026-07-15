@@ -49,5 +49,11 @@ monitoring:
   lokiCanary:
     enabled: false
 
+# Lab capacity: memcached caches consume extra pods; SingleBinary works without them.
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+
 test:
   enabled: false
