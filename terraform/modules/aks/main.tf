@@ -36,8 +36,11 @@ resource "azurerm_kubernetes_cluster" "this" {
     tenant_id          = data.azurerm_client_config.current.tenant_id
   }
 
-  oms_agent {
-    log_analytics_workspace_id = var.log_analytics_workspace_id
+  dynamic "oms_agent" {
+    for_each = var.log_analytics_workspace_id != null ? [1] : []
+    content {
+      log_analytics_workspace_id = var.log_analytics_workspace_id
+    }
   }
 
   lifecycle {
@@ -62,6 +65,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "user" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "aks" {
+  count = var.log_analytics_workspace_id != null ? 1 : 0
+
   name                       = "aks-diagnostics"
   target_resource_id         = azurerm_kubernetes_cluster.this.id
   log_analytics_workspace_id = var.log_analytics_workspace_id

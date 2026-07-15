@@ -1,9 +1,9 @@
 # 05 — GitOps Bootstrap
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 90 minutes  
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete (Topic 04 recommended before CI, not blocking GitOps)  
-**Creates:** Argo CD v2.10.7, AppProjects, root app-of-apps, platform/apps root Applications  
+**Audience:** L2 — Implementer
+**Estimated time:** 90 minutes
+**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete (Topic 04 recommended before CI, not blocking GitOps)
+**Creates:** Argo CD v2.10.7, AppProjects, root app-of-apps, platform/apps root Applications
 **Related ADRs:** [0004](../adr/0004-argocd-gitops.md)
 
 ---

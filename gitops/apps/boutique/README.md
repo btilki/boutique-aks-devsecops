@@ -25,5 +25,5 @@ Kustomize packaging for [Online Boutique v0.10.5](https://github.com/GoogleCloud
 
 ## Timing
 
-Topic 10: `base/`, `overlays/dev/`, `dev-application.yaml`, smoke test.  
+Topic 10: `base/`, `overlays/dev/`, `dev-application.yaml`, smoke test.
 Topic 12: `overlays/stage/`, `overlays/prod/`, promotion pipeline, smoke tests.

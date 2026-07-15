@@ -65,8 +65,9 @@ variable "user_node_max_count" {
 }
 
 variable "log_analytics_workspace_id" {
-  description = "Log Analytics workspace for Container Insights."
+  description = "Optional Log Analytics workspace for Container Insights and AKS diagnostics. Null disables Azure Monitor integration (use in-cluster Loki per ADR-0012)."
   type        = string
+  default     = null
 }
 
 variable "tags" {

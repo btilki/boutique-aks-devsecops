@@ -46,6 +46,8 @@ gitops:
   secrets_store_csi_azure_provider: "1.5.0"
   kube_prometheus_stack_chart: "58.2.2"
   opentelemetry_collector_chart: "0.95.0"
+  loki_chart: "6.23.0"
+  promtail_chart: "6.16.6"
 
 supply_chain:
   trivy: "0.51.4"

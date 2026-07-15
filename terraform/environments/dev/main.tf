@@ -1,7 +1,8 @@
 # Dev environment root module — single physical AKS platform (Topics 02–04).
-# Topic 02: resource group, networking, DNS, Log Analytics.
-# Topic 03: AKS, ACR, Key Vault, identities.
+# Topic 02: resource group, networking, DNS.
+# Topic 03: AKS, ACR, Key Vault, identities (modules added in Topic 03).
 # Topic 04: ADO OIDC federation (see docs/setup/04-ado-oidc.md).
+# Logging: in-cluster Loki + Promtail (ADR-0012); no Log Analytics by default.
 
 terraform {
   required_version = ">= 1.6.0"
@@ -53,16 +54,6 @@ module "dns" {
   tags                = var.tags
 }
 
-module "diagnostics" {
-  source = "../../modules/diagnostics"
-
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  workspace_name      = var.log_analytics_workspace_name
-  retention_in_days   = var.log_analytics_retention_days
-  tags                = var.tags
-}
-
 module "acr" {
   source = "../../modules/acr"
 
@@ -70,7 +61,7 @@ module "acr" {
   resource_group_name        = module.resource_group.name
   location                   = module.resource_group.location
   sku                        = var.acr_sku
-  log_analytics_workspace_id = module.diagnostics.workspace_id
+  log_analytics_workspace_id = null
   tags                       = var.tags
 }
 
@@ -80,7 +71,7 @@ module "key_vault" {
   name                       = var.key_vault_name
   resource_group_name        = module.resource_group.name
   location                   = module.resource_group.location
-  log_analytics_workspace_id = module.diagnostics.workspace_id
+  log_analytics_workspace_id = null
   tags                       = var.tags
 }
 
@@ -99,7 +90,7 @@ module "aks" {
   user_node_count            = var.user_node_count
   user_node_min_count        = var.user_node_min_count
   user_node_max_count        = var.user_node_max_count
-  log_analytics_workspace_id = module.diagnostics.workspace_id
+  log_analytics_workspace_id = null
   tags                       = var.tags
 }
 
@@ -116,21 +107,4 @@ module "identities" {
   tags                       = var.tags
 
   depends_on = [module.aks, module.acr, module.key_vault, module.dns]
-}
-
-module "ado_federation" {
-  source = "../../modules/ado-federation"
-
-  resource_group_name     = module.resource_group.name
-  location                = module.resource_group.location
-  identity_name           = var.ado_pipeline_identity_name
-  ado_organization_id     = var.ado_organization_id
-  ado_organization_name   = var.ado_organization_name
-  ado_project_name        = var.ado_project_name
-  service_connection_name = var.ado_service_connection_name
-  acr_id                  = module.acr.id
-  key_vault_id            = module.key_vault.id
-  tags                    = var.tags
-
-  depends_on = [module.acr, module.key_vault]
 }

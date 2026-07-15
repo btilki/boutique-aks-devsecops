@@ -1,9 +1,9 @@
 # 04 — ADO OIDC Federation
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 75 minutes  
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete  
-**Creates:** Pipeline UAMI, federated identity credential, AcrPush + Key Vault Secrets User RBAC; ADO ARM service connection (GUI)  
+**Audience:** L2 — Implementer
+**Estimated time:** 75 minutes
+**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete
+**Creates:** Pipeline UAMI, federated identity credential, AcrPush + Key Vault Secrets User RBAC; ADO ARM service connection (GUI)
 **Related ADRs:** [0008](../adr/0008-ado-prod-approval-gate.md) (trust foundation for CI gates)
 
 ---
@@ -169,7 +169,7 @@ chmod +x scripts/register-ado-sc-federation.sh
 
 ### GUI instructions
 
-**Platform:** Azure DevOps  
+**Platform:** Azure DevOps
 **Permissions:** Project Administrator or equivalent to create service connections
 
 1. Navigate to: **`https://dev.azure.com/<ADO_ORG_NAME>/<ADO_PROJECT_NAME>`** → **Project settings** (bottom left) → **Service connections**

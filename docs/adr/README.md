@@ -13,6 +13,7 @@
 | [0009](0009-mirror-upstream-images.md) | Mirror upstream v0.10.5 images | Accepted |
 | [0010](0010-destroy-acr-on-teardown.md) | Destroy ACR on teardown | Accepted |
 | [0011](0011-aks-node-vm-sku.md) | AKS node VM SKUs and region | Accepted |
+| [0012](0012-loki-in-cluster-logging.md) | In-cluster Loki instead of Log Analytics | Accepted |
 
 ## Format
 

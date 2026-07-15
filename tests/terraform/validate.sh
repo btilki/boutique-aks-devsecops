@@ -7,8 +7,10 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "${REPO_ROOT}"
 
-echo "[validate] terraform fmt -check -recursive"
-terraform fmt -check -recursive terraform/
+echo "[validate] terraform fmt -check (tracked .tf only; skips local *.tfvars)"
+while IFS= read -r -d '' file; do
+  terraform fmt -check "${file}"
+done < <(find terraform -type f -name '*.tf' -print0)
 
 echo "[validate] bootstrap module"
 (

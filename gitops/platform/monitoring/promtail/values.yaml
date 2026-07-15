@@ -1,0 +1,19 @@
+# Grafana Promtail — ships pod logs to Loki (chart 6.16.6 per versions.yaml)
+
+config:
+  clients:
+    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+  snippets:
+    pipelineStages:
+      - cri: {}
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 128Mi
+
+tolerations:
+  - effect: NoSchedule
+    operator: Exists

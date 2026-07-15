@@ -1,9 +1,9 @@
 # 13 — Teardown
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 60 minutes (destroy may take 15–30 minutes)  
-**Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon lab)  
-**Destroys:** AKS, ACR, Key Vault, VNet, Azure DNS zone, Log Analytics, platform resource group  
+**Audience:** L2 — Implementer
+**Estimated time:** 60 minutes (destroy may take 15–30 minutes)
+**Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon lab)
+**Destroys:** AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
 **Related ADRs:** [0010](../adr/0010-destroy-acr-on-teardown.md)
 
 ---
@@ -99,7 +99,8 @@ Review plan output for:
 - `azurerm_key_vault`
 - `azurerm_dns_zone`
 - `azurerm_virtual_network`
-- `azurerm_log_analytics_workspace`
+
+(No Log Analytics workspace in default lab — ADR-0012.)
 
 ### Validation
 

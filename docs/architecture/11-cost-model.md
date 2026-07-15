@@ -1,6 +1,6 @@
 # Cost model
 
-Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month). Actual cost varies with uptime, egress, and Log Analytics ingestion.
+Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month). Actual cost varies with uptime and egress.
 
 ## Core resources
 
@@ -13,9 +13,9 @@ Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month).
 | ACR Basic | ~€5 | Storage | **Destroyed Phase 14** |
 | Key Vault | ~€1 | Operations | Minimal secrets |
 | Azure DNS zone | ~€0.50 | Hosted zone | Keep or delete post-teardown |
-| Log Analytics | ~€5–30 | Ingestion GB | Filter noisy logs |
+| Loki (in-cluster) | ~€0 Azure | PVC on node disk | 10Gi lab default; no Log Analytics |
 
-**Typical active lab:** ~€150–250/month with 2 nodes running.
+**Typical active lab:** ~€150–220/month with 2 nodes running (Log Analytics removed per ADR-0012).
 
 ## Guardrails
 
@@ -23,7 +23,7 @@ Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month).
 |-----------|----------------|
 | Max nodes | User pool `max_count: 3` |
 | VM SKUs locked | D2s_v5 system, D4s_v5 user — no larger without ADR |
-| Log retention | 30d LAW default; 15d Prometheus |
+| Log retention | Loki PVC 10Gi; Prometheus 15d |
 | Teardown | Phase 14 mandatory for cost stop |
 | Destroy ACR | Removes storage + pull costs |
 

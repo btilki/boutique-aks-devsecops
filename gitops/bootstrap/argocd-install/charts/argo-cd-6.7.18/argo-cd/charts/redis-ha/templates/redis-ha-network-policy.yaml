@@ -26,7 +26,7 @@ spec:
     - Egress
   egress:
     - to:
-      - podSelector: 
+      - podSelector:
           matchLabels:
             release: {{ .Release.Name }}
             app: {{ template "redis-ha.name" . }}
@@ -54,7 +54,7 @@ spec:
           matchLabels:
             release: {{ .Release.Name }}
             app: {{ template "redis-ha.name" . }}
-      ports: 
+      ports:
         - port: {{ .Values.redis.port }}
           protocol: TCP
         - port: {{ .Values.sentinel.port }}

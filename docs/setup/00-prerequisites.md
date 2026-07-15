@@ -1,7 +1,7 @@
 # Prerequisites
 
-**Audience:** L2 — Implementer  
-**Last reviewed:** 2026-07-14  
+**Audience:** L2 — Implementer
+**Last reviewed:** 2026-07-14
 **Related:** [Setup index](README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) · [versions.yaml](../../versions.yaml) · [ADR-0011](../adr/0011-aks-node-vm-sku.md)
 
 ---

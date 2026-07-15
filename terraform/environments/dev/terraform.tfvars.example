@@ -11,14 +11,11 @@ aks_subnet_prefixes = ["10.0.0.0/20"]
 
 dns_zone_name = "biroltilki.art"
 
-log_analytics_workspace_name = "law-boutique-dev-gwc"
-log_analytics_retention_days   = 30
-
 tags = {
   project     = "boutique-aks-devsecops"
   environment = "platform"
   managed_by  = "terraform"
-  owner       = "<YOUR_ALIAS>"
+  owner       = "btilki"
 }
 
 # --- Topic 03: must be globally unique where noted ---

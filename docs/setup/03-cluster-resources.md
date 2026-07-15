@@ -1,9 +1,9 @@
 # 03 — Cluster Resources (AKS, ACR, Key Vault)
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 120 minutes (AKS create ~15–20 min)  
-**Prerequisites:** [02-azure-foundation.md](02-azure-foundation.md) ✅ complete  
-**Creates:** AKS cluster (WI + OIDC), ACR, Key Vault, platform UAMI, RBAC (AcrPull, KV Secrets User, DNS Zone Contributor)  
+**Audience:** L2 — Implementer
+**Estimated time:** 120 minutes (AKS create ~15–20 min)
+**Prerequisites:** [02-azure-foundation.md](02-azure-foundation.md) ✅ complete
+**Creates:** AKS cluster (WI + OIDC), ACR, Key Vault, platform UAMI, RBAC (AcrPull, KV Secrets User, DNS Zone Contributor)
 **Related ADRs:** [0002](../adr/0002-single-cluster-multi-namespace.md), [0011](../adr/0011-aks-node-vm-sku.md)
 
 ---

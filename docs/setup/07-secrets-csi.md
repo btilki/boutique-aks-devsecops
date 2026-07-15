@@ -1,9 +1,9 @@
 # 07 — Secrets Store CSI
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 75 minutes  
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ · [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) recommended  
-**Creates:** CSI driver 1.4.0, Azure provider 1.5.0, test SecretProviderClass + pod in `csi-test`  
+**Audience:** L2 — Implementer
+**Estimated time:** 75 minutes
+**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ · [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) recommended
+**Creates:** CSI driver 1.4.0, Azure provider 1.5.0, test SecretProviderClass + pod in `csi-test`
 **Related ADRs:** — (see [07-security-architecture.md](../architecture/07-security-architecture.md))
 
 ---

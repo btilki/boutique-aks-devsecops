@@ -1,0 +1,36 @@
+# Argo CD Application — Grafana Loki (in-cluster log aggregation, ADR-0012).
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "38"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: loki
+      targetRevision: 6.23.0
+      helm:
+        releaseName: loki
+        valueFiles:
+          - $values/gitops/platform/monitoring/loki/values.yaml
+    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

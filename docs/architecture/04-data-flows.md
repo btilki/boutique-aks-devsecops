@@ -56,13 +56,13 @@ sequenceDiagram
 ```mermaid
 flowchart LR
     APP[Boutique pods] -->|metrics| PROM[Prometheus]
+    APP -->|logs| PROMTAIL[Promtail]
     APP -->|OTLP| OTEL[OTel Collector]
+    PROMTAIL --> LOKI[Loki]
     OTEL --> PROM
     PROM --> GRAF[Grafana]
+    LOKI --> GRAF
     PROM --> AM[Alertmanager]
-    AKS --> LAW[Log Analytics]
-    ACR --> LAW
-    KV --> LAW
 ```
 
 ## Secrets flow

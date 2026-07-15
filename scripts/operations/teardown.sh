@@ -30,7 +30,7 @@ Options:
   -h, --help           Show this help
 
 Destroys (terraform/environments/dev):
-  AKS, ACR, Key Vault, VNet, Azure DNS zone, Log Analytics, platform resource group
+  AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
 
 Retained by default:
   Terraform remote state backend (bootstrap stack)

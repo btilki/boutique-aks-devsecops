@@ -1,0 +1,36 @@
+# Argo CD Application — Grafana Promtail (log shipper to Loki).
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promtail
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "39"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: monitoring
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: promtail
+      targetRevision: 6.16.6
+      helm:
+        releaseName: promtail
+        valueFiles:
+          - $values/gitops/platform/monitoring/promtail/values.yaml
+    - repoURL: https://github.com/<GITHUB_ORG>/<REPO_NAME>
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

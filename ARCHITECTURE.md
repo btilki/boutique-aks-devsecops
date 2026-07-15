@@ -1,11 +1,11 @@
 # Architecture — boutique-aks-devsecops
 
-**Maturity:** Production pilot (single cluster; honest limitations documented)  
-**Region:** `germanywestcentral` (Germany West Central)  
+**Maturity:** Production pilot (single cluster; honest limitations documented)
+**Region:** `germanywestcentral` (Germany West Central)
 **Application:** Online Boutique [v0.10.5](https://github.com/GoogleCloudPlatform/microservices-demo/releases/tag/v0.10.5)
 
-**Deep docs:** [docs/architecture/](docs/architecture/README.md)  
-**Implementation plan:** [docs/implementation/plan.md](docs/implementation/plan.md)  
+**Deep docs:** [docs/architecture/](docs/architecture/README.md)
+**Implementation plan:** [docs/implementation/plan.md](docs/implementation/plan.md)
 **Version pins:** [versions.yaml](versions.yaml)
 
 ---
@@ -211,7 +211,7 @@ User pool autoscales 1–3 × `Standard_D4s_v5`. Full Boutique × 3 namespaces i
 
 ## 13. Observability
 
-kube-prometheus-stack (Prometheus, Grafana, Alertmanager) + OTel collector baseline. Grafana at `grafana-boutique.biroltilki.art`. Azure Log Analytics for platform audit. [10-observability.md](docs/architecture/10-observability.md).
+kube-prometheus-stack (Prometheus, Grafana, Alertmanager) + Loki/Promtail + OTel collector baseline. Grafana at `grafana-boutique.biroltilki.art`. In-cluster logging per [ADR-0012](docs/adr/0012-loki-in-cluster-logging.md). [10-observability.md](docs/architecture/10-observability.md).
 
 ---
 

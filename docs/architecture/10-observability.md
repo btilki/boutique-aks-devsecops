@@ -7,10 +7,12 @@
 | Metrics | Prometheus (kube-prometheus-stack) | `gitops/platform/monitoring/kube-prometheus-stack/` |
 | Dashboards | Grafana | same |
 | Alerting | Alertmanager | same |
+| Logs | Loki + Promtail | `gitops/platform/monitoring/loki/`, `promtail/` |
 | Traces | OpenTelemetry Collector | `gitops/platform/monitoring/otel/` |
-| Audit logs | Azure Log Analytics | `terraform/modules/diagnostics/` |
 
 **Grafana hostname:** `grafana-boutique.biroltilki.art`
+
+See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics is **not** deployed in the default lab path.
 
 ## Metrics
 
@@ -25,10 +27,11 @@
 
 ## Logs
 
-- **Platform audit:** AKS, ACR, Key Vault → Log Analytics (Terraform diagnostics)
-- **Workload logs:** `kubectl logs` / Azure Monitor container insights (optional)
+- **Centralized:** Promtail → Loki; query in Grafana Explore (LogQL)
+- **Ad-hoc:** `kubectl logs` for quick checks
+- **Retention:** Loki filesystem PVC (~10Gi lab default)
 
-Structured logging expected from Boutique services; no centralized Loki in v1.
+Example LogQL: `{namespace="boutique-dev", app="frontend"}`
 
 ## Traces
 

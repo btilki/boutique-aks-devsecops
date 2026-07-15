@@ -1,16 +1,16 @@
 # 11 — Observability
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 90 minutes  
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) ✅ · [10-boutique-dev.md](10-boutique-dev.md) ✅  
-**Creates:** kube-prometheus-stack, Grafana ingress, dashboards, alerts, OTel collector  
-**Related docs:** [10-observability.md](../architecture/10-observability.md), [boutique-availability.md](../slo/boutique-availability.md)
+**Audience:** L2 — Implementer
+**Estimated time:** 90 minutes
+**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) ✅ · [10-boutique-dev.md](10-boutique-dev.md) ✅
+**Creates:** kube-prometheus-stack, Loki, Promtail, Grafana ingress, dashboards, alerts, OTel collector
+**Related docs:** [10-observability.md](../architecture/10-observability.md), [ADR-0012](../adr/0012-loki-in-cluster-logging.md), [boutique-availability.md](../slo/boutique-availability.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **Prometheus**, **Grafana**, and **Alertmanager** run in namespace **`monitoring`**, Grafana is reachable at **`https://grafana-boutique.biroltilki.art`**, **Cluster Overview** and **Boutique Overview** dashboards load, platform/Boutique **PrometheusRules** are active, and the **OpenTelemetry Collector** accepts OTLP traces (10% sampling).
+When this topic is complete, **Prometheus**, **Grafana**, and **Alertmanager** run in namespace **`monitoring`**, **Loki** and **Promtail** aggregate pod logs, Grafana is reachable at **`https://grafana-boutique.biroltilki.art`**, **Cluster Overview** and **Boutique Overview** dashboards load, platform/Boutique **PrometheusRules** are active, and the **OpenTelemetry Collector** accepts OTLP traces (10% sampling).
 
 ## Why this topic is required
 
@@ -49,13 +49,15 @@ Multiple Argo CD Applications and CRDs sync in waves; order matters.
 cd /path/to/boutique-aks-devsecops
 tree gitops/platform/monitoring -L 3
 cat gitops/platform/monitoring/kustomization.yaml
-cat versions.yaml | grep -E 'kube_prometheus|opentelemetry'
+cat versions.yaml | grep -E 'kube_prometheus|opentelemetry|loki|promtail'
 ```
 
 ### Expected layout
 
 | Component | Chart / version | Sync wave |
 |-----------|-----------------|-----------|
+| Loki | 6.23.0 | 38 |
+| Promtail | 6.16.6 | 39 |
 | kube-prometheus-stack | 58.2.2 | 40 |
 | otel-collector | 0.95.0 | 41 |
 | PrometheusRules / ServiceMonitors | CRDs | 45 |

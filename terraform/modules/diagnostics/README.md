@@ -1,32 +1,5 @@
-# Module: diagnostics
+# Diagnostics (optional)
 
-## Purpose
+Log Analytics workspace module — **not wired** in the default dev environment (see [ADR-0012](../../docs/adr/0012-loki-in-cluster-logging.md)).
 
-Log Analytics workspace and diagnostic settings.
-
-## Inputs
-
-Documented in `variables.tf` (Phase 2–4). See `terraform.tfvars.example` in environment root.
-
-## Outputs
-
-Documented in `outputs.tf`. Consumed by environment root, GitOps docs, or ADO setup.
-
-## Dependencies
-
-See [docs/implementation/plan.md](../../../docs/implementation/plan.md) for phase ordering.
-
-## Usage
-
-```hcl
-module "diagnostics" {
-  source = "../../modules/diagnostics"
-  # ...
-}
-```
-
-See matching [docs/setup/](../../../docs/setup/) topic.
-
-## Timing
-
-SETUP_REQUIRED — populated in Phases 2–4.
+Use in-cluster Loki + Promtail for logs. This module remains available if you need Azure Monitor diagnostic settings for compliance scenarios.

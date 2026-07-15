@@ -1,7 +1,7 @@
 # Roadmap — boutique-aks-devsecops
 
-**Status:** Phase 0 — repository scaffold (architecture + structure files written)  
-**Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md)  
+**Status:** Phase 0 — repository scaffold (architecture + structure files written)
+**Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md)
 **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ## Vision

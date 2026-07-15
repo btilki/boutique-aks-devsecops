@@ -1,9 +1,9 @@
 # 10 — Boutique Dev Deploy
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 90 minutes  
-**Prerequisites:** [06-ingress-tls.md](06-ingress-tls.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) ✅  
-**Creates:** Online Boutique v0.10.5 in `boutique-dev`, HTTPS ingress at `dev-boutique.biroltilki.art`  
+**Audience:** L2 — Implementer
+**Estimated time:** 90 minutes
+**Prerequisites:** [06-ingress-tls.md](06-ingress-tls.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) ✅
+**Creates:** Online Boutique v0.10.5 in `boutique-dev`, HTTPS ingress at `dev-boutique.biroltilki.art`
 **Related ADRs:** [0002](../adr/0002-single-cluster-multi-namespace.md), [0009](../adr/0009-mirror-upstream-images.md)
 
 ---

@@ -1,7 +1,7 @@
 # Implementation plan
 
-**Status:** Planning complete — Phase 0 scaffold in progress  
-**Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)  
+**Status:** Planning complete — Phase 0 scaffold in progress
+**Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 
 ---
@@ -77,7 +77,7 @@ Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on
 
 ## 8. Scope
 
-**In:** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.  
+**In:** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.
 **Out:** Multi-region DR, service mesh, Azure Policy duplicate, Trivy attestations v1.
 
 ---

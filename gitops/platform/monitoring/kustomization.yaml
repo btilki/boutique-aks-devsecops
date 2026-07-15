@@ -23,6 +23,8 @@ generatorOptions:
   disableNameSuffixHash: true
 
 resources:
+  - loki/Application.yaml
+  - promtail/Application.yaml
   - kube-prometheus-stack/Application.yaml
   - kube-prometheus-stack/alerts/boutique-availability.yaml
   - kube-prometheus-stack/alerts/platform-health.yaml

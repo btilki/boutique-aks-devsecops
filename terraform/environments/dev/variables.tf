@@ -39,17 +39,6 @@ variable "dns_zone_name" {
   default     = "biroltilki.art"
 }
 
-variable "log_analytics_workspace_name" {
-  description = "Log Analytics workspace for platform diagnostics."
-  type        = string
-}
-
-variable "log_analytics_retention_days" {
-  description = "Log retention for the workspace."
-  type        = number
-  default     = 30
-}
-
 variable "tags" {
   description = "Common tags for platform resources."
   type        = map(string)

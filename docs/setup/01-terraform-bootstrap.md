@@ -1,9 +1,9 @@
 # 01 — Terraform Bootstrap
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 60 minutes  
-**Prerequisites:** [00-prerequisites.md](00-prerequisites.md) ✅ complete  
-**Creates:** Azure resource group + storage account + blob container for remote Terraform state; `terraform/environments/dev/` remote backend configuration  
+**Audience:** L2 — Implementer
+**Estimated time:** 60 minutes
+**Prerequisites:** [00-prerequisites.md](00-prerequisites.md) ✅ complete
+**Creates:** Azure resource group + storage account + blob container for remote Terraform state; `terraform/environments/dev/` remote backend configuration
 **Related ADRs:** — (foundation for [FR-01](../../ARCHITECTURE.md))
 
 ---

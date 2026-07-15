@@ -1,20 +1,20 @@
 # 02 — Azure Foundation
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 90 minutes (plus DNS propagation wait)  
-**Prerequisites:** [01-terraform-bootstrap.md](01-terraform-bootstrap.md) ✅ complete  
-**Creates:** Platform resource group, VNet + AKS subnet + NSG, Azure DNS zone `biroltilki.art`, Log Analytics workspace  
-**Related ADRs:** [0001 — Azure cloud provider](../adr/0001-azure-cloud-provider.md)
+**Audience:** L2 — Implementer
+**Estimated time:** 90 minutes (plus DNS propagation wait)
+**Prerequisites:** [01-terraform-bootstrap.md](01-terraform-bootstrap.md) ✅ complete
+**Creates:** Platform resource group, VNet + AKS subnet + NSG, Azure DNS zone `biroltilki.art`
+**Related ADRs:** [0001 — Azure cloud provider](../adr/0001-azure-cloud-provider.md), [0012 — Loki in-cluster logging](../adr/0012-loki-in-cluster-logging.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, the **platform resource group** exists in `germanywestcentral` with a VNet (`10.0.0.0/16`), an AKS-ready subnet (`10.0.0.0/20`) with NSG, an Azure DNS zone for `biroltilki.art`, and a Log Analytics workspace. DNS is **delegated** at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
+When this topic is complete, the **platform resource group** exists in `germanywestcentral` with a VNet (`10.0.0.0/16`), an AKS-ready subnet (`10.0.0.0/20`) with NSG, and an Azure DNS zone for `biroltilki.art`. DNS is **delegated** at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
 
 ## Why this topic is required
 
-AKS (Topic 03) requires a subnet ID and resource group. Ingress TLS (Topic 06) requires Azure DNS control of `biroltilki.art`. Platform diagnostics (Topic 03+) need a Log Analytics workspace ID. Applying foundation separately keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
+AKS (Topic 03) requires a subnet ID and resource group. Ingress TLS (Topic 06) requires Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation separately keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
 
 ---
 
@@ -23,7 +23,7 @@ AKS (Topic 03) requires a subnet ID and resource group. Ingress TLS (Topic 06) r
 - [ ] Topic 01 complete: remote backend works (`terraform init` in `environments/dev`)
 - [ ] `az account show` targets the correct subscription
 - [ ] You control DNS at the **registrar** for `biroltilki.art` (or a subdomain delegation plan)
-- [ ] You understand this `apply` creates **billable** Azure resources (VNet is free; LAW has ingestion cost)
+- [ ] You understand this `apply` creates **billable** Azure resources (VNet is free; no Log Analytics per ADR-0012)
 
 ```bash
 cd terraform/environments/dev
@@ -49,7 +49,7 @@ VNet CIDR and DNS zone name are hard to change after AKS is deployed. Review now
 cd /path/to/boutique-aks-devsecops
 cat terraform/environments/dev/terraform.tfvars.example
 cat docs/architecture/06-network-design.md | head -40
-ls terraform/modules/{resource-group,networking,dns,diagnostics}/
+ls terraform/modules/{resource-group,networking,dns}/
 ```
 
 ### Expected output
@@ -63,8 +63,8 @@ ls terraform/modules/{resource-group,networking,dns,diagnostics}/
 
 ### Validation
 
-- [ ] Four modules have `main.tf`, `variables.tf`, `outputs.tf`
-- [ ] `main.tf` in dev env wires only RG, networking, DNS, diagnostics (no AKS yet)
+- [ ] Three modules have `main.tf`, `variables.tf`, `outputs.tf`
+- [ ] `main.tf` in dev env wires only RG, networking, DNS (no AKS yet)
 
 ### Security notes
 
@@ -76,11 +76,11 @@ ls terraform/modules/{resource-group,networking,dns,diagnostics}/
 
 ### Goal
 
-Provide environment-specific names for the platform resource group and Log Analytics workspace.
+Provide environment-specific names for the platform resource group.
 
 ### Why this step is required
 
-Workspace and RG names must be unique within your subscription; values stay out of Git.
+RG names must be unique within your subscription; values stay out of Git.
 
 ### Commands
 
@@ -92,7 +92,6 @@ cp terraform.tfvars.example terraform.tfvars
 Edit `terraform.tfvars` — at minimum confirm:
 
 - `resource_group_name = "rg-boutique-dev-gwc"`
-- `log_analytics_workspace_name = "law-boutique-dev-gwc"` (must be unique in subscription)
 
 ### Validation
 
@@ -103,7 +102,7 @@ Edit `terraform.tfvars` — at minimum confirm:
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
-| LAW name taken | Prior lab deployment | Choose `law-boutique-dev-gwc2` or similar |
+| RG name conflict | Prior lab deployment | Choose `rg-boutique-dev-gwc2` or similar |
 
 ---
 
@@ -171,9 +170,8 @@ Plan adds resources similar to:
 - `module.networking.azurerm_network_security_group.aks`
 - `module.networking.azurerm_subnet_network_security_group_association.aks`
 - `module.dns.azurerm_dns_zone.this`
-- `module.diagnostics.azurerm_log_analytics_workspace.this`
 
-**Plan:** approximately **7 to add**, 0 change, 0 destroy (first apply).
+**Plan:** approximately **6 to add**, 0 change, 0 destroy (first apply).
 
 ### Validation
 
@@ -191,7 +189,7 @@ Plan adds resources similar to:
 ### Cost impact
 
 - VNet/subnet/NSG/DNS zone: negligible
-- Log Analytics: pay per ingestion (~low at lab scale)
+- No Log Analytics workspace (ADR-0012)
 
 ---
 
@@ -199,11 +197,11 @@ Plan adds resources similar to:
 
 ### Goal
 
-Create platform networking, DNS zone, and Log Analytics workspace in Azure.
+Create platform networking and DNS zone in Azure.
 
 ### Why this step is required
 
-Downstream topics depend on `aks_subnet_id`, DNS zone, and LAW ID outputs.
+Downstream topics depend on `aks_subnet_id` and DNS zone outputs.
 
 ### Commands
 
@@ -215,7 +213,7 @@ terraform apply -input=false tfplan
 ### Expected output
 
 ```text
-Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
 ```
 
 Capture outputs:
@@ -269,7 +267,6 @@ Catches wrong-subscription applies before DNS delegation.
 |---------------|---------------|
 | Virtual network | `vnet-boutique-dev-gwc` |
 | DNS zone | `biroltilki.art` |
-| Log Analytics workspace | `law-boutique-dev-gwc` |
 | Network security group | `aks-subnet-nsg` |
 
 3. Click **DNS zone** → **Overview** → copy **Name servers** list
@@ -280,12 +277,11 @@ Catches wrong-subscription applies before DNS delegation.
 az group show -n rg-boutique-dev-gwc -o table
 az network vnet show -g rg-boutique-dev-gwc -n vnet-boutique-dev-gwc --query "{name:name, prefixes:addressSpace.addressPrefixes}" -o json
 az network dns zone show -g rg-boutique-dev-gwc -n biroltilki.art --query "{name:name, nameservers:nameServers}" -o json
-az monitor log-analytics workspace show -g rg-boutique-dev-gwc -n law-boutique-dev-gwc --query name -o tsv
 ```
 
 ### Validation
 
-- [ ] All four CLI commands succeed
+- [ ] All three CLI commands succeed
 - [ ] VNet address space is `10.0.0.0/16`
 
 ---
@@ -431,8 +427,8 @@ dig NS biroltilki.art +short
 
 **Success criteria:**
 
-- [ ] Terraform outputs: `aks_subnet_id`, `dns_name_servers`, `log_analytics_workspace_id`
-- [ ] Azure Portal shows RG + VNet + DNS + LAW
+- [ ] Terraform outputs: `aks_subnet_id`, `dns_name_servers`
+- [ ] Azure Portal shows RG + VNet + DNS zone
 - [ ] NS delegation propagated (or documented wait if in progress)
 - [ ] `tests/terraform/validate.sh` passes
 
@@ -448,7 +444,6 @@ Update [Setup Index](README.md) Topic 02 to ✅ when complete.
 |---------|--------------|-----|
 | `terraform plan` wants to recreate VNet | Changed address space | Do not change CIDR after apply; destroy/recreate only if no AKS |
 | DNS zone already exists in another RG | Prior deployment | Import zone or use existing zone via refactor (out of scope) |
-| LAW quota exceeded | Subscription limit | Request increase or use new subscription |
 
 ---
 
@@ -456,4 +451,4 @@ Update [Setup Index](README.md) Topic 02 to ✅ when complete.
 
 ➡️ Continue to **[03-cluster-resources.md](03-cluster-resources.md)** (Topic 03) after Topic 02 validation.
 
-Topic 03 extends `terraform/environments/dev/main.tf` with AKS, ACR, and Key Vault modules using `aks_subnet_id` and `log_analytics_workspace_id` from this topic.
+Topic 03 extends `terraform/environments/dev/main.tf` with AKS, ACR, and Key Vault modules using `aks_subnet_id` from this topic.

@@ -23,5 +23,5 @@ Azure DevOps pipeline definitions: mirror Online Boutique v0.10.5, Trivy scan, c
 
 ## Timing
 
-Topic 09: `azure-pipelines.yml`, `templates/*.yml`, setup guide.  
+Topic 09: `azure-pipelines.yml`, `templates/*.yml`, setup guide.
 Topic 12: `azure-pipelines-promote.yml`, stage/prod overlays, promotion smoke tests.

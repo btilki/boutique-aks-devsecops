@@ -44,7 +44,7 @@ graph TB
             ACR[Azure Container Registry]
             KV[Key Vault]
             DNS[Azure DNS biroltilki.art]
-            LAW[Log Analytics]
+            LOKI[Loki in-cluster]
         end
     end
 
@@ -63,7 +63,7 @@ graph TB
     AKS --> ACR
     AKS --> KV
     AKS --> DNS
-    AKS --> LAW
+    AKS --> LOKI
 ```
 
 **Prose:** The platform runs entirely in one Azure region. External touchpoints are Git (desired state), ADO (build/sign/promote), Google public images (upstream), and the domain registrar (DNS delegation). Users never pull images directly from Google at runtime — only from ACR after mirror/sign.

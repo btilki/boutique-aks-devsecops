@@ -120,12 +120,12 @@ spec:
           mountPath: /host-sys
         {{- end }}
         command: {{ toYaml .Values.sysctlImage.command | nindent 10 }}
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
       {{- end }}
 {{- if and .Values.hostPath.path .Values.hostPath.chown }}
       - name: hostpath-chown
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         command:
         - chown
         - "{{ .Values.containerSecurityContext.runAsUser }}"
@@ -143,7 +143,7 @@ spec:
         - sh
         args:
         - /readonly-config/init.sh
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         env:
 {{- $replicas := int (toString .Values.replicas) -}}
 {{- range $i := until $replicas }}
@@ -231,7 +231,7 @@ spec:
            && if test -s /data/dump.rdb; \
               then cp -v /data/dump.rdb /data/dump.rdb_orig; fi \
            && mv -v /data/dump.rdb_ /data/dump.rdb"
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         envFrom:
         - secretRef:
           {{- if .Values.restore.existingSecret }}
@@ -254,7 +254,7 @@ spec:
         - redis-server
         args:
         - /data/conf/redis.conf
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         {{- if .Values.auth }}
         env:
         - name: AUTH
@@ -324,7 +324,7 @@ spec:
           - redis-sentinel
         args:
           - /data/conf/sentinel.conf
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
 {{- if or .Values.auth .Values.sentinel.auth}}
         env:
   {{- if .Values.auth }}
@@ -405,7 +405,7 @@ spec:
           - sh
         args:
           - /readonly-config/fix-split-brain.sh
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         env:
 {{- $replicas := int (toString .Values.replicas) -}}
 {{- range $i := until $replicas }}
@@ -434,7 +434,7 @@ spec:
             {{- end }}
               key: {{ .Values.sentinel.authKey }}
 {{- end }}
-        resources: 
+        resources:
           {{- toYaml .Values.splitBrainDetection.resources | nindent 10 }}
         volumeMounts:
         - name: config
@@ -455,7 +455,7 @@ spec:
         {{- range $key, $value := .Values.exporter.extraArgs }}
           - --{{ $key }}={{ $value }}
         {{- end }}
-        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}        
+        securityContext: {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         env:
           - name: REDIS_ADDR
           {{- if .Values.exporter.sslEnabled }}

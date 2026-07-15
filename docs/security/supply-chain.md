@@ -44,7 +44,7 @@ Eleven services from [versions.yaml](../../versions.yaml):
 
 `frontend`, `cartservice`, `checkoutservice`, `currencyservice`, `emailservice`, `paymentservice`, `productcatalogservice`, `recommendationservice`, `shippingservice`, `adservice`, `loadgenerator`
 
-**Upstream:** `us-central1-docker.pkg.dev/google-samples/microservices-demo/<service>:v0.10.5`  
+**Upstream:** `us-central1-docker.pkg.dev/google-samples/microservices-demo/<service>:v0.10.5`
 **Destination:** `<acr>.azurecr.io/<service>:v0.10.5` (signed at manifest digest)
 
 ---
@@ -128,5 +128,5 @@ Artifact `digest-manifest.json` maps service name → `sha256:...` from each pip
 - [ ] No cosign private key in Git, ADO variables, or logs
 - [ ] ACR retention: teardown destroys images — re-run pipeline after rebuild ([13-teardown.md](../setup/13-teardown.md))
 
-**Setup:** [09-ci-pipeline.md](../setup/09-ci-pipeline.md)  
+**Setup:** [09-ci-pipeline.md](../setup/09-ci-pipeline.md)
 **Troubleshooting:** [pipeline-failures.md](../troubleshooting/pipeline-failures.md), [image-signature.md](../troubleshooting/image-signature.md)

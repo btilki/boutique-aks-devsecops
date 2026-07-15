@@ -1,9 +1,9 @@
 # 08 — Admission Policies (Kyverno)
 
-**Audience:** L2 — Implementer  
-**Estimated time:** 120 minutes  
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [07-secrets-csi.md](07-secrets-csi.md) recommended (remove `csi-test` pod before enforce)  
-**Creates:** Kyverno 1.12.6, five ClusterPolicies, policy test suite  
+**Audience:** L2 — Implementer
+**Estimated time:** 120 minutes
+**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [07-secrets-csi.md](07-secrets-csi.md) recommended (remove `csi-test` pod before enforce)
+**Creates:** Kyverno 1.12.6, five ClusterPolicies, policy test suite
 **Related ADRs:** [0003](../adr/0003-kyverno-admission.md), [0005](../adr/0005-cosign-key-based-signing.md)
 
 ---
