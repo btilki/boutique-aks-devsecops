@@ -43,7 +43,10 @@ spec:
               entries:
                 - keys:
                     publicKeys: |-
-                      <COSIGN_PUBLIC_KEY_PEM>
+                      -----BEGIN PUBLIC KEY-----
+                      MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEza4vT3QtRFJDngvP1ZaSfYXJUClv
+                      twrngdLGGxTkmKa7fTudEYUaJQG11/8hNzbVGdxEWQrmPfI4KP42Hdx2lw==
+                      -----END PUBLIC KEY-----
                     rekor:
                       ignoreTlog: true
                     ctlog:
