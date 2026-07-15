@@ -58,7 +58,7 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | 05 | GitOps bootstrap | [05-gitops-bootstrap.md](05-gitops-bootstrap.md) | 5 | 03 | 90 min | ⬜ |
 | 06 | Ingress + TLS | [06-ingress-tls.md](06-ingress-tls.md) | 6 | 05 | 120 min | ⬜ |
 | 07 | Secrets Store CSI | [07-secrets-csi.md](07-secrets-csi.md) | 7 | 03, 05 | 75 min | ⬜ |
-| 08 | Admission policies (Kyverno) | [08-admission-policies.md](08-admission-policies.md) | 8 | 05, 09† | 120 min | ⬜ |
+| 08 | Admission policies (Kyverno) | [08-admission-policies.md](08-admission-policies.md) | 8 | 05, 09† | 120 min | ✅ |
 | 09 | CI pipeline (mirror, scan, sign) | [09-ci-pipeline.md](09-ci-pipeline.md) | 9 | 04, 03 | 180 min | ⬜ |
 | 10 | Boutique dev deploy | [10-boutique-dev.md](10-boutique-dev.md) | 10 | 06, 08, 09 | 90 min | ⬜ |
 | 11 | Observability | [11-observability.md](11-observability.md) | 11 | 05, 10 | 90 min | ⬜ |
