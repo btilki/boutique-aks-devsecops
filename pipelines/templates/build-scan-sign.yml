@@ -88,7 +88,7 @@ stages:
                     --vault-name "$(keyVaultName)" \
                     --name "$(cosignPublicKeySecretName)" \
                     --query value -o tsv > "${PUB_KEY}"
-                  cosign verify --key "${PUB_KEY}" --tlog-upload=false "${DEST_DIGEST_REF}"
+                  cosign verify --key "${PUB_KEY}" --insecure-ignore-tlog "${DEST_DIGEST_REF}"
 
                   jq --arg svc "${SERVICE}" --arg digest "${DIGEST}" \
                     '. + {($svc): $digest}' "${DIGEST_MANIFEST}" > "${DIGEST_MANIFEST}.tmp"

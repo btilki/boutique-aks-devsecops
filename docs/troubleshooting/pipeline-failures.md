@@ -129,7 +129,15 @@ trivy image --scanners vuln --severity CRITICAL --ignore-status fixed <acr>.azur
 2. Re-upload `cosign.key` to Key Vault secret `cosign-private-key`.
 3. If using passphrase, pipeline must pass `--key` with env `COSIGN_PASSWORD` — default template assumes **unencrypted** lab key.
 
-### `cosign verify` fails in pipeline after sign
+### `unknown flag: --tlog-upload` on cosign verify
+
+**Cause:** `--tlog-upload` is a **sign** flag only; verify uses `--insecure-ignore-tlog` for key-based signing (ADR-0005).
+
+**Fix:** In [build-scan-sign.yml](../../pipelines/templates/build-scan-sign.yml):
+
+```bash
+cosign verify --key "${PUB_KEY}" --insecure-ignore-tlog "${DEST_DIGEST_REF}"
+```
 
 **Cause:** Public key in KV does not match private key used to sign.
 
