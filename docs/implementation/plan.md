@@ -1,6 +1,6 @@
 # Implementation plan
 
-**Status:** Planning complete — Phase 0 scaffold in progress
+**Status:** Setup Topics **00–12** executed; hardening/teardown (Phases 13–14) remain
 **Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 
@@ -14,8 +14,8 @@
 | Goal | Production-pilot Azure DevSecOps for Online Boutique v0.10.5 on AKS |
 | Phases | 15 (0–14) |
 | Region | `germanywestcentral` |
-| Node SKUs | System `Standard_D2s_v5`, User `Standard_D4s_v5` |
-| Done | FR-01–FR-04 met; policies enforce; observability + teardown documented |
+| Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
+| Done | FR-01–FR-04 met; policies enforce; observability + promotion executed; teardown documented |
 
 ---
 
@@ -64,7 +64,7 @@ See [docs/architecture/01-requirements.md](../architecture/01-requirements.md).
 |------------|----------|
 | Azure admin | Phase 0 |
 | DNS delegation | Phase 2 |
-| Dsv5 in germanywestcentral | Phase 0/3 |
+| Dsv6 in germanywestcentral | Phase 0/3 |
 | ADO federation rights | Phase 4 |
 
 ---

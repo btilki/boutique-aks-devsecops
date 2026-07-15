@@ -14,7 +14,7 @@ chmod +x scripts/operations/teardown.sh
 # Preview destroy plan
 ./scripts/operations/teardown.sh --confirm destroy-boutique-platform --dry-run
 
-# Destroy platform (AKS, ACR, KV, DNS, VNet, LAW)
+# Destroy platform (AKS, ACR, KV, DNS, VNet — no Log Analytics per ADR-0012)
 ./scripts/operations/teardown.sh --confirm destroy-boutique-platform
 
 # Also remove Terraform remote state backend

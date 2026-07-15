@@ -4,7 +4,7 @@
 
 **Audience:** L2 implementer following topics manually, one step at a time, with validation after every step.
 
-**Status:** Phase B **complete** — Topics **00–13** guides and repo files materialized.
+**Status:** Guides for Topics **00–13** are authored. Lab execution: Topics **00–12** ✅ · Topic **13** (teardown) ⬜.
 
 ---
 
@@ -26,7 +26,7 @@ End-to-end bootstrap of a **production-pilot Azure DevSecOps platform** for **On
 | Scope | Time (solo) | Cost impact |
 |-------|-------------|-------------|
 | Topics 00–05 (foundation + GitOps) | ~8–12 hours | Low until AKS (Topic 03) |
-| Topics 06–10 (platform + CI + dev app) | ~10–14 hours | **AKS + ACR + LAW** ~€150–250/mo |
+| Topics 06–10 (platform + CI + dev app) | ~10–14 hours | **AKS + ACR + Loki PVC** ~€150–250/mo |
 | Topics 11–12 (observability + promotion) | ~6–8 hours | Same cluster |
 | Topic 13 (teardown) | ~1–2 hours | Destroys billable resources |
 
@@ -50,19 +50,19 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 
 | # | Topic | Guide | Phase | Prerequisites | Est. time | Status |
 |---|-------|-------|-------|---------------|-----------|--------|
-| 00 | Prerequisites | [00-prerequisites.md](00-prerequisites.md) | 0 | None | 60 min | 🔄 |
-| 01 | Terraform bootstrap | [01-terraform-bootstrap.md](01-terraform-bootstrap.md) | 1 | 00 | 60 min | ⬜ |
-| 02 | Azure foundation | [02-azure-foundation.md](02-azure-foundation.md) | 2 | 01 | 90 min | ⬜ |
-| 03 | Cluster resources (AKS, ACR, KV) | [03-cluster-resources.md](03-cluster-resources.md) | 3 | 02 | 120 min | ⬜ |
-| 04 | ADO OIDC federation | [04-ado-oidc.md](04-ado-oidc.md) | 4 | 03 | 75 min | ⬜ |
-| 05 | GitOps bootstrap | [05-gitops-bootstrap.md](05-gitops-bootstrap.md) | 5 | 03 | 90 min | ⬜ |
-| 06 | Ingress + TLS | [06-ingress-tls.md](06-ingress-tls.md) | 6 | 05 | 120 min | ⬜ |
-| 07 | Secrets Store CSI | [07-secrets-csi.md](07-secrets-csi.md) | 7 | 03, 05 | 75 min | ⬜ |
+| 00 | Prerequisites | [00-prerequisites.md](00-prerequisites.md) | 0 | None | 60 min | ✅ |
+| 01 | Terraform bootstrap | [01-terraform-bootstrap.md](01-terraform-bootstrap.md) | 1 | 00 | 60 min | ✅ |
+| 02 | Azure foundation | [02-azure-foundation.md](02-azure-foundation.md) | 2 | 01 | 90 min | ✅ |
+| 03 | Cluster resources (AKS, ACR, KV) | [03-cluster-resources.md](03-cluster-resources.md) | 3 | 02 | 120 min | ✅ |
+| 04 | ADO OIDC federation | [04-ado-oidc.md](04-ado-oidc.md) | 4 | 03 | 75 min | ✅ |
+| 05 | GitOps bootstrap | [05-gitops-bootstrap.md](05-gitops-bootstrap.md) | 5 | 03 | 90 min | ✅ |
+| 06 | Ingress + TLS | [06-ingress-tls.md](06-ingress-tls.md) | 6 | 05 | 120 min | ✅ |
+| 07 | Secrets Store CSI | [07-secrets-csi.md](07-secrets-csi.md) | 7 | 03, 05 | 75 min | ✅ |
 | 08 | Admission policies (Kyverno) | [08-admission-policies.md](08-admission-policies.md) | 8 | 05, 09† | 120 min | ✅ |
 | 09 | CI pipeline (mirror, scan, sign) | [09-ci-pipeline.md](09-ci-pipeline.md) | 9 | 04, 03 | 180 min | ✅ |
 | 10 | Boutique dev deploy | [10-boutique-dev.md](10-boutique-dev.md) | 10 | 06, 08, 09 | 90 min | ✅ |
 | 11 | Observability | [11-observability.md](11-observability.md) | 11 | 05, 10 | 90 min | ✅ |
-| 12 | Promotion (stage + prod) | [12-promotion-stage-prod.md](12-promotion-stage-prod.md) | 12 | 10, 11 | 120 min | ⬜ |
+| 12 | Promotion (stage + prod) | [12-promotion-stage-prod.md](12-promotion-stage-prod.md) | 12 | 10, 11 | 120 min | ✅ |
 | 13 | Teardown | [13-teardown.md](13-teardown.md) | 14 | 12 | 60 min | ⬜ |
 
 † **Topic 08 note:** Kyverno installs after GitOps bootstrap (05). Image signature verification policy is validated after CI (09) produces signed digests. Topic 08 covers install + baseline policies; signature verify step references Topic 09.
@@ -205,7 +205,7 @@ Phase A (planning) produced:
 
 ## 7. Progress tracker (update as you go)
 
-Mark topics in the table in §2 when complete. Phase 0 scaffold (repo docs, lint config) is complete; Topic 00 guide is written.
+Mark topics in the table in §2 when complete. Topics **00–12** are executed in the reference lab; Topic **13** (teardown) remains until you destroy resources.
 
 | Milestone | Topics | Target |
 |-----------|--------|--------|

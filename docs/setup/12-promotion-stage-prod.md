@@ -343,14 +343,24 @@ chmod +x tests/integration/rollback-smoke.sh
 - [ ] `promotion-smoke.sh` passes for stage and prod
 - [ ] Rollback procedure documented and understood
 
+**Screenshot references:**
+
+Stage storefront (`https://stage-boutique.biroltilki.art`):
+
+![Stage Boutique homepage](../../assets/images/setup/12-stage-boutique-homepage.png)
+
+Prod storefront (`https://boutique.biroltilki.art`):
+
+![Prod Boutique homepage](../../assets/images/setup/12-prod-boutique-homepage.png)
+
 ---
 
 ## Next step
 
 **Topic 13 — Teardown:** Destroy Azure resources, validate cleanup, optional ACR destruction.
 
-Guide: [13-teardown.md](13-teardown.md) (Phase B — pending until you approve Topic 13)
+Guide: [13-teardown.md](13-teardown.md)
 
-**Phase C protocol:** Confirm each step with ✅ or paste errors before Topic 13.
+Topic 12 is complete — run Topic 13 when you are ready to destroy billable resources.
 
-**Approval phrase for Phase B Topic 13:** `Approved — begin Setup Phase B, Topic 13`
+**Lab note:** Stage/prod use digest pins; optional Boutique services may be scaled to 0 for cluster capacity.

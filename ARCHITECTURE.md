@@ -1,6 +1,6 @@
 # Architecture — boutique-aks-devsecops
 
-**Maturity:** Production pilot (single cluster; honest limitations documented)
+**Maturity:** Production pilot (single cluster). Limitations and CI story are stated in the [README](README.md#limitations).
 **Region:** `germanywestcentral` (Germany West Central)
 **Application:** Online Boutique [v0.10.5](https://github.com/GoogleCloudPlatform/microservices-demo/releases/tag/v0.10.5)
 
@@ -40,7 +40,7 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 |------------|---------------|
 | Azure only | `azurerm` provider; Azure-native identity and secrets |
 | One AKS cluster | Namespace isolation for dev/stage/prod |
-| Budget minimal | `Standard_D2s_v5` system + `Standard_D4s_v5` user pool |
+| Budget minimal | `Standard_D2s_v6` system + `Standard_D4s_v6` user pool |
 | No long-lived CI secrets | ADO OIDC federation |
 | Destroy ACR on teardown | Phase 14 removes all mirrored images |
 
@@ -52,20 +52,21 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 |------------|-------------|
 | Azure subscription admin | Phase 0 |
 | DNS `biroltilki.art` delegatable to Azure DNS | Phase 2 |
-| Dsv5 SKUs available in `germanywestcentral` | Phase 0/3 (`az vm list-skus`) |
+| Dsv6 SKUs available in `germanywestcentral` | Phase 0/3 (`az vm list-skus`) |
 | ADO federation rights | Phase 4 |
 
 ---
 
 ## 4. High-level architecture
 
-Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, Azure DNS, Log Analytics. Argo CD reconciles platform Helm/Kustomize and Boutique overlays from `gitops/`. Azure DevOps mirrors upstream v0.10.5 images to ACR, Trivy-scans (fail CRITICAL), cosign-signs by digest (`--tlog-upload=false`), then updates GitOps overlays. Kyverno enforces ACR allowlist, denies `:latest`, verifies signatures, and applies Pod Security baseline. NGINX Ingress + cert-manager expose five HTTPS hostnames via Let's Encrypt DNS-01.
+Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. **Logs are in-cluster via Loki** ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)) — Azure Log Analytics is not deployed on the default lab path. Argo CD reconciles platform Helm/Kustomize and Boutique overlays from `gitops/`. Azure DevOps mirrors upstream v0.10.5 images to ACR, Trivy-scans (fail CRITICAL), cosign-signs by digest (`--tlog-upload=false`), then updates GitOps overlays. Kyverno enforces ACR allowlist, denies `:latest`, verifies signatures, and applies Pod Security baseline. NGINX Ingress + cert-manager expose five HTTPS hostnames via Let's Encrypt DNS-01.
 
 ### Layers
 
 | Layer | Components | Repo path |
 |-------|------------|-----------|
-| Infrastructure | VNet, AKS, ACR, KV, DNS, LAW | `terraform/` |
+| Infrastructure | VNet, AKS, ACR, KV, DNS | `terraform/` |
+| Logging | Loki + Promtail (in-cluster) | `gitops/platform/monitoring/` |
 | Platform | Argo CD, NGINX, cert-manager, CSI, Kyverno, monitoring | `gitops/platform/` |
 | Applications | Online Boutique v0.10.5 | `gitops/apps/boutique/` |
 | Policy | Kyverno cluster policies | `policies/` |
@@ -83,8 +84,8 @@ Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, Azure
 
 | Pool | VM SKU | vCPU / RAM |
 |------|--------|------------|
-| System | `Standard_D2s_v5` | 2 / 8 GiB |
-| User | `Standard_D4s_v5` | 4 / 16 GiB (autoscaler 1–3) |
+| System | `Standard_D2s_v6` | 2 / 8 GiB |
+| User | `Standard_D4s_v6` | 4 / 16 GiB (autoscaler 1–3) |
 
 ---
 
@@ -199,7 +200,7 @@ Full table: [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md)
 
 ## 11. Scalability
 
-User pool autoscales 1–3 × `Standard_D4s_v5`. Full Boutique × 3 namespaces is the designed ceiling for this pilot. Bottleneck: node CPU — mitigate with autoscale and optional HPA on frontend.
+User pool autoscales 1–3 × `Standard_D4s_v6`. Full Boutique × 3 namespaces is the designed ceiling for this pilot; the reference lab often runs a **slim** Boutique (core storefront only) for pod capacity. Bottleneck: node CPU and maxPods — mitigate with autoscale and optional HPA on frontend.
 
 ---
 

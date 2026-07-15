@@ -29,6 +29,8 @@ spec:
             description: >-
               deployment/frontend in boutique-dev has had zero available replicas
               for more than 5 minutes.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/operations/17-common-incidents.md
+            dashboard_url: https://grafana-boutique.biroltilki.art/dashboards
         - alert: BoutiqueDevPodsNotReady
           expr: |
             sum(kube_pod_status_ready{namespace="boutique-dev", condition="true"}) <
@@ -40,3 +42,5 @@ spec:
           annotations:
             summary: Boutique dev pods below 80% ready
             description: More than 20% of pods in boutique-dev are not Ready.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/operations/04-scaling.md
+            dashboard_url: https://grafana-boutique.biroltilki.art/dashboards

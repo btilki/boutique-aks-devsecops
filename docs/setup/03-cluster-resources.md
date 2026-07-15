@@ -22,13 +22,13 @@ GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live clust
 
 - [ ] Topic 02 applied: `terraform output aks_subnet_id` is non-empty
 - [ ] DNS delegation in progress or complete (not blocking AKS, but needed before Topic 06)
-- [ ] `az vm list-skus` still shows D2s_v5 / D4s_v5 available (see [00-prerequisites.md](00-prerequisites.md))
+- [ ] `az vm list-skus` still shows D2s_v6 / D4s_v6 available (see [00-prerequisites.md](00-prerequisites.md))
 - [ ] You accept **AKS + nodes** monthly cost (~€100–200 order-of-magnitude)
 
 ```bash
 cd terraform/environments/dev
 terraform output aks_subnet_id
-az vm list-skus --location germanywestcentral --size Standard_D4s_v5 --all -o table | head -5
+az vm list-skus --location germanywestcentral --size Standard_D4s_v6 --all -o table | head -5
 ```
 
 ---
@@ -144,7 +144,7 @@ Plan adds approximately **15–20 resources**, including:
 - Multiple `azurerm_role_assignment`
 - `azurerm_monitor_diagnostic_setting` (AKS, ACR, KV)
 
-**No destroys** of Topic 02 VNet/DNS/LAW unless you changed addressing.
+**No destroys** of Topic 02 VNet/DNS unless you changed addressing.
 
 ### Validation
 
@@ -243,8 +243,8 @@ kubectl get nodes --show-labels | grep agentpool
 
 Two nodes in `Ready` state:
 
-- `agentpool=system` — `Standard_D2s_v5`
-- `agentpool=user` — `Standard_D4s_v5`
+- `agentpool=system` — `Standard_D2s_v6`
+- `agentpool=user` — `Standard_D4s_v6`
 
 ### Validation
 

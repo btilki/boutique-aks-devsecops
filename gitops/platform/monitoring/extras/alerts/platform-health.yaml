@@ -23,6 +23,8 @@ spec:
           annotations:
             summary: Kubernetes node not ready
             description: Node {{ $labels.node }} has been NotReady for more than 10 minutes.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/operations/17-common-incidents.md
+            dashboard_url: https://grafana-boutique.biroltilki.art/dashboards
         - alert: KyvernoAdmissionDown
           expr: |
             kube_deployment_status_replicas_available{
@@ -36,6 +38,7 @@ spec:
           annotations:
             summary: Kyverno admission controller unavailable
             description: kyverno-admission-controller has no available replicas.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/troubleshooting/kyverno-admission.md
         - alert: IngressCertExpiringSoon
           expr: |
             (certmanager_certificate_expiration_timestamp_seconds - time()) < 14 * 24 * 3600
@@ -47,3 +50,4 @@ spec:
           annotations:
             summary: TLS certificate expiring within 14 days
             description: Certificate {{ $labels.name }} in {{ $labels.namespace }} expires soon.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/operations/14-certificate-rotation.md

@@ -33,7 +33,7 @@ module "ado_federation" {
 }
 ```
 
-Full steps: [docs/setup/04-ado-oidc.md](../../docs/setup/04-ado-oidc.md)
+Full steps: [docs/setup/04-ado-oidc.md](../../../docs/setup/04-ado-oidc.md)
 
 ## Timing
 

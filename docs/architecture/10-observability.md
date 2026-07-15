@@ -39,21 +39,24 @@ OTel collector deployed with baseline OTLP receiver. Full Tempo/Jaeger backend d
 
 ## Alerting
 
+Canonical rules: `gitops/platform/monitoring/extras/alerts/` (Argo app `monitoring-extras`).
+
 | Alert | Condition | Audience |
 |-------|-----------|----------|
-| BoutiqueDown | `frontend` up == 0 for 5m | Platform engineer |
-| IngressCertExpiring | cert < 14 days | Platform engineer |
-| NodeNotReady | node unready 10m | Platform engineer |
-| KyvernoDown | kyverno pods unavailable | Platform engineer |
+| `BoutiqueFrontendDown` | frontend available replicas &lt; 1 for 5m (`boutique-dev`) | Platform engineer |
+| `BoutiqueDevPodsNotReady` | Ready pods &lt; 80% in `boutique-dev` for 10m | Platform engineer |
+| `IngressCertExpiringSoon` | cert &lt; 14 days | Platform engineer |
+| `NodeNotReady` | node NotReady 10m | Platform engineer |
+| `KyvernoAdmissionDown` | Kyverno admission replicas &lt; 1 for 5m | Platform engineer |
 
-Notification channels (email/Slack) disabled by default in lab; Alertmanager UI used for validation.
+Notification channels (email/Slack) disabled by default in lab; Alertmanager UI used for validation. Ops guide: [10-alerting.md](../operations/10-alerting.md).
 
 ## Dashboards
 
 | Dashboard | File |
 |-----------|------|
-| Cluster overview | `gitops/platform/monitoring/dashboards/cluster-overview.json` |
-| Boutique overview | `gitops/platform/monitoring/dashboards/boutique-overview.json` |
+| Cluster overview | `gitops/platform/monitoring/extras/dashboards/cluster-overview.json` |
+| Boutique overview | `gitops/platform/monitoring/extras/dashboards/boutique-overview.json` |
 
 ## SLO
 

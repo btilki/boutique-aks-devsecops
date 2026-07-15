@@ -14,4 +14,4 @@ terraform plan -input=false -out=tfplan
 terraform apply -input=false tfplan
 ```
 
-Full steps: [docs/setup/02-azure-foundation.md](../../docs/setup/02-azure-foundation.md)
+Full steps: [docs/setup/02-azure-foundation.md](../../../docs/setup/02-azure-foundation.md)

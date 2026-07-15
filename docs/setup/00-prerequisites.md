@@ -40,7 +40,7 @@ Do **not** use this guide for day-2 cluster operations — see [docs/operations/
 
 ## Architecture context
 
-This project provisions a single AKS platform in `germanywestcentral` with node pools **Standard_D2s_v5** (system) and **Standard_D4s_v5** (user). Tool versions are pinned in [versions.yaml](../../versions.yaml) so Terraform, Kubernetes, and pipeline stages stay compatible.
+This project provisions a single AKS platform in `germanywestcentral` with node pools **Standard_D2s_v6** (system) and **Standard_D4s_v6** (user). Tool versions are pinned in [versions.yaml](../../versions.yaml) so Terraform, Kubernetes, and pipeline stages stay compatible.
 
 ```mermaid
 flowchart LR
@@ -150,15 +150,15 @@ az account show --query "{name:name, id:id, tenantId:tenantId}" -o json
 
 ### Step 3: Verify VM SKU availability in Germany West Central
 
-**Goal:** Confirm **Standard_D4s_v5** (user pool) is available for your subscription in `germanywestcentral`.
+**Goal:** Confirm **Standard_D4s_v6** (user pool) is available for your subscription in `germanywestcentral`.
 
 **Why:** AKS node pool creation fails if the SKU is restricted or capacity-blocked. This check avoids a failed Phase 3 apply. See [ADR-0011](../adr/0011-aks-node-vm-sku.md).
 
 **Where:** Local machine (requires Step 2 complete).
 
 ```bash
-az vm list-skus --location germanywestcentral --size Standard_D4s_v5 --all -o table
-az vm list-skus --location germanywestcentral --size Standard_D2s_v5 --all -o table
+az vm list-skus --location germanywestcentral --size Standard_D4s_v6 --all -o table
+az vm list-skus --location germanywestcentral --size Standard_D2s_v6 --all -o table
 ```
 
 **Expected output:** Rows with `Restrictions` column empty or showing `None`:
@@ -166,12 +166,12 @@ az vm list-skus --location germanywestcentral --size Standard_D2s_v5 --all -o ta
 ```text
 ResourceType     Locations           Name             Zones    Restrictions
 ---------------  ------------------  ---------------  -------  --------------
-virtualMachines  GermanyWestCentral  Standard_D4s_v5  1,2,3    None
+virtualMachines  GermanyWestCentral  Standard_D4s_v6  1,2,3    None
 ```
 
 **Validation:**
 
-- [ ] Both D4s_v5 and D2s_v5 show no `NotAvailableForSubscription` restriction
+- [ ] Both D4s_v6 and D2s_v6 show no `NotAvailableForSubscription` restriction
 - [ ] If restricted, do **not** proceed to Phase 3 without choosing a fallback SKU documented in ADR-0011
 
 **Recovery:** If `westeurope` or other regions show restrictions but `germanywestcentral` is clear, keep the locked region — do not change without updating `versions.yaml` and ADR-0011.
@@ -405,7 +405,7 @@ Run this checklist before starting [01-terraform-bootstrap.md](01-terraform-boot
 ```bash
 terraform version
 az account show --query name -o tsv
-az vm list-skus --location germanywestcentral --size Standard_D4s_v5 --all -o table | head -5
+az vm list-skus --location germanywestcentral --size Standard_D4s_v6 --all -o table | head -5
 git remote -v
 git status
 pre-commit run --all-files

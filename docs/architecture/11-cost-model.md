@@ -7,8 +7,8 @@ Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month).
 | Resource | Est. monthly | Cost driver | Optimization |
 |----------|--------------|-------------|--------------|
 | AKS control plane | ~€65 | Per cluster | Single cluster only |
-| System node `Standard_D2s_v5` × 1 | ~€60 | VM hours | Fixed count 1 |
-| User node `Standard_D4s_v5` × 1–3 | ~€90–270 | Autoscale | min=1; stop when not labbing |
+| System node `Standard_D2s_v6` × 1 | ~€60 | VM hours | Fixed count 1 |
+| User node `Standard_D4s_v6` × 1–3 | ~€90–270 | Autoscale | min=1; stop when not labbing |
 | Load Balancer (ingress) | ~€20 | Public LB | Single LB |
 | ACR Basic | ~€5 | Storage | **Destroyed Phase 14** |
 | Key Vault | ~€1 | Operations | Minimal secrets |
@@ -22,7 +22,7 @@ Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month).
 | Guardrail | Implementation |
 |-----------|----------------|
 | Max nodes | User pool `max_count: 3` |
-| VM SKUs locked | D2s_v5 system, D4s_v5 user — no larger without ADR |
+| VM SKUs locked | D2s_v6 system, D4s_v6 user — no larger without ADR |
 | Log retention | Loki PVC 10Gi; Prometheus 15d |
 | Teardown | Phase 14 mandatory for cost stop |
 | Destroy ACR | Removes storage + pull costs |

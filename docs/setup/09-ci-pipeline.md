@@ -384,14 +384,22 @@ Full reference: [docs/troubleshooting/pipeline-failures.md](../troubleshooting/p
 - [ ] 11 Boutique v0.10.5 images in ACR, signed by digest
 - [ ] `digest-manifest` artifact published
 
+**Screenshot references:**
+
+ADO pipeline green (mirror / Trivy / cosign):
+
+![ADO supply chain pipeline success](../../assets/images/setup/09-ado-pipeline-supply-chain-success.png)
+
+ACR repositories with `frontend` `v0.10.5` and digest tags:
+
+![ACR frontend repository](../../assets/images/setup/09-acr-repositories-frontend.png)
+
 ---
 
 ## Next step
 
 **Topic 10 — Boutique dev deploy:** GitOps manifests for dev namespace, image digests from ACR, ingress at `dev-boutique.biroltilki.art`.
 
-Guide: [10-boutique-dev.md](10-boutique-dev.md) (Phase B — pending until you approve Topic 10)
+Guide: [10-boutique-dev.md](10-boutique-dev.md)
 
-**Phase C protocol:** Confirm each step above with ✅ or paste errors before proceeding to Topic 10.
-
-**Approval phrase for Phase B Topic 10:** `Approved — begin Setup Phase B, Topic 10`
+Topic 09 is complete — continue to Topic 10 when ready.

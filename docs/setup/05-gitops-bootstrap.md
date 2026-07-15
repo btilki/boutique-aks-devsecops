@@ -380,6 +380,10 @@ kubectl get appprojects,applications -n argocd
 - [ ] Repository connection successful
 - [ ] Admin UI accessible (port-forward)
 
+**Screenshot reference** (Healthy / Synced applications):
+
+![Argo CD applications Healthy](../../assets/images/setup/05-argocd-applications-healthy.png)
+
 Update [Setup Index](README.md) Topic 05 to ✅ when complete.
 
 ---

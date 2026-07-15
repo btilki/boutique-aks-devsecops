@@ -17,7 +17,7 @@
 flowchart TB
     subgraph VNet["VNet 10.0.0.0/16"]
         subgraph AKSSubnet["aks-subnet"]
-            NODES[AKS Nodes — D2s_v5 / D4s_v5]
+            NODES[AKS Nodes — D2s_v6 / D4s_v6]
             PODS[Pod IPs Azure CNI]
         end
     end

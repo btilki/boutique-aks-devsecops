@@ -49,6 +49,9 @@ resource "azurerm_kubernetes_cluster" "this" {
     ignore_changes = [
       kubernetes_version,
       default_node_pool[0].upgrade_settings,
+      # Subscription / Defender for Containers may attach a microsoft_defender
+      # profile outside this module; ignore to avoid plan drift disabling it.
+      microsoft_defender,
     ]
   }
 }
@@ -64,6 +67,14 @@ resource "azurerm_kubernetes_cluster_node_pool" "user" {
   min_count             = var.user_node_min_count
   max_count             = var.user_node_max_count
   tags                  = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      # With enable_auto_scaling, Azure manages count between min/max.
+      node_count,
+      upgrade_settings,
+    ]
+  }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "aks" {

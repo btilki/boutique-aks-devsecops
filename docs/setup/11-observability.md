@@ -348,14 +348,26 @@ cat docs/slo/boutique-availability.md
 - [ ] PrometheusRules loaded; alerts visible in UI
 - [ ] SLO doc reviewed
 
+**Screenshot references:**
+
+Grafana dashboards list:
+
+![Grafana dashboards](../../assets/images/setup/11-grafana-dashboards-list.png)
+
+Boutique Overview (replicas / pods / ingress rate):
+
+![Boutique Overview dashboard](../../assets/images/setup/11-grafana-boutique-overview.png)
+
+Alertmanager / Overview:
+
+![Alertmanager Overview](../../assets/images/setup/11-grafana-alertmanager-overview.png)
+
 ---
 
 ## Next step
 
 **Topic 12 — Promotion (stage + prod):** Overlays, manual sync, ADO prod approval gate, promotion smoke tests.
 
-Guide: [12-promotion-stage-prod.md](12-promotion-stage-prod.md) (Phase B — pending until you approve Topic 12)
+Guide: [12-promotion-stage-prod.md](12-promotion-stage-prod.md)
 
-**Phase C protocol:** Confirm each step with ✅ or paste errors before Topic 12.
-
-**Approval phrase for Phase B Topic 12:** `Approved — begin Setup Phase B, Topic 12`
+Topic 11 is complete — continue to Topic 12 when ready.

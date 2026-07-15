@@ -14,7 +14,7 @@ Azure infrastructure as code: remote state bootstrap, environment root for the s
 
 - Azure CLI logged in with subscription access
 - Terraform >= 1.6
-- Phase 0 complete
+- Phase 0 complete (repo + tools from Topic 00)
 
 ## Usage
 
@@ -25,8 +25,8 @@ See [docs/setup/01-terraform-bootstrap.md](../docs/setup/01-terraform-bootstrap.
 | Variable | Value |
 |----------|-------|
 | `location` | `germanywestcentral` |
-| `system_node_vm_size` | `Standard_D2s_v5` |
-| `user_node_vm_size` | `Standard_D4s_v5` |
+| `system_node_vm_size` | `Standard_D2s_v6` |
+| `user_node_vm_size` | `Standard_D4s_v6` |
 
 ## Related documentation
 

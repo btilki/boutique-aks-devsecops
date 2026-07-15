@@ -16,7 +16,7 @@ Production-pilot threat model for the **single-cluster** Online Boutique v0.10.5
 | Git repository (manifests, policies) | High | Azure DevOps |
 | Terraform state | High | Bootstrap storage blob |
 | Application user traffic | Medium | Boutique ingress |
-| Platform telemetry | Low | Prometheus / LAW |
+| Platform telemetry | Low | Prometheus / Loki |
 
 ---
 

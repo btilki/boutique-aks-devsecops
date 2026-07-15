@@ -14,7 +14,7 @@ Destroy billable Azure platform resources when the lab is complete or paused lon
 | ACR (+ all mirrored images) | Same | **Destroyed** per ADR-0010 |
 | Key Vault | Same | Soft-delete 7 days; purge for name reuse |
 | Azure DNS zone `biroltilki.art` | Same | Update registrar NS if zone removed |
-| VNet, NSG, LAW | Same | Platform RG removed |
+| VNet, NSG | Same | Platform RG removed |
 | Load balancers | Removed with AKS/ingress | Public IPs released |
 
 ## Retained by default

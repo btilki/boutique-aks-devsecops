@@ -349,14 +349,24 @@ Push and let Argo CD auto-sync.
 - [ ] TLS certificate Ready
 - [ ] `tests/integration/dev-smoke.sh` passes
 
+**Screenshot references:**
+
+Dev storefront (`https://dev-boutique.biroltilki.art`):
+
+![Dev Boutique homepage](../../assets/images/setup/10-dev-boutique-homepage.png)
+
+Dev cart / checkout:
+
+![Dev Boutique cart](../../assets/images/setup/10-dev-boutique-cart-checkout.png)
+
 ---
 
 ## Next step
 
 **Topic 11 — Observability:** kube-prometheus-stack, Grafana ingress, Boutique dashboards, SLO alerts.
 
-Guide: [11-observability.md](11-observability.md) (Phase B — pending until you approve Topic 11)
+Guide: [11-observability.md](11-observability.md)
 
-**Phase C protocol:** Confirm each step with ✅ or paste errors before Topic 11.
+Topic 10 is complete — continue to Topic 11 when ready.
 
-**Approval phrase for Phase B Topic 11:** `Approved — begin Setup Phase B, Topic 11`
+**Lab note:** Capacity-constrained labs may run a slim Boutique (core storefront only; optional services at 0 replicas). See overlay patches under `gitops/apps/boutique/overlays/*/patches/`.

@@ -70,7 +70,7 @@ See [pipeline-failures.md](../troubleshooting/pipeline-failures.md) and [image-s
 1. Revoke ADO pipeline access; disable service connection
 2. Rotate cosign key pair in Key Vault; update Kyverno policy
 3. Do **not** sync prod; scale affected deployments to 0
-4. Preserve logs: LAW queries, `kubectl logs`, Argo CD audit
+4. Preserve logs: Loki/Grafana Explore, `kubectl logs`, Argo CD audit
 5. Rebuild from signed known-good digests after root cause
 
 ---

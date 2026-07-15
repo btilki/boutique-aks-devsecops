@@ -57,7 +57,7 @@ graph TB
 | `networking` | VNet, AKS subnet, NSG |
 | `dns` | Zone `biroltilki.art` |
 | `diagnostics` | Optional Log Analytics (not wired in default lab; see ADR-0012) |
-| `aks` | Cluster, node pools (D2s_v5 / D4s_v5) |
+| `aks` | Cluster, node pools (D2s_v6 / D4s_v6) |
 | `acr` | Container registry |
 | `key-vault` | Secrets store |
 | `identities` | WI, kubelet AcrPull |
@@ -68,7 +68,7 @@ graph TB
 | Dimension | Approach |
 |-----------|----------|
 | Horizontal | User pool autoscaler 1–3; optional HPA on frontend |
-| Vertical | `Standard_D4s_v5` user nodes |
+| Vertical | `Standard_D4s_v6` user nodes |
 | Multi-tenancy | Namespace + RBAC + Kyverno |
 | Ceiling | Full Boutique × 3 envs on one cluster (pilot) |
 

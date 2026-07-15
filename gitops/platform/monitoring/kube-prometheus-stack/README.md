@@ -4,7 +4,6 @@ Helm chart **58.2.2** from `prometheus-community` — deploys Prometheus Operato
 
 - Values: `values.yaml`
 - Argo CD Application: `Application.yaml` (project: `monitoring`)
-- Custom alerts: `alerts/`
-- ServiceMonitors: `servicemonitors/`
+- Custom alerts / ServiceMonitors / dashboards: **`../extras/`** (Argo app `monitoring-extras`) — not in this directory
 
 Grafana ingress hostname: `grafana-boutique.biroltilki.art`
