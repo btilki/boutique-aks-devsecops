@@ -5,6 +5,10 @@ syncSecret:
 enableSecretRotation: true
 rotationPollInterval: 2m
 
+# Required for Azure Key Vault provider Workload Identity mode.
+tokenRequests:
+  - audience: api://AzureADTokenExchange
+
 linux:
   enabled: true
   resources:
