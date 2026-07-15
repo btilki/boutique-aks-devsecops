@@ -60,7 +60,7 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | 07 | Secrets Store CSI | [07-secrets-csi.md](07-secrets-csi.md) | 7 | 03, 05 | 75 min | ⬜ |
 | 08 | Admission policies (Kyverno) | [08-admission-policies.md](08-admission-policies.md) | 8 | 05, 09† | 120 min | ✅ |
 | 09 | CI pipeline (mirror, scan, sign) | [09-ci-pipeline.md](09-ci-pipeline.md) | 9 | 04, 03 | 180 min | ✅ |
-| 10 | Boutique dev deploy | [10-boutique-dev.md](10-boutique-dev.md) | 10 | 06, 08, 09 | 90 min | ⬜ |
+| 10 | Boutique dev deploy | [10-boutique-dev.md](10-boutique-dev.md) | 10 | 06, 08, 09 | 90 min | ✅ |
 | 11 | Observability | [11-observability.md](11-observability.md) | 11 | 05, 10 | 90 min | ⬜ |
 | 12 | Promotion (stage + prod) | [12-promotion-stage-prod.md](12-promotion-stage-prod.md) | 12 | 10, 11 | 120 min | ⬜ |
 | 13 | Teardown | [13-teardown.md](13-teardown.md) | 14 | 12 | 60 min | ⬜ |
