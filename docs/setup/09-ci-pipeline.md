@@ -294,8 +294,10 @@ DIGEST="$(az acr repository show-manifests \
 IMAGE="${ACR_LOGIN}/frontend@${DIGEST}"
 echo "Checking ${IMAGE}"
 
+az acr login --name "${ACR_NAME}"
+
 az keyvault secret show --vault-name "${KV_NAME}" --name cosign-public-key --query value -o tsv > /tmp/cosign.pub
-cosign verify --key /tmp/cosign.pub --tlog-upload=false "${IMAGE}"
+cosign verify --key /tmp/cosign.pub --insecure-ignore-tlog "${IMAGE}"
 rm -f /tmp/cosign.pub
 ```
 
