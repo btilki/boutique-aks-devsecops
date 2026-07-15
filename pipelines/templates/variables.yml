@@ -11,7 +11,7 @@ variables:
   upstreamRegistry: us-central1-docker.pkg.dev/google-samples/microservices-demo
   boutiqueVersion: v0.10.5
 
-  trivyVersion: 0.51.4
+  trivyVersion: 0.72.0
   cosignVersion: 2.2.4
   cosignSignArgs: --tlog-upload=false
 

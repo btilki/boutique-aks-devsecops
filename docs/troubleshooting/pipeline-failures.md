@@ -105,9 +105,9 @@ trivy image --severity CRITICAL <acr>.azurecr.io/frontend@sha256:...
 
 ### Trivy binary install fails
 
-**Cause:** GitHub rate limit or wrong version pin.
+**Cause:** Pinned version no longer published on GitHub / `get.trivy.dev` (common for older pins such as `0.51.4`).
 
-**Fix:** Confirm `trivyVersion: 0.51.4` in `variables.yml` matches [versions.yaml](../../versions.yaml).
+**Fix:** Set `trivy` in [versions.yaml](../../versions.yaml) and `trivyVersion` in [variables.yml](../../pipelines/templates/variables.yml) to a tag that exists on [Trivy releases](https://github.com/aquasecurity/trivy/releases) (e.g. `0.72.0`). Re-run pipeline — install uses official `contrib/install.sh`.
 
 ---
 

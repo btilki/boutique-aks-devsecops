@@ -50,7 +50,7 @@ gitops:
   promtail_chart: "6.16.6"
 
 supply_chain:
-  trivy: "0.51.4"
+  trivy: "0.72.0"
   cosign: "2.2.4"
   cosign_sign_args:
     - "--tlog-upload=false"
