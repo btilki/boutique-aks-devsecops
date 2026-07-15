@@ -1,6 +1,6 @@
 # cosign signature verification for ACR images.
 # SETUP:
-#   1) Replace <ACR_NAME> with terraform output acr_name
+#   1) Replace acrboutiquedevgwc with terraform output acr_name
 #   2) Replace <COSIGN_PUBLIC_KEY_PEM> with cosign public key after Topic 09 keygen
 #      (keep PEM block indentation exact)
 # Matches ADR-0005: cosign sign --tlog-upload=false → ignoreTlog / ignoreSCT in Kyverno.
@@ -34,7 +34,7 @@ spec:
                 - csi-test
       verifyImages:
         - imageReferences:
-            - "<ACR_NAME>.azurecr.io/*"
+            - "acrboutiquedevgwc.azurecr.io/*"
           mutateDigest: true
           required: true
           verifyDigest: true

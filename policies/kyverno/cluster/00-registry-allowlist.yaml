@@ -1,5 +1,5 @@
 # Allow only images from the platform ACR.
-# SETUP: replace <ACR_NAME> with terraform output acr_name (no .azurecr.io suffix).
+# SETUP: replace acrboutiquedevgwc with terraform output acr_name (no .azurecr.io suffix).
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -29,12 +29,12 @@ spec:
                 - cert-manager
                 - csi-test
       validate:
-        message: "Only images from <ACR_NAME>.azurecr.io are allowed."
+        message: "Only images from acrboutiquedevgwc.azurecr.io are allowed."
         pattern:
           spec:
             =(ephemeralContainers):
-              - image: "<ACR_NAME>.azurecr.io/*"
+              - image: "acrboutiquedevgwc.azurecr.io/*"
             =(initContainers):
-              - image: "<ACR_NAME>.azurecr.io/*"
+              - image: "acrboutiquedevgwc.azurecr.io/*"
             containers:
-              - image: "<ACR_NAME>.azurecr.io/*"
+              - image: "acrboutiquedevgwc.azurecr.io/*"
