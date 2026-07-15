@@ -7,3 +7,4 @@ resources:
   - promtail/Application.yaml
   - kube-prometheus-stack/Application.yaml
   - otel/Application.yaml
+  - extras-application.yaml

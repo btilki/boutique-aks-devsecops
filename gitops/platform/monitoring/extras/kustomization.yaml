@@ -1,0 +1,25 @@
+# PrometheusRules, ServiceMonitors, Grafana dashboard ConfigMaps (sync-wave 45).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: monitoring
+
+resources:
+  - ../kube-prometheus-stack/alerts/boutique-availability.yaml
+  - ../kube-prometheus-stack/alerts/platform-health.yaml
+  - ../kube-prometheus-stack/servicemonitors/boutique-frontend.yaml
+  - ../kube-prometheus-stack/servicemonitors/ingress-nginx.yaml
+
+configMapGenerator:
+  - name: boutique-overview-dashboard
+    files:
+      - boutique-overview.json=../dashboards/boutique-overview.json
+    options:
+      labels:
+        grafana_dashboard: "1"
+  - name: cluster-overview-dashboard
+    files:
+      - cluster-overview.json=../dashboards/cluster-overview.json
+    options:
+      labels:
+        grafana_dashboard: "1"

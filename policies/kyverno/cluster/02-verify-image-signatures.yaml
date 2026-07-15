@@ -32,6 +32,7 @@ spec:
                 - ingress-nginx
                 - cert-manager
                 - csi-test
+                - monitoring
       verifyImages:
         - imageReferences:
             - "acrboutiquedevgwc.azurecr.io/*"

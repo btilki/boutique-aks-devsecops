@@ -28,6 +28,7 @@ spec:
                 - ingress-nginx
                 - cert-manager
                 - csi-test
+                - monitoring
       validate:
         message: "Only images from acrboutiquedevgwc.azurecr.io are allowed."
         pattern:
