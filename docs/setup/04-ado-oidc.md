@@ -56,11 +56,14 @@ cat terraform/environments/dev/terraform.tfvars.example | tail -10
 
 ### Expected output
 
-Federation subject pattern:
+Federation subject pattern (Entra issuer — current ADO default):
 
 ```text
-sc://{organization}/{project}/{service-connection-name}
+Issuer:  https://login.microsoftonline.com/{tenant-id}/v2.0
+Subject: sc://{organization}/{project}/{service-connection-name}
 ```
+
+Legacy issuer `https://vstoken.dev.azure.com/{org-id}` is deprecated (retired July 2027).
 
 Default service connection name: `azure-boutique-oidc`
 
@@ -135,7 +138,7 @@ Plan adds approximately **4–5 resources**:
 ### Validation
 
 - [ ] Apply exits 0
-- [ ] `ado_oidc_issuer` starts with `https://vstoken.dev.azure.com/`
+- [ ] `ado_oidc_issuer` starts with `https://login.microsoftonline.com/` and ends with `/v2.0`
 - [ ] `ado_oidc_subject` matches `sc://{org}/{project}/azure-boutique-oidc`
 
 ### Common problems

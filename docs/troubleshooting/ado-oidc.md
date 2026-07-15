@@ -18,7 +18,32 @@ terraform output -raw ado_oidc_subject
 # Expected format: sc://{org}/{project}/{service-connection-name}
 ```
 
-## Issuer mismatch
+## Issuer mismatch (AADSTS700211)
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `AADSTS700211` — issuer `login.microsoftonline.com/.../v2.0` | Federated credential still uses legacy `vstoken.dev.azure.com` issuer | Re-apply `module.ado_federation` or update federated credential issuer to Entra format (see below) |
+| `AADSTS700213` / subject mismatch | Service connection name differs from Terraform `subject` | Rename SC to match `terraform output -raw ado_oidc_subject` or update tfvars and re-apply |
+
+New ADO service connections (2025+) use the **Microsoft Entra issuer**, not `vstoken.dev.azure.com`:
+
+| | Legacy (deprecated) | Current (Entra) |
+|--|---------------------|-----------------|
+| Issuer | `https://vstoken.dev.azure.com/{org-guid}` | `https://login.microsoftonline.com/{tenant-id}/v2.0` |
+| Subject | `sc://{org}/{project}/{sc-name}` | Usually same `sc://...` format |
+
+Verify:
+
+```bash
+cd terraform/environments/dev
+terraform output -raw ado_oidc_issuer
+# Expected: https://login.microsoftonline.com/{tenant-id}/v2.0
+terraform output -raw ado_oidc_subject
+```
+
+If ADO UI shows different **Issuer** or **Subject identifier** values, copy them exactly into the managed identity federated credential (Portal → `uami-ado-pipeline` → Federated credentials).
+
+## Issuer mismatch (legacy)
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|

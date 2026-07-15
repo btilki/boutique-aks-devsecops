@@ -108,3 +108,21 @@ module "identities" {
 
   depends_on = [module.aks, module.acr, module.key_vault, module.dns]
 }
+
+module "ado_federation" {
+  source = "../../modules/ado-federation"
+
+  resource_group_name     = module.resource_group.name
+  location                = module.resource_group.location
+  identity_name           = var.ado_pipeline_identity_name
+  ado_organization_id     = var.ado_organization_id
+  ado_organization_name   = var.ado_organization_name
+  ado_project_name        = var.ado_project_name
+  service_connection_name = var.ado_service_connection_name
+  federation_subject      = var.ado_federation_subject
+  acr_id                  = module.acr.id
+  key_vault_id            = module.key_vault.id
+  tags                    = var.tags
+
+  depends_on = [module.acr, module.key_vault]
+}

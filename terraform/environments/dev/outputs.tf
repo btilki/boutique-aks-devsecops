@@ -74,3 +74,35 @@ output "platform_identity_client_id" {
   description = "Platform UAMI client ID for Workload Identity."
   value       = module.identities.platform_identity_client_id
 }
+
+# Topic 04 outputs
+
+output "ado_pipeline_identity_client_id" {
+  description = "ADO pipeline UAMI client ID for ARM service connection."
+  value       = module.ado_federation.identity_client_id
+}
+
+output "ado_oidc_issuer" {
+  description = "OIDC issuer for ADO federated credential."
+  value       = module.ado_federation.issuer
+}
+
+output "ado_oidc_subject" {
+  description = "Federation subject for ADO service connection validation."
+  value       = module.ado_federation.subject
+}
+
+output "ado_service_connection_name" {
+  description = "Expected ADO ARM service connection name."
+  value       = module.ado_federation.service_connection_name
+}
+
+output "azure_tenant_id" {
+  description = "Entra tenant ID."
+  value       = module.ado_federation.tenant_id
+}
+
+output "azure_subscription_id" {
+  description = "Azure subscription ID."
+  value       = module.ado_federation.subscription_id
+}

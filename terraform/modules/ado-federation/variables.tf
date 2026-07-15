@@ -35,9 +35,15 @@ variable "ado_project_name" {
 }
 
 variable "service_connection_name" {
-  description = "Azure Resource Manager service connection name in ADO (must match subject)."
+  description = "Azure Resource Manager service connection name in ADO."
   type        = string
   default     = "azure-boutique-oidc"
+}
+
+variable "federation_subject" {
+  description = "Federated credential subject from ADO service connection (Subject identifier field). Required for Microsoft Entra issuer — copy from ADO after creating SC draft; overrides legacy sc:// subject."
+  type        = string
+  default     = null
 }
 
 variable "federated_credential_name" {

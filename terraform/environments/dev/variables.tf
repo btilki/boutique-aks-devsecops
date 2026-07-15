@@ -155,3 +155,9 @@ variable "ado_service_connection_name" {
   type        = string
   default     = "azure-boutique-oidc"
 }
+
+variable "ado_federation_subject" {
+  description = "Subject identifier from ADO service connection form (Entra issuer). Copy after SC draft; see docs/setup/04-ado-oidc.md Step 4.4."
+  type        = string
+  default     = null
+}

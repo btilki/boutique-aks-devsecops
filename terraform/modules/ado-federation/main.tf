@@ -3,8 +3,14 @@ data "azurerm_client_config" "current" {}
 locals {
   subscription_id = coalesce(var.subscription_id, data.azurerm_client_config.current.subscription_id)
   tenant_id       = data.azurerm_client_config.current.tenant_id
-  issuer          = "https://vstoken.dev.azure.com/${var.ado_organization_id}"
-  subject         = "sc://${var.ado_organization_name}/${var.ado_project_name}/${var.service_connection_name}"
+  # Microsoft Entra issuer (required for new ADO service connections since ~2025).
+  # Legacy Azure DevOps issuer: https://vstoken.dev.azure.com/{org-id} — retired 2027.
+  issuer = "https://login.microsoftonline.com/${local.tenant_id}/v2.0"
+  # Entra issuer: subject is an immutable ADO-generated path (not sc://). Copy from ADO SC form.
+  subject = coalesce(
+    var.federation_subject,
+    "sc://${var.ado_organization_name}/${var.ado_project_name}/${var.service_connection_name}"
+  )
 }
 
 resource "azurerm_user_assigned_identity" "pipeline" {
