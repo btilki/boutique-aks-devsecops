@@ -1,5 +1,5 @@
-# Stage overlay — namespace boutique-stage, manual Argo sync, same digest as dev after promotion.
-# SETUP: replace <ACR_LOGIN_SERVER> (must match base/kustomization.yaml).
+# Stage overlay — namespace boutique-stage, manual Argo sync, same digest as ACR/dev.
+# Lab: slim optional services (same capacity pattern as dig) — teardown after Topic 12.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -14,8 +14,34 @@ patches:
   - path: patches/recreate-deployment-strategy.yaml
   - path: patches/reduce-resource-requests.yaml
   - path: patches/container-run-as-non-root.yaml
+  - path: patches/loadgenerator-replicas.yaml
+  - path: patches/optional-services-replicas.yaml
 
-# Digest pins added by promote-digest pipeline or manual copy from dev overlay.
-# images:
-#   - name: <ACR_LOGIN_SERVER>/frontend
-#     digest: sha256:...
+# Digest pins — same signed ACR digests as Topic 09 (Option A manual promote).
+images:
+  - name: acrboutiquedevgwc.azurecr.io/frontend
+    digest: sha256:50ca57c513de1ef22a97b6ef76989a73878d4a3873f85b5314bfc207853d5475
+  - name: acrboutiquedevgwc.azurecr.io/productcatalogservice
+    digest: sha256:6e0d2218e0edecf671230d54cbbb565209d3a7592215d9167aca918dcb251e14
+  - name: acrboutiquedevgwc.azurecr.io/currencyservice
+    digest: sha256:1ced46aa236c5093a3cc6642f67edf50e0deccdc07262871ffacf6173fc8c6fa
+  - name: acrboutiquedevgwc.azurecr.io/cartservice
+    digest: sha256:85c4fee0ddb6eada076003abcbff17ac3daf8e18dde68c7bde03b15fc8e17417
+  - name: acrboutiquedevgwc.azurecr.io/redis
+    digest: sha256:18e7e254e2fe1fa185f9434450649b33c1efb9a7dcda9daaf1ce0dfb133bc16b
+  - name: acrboutiquedevgwc.azurecr.io/adservice
+    digest: sha256:2abbc0505d527711ff8ba233aaf6e0590f72acd86c016332ea3a5f2595ea70a8
+  - name: acrboutiquedevgwc.azurecr.io/checkoutservice
+    digest: sha256:403f4056479bcf2d36a865bf037ba2de0f84a60408519cee1b80e705e99f622a
+  - name: acrboutiquedevgwc.azurecr.io/emailservice
+    digest: sha256:c6de94237cad0708ec674085a54a52d9856be37d9bf2d6ec2ddfe7b725d02bb2
+  - name: acrboutiquedevgwc.azurecr.io/paymentservice
+    digest: sha256:d9bc5e83c671660ce825420fea552b0ab067f441e6387607091fa35b15dc1e1f
+  - name: acrboutiquedevgwc.azurecr.io/recommendationservice
+    digest: sha256:969f8f14ee769da1df9b831a4aa0c5e30a4d43a231a887d04fa3019c2b78548b
+  - name: acrboutiquedevgwc.azurecr.io/shippingservice
+    digest: sha256:0d2be86f0280a0a5594de9593eecd47ca2380e90946a3434b30d956373599b44
+  - name: acrboutiquedevgwc.azurecr.io/loadgenerator
+    digest: sha256:3e5cf93c21e6b7d1e8bb8713aa02c7912d4c9f90fd02d477b3d911bd02a292fb
+  - name: acrboutiquedevgwc.azurecr.io/busybox
+    digest: sha256:5b0745afdfec8efe7225bbe20cd87dc9139381e676400707ea979ec5406de3a8
