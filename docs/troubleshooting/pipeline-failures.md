@@ -95,13 +95,19 @@ az acr repository list --name "${ACR_NAME}" -o table
 
 **Options (lab):**
 
-1. **Preferred:** Accept upstream risk for pilot — document CVE IDs; re-run when Google publishes patched v0.10.5+ images.
-2. **Temporary bypass (not recommended):** Add `|| true` after trivy in a forked template — defeats supply-chain gate.
-3. **Inspect:** Download ADO log; run locally:
+1. **Preferred for pinned upstream v0.10.5:** Pipeline uses `--ignore-status fixed` — fail only on CRITICAL **unfixed** CVEs (Google has not yet published patched v0.10.5 images). Document accepted CVE IDs below if scan still fails.
+2. **Strict mode:** Remove `--ignore-status fixed` from [build-scan-sign.yml](../../pipelines/templates/build-scan-sign.yml) when upstream releases patched images.
+3. **Temporary bypass (not recommended):** Add `|| true` after trivy in a forked template — defeats supply-chain gate.
+4. **Inspect:** Download ADO log; run locally:
 
 ```bash
-trivy image --severity CRITICAL <acr>.azurecr.io/frontend@sha256:...
+trivy image --scanners vuln --severity CRITICAL --ignore-status fixed <acr>.azurecr.io/frontend@sha256:...
 ```
+
+**Known upstream fixed CRITICALs on v0.10.5 (lab accepted with `--ignore-status fixed`):**
+
+- `CVE-2026-33186` — `google.golang.org/grpc` (frontend; fix in grpc 1.79.3)
+- `CVE-2025-68121` — Go stdlib TLS (multiple services; fix in Go 1.25.7+)
 
 ### Trivy binary install fails
 
