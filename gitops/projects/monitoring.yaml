@@ -12,6 +12,11 @@ spec:
   destinations:
     - server: https://kubernetes.default.svc
       namespace: monitoring
+    # kube-prometheus-stack scrapes kube-system / default Services
+    - server: https://kubernetes.default.svc
+      namespace: kube-system
+    - server: https://kubernetes.default.svc
+      namespace: default
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
