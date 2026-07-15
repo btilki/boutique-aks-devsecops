@@ -8,6 +8,7 @@ kind: Kustomization
 resources:
   - ingress-nginx/Application.yaml
   - cert-manager/Application.yaml
+  - cert-manager/issuer-application.yaml
   - argocd-ingress.yaml
   - secrets-store-csi/Application.yaml
   - kyverno/

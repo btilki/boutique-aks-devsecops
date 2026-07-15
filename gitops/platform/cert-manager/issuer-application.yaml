@@ -1,0 +1,29 @@
+# ClusterIssuer — sync after cert-manager CRDs exist (sync-wave 20).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-issuer
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/btilki/boutique-aks-devsecops
+    targetRevision: main
+    path: gitops/platform/cert-manager
+    directory:
+      include: cluster-issuer-letsencrypt.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
