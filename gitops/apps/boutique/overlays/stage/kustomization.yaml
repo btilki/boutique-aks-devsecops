@@ -20,7 +20,7 @@ patches:
 # Digest pins — same signed ACR digests as Topic 09 (Option A manual promote).
 images:
   - name: acrboutiquedevgwc.azurecr.io/frontend
-    digest: sha256:50ca57c513de1ef22a97b6ef76989a73878d4a3873f85b5314bfc207853d5475
+    digest: sha256:000000000000000000000000000000000000000000000000000000000000dead
   - name: acrboutiquedevgwc.azurecr.io/productcatalogservice
     digest: sha256:6e0d2218e0edecf671230d54cbbb565209d3a7592215d9167aca918dcb251e14
   - name: acrboutiquedevgwc.azurecr.io/currencyservice
