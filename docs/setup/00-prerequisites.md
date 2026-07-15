@@ -97,7 +97,7 @@ pre-commit --version
 | Tool | Minimum |
 |------|---------|
 | Terraform | >= 1.6.0 |
-| kubectl client | 1.29+ |
+| kubectl client | 1.34+ (within 1 minor of AKS — see `versions.yaml`) |
 | Helm | 3.14+ |
 | Python | 3.10+ |
 | pre-commit | 3.0+ |
@@ -105,7 +105,7 @@ pre-commit --version
 **Validation:**
 
 - [ ] `terraform version` shows `>= 1.6`
-- [ ] `kubectl version --client` shows 1.29 or higher
+- [ ] `kubectl version --client` shows 1.34 or higher (or within one minor of `versions.yaml`)
 - [ ] All commands exit with code 0
 
 ---

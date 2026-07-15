@@ -82,13 +82,13 @@ variable "aks_dns_prefix" {
 variable "kubernetes_version" {
   description = "AKS Kubernetes version — see versions.yaml."
   type        = string
-  default     = "1.29"
+  default     = "1.34"
 }
 
 variable "system_node_vm_size" {
   description = "System node pool VM SKU."
   type        = string
-  default     = "Standard_D2s_v5"
+  default     = "Standard_D2s_v6"
 }
 
 variable "system_node_count" {
@@ -100,7 +100,7 @@ variable "system_node_count" {
 variable "user_node_vm_size" {
   description = "User node pool VM SKU."
   type        = string
-  default     = "Standard_D4s_v5"
+  default     = "Standard_D4s_v6"
 }
 
 variable "user_node_count" {

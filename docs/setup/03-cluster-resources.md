@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, a production-pilot **AKS cluster** runs in `germanywestcentral` with system (`Standard_D2s_v5`) and user (`Standard_D4s_v5`) node pools, an **ACR** registry for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
+When this topic is complete, a production-pilot **AKS cluster** runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** registry for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
 
 ## Why this topic is required
 
@@ -149,9 +149,9 @@ Plan adds approximately **15–20 resources**, including:
 ### Validation
 
 - [ ] Plan shows 2 node pools (system + user)
-- [ ] `kubernetes_version` = `1.29`
+- [ ] `kubernetes_version` = `1.34` (or current supported minor per `az aks get-versions`)
 - [ ] `workload_identity_enabled` / OIDC implied in cluster resource
-- [ ] System pool `Standard_D2s_v5`, user pool `Standard_D4s_v5`
+- [ ] System pool `Standard_D2s_v6`, user pool `Standard_D4s_v6` (see ADR-0011)
 
 ### Common problems
 

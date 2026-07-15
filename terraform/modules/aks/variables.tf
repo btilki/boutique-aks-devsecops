@@ -31,7 +31,7 @@ variable "kubernetes_version" {
 variable "system_node_vm_size" {
   description = "VM SKU for the system node pool."
   type        = string
-  default     = "Standard_D2s_v5"
+  default     = "Standard_D2s_v6"
 }
 
 variable "system_node_count" {
@@ -43,7 +43,7 @@ variable "system_node_count" {
 variable "user_node_vm_size" {
   description = "VM SKU for the user node pool."
   type        = string
-  default     = "Standard_D4s_v5"
+  default     = "Standard_D4s_v6"
 }
 
 variable "user_node_count" {
@@ -68,6 +68,18 @@ variable "log_analytics_workspace_id" {
   description = "Optional Log Analytics workspace for Container Insights and AKS diagnostics. Null disables Azure Monitor integration (use in-cluster Loki per ADR-0012)."
   type        = string
   default     = null
+}
+
+variable "service_cidr" {
+  description = "Kubernetes service CIDR — must not overlap the AKS node subnet (see docs/architecture/06-network-design.md)."
+  type        = string
+  default     = "10.1.0.0/16"
+}
+
+variable "dns_service_ip" {
+  description = "IP address for kube-dns / CoreDNS service — must be within service_cidr."
+  type        = string
+  default     = "10.1.0.10"
 }
 
 variable "tags" {
