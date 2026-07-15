@@ -36,7 +36,8 @@ metadata:
   labels:
     app.kubernetes.io/part-of: boutique-aks-devsecops
 spec:
-  project: applications
+  # Parent app-of-apps: Application CRs live in argocd namespace → platform project.
+  project: platform
   source:
     repoURL: https://github.com/btilki/boutique-aks-devsecops
     targetRevision: main
