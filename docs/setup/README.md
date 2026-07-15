@@ -4,7 +4,7 @@
 
 **Audience:** L2 implementer following topics manually, one step at a time, with validation after every step.
 
-**Status:** Guides for Topics **00–13** are authored. Lab execution: Topics **00–12** ✅ · Topic **13** (teardown) ⬜.
+**Status:** Guides for Topics **00–13** are authored. Lab execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README).
 
 ---
 
@@ -63,7 +63,7 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | 10 | Boutique dev deploy | [10-boutique-dev.md](10-boutique-dev.md) | 10 | 06, 08, 09 | 90 min | ✅ |
 | 11 | Observability | [11-observability.md](11-observability.md) | 11 | 05, 10 | 90 min | ✅ |
 | 12 | Promotion (stage + prod) | [12-promotion-stage-prod.md](12-promotion-stage-prod.md) | 12 | 10, 11 | 120 min | ✅ |
-| 13 | Teardown | [13-teardown.md](13-teardown.md) | 14 | 12 | 60 min | ⬜ |
+| 13 | Teardown | [13-teardown.md](13-teardown.md) | 14 | 12 | 60 min | ✅ |
 
 † **Topic 08 note:** Kyverno installs after GitOps bootstrap (05). Image signature verification policy is validated after CI (09) produces signed digests. Topic 08 covers install + baseline policies; signature verify step references Topic 09.
 
@@ -205,7 +205,7 @@ Phase A (planning) produced:
 
 ## 7. Progress tracker (update as you go)
 
-Mark topics in the table in §2 when complete. Topics **00–12** are executed in the reference lab; Topic **13** (teardown) remains until you destroy resources.
+Mark topics in the table in §2 when complete. Reference lab: Topics **00–13** executed (platform torn down; rebuild via this guide).
 
 | Milestone | Topics | Target |
 |-----------|--------|--------|

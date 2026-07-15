@@ -1,6 +1,6 @@
 # Roadmap — boutique-aks-devsecops
 
-**Status:** Setup Topics **00–12** executed (production-pilot lab live). Topic **13** teardown and optional hardening remain.
+**Status:** Setup Topics **00–13** complete. Azure lab torn down (reference repo + screenshots retained).
 **Numbering note:** Setup **Topic 13** = teardown (`docs/setup/13-teardown.md`). Roadmap **Phase 13** = hardening/integration (no setup guide); **Phase 14** = teardown.
 **Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md)
 **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
@@ -19,7 +19,7 @@ Build a production-style reference platform that proves secure delivery end-to-e
 | M4: Platform services | 6–8 | TLS Ready; Kyverno enforces | ✅ |
 | M5: Secure delivery | 9–10 | Signed v0.10.5 images; dev app live | ✅ |
 | M6: Operate & promote | 11–12 | Grafana + SLO; stage/prod promotion | ✅ |
-| M7: Complete & teardown | 13–14 | Smoke tests pass; teardown validated | ⬜ |
+| M7: Complete & teardown | 13–14 | Smoke tests pass; teardown validated | ✅ |
 
 ## Phase overview
 
@@ -38,8 +38,8 @@ Build a production-style reference platform that proves secure delivery end-to-e
 | 10 | Boutique dev deploy | ✅ | 10-boutique-dev | dev-boutique reachable |
 | 11 | Observability | ✅ | 11-observability | Grafana dashboard loads |
 | 12 | Stage/prod promotion | ✅ | 12-promotion-stage-prod | Same digest in prod |
-| 13 | Hardening & integration | ⬜ | — | Smoke tests pass; doc/gate cleanup |
-| 14 | Teardown | ⬜ | 13-teardown | No billable AKS/ACR |
+| 13 | Hardening & integration | ⏭️ | — | Smokes run during Topics 10–12; further hardening deferred |
+| 14 | Teardown | ✅ | 13-teardown | No billable AKS/ACR |
 
 Status: ⬜ not started · 🔄 in progress · ✅ complete · ⏭️ skipped
 

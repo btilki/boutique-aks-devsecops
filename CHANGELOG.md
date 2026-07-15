@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Status SSOT: Setup Topic **13** teardown complete; lab offline — README hostnames note points readers to `assets/images/setup/` screenshots.
 - Alert catalog docs point only at `gitops/platform/monitoring/extras/alerts/` (`docs/operations/10-alerting.md`, architecture observability).
 - Fixed relative doc links from `terraform/` and `gitops/platform/monitoring/{loki,promtail}/` READMEs.
 

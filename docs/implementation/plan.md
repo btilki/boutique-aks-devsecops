@@ -1,6 +1,6 @@
 # Implementation plan
 
-**Status:** Setup Topics **00–12** executed; hardening/teardown (Phases 13–14) remain
+**Status:** Setup Topics **00–13** complete; Azure lab torn down. Phase 13 hardening deferred (⏭️).
 **Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 

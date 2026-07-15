@@ -9,8 +9,8 @@ Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secr
 | Item | State |
 |------|--------|
 | Planning | Complete |
-| Implementation | Setup Topics **00–12** executed (lab live); Topic **13** teardown not run |
-| Region | `germanywestcentral` |
+| Implementation | Setup Topics **00–13** complete; Azure lab **torn down** |
+| Region | `germanywestcentral` (when rebuilt) |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
 
 ## Limitations
@@ -66,8 +66,10 @@ YAML lives in [`pipelines/`](pipelines/). Auth is ADO **OIDC** (no long-lived pi
 
 ## Hostnames
 
-| Service | FQDN |
-|---------|------|
+**Lab offline.** These FQDNs were used for the lived pilot; they resolve only after you rebuild Topics 02–12. For storefront / UI proof, see [Visual evidence](#visual-evidence).
+
+| Service | FQDN (when lab is live) |
+|---------|-------------------------|
 | Argo CD | `argocd-boutique.biroltilki.art` |
 | Grafana | `grafana-boutique.biroltilki.art` |
 | Boutique dev | `dev-boutique.biroltilki.art` |
@@ -76,7 +78,7 @@ YAML lives in [`pipelines/`](pipelines/). Auth is ADO **OIDC** (no long-lived pi
 
 ## Visual evidence
 
-Setup screenshots live under [`assets/images/setup/`](assets/images/setup/) and are linked from matching [`docs/setup/`](docs/setup/) topics. Catalog: [`assets/images/README.md`](assets/images/README.md).
+Setup screenshots live under [`assets/images/setup/`](assets/images/setup/) and are linked from matching [`docs/setup/`](docs/setup/) topics. Catalog: [`assets/images/README.md`](assets/images/README.md). Use these when public URLs are offline.
 
 ## Repository layout
 
