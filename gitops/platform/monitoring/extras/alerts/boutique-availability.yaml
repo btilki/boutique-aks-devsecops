@@ -1,0 +1,42 @@
+# Boutique availability alerts — requires kube-state-metrics (enabled in values.yaml).
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: boutique-availability
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "45"
+  labels:
+    release: kube-prometheus-stack
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  groups:
+    - name: boutique.availability
+      interval: 30s
+      rules:
+        - alert: BoutiqueFrontendDown
+          expr: |
+            kube_deployment_status_replicas_available{
+              namespace="boutique-dev",
+              deployment="frontend"
+            } < 1
+          for: 5m
+          labels:
+            severity: critical
+            team: platform
+          annotations:
+            summary: Boutique frontend unavailable
+            description: >-
+              deployment/frontend in boutique-dev has had zero available replicas
+              for more than 5 minutes.
+        - alert: BoutiqueDevPodsNotReady
+          expr: |
+            sum(kube_pod_status_ready{namespace="boutique-dev", condition="true"}) <
+            count(kube_pod_info{namespace="boutique-dev"}) * 0.8
+          for: 10m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: Boutique dev pods below 80% ready
+            description: More than 20% of pods in boutique-dev are not Ready.

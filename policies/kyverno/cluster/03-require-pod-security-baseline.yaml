@@ -22,6 +22,7 @@ spec:
               namespaces:
                 - kube-system
                 - kyverno
+                - monitoring
       validate:
         message: "Privileged containers are not allowed."
         pattern:
@@ -47,6 +48,7 @@ spec:
               namespaces:
                 - kube-system
                 - kyverno
+                - monitoring
       validate:
         message: "Containers must set runAsNonRoot=true."
         pattern:
