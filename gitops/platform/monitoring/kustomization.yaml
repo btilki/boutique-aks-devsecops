@@ -1,33 +1,9 @@
+# Monitoring Applications only — PrometheusRules/ServiceMonitors sync via kube-prometheus-stack app (Topic 11).
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-namespace: monitoring
-
-configMapGenerator:
-  - name: grafana-dashboard-cluster-overview
-    files:
-      - cluster-overview.json=dashboards/cluster-overview.json
-    options:
-      labels:
-        grafana_dashboard: "1"
-        app.kubernetes.io/part-of: boutique-aks-devsecops
-  - name: grafana-dashboard-boutique-overview
-    files:
-      - boutique-overview.json=dashboards/boutique-overview.json
-    options:
-      labels:
-        grafana_dashboard: "1"
-        app.kubernetes.io/part-of: boutique-aks-devsecops
-
-generatorOptions:
-  disableNameSuffixHash: true
 
 resources:
   - loki/Application.yaml
   - promtail/Application.yaml
   - kube-prometheus-stack/Application.yaml
-  - kube-prometheus-stack/alerts/boutique-availability.yaml
-  - kube-prometheus-stack/alerts/platform-health.yaml
-  - kube-prometheus-stack/servicemonitors/boutique-frontend.yaml
-  - kube-prometheus-stack/servicemonitors/ingress-nginx.yaml
   - otel/Application.yaml
