@@ -44,6 +44,18 @@ resource "azurerm_network_security_group" "aks" {
   }
 
   security_rule {
+    name                       = "AllowInternetHttpHttps"
+    priority                   = 120
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_ranges    = ["80", "443"]
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
     name                       = "AllowOutboundInternet"
     priority                   = 100
     direction                  = "Outbound"
