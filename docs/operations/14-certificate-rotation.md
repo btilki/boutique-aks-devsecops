@@ -80,4 +80,4 @@ Let’s Encrypt rate limits — avoid delete/recreate loops.
 
 ## Automation opportunities
 
-Alert already defined — ensure notification channel in lab.
+Alert already defined — ensure notification channel in test.

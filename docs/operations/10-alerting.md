@@ -13,7 +13,7 @@ Know which alerts exist, where they are defined, and how to attach runbook links
 ## When to use / When not to use
 
 **Use** when wiring notifications, silencing, or verifying alert firing.
-**Do not** expect PagerDuty enterprise routing in this solo lab unless you configured receivers.
+**Do not** expect PagerDuty enterprise routing in this solo test unless you configured receivers.
 
 ## Prerequisites
 

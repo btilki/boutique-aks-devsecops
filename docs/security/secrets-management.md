@@ -1,6 +1,6 @@
 # Secrets management
 
-How this project stores, delivers, and rotates secrets for the production-pilot lab.
+How this project stores, delivers, and rotates secrets for the production-pilot test.
 
 **Audience:** L2 implementer / operator
 **Related:** [Topic 07 CSI setup](../setup/07-secrets-csi.md), [Topic 09 CI](../setup/09-ci-pipeline.md), [07-security-architecture.md](../architecture/07-security-architecture.md), [supply-chain.md](supply-chain.md), [SECURITY.md](../../SECURITY.md)
@@ -21,10 +21,10 @@ How this project stores, delivers, and rotates secrets for the production-pilot 
 
 | Secret | Store | Name / path | Consumers | Rotation trigger |
 |--------|-------|-------------|-----------|------------------|
-| Cosign private key | Key Vault | `cosign-private-key` | ADO mirror/sign job | Key compromise; annual lab rotation |
+| Cosign private key | Key Vault | `cosign-private-key` | ADO mirror/sign job | Key compromise; annual test rotation |
 | Cosign public key | Key Vault + Git | `cosign-public-key` · `policies/kyverno/cluster/02-verify-image-signatures.yaml` | Pipeline verify + Kyverno | With private key |
 | Grafana admin | Key Vault → K8s Secret | typically `grafana-admin-credentials` (Topic 11) | Grafana | Password leak; admin change |
-| CSI smoke test | Key Vault | `csi-test-secret` | `csi-test` pod | Lab only; disposable |
+| CSI smoke test | Key Vault | `csi-test-secret` | `csi-test` pod | Test only; disposable |
 | TLS certs | cert-manager → K8s Secrets | Ingress TLS secrets | NGINX | Auto-renew via DNS-01 |
 | Terraform state | Azure Storage (bootstrap) | blob `dev.terraform.tfstate` | Operators with storage RBAC | Access revoke on offboarding |
 | ADO auth | OIDC federation | Federated credential on pipeline UAMI | ADO service connection | Change SC subject → update federation |
@@ -79,9 +79,9 @@ make pre-commit   # includes gitleaks
 
 ## Day-2 operations
 
-### Rotate cosign keys (lab)
+### Rotate cosign keys (test)
 
-1. Generate new key pair (empty password for lab, or remembered password for pipeline).
+1. Generate new key pair (empty password for test, or remembered password for pipeline).
 2. `az keyvault secret set` for `cosign-private-key` and `cosign-public-key`.
 3. Update Kyverno `02-verify-image-signatures.yaml` public PEM; commit + sync `kyverno-policies`.
 4. Re-run ADO pipeline to re-sign digests (or plan digest re-promote).
@@ -97,13 +97,13 @@ Detail: [supply-chain.md](supply-chain.md) and [incident-response.md](../runbook
 
 ### Revoke human access
 
-1. Remove Entra / Azure RBAC assignments (especially **Key Vault Administrator** on the lab vault).
+1. Remove Entra / Azure RBAC assignments (especially **Key Vault Administrator** on the test vault).
 2. Rotate any secrets that person could have read (cosign private, Grafana).
 3. Review ADO project membership and service connection administration.
 
 ---
 
-## Lab residual risks (accepted)
+## Test residual risks (accepted)
 
 | Risk | Mitigation / note |
 |------|-------------------|

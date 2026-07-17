@@ -1,4 +1,4 @@
-# Grafana Loki — SingleBinary mode for lab (chart 6.23.0 per versions.yaml)
+# Grafana Loki — SingleBinary mode for test (chart 6.23.0 per versions.yaml)
 # Replaces Azure Log Analytics for workload/platform log aggregation (ADR-0012).
 
 deploymentMode: SingleBinary
@@ -49,7 +49,7 @@ monitoring:
   lokiCanary:
     enabled: false
 
-# Lab capacity: memcached caches consume extra pods; SingleBinary works without them.
+# Test capacity: memcached caches consume extra pods; SingleBinary works without them.
 chunksCache:
   enabled: false
 resultsCache:

@@ -12,7 +12,7 @@
 
 **Grafana hostname:** `grafana-boutique.biroltilki.art`
 
-See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics is **not** deployed in the default lab path.
+See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics is **not** deployed in the default test path.
 
 ## Metrics
 
@@ -29,7 +29,7 @@ See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics i
 
 - **Centralized:** Promtail → Loki; query in Grafana Explore (LogQL)
 - **Ad-hoc:** `kubectl logs` for quick checks
-- **Retention:** Loki filesystem PVC (~10Gi lab default)
+- **Retention:** Loki filesystem PVC (~10Gi test default)
 
 Example LogQL: `{namespace="boutique-dev", app="frontend"}`
 
@@ -49,7 +49,7 @@ Canonical rules: `gitops/platform/monitoring/extras/alerts/` (Argo app `monitori
 | `NodeNotReady` | node NotReady 10m | Platform engineer |
 | `KyvernoAdmissionDown` | Kyverno admission replicas &lt; 1 for 5m | Platform engineer |
 
-Notification channels (email/Slack) disabled by default in lab; Alertmanager UI used for validation. Ops guide: [10-alerting.md](../operations/10-alerting.md).
+Notification channels (email/Slack) disabled by default in test; Alertmanager UI used for validation. Ops guide: [10-alerting.md](../operations/10-alerting.md).
 
 ## Dashboards
 
@@ -62,6 +62,6 @@ Notification channels (email/Slack) disabled by default in lab; Alertmanager UI 
 
 Documented in `docs/slo/boutique-availability.md` (Phase 11).
 
-## On-call (solo lab)
+## On-call (solo test)
 
 Owner verifies Grafana after deploys. No formal escalation path in v1.

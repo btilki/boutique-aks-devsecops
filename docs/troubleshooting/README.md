@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Symptom → diagnosis → fix guides for the platform lab.
+Symptom → diagnosis → fix guides for the platform test.
 
 | Guide | Topic |
 |-------|--------|

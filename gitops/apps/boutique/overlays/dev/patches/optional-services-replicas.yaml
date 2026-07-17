@@ -1,4 +1,4 @@
-# Lab capacity (Topic 11): keep storefront core only — teardown after install.
+# Test capacity (Topic 11): keep storefront core only — teardown after install.
 # Keep: frontend, productcatalog, currency, cart, redis-cart.
 apiVersion: apps/v1
 kind: Deployment

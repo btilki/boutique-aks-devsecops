@@ -1,7 +1,7 @@
 # Incident response
 
 **Audience:** L3 — Operator
-**Applies to:** All lab environments
+**Applies to:** All test environments
 **Prerequisites:** kubectl, Grafana access, [runbooks/incident-response.md](../runbooks/incident-response.md)
 **Estimated time:** Continuous until mitigated
 **Risk level:** High (SEV-1/2)
@@ -24,7 +24,7 @@ Triage severity, mitigate user impact, and hand off to common-incident playbooks
 
 ### Step 1: Assign SEV
 
-| Severity | Definition | Response (lab) | Example |
+| Severity | Definition | Response (test) | Example |
 |----------|------------|----------------|---------|
 | **SEV-1** | Total outage / data-loss risk | Immediate | Prod storefront down; API unreachable |
 | **SEV-2** | Major degradation | < 30 min | Error rate high; Argo cannot sync; Kyverno down |

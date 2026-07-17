@@ -1,4 +1,4 @@
-# Lower CPU/memory requests for single-node / small-lab user pool (D4s_v6).
+# Lower CPU/memory requests for single-node / small-test user pool (D4s_v6).
 apiVersion: apps/v1
 kind: Deployment
 metadata:

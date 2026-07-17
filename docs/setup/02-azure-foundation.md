@@ -102,7 +102,7 @@ Edit `terraform.tfvars` — at minimum confirm:
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
-| RG name conflict | Prior lab deployment | Choose `rg-boutique-dev-gwc2` or similar |
+| RG name conflict | Prior test deployment | Choose `rg-boutique-dev-gwc2` or similar |
 
 ---
 

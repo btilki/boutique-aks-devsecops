@@ -1,7 +1,7 @@
 # Troubleshooting
 
 **Audience:** L3 — Operator
-**Applies to:** All lab components
+**Applies to:** All test components
 **Prerequisites:** kubectl; access to [docs/troubleshooting/](../troubleshooting/)
 **Estimated time:** Varies
 **Risk level:** Medium

@@ -2,7 +2,7 @@
 
 **Audience:** L2 — Implementer
 **Estimated time:** 60 minutes (destroy may take 15–30 minutes)
-**Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon lab)
+**Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon test)
 **Destroys:** AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
 **Related ADRs:** [0010](../adr/0010-destroy-acr-on-teardown.md)
 
@@ -14,7 +14,7 @@ When this topic is complete, **billable Azure platform resources** from Topics 0
 
 ## Why this topic is required
 
-The lab targets **€150–250/month** when active. Teardown stops ongoing compute, registry, and load balancer charges. ADR-0010 requires ACR destruction — rebuild requires re-running the mirror pipeline (Topic 09).
+The test targets **€150–250/month** when active. Teardown stops ongoing compute, registry, and load balancer charges. ADR-0010 requires ACR destruction — rebuild requires re-running the mirror pipeline (Topic 09).
 
 ---
 
@@ -100,7 +100,7 @@ Review plan output for:
 - `azurerm_dns_zone`
 - `azurerm_virtual_network`
 
-(No Log Analytics workspace in default lab — ADR-0012.)
+(No Log Analytics workspace in default test — ADR-0012.)
 
 ### Validation
 
@@ -319,13 +319,13 @@ Full reference: [teardown.md](../runbooks/teardown.md)
 
 ## Setup guide complete
 
-**All Topics 00–13** are authored. Phase C execution is complete when you confirm this teardown (or document intentional skip while keeping lab running).
+**All Topics 00–13** are authored. Phase C execution is complete when you confirm this teardown (or document intentional skip while keeping test running).
 
 ### Phase D — readiness validation (next)
 
 When ready for end-to-end project validation:
 
-1. Re-run integration smokes if lab still running **before** teardown
+1. Re-run integration smokes if test still running **before** teardown
 2. Confirm Required Files Inventory satisfied per topic
 3. Request Phase D validation in Setup Chat
 

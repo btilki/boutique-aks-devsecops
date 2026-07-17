@@ -1,6 +1,6 @@
 # Roadmap — boutique-aks-devsecops
 
-**Status:** Setup Topics **00–13** complete. Azure lab torn down (reference repo + screenshots retained).
+**Status:** Setup Topics **00–13** complete. Azure test torn down (reference repo + screenshots retained).
 **Numbering note:** Setup **Topic 13** = teardown (`docs/setup/13-teardown.md`). Roadmap **Phase 13** = hardening/integration (no setup guide); **Phase 14** = teardown.
 **Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md)
 **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
@@ -61,7 +61,7 @@ Status: ⬜ not started · 🔄 in progress · ✅ complete · ⏭️ skipped
 | 11 | View metrics/dashboards; test an alert |
 | 12 | Promote one digest dev → stage → prod |
 | 13 | Hand repo to another engineer with passing smokes |
-| 14 | Tear down lab resources; ACR destroyed |
+| 14 | Tear down test resources; ACR destroyed |
 
 ## Out of scope (deferred)
 

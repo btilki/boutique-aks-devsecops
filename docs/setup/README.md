@@ -4,7 +4,7 @@
 
 **Audience:** L2 implementer following topics manually, one step at a time, with validation after every step.
 
-**Status:** Guides for Topics **00–13** are authored. Lab execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README).
+**Status:** Guides for Topics **00–13** are authored. Test execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README).
 
 ---
 
@@ -90,7 +90,7 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | Cloud | Azure only |
 | Region | `germanywestcentral` (Germany West Central) |
 | DNS zone | `biroltilki.art` (Azure DNS) |
-| Subscription | Your lab subscription — see placeholder below |
+| Subscription | Your test subscription — see placeholder below |
 
 ### Placeholder legend
 
@@ -205,7 +205,7 @@ Phase A (planning) produced:
 
 ## 7. Progress tracker (update as you go)
 
-Mark topics in the table in §2 when complete. Reference lab: Topics **00–13** executed (platform torn down; rebuild via this guide).
+Mark topics in the table in §2 when complete. Reference test: Topics **00–13** executed (platform torn down; rebuild via this guide).
 
 | Milestone | Topics | Target |
 |-----------|--------|--------|

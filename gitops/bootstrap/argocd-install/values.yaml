@@ -7,7 +7,7 @@ global:
 
 configs:
   cm:
-    # Allow Argo CD to manage resources in platform namespaces (lab scope).
+    # Allow Argo CD to manage resources in platform namespaces (test scope).
     application.resourceTrackingMethod: annotation
     timeout.reconciliation: 180s
   params:

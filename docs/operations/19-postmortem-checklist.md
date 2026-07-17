@@ -1,7 +1,7 @@
 # Postmortem checklist
 
 **Audience:** L3 — Operator
-**Applies to:** SEV-1 and SEV-2 (lab)
+**Applies to:** SEV-1 and SEV-2 (test)
 **Prerequisites:** Incident closed or mitigated
 **Estimated time:** 30–60 minutes
 **Risk level:** Low

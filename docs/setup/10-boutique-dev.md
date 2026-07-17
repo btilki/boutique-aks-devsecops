@@ -369,4 +369,4 @@ Guide: [11-observability.md](11-observability.md)
 
 Topic 10 is complete — continue to Topic 11 when ready.
 
-**Lab note:** Capacity-constrained labs may run a slim Boutique (core storefront only; optional services at 0 replicas). See overlay patches under `gitops/apps/boutique/overlays/*/patches/`.
+**Test note:** Capacity-constrained tests may run a slim Boutique (core storefront only; optional services at 0 replicas). See overlay patches under `gitops/apps/boutique/overlays/*/patches/`.

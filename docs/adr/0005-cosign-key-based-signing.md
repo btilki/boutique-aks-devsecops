@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Kyverno 1.12.x `verifyImages` is stable with key-based cosign. Keyless/cosign v3 adds complexity for a solo lab.
+Kyverno 1.12.x `verifyImages` is stable with key-based cosign. Keyless/cosign v3 adds complexity for a solo test.
 
 ## Decision
 

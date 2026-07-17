@@ -6,13 +6,13 @@ Accepted
 
 ## Context
 
-Azure Log Analytics bills primarily on **ingestion volume**. For a solo lab, Container Insights and platform diagnostic settings can cost more than the rest of the stack combined with little benefit — metrics and dashboards already run in-cluster via kube-prometheus-stack (Prometheus + Grafana).
+Azure Log Analytics bills primarily on **ingestion volume**. For a solo test, Container Insights and platform diagnostic settings can cost more than the rest of the stack combined with little benefit — metrics and dashboards already run in-cluster via kube-prometheus-stack (Prometheus + Grafana).
 
 The project needs centralized log search in Grafana for platform and Boutique troubleshooting without recurring Azure Monitor ingestion charges.
 
 ## Decision
 
-1. **Do not deploy** a Log Analytics workspace or Container Insights (`oms_agent`) in the default lab path.
+1. **Do not deploy** a Log Analytics workspace or Container Insights (`oms_agent`) in the default test path.
 2. Deploy **Grafana Loki** (SingleBinary) and **Promtail** via GitOps under `gitops/platform/monitoring/`.
 3. Configure Grafana with a **Loki datasource** alongside Prometheus.
 4. Keep the `terraform/modules/diagnostics/` module in the repo for optional future use but **do not wire it** in `terraform/environments/dev/main.tf`.

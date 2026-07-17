@@ -16,7 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Status SSOT: Setup Topic **13** teardown complete; lab offline — README hostnames note points readers to `assets/images/setup/` screenshots.
+- Status SSOT: Setup Topic **13** teardown complete; test offline — README hostnames note points readers to `assets/images/setup/` screenshots.
+- Terminology: project “lab” / “Lab” wording renamed to **test** / **Test** (docs, comments, ops guides).
 - Alert catalog docs point only at `gitops/platform/monitoring/extras/alerts/` (`docs/operations/10-alerting.md`, architecture observability).
 - Fixed relative doc links from `terraform/` and `gitops/platform/monitoring/{loki,promtail}/` READMEs.
 
@@ -27,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.2.0] — 2026-07-15
 
-Production-pilot lab through Setup Topics **00–12** (live), with Topic **13** teardown authored but not executed.
+Production-pilot test through Setup Topics **00–12** (live), with Topic **13** teardown authored but not executed.
 
 ### Added
 
@@ -61,8 +62,8 @@ Production-pilot lab through Setup Topics **00–12** (live), with Topic **13** 
 
 ### Changed
 
-- Node pools on live lab: `Standard_D2s_v6` / `Standard_D4s_v6` where quota required (see ADR-0011).
-- Monitoring/Boutique sized for a two-node lab; alerts consolidated under `monitoring/extras/`.
+- Node pools on live test: `Standard_D2s_v6` / `Standard_D4s_v6` where quota required (see ADR-0011).
+- Monitoring/Boutique sized for a two-node test; alerts consolidated under `monitoring/extras/`.
 
 ### Fixed
 

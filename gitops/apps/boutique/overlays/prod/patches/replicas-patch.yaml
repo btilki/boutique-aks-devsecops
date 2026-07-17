@@ -1,4 +1,4 @@
-# Prod pilot — scale storefront for availability demo (single cluster lab).
+# Prod pilot — scale storefront for availability demo (single cluster test).
 apiVersion: apps/v1
 kind: Deployment
 metadata:

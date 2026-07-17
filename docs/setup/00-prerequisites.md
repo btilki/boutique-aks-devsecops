@@ -247,7 +247,7 @@ git status
 3. **Owner:** `<GITHUB_ORG>`
 4. **Repository name:** `<REPO_NAME>` (e.g. `boutique-aks-devsecops`)
 5. **Description:** (optional) `Azure AKS DevSecOps reference platform`
-6. **Visibility:** **Private** recommended (lab configs; no secrets in Git, but reduces exposure)
+6. **Visibility:** **Private** recommended (test configs; no secrets in Git, but reduces exposure)
 7. **Do not** initialize with README, `.gitignore`, or license — your local tree already has these files
 8. Click **Create repository**
 9. Copy the **HTTPS** URL shown (e.g. `https://github.com/<GITHUB_ORG>/<REPO_NAME>.git`)
@@ -457,9 +457,9 @@ pre-commit run --all-files
 
 ## Production considerations
 
-This lab uses a **single** AKS cluster and minimal node counts. Prerequisites here do not configure HA — that is an explicit non-goal. Before any shared/production-like usage:
+This test uses a **single** AKS cluster and minimal node counts. Prerequisites here do not configure HA — that is an explicit non-goal. Before any shared/production-like usage:
 
-- Use separate Azure subscriptions for lab vs production
+- Use separate Azure subscriptions for test vs production
 - Enable MFA on Entra accounts with subscription access
 - Document who holds Owner on the subscription
 
@@ -472,7 +472,7 @@ N/A for multi-region or multi-cluster — out of scope.
 - Never paste client secrets, cosign private keys, or `terraform.tfvars` contents into issues or chat.
 - `az login` stores credentials locally — lock your workstation; use `az account clear` on shared machines.
 - pre-commit **gitleaks** scans for accidental secret commits — do not disable without cause.
-- Use least privilege: Contributor on a dedicated resource group is sufficient once Phase 2 creates it; subscription Owner is only needed for initial lab setup.
+- Use least privilege: Contributor on a dedicated resource group is sufficient once Phase 2 creates it; subscription Owner is only needed for initial test setup.
 
 ---
 

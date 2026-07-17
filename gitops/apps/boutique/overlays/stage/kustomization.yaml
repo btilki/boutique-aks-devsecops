@@ -1,5 +1,5 @@
 # Stage overlay — namespace boutique-stage, manual Argo sync, same digest as ACR/dev.
-# Lab: slim optional services (same capacity pattern as dig) — teardown after Topic 12.
+# Test: slim optional services (same capacity pattern as dig) — teardown after Topic 12.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 

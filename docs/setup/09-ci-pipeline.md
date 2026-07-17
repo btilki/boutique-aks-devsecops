@@ -88,7 +88,7 @@ ADR-0005 mandates key-based signing. The private key never enters Git or ADO var
 cd /path/to/boutique-aks-devsecops
 KV_NAME="$(cd terraform/environments/dev && terraform output -raw key_vault_name)"
 
-# Generate key pair (interactive passphrase — use a strong passphrase or empty for lab only)
+# Generate key pair (interactive passphrase — use a strong passphrase or empty for test only)
 cosign generate-key-pair
 
 # Store in Key Vault (files created in current directory)
@@ -372,7 +372,7 @@ Full reference: [docs/troubleshooting/pipeline-failures.md](../troubleshooting/p
 
 - Private cosign key: **Key Vault only** — see [supply-chain.md](../security/supply-chain.md)
 - Pipeline uses `--tlog-upload=false` (ADR-0005); Kyverno uses `ignoreTlog: true`
-- Trivy gate: **CRITICAL only** — HIGH/MEDIUM logged but do not fail the build (lab default)
+- Trivy gate: **CRITICAL only** — HIGH/MEDIUM logged but do not fail the build (test default)
 
 ---
 

@@ -1,7 +1,7 @@
 # Common incidents
 
 **Audience:** L3 — Operator
-**Applies to:** Production-pilot lab
+**Applies to:** Production-pilot test
 **Prerequisites:** [07-incident-response.md](07-incident-response.md)
 **Estimated time:** 10–45 minutes per playbook
 **Risk level:** Medium–High
@@ -121,7 +121,7 @@ kubectl top pod -n <ns>
 
 **Recovery:** Rollback resource patch if thrashing.
 
-**Prevention:** Keep slim lab profile; Grafana CPU/memory panels.
+**Prevention:** Keep slim test profile; Grafana CPU/memory panels.
 
 ---
 

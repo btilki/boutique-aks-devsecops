@@ -427,7 +427,7 @@ Update [Setup Index](README.md) Topic 03 to ✅ when complete.
 |---------|--------------|-----|
 | AKS create timeout | Azure capacity | Retry apply; try off-peak hours |
 | `InsufficientSubnetSize` | Subnet too small | `/20` should suffice; do not shrink |
-| Key Vault name in soft-delete | Prior lab | `az keyvault purge` or new name |
+| Key Vault name in soft-delete | Prior test | `az keyvault purge` or new name |
 | OIDC URL empty | Cluster not finished | Wait; re-run `terraform output` |
 
 ---

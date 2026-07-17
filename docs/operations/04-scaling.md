@@ -2,13 +2,13 @@
 
 **Audience:** L3 — Operator
 **Applies to:** Boutique Deployments; AKS user node pool
-**Prerequisites:** Understanding of lab maxPods ≈ 30/node; TF ignore on `node_count`
+**Prerequisites:** Understanding of test maxPods ≈ 30/node; TF ignore on `node_count`
 **Estimated time:** 10–30 minutes
 **Risk level:** Medium
 
 ## Purpose
 
-Adjust application replicas or node capacity without breaking GitOps or exhausting the 2-node lab.
+Adjust application replicas or node capacity without breaking GitOps or exhausting the 2-node test.
 
 ## When to use / When not to use
 

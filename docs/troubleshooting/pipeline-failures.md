@@ -93,7 +93,7 @@ az acr repository list --name "${ACR_NAME}" -o table
 
 **Cause:** Trivy gate: `--severity CRITICAL --exit-code 1`.
 
-**Options (lab):**
+**Options (test):**
 
 1. **Preferred for pinned upstream v0.10.5:** Pipeline uses `--ignore-status fixed` — fail only on CRITICAL **unfixed** CVEs (Google has not yet published patched v0.10.5 images). Document accepted CVE IDs below if scan still fails.
 2. **Strict mode:** Remove `--ignore-status fixed` from [build-scan-sign.yml](../../pipelines/templates/build-scan-sign.yml) when upstream releases patched images.
@@ -104,7 +104,7 @@ az acr repository list --name "${ACR_NAME}" -o table
 trivy image --scanners vuln --severity CRITICAL --ignore-status fixed <acr>.azurecr.io/frontend@sha256:...
 ```
 
-**Known upstream fixed CRITICALs on v0.10.5 (lab accepted with `--ignore-status fixed`):**
+**Known upstream fixed CRITICALs on v0.10.5 (test accepted with `--ignore-status fixed`):**
 
 - `CVE-2026-33186` — `google.golang.org/grpc` (frontend; fix in grpc 1.79.3)
 - `CVE-2025-68121` — Go stdlib TLS (multiple services; fix in Go 1.25.7+)
@@ -127,7 +127,7 @@ trivy image --scanners vuln --severity CRITICAL --ignore-status fixed <acr>.azur
 
 1. Regenerate: `cosign generate-key-pair` (note passphrase).
 2. Re-upload `cosign.key` to Key Vault secret `cosign-private-key`.
-3. If using passphrase, pipeline must pass `--key` with env `COSIGN_PASSWORD` — default template assumes **unencrypted** lab key.
+3. If using passphrase, pipeline must pass `--key` with env `COSIGN_PASSWORD` — default template assumes **unencrypted** test key.
 
 ### `unknown flag: --tlog-upload` on cosign verify
 

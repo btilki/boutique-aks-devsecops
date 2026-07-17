@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Lab cost must stop cleanly when the project is not in use.
+Test cost must stop cleanly when the project is not in use.
 
 ## Decision
 

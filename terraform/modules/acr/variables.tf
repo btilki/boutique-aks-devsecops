@@ -19,7 +19,7 @@ variable "location" {
 }
 
 variable "sku" {
-  description = "ACR SKU (Standard sufficient for lab; Premium for private endpoint)."
+  description = "ACR SKU (Standard sufficient for test; Premium for private endpoint)."
   type        = string
   default     = "Standard"
 }

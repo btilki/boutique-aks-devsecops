@@ -12,7 +12,7 @@ Rotate platform secrets without leaving Git or pipelines on stale material. This
 
 ## When to use / When not to use
 
-**Use** after suspected leak, operator offboarding, or scheduled lab rotation.
+**Use** after suspected leak, operator offboarding, or scheduled test rotation.
 **Do not** commit private keys to Git “temporarily.”
 
 ## Prerequisites
@@ -65,7 +65,7 @@ N/A.
 
 ## Security notes
 
-Aligns with Security Prompt near-term secrets findings; purge protection may be off in lab.
+Aligns with Security Prompt near-term secrets findings; purge protection may be off in test.
 
 ## Automation opportunities
 

@@ -1,6 +1,6 @@
 # Operations — boutique-aks-devsecops
 
-Day-2 runbooks for the **production-pilot** lab (single AKS cluster). Bootstrap lives in [`docs/setup/`](../setup/). Deep promotion/teardown procedures live in [`docs/runbooks/`](../runbooks/). Symptom indexes live in [`docs/troubleshooting/`](../troubleshooting/).
+Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap lives in [`docs/setup/`](../setup/). Deep promotion/teardown procedures live in [`docs/runbooks/`](../runbooks/). Symptom indexes live in [`docs/troubleshooting/`](../troubleshooting/).
 
 **Maturity:** Production pilot · **Owner:** You (solo operator)
 **Assumes:** Setup Topics 00–12 completed at least once.
@@ -38,7 +38,7 @@ Day-2 runbooks for the **production-pilot** lab (single AKS cluster). Bootstrap 
 
 ---
 
-## Escalation (solo lab)
+## Escalation (solo test)
 
 | Level | Role | When |
 |-------|------|------|
@@ -46,7 +46,7 @@ Day-2 runbooks for the **production-pilot** lab (single AKS cluster). Bootstrap 
 | L2 | You (with calm checklist) | > 30 min or promote/ACR/KV risk |
 | L3 | Azure subscription / Entra admin (You) | Billing lockout, subscription RBAC, DNS registrar |
 
-Lab IR detail: [07-incident-response.md](07-incident-response.md) · [runbooks/incident-response.md](../runbooks/incident-response.md)
+Test IR detail: [07-incident-response.md](07-incident-response.md) · [runbooks/incident-response.md](../runbooks/incident-response.md)
 
 ---
 
@@ -99,7 +99,7 @@ Lab IR detail: [07-incident-response.md](07-incident-response.md) · [runbooks/i
 - [x] No secrets in commands — placeholders only
 - [x] Commands match repo paths (`tests/integration/`, `gitops/`, `terraform/environments/dev`)
 - [x] Common incidents ≥6 playbooks ([17](17-common-incidents.md))
-- [x] DR/backup honest for lab (rebuild-from-git; no multi-region)
+- [x] DR/backup honest for test (rebuild-from-git; no multi-region)
 - [x] Postmortem template for SEV-1/2 ([19](19-postmortem-checklist.md))
 - [x] Automation section lists opportunities — not setup bypass ([20](20-automation-opportunities.md))
 

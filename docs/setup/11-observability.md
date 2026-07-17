@@ -99,7 +99,7 @@ kubectl create secret generic grafana-admin-credentials -n monitoring \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-**Option B — lab password you choose:**
+**Option B — test password you choose:**
 
 ```bash
 kubectl create secret generic grafana-admin-credentials -n monitoring \
@@ -290,7 +290,7 @@ kubectl port-forward -n monitoring svc/kube-prometheus-stack-alertmanager 9093:9
 # Open http://localhost:9093 — view config status
 ```
 
-Optional — simulate alert (lab only):
+Optional — simulate alert (test only):
 
 ```bash
 kubectl scale deployment frontend -n boutique-dev --replicas=0

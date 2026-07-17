@@ -9,7 +9,7 @@ Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secr
 | Item | State |
 |------|--------|
 | Planning | Complete |
-| Implementation | Setup Topics **00–13** complete; Azure lab **torn down** |
+| Implementation | Setup Topics **00–13** complete; Azure test **torn down** |
 | Region | `germanywestcentral` (when rebuilt) |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
 
@@ -24,7 +24,7 @@ This is a **production pilot**, not enterprise production HA. Honesty here is pa
 | End-to-end DevSecOps on Azure AKS | Multi-region / multi-cluster failover |
 | Signed digests + Kyverno admission | Separate clusters per environment |
 | GitOps promotion with ADO prod approval | WAF, DDoS protection, HSM-backed keys |
-| Metrics, lab SLO, Alertmanager UI | 24×7 on-call, Tempo/Jaeger, SOC SIEM |
+| Metrics, test SLO, Alertmanager UI | 24×7 on-call, Tempo/Jaeger, SOC SIEM |
 | Rebuild-from-Git DR (hours) | Enterprise RTO/RPO or automatic DR |
 | Boutique × up to 3 namespaces on one cluster | Unlimited scale; blast radius is the whole cluster |
 
@@ -66,9 +66,9 @@ YAML lives in [`pipelines/`](pipelines/). Auth is ADO **OIDC** (no long-lived pi
 
 ## Hostnames
 
-**Lab offline.** These FQDNs were used for the lived pilot; they resolve only after you rebuild Topics 02–12. For storefront / UI proof, see [Visual evidence](#visual-evidence).
+**Test offline.** These FQDNs were used for the lived pilot; they resolve only after you rebuild Topics 02–12. For storefront / UI proof, see [Visual evidence](#visual-evidence).
 
-| Service | FQDN (when lab is live) |
+| Service | FQDN (when test is live) |
 |---------|-------------------------|
 | Argo CD | `argocd-boutique.biroltilki.art` |
 | Grafana | `grafana-boutique.biroltilki.art` |
@@ -95,8 +95,8 @@ examples/     # Runnable demos (CSI secret test)
 
 ## Getting started
 
-1. **New lab:** start at [docs/setup/00-prerequisites.md](docs/setup/00-prerequisites.md), then follow [docs/setup/](docs/setup/) in order.
-2. **Existing lab:** run P0 checks in [tests/README.md](tests/README.md); do not re-apply foundation blindly.
+1. **New test:** start at [docs/setup/00-prerequisites.md](docs/setup/00-prerequisites.md), then follow [docs/setup/](docs/setup/) in order.
+2. **Existing test:** run P0 checks in [tests/README.md](tests/README.md); do not re-apply foundation blindly.
 3. Confirm each topic before the next; authoritative steps live only under `docs/setup/`.
 
 ## Security

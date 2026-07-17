@@ -56,7 +56,7 @@ graph TB
 | `resource-group` | Platform RG |
 | `networking` | VNet, AKS subnet, NSG |
 | `dns` | Zone `biroltilki.art` |
-| `diagnostics` | Optional Log Analytics (not wired in default lab; see ADR-0012) |
+| `diagnostics` | Optional Log Analytics (not wired in default test; see ADR-0012) |
 | `aks` | Cluster, node pools (D2s_v6 / D4s_v6) |
 | `acr` | Container registry |
 | `key-vault` | Secrets store |

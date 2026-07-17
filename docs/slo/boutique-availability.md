@@ -30,7 +30,7 @@ Service level objective for Online Boutique **frontend** in the dev environment 
 
 ## SLI measurement
 
-### Primary (lab)
+### Primary (test)
 
 Manual / scripted probe aligned with smoke test:
 
@@ -50,7 +50,7 @@ Alert **`BoutiqueFrontendDown`** fires when frontend replicas &lt; 1 for 5 minut
 
 ---
 
-## Error budget policy (solo lab)
+## Error budget policy (solo test)
 
 | Burn rate | Action |
 |-----------|--------|

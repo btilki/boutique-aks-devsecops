@@ -183,7 +183,7 @@ chmod +x scripts/register-ado-sc-federation.sh
 | Field | Value | Notes |
 |-------|-------|-------|
 | Service connection name | `azure-boutique-oidc` | **Must match** `ado_service_connection_name` in tfvars |
-| Subscription ID | From `terraform output azure_subscription_id` | Your lab subscription |
+| Subscription ID | From `terraform output azure_subscription_id` | Your test subscription |
 | Subscription name | Select from dropdown | Display only |
 | Resource group | `rg-boutique-dev-gwc` | Scopes connection visibility |
 | Managed identity client ID | `terraform output -raw ado_pipeline_identity_client_id` | Pipeline UAMI — not platform UAMI |

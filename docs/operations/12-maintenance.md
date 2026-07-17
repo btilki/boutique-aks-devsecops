@@ -8,7 +8,7 @@
 
 ## Purpose
 
-Perform planned work (node recycle, chart bumps prep, capacity reclaim) with minimal customer-facing impact on the lab hostnames.
+Perform planned work (node recycle, chart bumps prep, capacity reclaim) with minimal customer-facing impact on the test hostnames.
 
 ## When to use / When not to use
 
@@ -46,7 +46,7 @@ kubectl uncordon "$NODE"
 
 **Recovery steps:** Uncordon immediately if drain fails mid-way; scale down non-critical envs.
 
-**Best practices:** Drain one node at a time on a 2-node lab.
+**Best practices:** Drain one node at a time on a 2-node test.
 
 ### Step 3: Capacity reclaim (GitOps)
 

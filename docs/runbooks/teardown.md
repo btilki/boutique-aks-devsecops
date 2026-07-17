@@ -1,6 +1,6 @@
 # Teardown runbook
 
-Destroy billable Azure platform resources when the lab is complete or paused long-term.
+Destroy billable Azure platform resources when the test is complete or paused long-term.
 
 **Related:** [13-teardown.md](../setup/13-teardown.md), [ADR-0010](../adr/0010-destroy-acr-on-teardown.md), [11-cost-model.md](../architecture/11-cost-model.md)
 
@@ -32,7 +32,7 @@ Destroy billable Azure platform resources when the lab is complete or paused lon
 - [ ] Export cosign **public** key from repo/KV if not already in Git (`policies/kyverno/...`)
 - [ ] Optional: `kubectl config` backup
 - [ ] Disable or pause ADO pipelines (avoid failed runs against dead cluster)
-- [ ] Confirm no production dependency on this lab cluster
+- [ ] Confirm no production dependency on this test cluster
 - [ ] Run dry-run: `./scripts/operations/teardown.sh --confirm destroy-boutique-platform --dry-run`
 
 ---

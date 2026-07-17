@@ -1,7 +1,7 @@
 # Disaster recovery
 
 **Audience:** L3 — Operator
-**Applies to:** Entire lab platform
+**Applies to:** Entire test platform
 **Prerequisites:** Git remote healthy; Azure access; Setup guides available
 **Estimated time:** Hours (full rebuild)
 **Risk level:** High
@@ -13,7 +13,7 @@ Recover from loss of cluster, subscription misconfiguration, or deliberate teard
 ## When to use / When not to use
 
 **Use** after catastrophic AKS failure, accidental destroy, or post-teardown rebuild.
-**Do not** expect automatic DR; this is a solo pilot lab (no secondary region).
+**Do not** expect automatic DR; this is a solo pilot test (no secondary region).
 
 ## Prerequisites
 
@@ -36,7 +36,7 @@ az acr show -n acrboutiquedevgwc -o table 2>/dev/null || echo "ACR gone — remi
 
 **Expected outcome:** Clear rebuild checklist.
 
-**Lab targets (honest):**
+**Test targets (honest):**
 
 | Metric | Target |
 |--------|--------|

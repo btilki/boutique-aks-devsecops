@@ -248,7 +248,7 @@ Understand how Topic 09/11 will reuse this pattern.
 
 ### Why this step is required
 
-Test resources are lab-only; production secrets use the same WI + SecretProviderClass model.
+Test resources are test-only; production secrets use the same WI + SecretProviderClass model.
 
 ### Reference pattern
 

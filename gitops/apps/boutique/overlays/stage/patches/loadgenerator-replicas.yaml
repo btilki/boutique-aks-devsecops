@@ -1,4 +1,4 @@
-# Lab capacity: disable loadgenerator so monitoring + boutique fit on 2 user nodes.
+# Test capacity: disable loadgenerator so monitoring + boutique fit on 2 user nodes.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

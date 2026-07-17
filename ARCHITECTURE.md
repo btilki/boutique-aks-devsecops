@@ -59,7 +59,7 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 
 ## 4. High-level architecture
 
-Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. **Logs are in-cluster via Loki** ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)) — Azure Log Analytics is not deployed on the default lab path. Argo CD reconciles platform Helm/Kustomize and Boutique overlays from `gitops/`. Azure DevOps mirrors upstream v0.10.5 images to ACR, Trivy-scans (fail CRITICAL), cosign-signs by digest (`--tlog-upload=false`), then updates GitOps overlays. Kyverno enforces ACR allowlist, denies `:latest`, verifies signatures, and applies Pod Security baseline. NGINX Ingress + cert-manager expose five HTTPS hostnames via Let's Encrypt DNS-01.
+Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. **Logs are in-cluster via Loki** ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)) — Azure Log Analytics is not deployed on the default test path. Argo CD reconciles platform Helm/Kustomize and Boutique overlays from `gitops/`. Azure DevOps mirrors upstream v0.10.5 images to ACR, Trivy-scans (fail CRITICAL), cosign-signs by digest (`--tlog-upload=false`), then updates GitOps overlays. Kyverno enforces ACR allowlist, denies `:latest`, verifies signatures, and applies Pod Security baseline. NGINX Ingress + cert-manager expose five HTTPS hostnames via Let's Encrypt DNS-01.
 
 ### Layers
 
@@ -200,7 +200,7 @@ Full table: [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md)
 
 ## 11. Scalability
 
-User pool autoscales 1–3 × `Standard_D4s_v6`. Full Boutique × 3 namespaces is the designed ceiling for this pilot; the reference lab often runs a **slim** Boutique (core storefront only) for pod capacity. Bottleneck: node CPU and maxPods — mitigate with autoscale and optional HPA on frontend.
+User pool autoscales 1–3 × `Standard_D4s_v6`. Full Boutique × 3 namespaces is the designed ceiling for this pilot; the reference test often runs a **slim** Boutique (core storefront only) for pod capacity. Bottleneck: node CPU and maxPods — mitigate with autoscale and optional HPA on frontend.
 
 ---
 

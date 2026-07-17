@@ -18,7 +18,7 @@ Describe what is backed up for this **demo/pilot** stack and how to restore crit
 ## Prerequisites
 
 - [ ] Know bootstrap storage account + container (`terraform/bootstrap`)
-- [ ] Soft-delete awareness on Key Vault (7 days; purge protection often **off** for lab)
+- [ ] Soft-delete awareness on Key Vault (7 days; purge protection often **off** for test)
 
 ## Procedure
 

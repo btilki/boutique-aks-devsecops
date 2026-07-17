@@ -2,13 +2,13 @@
 
 **Audience:** L3 — Operator
 **Applies to:** dev / stage / prod (one cluster)
-**Prerequisites:** Setup Topics 00–12 complete; kubectl context to the lab AKS cluster
+**Prerequisites:** Setup Topics 00–12 complete; kubectl context to the test AKS cluster
 **Estimated time:** 10 minutes (read)
 **Risk level:** Low
 
 ## Purpose
 
-Define the operational model: environments, ownership, lab constraints, and where other runbooks fit.
+Define the operational model: environments, ownership, test constraints, and where other runbooks fit.
 
 ## When to use / When not to use
 
@@ -50,9 +50,9 @@ kubectl get application -n argocd | grep boutique
 | stage | `boutique-stage` | `stage-boutique.biroltilki.art` | Manual |
 | prod | `boutique-prod` | `boutique.biroltilki.art` | Manual + ADO gate when using promote pipeline |
 
-**Lab capacity:** Two user nodes with `maxPods≈30` often cannot run full Boutique × 3 + monitoring. Overlays may set optional services and loadgenerator to **0 replicas** (slim storefront). Documented in overlay patches.
+**Test capacity:** Two user nodes with `maxPods≈30` often cannot run full Boutique × 3 + monitoring. Overlays may set optional services and loadgenerator to **0 replicas** (slim storefront). Documented in overlay patches.
 
-**SLO (pilot):** [boutique-availability.md](../slo/boutique-availability.md) — 99.5% frontend health (lab measurement).
+**SLO (pilot):** [boutique-availability.md](../slo/boutique-availability.md) — 99.5% frontend health (test measurement).
 
 ## End-to-end validation
 
@@ -73,7 +73,7 @@ N/A (read-only orientation).
 
 ## Security notes
 
-Public HTTPS for Argo/Grafana/Boutique — treat credentials as production-sensitive for the lab.
+Public HTTPS for Argo/Grafana/Boutique — treat credentials as production-sensitive for the test.
 
 ## Automation opportunities
 

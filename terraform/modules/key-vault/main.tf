@@ -12,7 +12,7 @@ resource "azurerm_key_vault" "this" {
   tags                       = var.tags
 }
 
-# Allow the Terraform deployer to manage secrets during bootstrap (lab scope).
+# Allow the Terraform deployer to manage secrets during bootstrap (test scope).
 resource "azurerm_role_assignment" "deployer_admin" {
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Administrator"

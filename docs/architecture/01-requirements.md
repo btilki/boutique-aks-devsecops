@@ -17,7 +17,7 @@
 | Security | Least privilege; signed images; no secrets in Git | OIDC, KV CSI, Kyverno |
 | Observability | Metrics, dashboards, alerts, SLO | kube-prometheus-stack, OTel |
 | Maintainability | Modular IaC and GitOps | TF modules; Kustomize overlays |
-| Cost | Solo lab budget | One cluster; teardown destroys ACR |
+| Cost | Solo test budget | One cluster; teardown destroys ACR |
 | Reproducibility | Pinned versions | `versions.yaml` |
 
 ## Derived requirements

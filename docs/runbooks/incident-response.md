@@ -1,6 +1,6 @@
-# Incident response (solo lab)
+# Incident response (solo test)
 
-Lightweight incident handling for a **single-operator** Azure DevSecOps lab. Not a full enterprise IR program.
+Lightweight incident handling for a **single-operator** Azure DevSecOps test. Not a full enterprise IR program.
 
 **Related:** [promotion-rollback.md](promotion-rollback.md), [monitoring-alerting.md](../troubleshooting/monitoring-alerting.md)
 
@@ -8,7 +8,7 @@ Lightweight incident handling for a **single-operator** Azure DevSecOps lab. Not
 
 ## Severity levels
 
-| Level | Example | Response time (lab) |
+| Level | Example | Response time (test) |
 |-------|---------|---------------------|
 | **S1** | Prod/stage storefront down | Immediate |
 | **S2** | Kyverno/Argo CD broken; no deploys | Same day |
@@ -75,7 +75,7 @@ See [pipeline-failures.md](../troubleshooting/pipeline-failures.md) and [image-s
 
 ---
 
-## Communication (solo lab)
+## Communication (solo test)
 
 | Audience | Channel |
 |----------|---------|
@@ -98,7 +98,7 @@ No on-call rotation in v1.
 ## When to teardown instead of fix
 
 - Unbounded Azure cost with no time to debug
-- Corrupted cluster state / etcd issues on lab cluster
+- Corrupted cluster state / etcd issues on test cluster
 - End of project milestone
 
 See [teardown.md](teardown.md)

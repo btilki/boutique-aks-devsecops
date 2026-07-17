@@ -47,7 +47,7 @@ Operational procedure for moving **the same signed digest** from dev → stage �
 
 ## Promote to prod
 
-1. Confirm stage smoke passed for **at least 24h** (lab minimum: same session after stage validation).
+1. Confirm stage smoke passed for **at least 24h** (test minimum: same session after stage validation).
 2. Copy validated `images:` block from stage overlay to `overlays/prod/kustomization.yaml`.
 3. **ADO:** Queue promotion pipeline prod stage **or** push Git commit — **prod** environment approval required before job runs (if using pipeline).
 4. Argo CD → **boutique-prod** → **Sync** (manual).

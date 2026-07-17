@@ -13,7 +13,7 @@ Query workload and platform logs during incidents without Azure Log Analytics.
 ## When to use / When not to use
 
 **Use** for pod crash loops, ingress 5xx, Kyverno denials (if logged).
-**Do not** expect infinite retention — PVC-sized Loki (lab ~10Gi).
+**Do not** expect infinite retention — PVC-sized Loki (test ~10Gi).
 
 ## Prerequisites
 

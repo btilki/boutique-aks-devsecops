@@ -2,7 +2,7 @@
 
 Production-pilot threat model for the **single-cluster** Online Boutique v0.10.5 platform. Complements [07-security-architecture.md](../architecture/07-security-architecture.md).
 
-**Scope:** Azure AKS lab in `germanywestcentral` · dev/stage/prod namespaces · ADO CI · GitOps
+**Scope:** Azure AKS test in `germanywestcentral` · dev/stage/prod namespaces · ADO CI · GitOps
 
 ---
 
@@ -86,7 +86,7 @@ flowchart LR
 
 Revisit this model when:
 
-- Enabling prod for external users beyond lab
+- Enabling prod for external users beyond test
 - Adding external CI systems or registries
 - Storing PII or payment data (Boutique demo uses mock payments)
 - Connecting corporate Entra tenant policies

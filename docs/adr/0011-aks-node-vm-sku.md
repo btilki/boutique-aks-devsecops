@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted (amended 2026-07-15 — Dsv6 lab fallback)
+Accepted (amended 2026-07-15 — Dsv6 test fallback)
 
 ## Context
 
@@ -15,13 +15,13 @@ During Topic 03 apply, subscription **Standard DSv5 Family vCPU quota** in `germ
 | Setting | Value |
 |---------|-------|
 | Region | `germanywestcentral` |
-| System pool | `Standard_D2s_v6` (1 node, fixed) — **lab default when DSv5 quota is 0** |
-| User pool | `Standard_D4s_v6` (1–3 nodes, autoscaler) — **lab default when DSv5 quota is 0** |
+| System pool | `Standard_D2s_v6` (1 node, fixed) — **test default when DSv5 quota is 0** |
+| User pool | `Standard_D4s_v6` (1–3 nodes, autoscaler) — **test default when DSv5 quota is 0** |
 | Preferred (when quota allows) | `Standard_D2s_v5` / `Standard_D4s_v5` per original pilot design |
 
 ## Consequences
 
-- **Positive:** Dsv6 available with quota in this subscription; equivalent core/memory class to Dsv5 for lab workloads.
+- **Positive:** Dsv6 available with quota in this subscription; equivalent core/memory class to Dsv5 for test workloads.
 - **Negative:** Diverges from original Dsv5 cost estimates until DSv5 quota is increased.
 - **Operational:** Request DSv5 quota increase via Azure Portal if reverting to original SKUs later.
 

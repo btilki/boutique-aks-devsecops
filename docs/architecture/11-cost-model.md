@@ -1,6 +1,6 @@
 # Cost model
 
-Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month). Actual cost varies with uptime and egress.
+Estimates for **germanywestcentral**, test usage, order-of-magnitude (EUR/month). Actual cost varies with uptime and egress.
 
 ## Core resources
 
@@ -13,9 +13,9 @@ Estimates for **germanywestcentral**, lab usage, order-of-magnitude (EUR/month).
 | ACR Basic | ~€5 | Storage | **Destroyed Phase 14** |
 | Key Vault | ~€1 | Operations | Minimal secrets |
 | Azure DNS zone | ~€0.50 | Hosted zone | Keep or delete post-teardown |
-| Loki (in-cluster) | ~€0 Azure | PVC on node disk | 10Gi lab default; no Log Analytics |
+| Loki (in-cluster) | ~€0 Azure | PVC on node disk | 10Gi test default; no Log Analytics |
 
-**Typical active lab:** ~€150–220/month with 2 nodes running (Log Analytics removed per ADR-0012).
+**Typical active test:** ~€150–220/month with 2 nodes running (Log Analytics removed per ADR-0012).
 
 ## Guardrails
 

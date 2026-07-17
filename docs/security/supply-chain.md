@@ -90,7 +90,7 @@ cosign sign --key cosign.key --tlog-upload=false -y <acr>.azurecr.io/<service>@s
 | Exit code | 1 on findings |
 | Scan target | ACR image `@digest` after push |
 
-HIGH/MEDIUM findings are visible in logs but do not fail the lab pipeline. Tighten for production pilots as needed.
+HIGH/MEDIUM findings are visible in logs but do not fail the test pipeline. Tighten for production pilots as needed.
 
 ---
 

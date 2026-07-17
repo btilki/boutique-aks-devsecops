@@ -1,4 +1,4 @@
-# Dev overlay — namespace boutique-dev, ingress TLS, lab resource tuning.
+# Dev overlay — namespace boutique-dev, ingress TLS, test resource tuning.
 # SETUP: replace <ACR_LOGIN_SERVER> (must match base/kustomization.yaml).
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

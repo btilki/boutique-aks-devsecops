@@ -120,7 +120,7 @@ Verify `release: kube-prometheus-stack` label on PrometheusRule resources.
 
 **Cause:** cert-manager metrics not scraped (optional component).
 
-**Fix:** Informational in lab; check certificates manually:
+**Fix:** Informational in test; check certificates manually:
 
 ```bash
 kubectl get certificate -A
@@ -157,7 +157,7 @@ kubectl logs -n monitoring deploy/otel-collector -f
 
 ### Prometheus OOMKilled
 
-**Fix:** Reduce retention in `kube-prometheus-stack/values.yaml` or increase memory limits. Lab default: 15d / 2Gi limit.
+**Fix:** Reduce retention in `kube-prometheus-stack/values.yaml` or increase memory limits. Test default: 15d / 2Gi limit.
 
 ### Grafana slow
 

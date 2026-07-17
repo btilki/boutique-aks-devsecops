@@ -124,7 +124,7 @@ ADR-0008 mandates ADO approval before prod overlay Git updates via `promote-dige
 ### GUI steps
 
 1. Azure DevOps → **Pipelines** → **Environments**
-2. **New environment** → name: `stage` → Create (no checks required for lab)
+2. **New environment** → name: `stage` → Create (no checks required for test)
 3. **New environment** → name: `prod` → Create
 4. **prod** → **Approvals and checks** → **Approvals** → add yourself as approver → Save
 
@@ -301,7 +301,7 @@ Rollback confidence is required for production-pilot credibility.
 
 See [promotion-rollback.md](../runbooks/promotion-rollback.md).
 
-Lab drill (stage):
+Test drill (stage):
 
 ```bash
 # Note current frontend image
@@ -363,4 +363,4 @@ Guide: [13-teardown.md](13-teardown.md)
 
 Topic 12 is complete — run Topic 13 when you are ready to destroy billable resources.
 
-**Lab note:** Stage/prod use digest pins; optional Boutique services may be scaled to 0 for cluster capacity.
+**Test note:** Stage/prod use digest pins; optional Boutique services may be scaled to 0 for cluster capacity.

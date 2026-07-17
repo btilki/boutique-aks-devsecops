@@ -104,7 +104,7 @@ kubectl describe pod -n boutique-prod -l app=frontend
 kubectl top nodes
 ```
 
-Temporarily scale to 1 in `replicas-patch.yaml` for lab if needed.
+Temporarily scale to 1 in `replicas-patch.yaml` for test if needed.
 
 ---
 
