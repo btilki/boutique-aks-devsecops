@@ -14,8 +14,10 @@ How this project secures container images from upstream mirror through cluster a
 | Registry | Private ACR | Mirror pipeline; Kyverno ACR allowlist |
 | Build integrity | Not applicable | Images mirrored, not rebuilt in-repo |
 | Vulnerability gate | Trivy CRITICAL | ADO pipeline fails on CRITICAL CVEs |
+| SBOM | Trivy SPDX JSON | Per-service SBOM; pipeline artifact `sboms-spdx` (Topic 17) |
 | Integrity / authenticity | cosign 2.2.4 | Sign by digest; `--tlog-upload=false` |
-| Runtime enforcement | Kyverno 1.12 | `verifyImages`, deny `:latest`, pod security baseline |
+| SBOM attestation | cosign attest `spdxjson` | Same key; verify-attestation in CI (ADR-0014) |
+| Runtime enforcement | Kyverno 1.12 | `verifyImages` (signatures + optional SPDX attest Audit→Enforce), deny `:latest`, pod security baseline |
 
 ---
 
@@ -27,12 +29,15 @@ flowchart LR
     Pull --> Push[ACR push :v0.10.5]
     Push --> Trivy[Trivy CRITICAL gate]
     Trivy --> Sign[cosign sign @digest]
-    Sign --> Verify[cosign verify in pipeline]
-    Verify --> KV[Public key in Kyverno policy]
+    Sign --> SBOM[Trivy SPDX SBOM]
+    SBOM --> Attest[cosign attest spdxjson]
+    Attest --> Verify[cosign verify + verify-attestation]
+    Verify --> KV[Public key in Kyverno]
     KV --> Kyverno[Kyverno admission]
 ```
 
 **Pipeline files:** `pipelines/azure-pipelines.yml`, `pipelines/templates/build-scan-sign.yml`
+**Toggle:** `enableSbomAttest` in `pipelines/templates/variables.yml` (Topic 17 / [ADR-0014](../adr/0014-sbom-cosign-attestations.md)).
 
 **Authentication:** Azure DevOps OIDC → UAMI `uami-ado-pipeline` → AcrPush + Key Vault Secrets User (no long-lived CI secrets).
 
@@ -85,10 +90,11 @@ cosign sign --key cosign.key --tlog-upload=false -y <acr>.azurecr.io/<service>@s
 
 | Setting | Value |
 |---------|-------|
-| Version | 0.51.4 |
+| Version | 0.72.0 (see `versions.yaml` / pipeline `trivyVersion`) |
 | Severity gate | CRITICAL |
 | Exit code | 1 on findings |
 | Scan target | ACR image `@digest` after push |
+| SBOM | `--format spdx-json` when `enableSbomAttest=true` |
 
 HIGH/MEDIUM findings are visible in logs but do not fail the test pipeline. Tighten for production pilots as needed.
 
@@ -116,17 +122,19 @@ Artifact `digest-manifest.json` maps service name → `sha256:...` from each pip
 | Compromised CI secret | OIDC federation; cosign private key in KV only |
 | Upstream registry swap | Fixed upstream path and tag in pipeline variables |
 | CVE in base image | Trivy CRITICAL gate; monitor upstream releases |
+| Missing component inventory | SPDX SBOM + cosign attest (Topic 17); Kyverno Audit→Enforce |
 
-**Residual risk:** Mirrored images trust Google's build; this project does not rebuild from source. Compromise of cosign private key allows signing malicious images until rotation.
+**Residual risk:** Mirrored images trust Google's build; this project does not rebuild from source. Compromise of cosign private key allows signing **and** attesting malicious images until rotation.
 
 ---
 
 ## Operator checklist
 
-- [ ] Pipeline green on `main` with all 11 services
-- [ ] Kyverno policy contains live cosign public key (not placeholder)
+- [ ] Pipeline green on `main` with all 11 services (sign + optional SBOM attest)
+- [ ] Kyverno signature policy contains live cosign public key (not placeholder)
+- [ ] Topic 17: attestation policy key matches; Enforce only after attestations exist
 - [ ] No cosign private key in Git, ADO variables, or logs
 - [ ] ACR retention: teardown destroys images — re-run pipeline after rebuild ([13-teardown.md](../setup/13-teardown.md))
 
-**Setup:** [09-ci-pipeline.md](../setup/09-ci-pipeline.md)
+**Setup:** [09-ci-pipeline.md](../setup/09-ci-pipeline.md) · [17-sbom-attestations.md](../setup/17-sbom-attestations.md)
 **Troubleshooting:** [pipeline-failures.md](../troubleshooting/pipeline-failures.md), [image-signature.md](../troubleshooting/image-signature.md)

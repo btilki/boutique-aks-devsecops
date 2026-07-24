@@ -1,0 +1,30 @@
+# Azure DevOps — optional OWASP ZAP baseline DAST (Topic 20 / ADR-0017)
+# Manual only. Requires live Boutique HTTPS (dev recommended).
+# SETUP: docs/setup/20-dast.md
+# SCAFFOLD: register as a separate ADO pipeline; do not add to PR or main supply-chain triggers.
+
+trigger: none
+pr: none
+
+parameters:
+  - name: targetUrl
+    displayName: HTTPS target to scan (must be a hostname you operate)
+    type: string
+    default: https://dev-boutique.biroltilki.art
+  - name: failOnWarn
+    displayName: Fail pipeline on ZAP WARN/FAIL
+    type: boolean
+    default: false
+
+variables:
+  - template: templates/dast-variables.yml
+  - name: dastTargetUrl
+    value: ${{ parameters.targetUrl }}
+  - name: dastFailOnWarn
+    value: ${{ parameters.failOnWarn }}
+
+stages:
+  - stage: DAST
+    displayName: DAST (ZAP baseline)
+    jobs:
+      - template: templates/dast-zap.yml

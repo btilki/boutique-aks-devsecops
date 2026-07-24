@@ -1,0 +1,13 @@
+# Default deny all ingress in the Boutique namespace (egress unrestricted in v1 of this package).
+# Pods only accept traffic matched by allow-* NetworkPolicies.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress

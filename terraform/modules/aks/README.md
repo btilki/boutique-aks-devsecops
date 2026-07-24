@@ -4,7 +4,7 @@
 
 AKS cluster with system (D2s_v6) and user (D4s_v6) node pools in germanywestcentral.
 
-**Autoscaling note:** The user pool sets `enable_auto_scaling = true` and uses `lifecycle.ignore_changes` on `node_count` (and `upgrade_settings`) so Terraform does not fight the cluster autoscaler. The cluster resource ignores `microsoft_defender` drift when Defender for Containers is enabled outside this module.
+**Autoscaling note:** The user pool sets `enable_auto_scaling = true` and uses `lifecycle.ignore_changes` on `node_count` (and `upgrade_settings`) so Terraform does not fight the cluster autoscaler. The cluster resource ignores `microsoft_defender` drift when Defender for Containers is enabled outside this module — see [DEFENDER-OPT-IN.md](DEFENDER-OPT-IN.md) (ADR-0015; Falco is the default runtime control).
 
 ## Inputs
 

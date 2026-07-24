@@ -40,3 +40,6 @@ build/
 # Local kubeconfig copies
 kubeconfig
 kubeconfig.*
+
+# Local ZAP DAST output (Topic 20)
+.zap-out/

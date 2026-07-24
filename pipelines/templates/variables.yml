@@ -15,6 +15,11 @@ variables:
   cosignVersion: 2.2.4
   cosignSignArgs: --tlog-upload=false
 
+  # Topic 17 / ADR-0014 — SPDX SBOM + cosign attest (set false to skip on emergency rebuild)
+  enableSbomAttest: "true"
+  cosignAttestType: spdxjson
+  sbomPredicateType: "https://spdx.dev/Document"
+
   cosignPrivateKeySecretName: cosign-private-key
   cosignPublicKeySecretName: cosign-public-key
 

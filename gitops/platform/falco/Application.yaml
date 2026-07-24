@@ -1,0 +1,37 @@
+# Argo CD Application — Falco runtime detection (ADR-0015 / Topic 18).
+# SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL if not btilki/boutique-aks-devsecops.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: falco
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "40"
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: runtime-security
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: platform
+  sources:
+    - repoURL: https://falcosecurity.github.io/charts
+      chart: falco
+      targetRevision: 9.1.0
+      helm:
+        releaseName: falco
+        valueFiles:
+          - $values/gitops/platform/falco/values.yaml
+    - repoURL: https://github.com/btilki/boutique-aks-devsecops
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: falco
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -1,0 +1,16 @@
+# Shared ResourceQuota for Boutique namespaces (Topic 19 / ADR-0016).
+# Sized for Online Boutique v0.10.5 on the pilot node pool — raise before scaling replicas.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: boutique-resource-quota
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: namespace-hardening
+spec:
+  hard:
+    pods: "50"
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi

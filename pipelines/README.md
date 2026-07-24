@@ -18,22 +18,30 @@ Mirror Online Boutique **v0.10.5**, Trivy CRITICAL gate, cosign sign (`--tlog-up
 
 | File | Role |
 |------|------|
-| `azure-pipelines.yml` | Main supply-chain pipeline |
-| `azure-pipelines-promote.yml` | Stage → prod promotion (ADO env approval on prod) |
+| `azure-pipelines.yml` | Main supply-chain pipeline (`main` push; `pr: none`) |
+| `azure-pipelines-dast.yml` | Optional ZAP baseline DAST (manual) — Topic 20 |
 | `templates/variables.yml` | Versions, ACR/KV names, service list |
-| `templates/build-scan-sign.yml` | Mirror / scan / sign |
+| `templates/dast-variables.yml` | ZAP image + target defaults |
+| `templates/dast-zap.yml` | ZAP baseline job |
+| `templates/pr-variables.yml` | PR pipeline tool pins (Terraform / Kyverno CLI / Python) |
+| `templates/pr-validate.yml` | PR validation jobs |
+| `templates/build-scan-sign.yml` | Mirror / scan / sign / SPDX attest (Topic 17) |
 | `templates/promote-digest.yml` | GitOps overlay digest updates |
 
 ## Prerequisites
 
-- ADO OIDC (Topic 04) — service connection `azure-boutique-oidc`
-- ACR + Key Vault (Topic 03)
-- GitHub repo connected to the ADO project (Topic 09)
+| Pipeline | Needs |
+|----------|--------|
+| Supply-chain / promote | ADO OIDC (Topic 04), ACR + KV (Topic 03), GitHub↔ADO (Topic 09) |
+| **PR validate** | GitHub↔ADO only — **no** OIDC/ACR (Topic 14) |
+| **DAST (ZAP)** | Live HTTPS Boutique URL; Docker on agent (Topic 20) — **no** OIDC |
 
 ## Usage
 
-[docs/setup/09-ci-pipeline.md](../docs/setup/09-ci-pipeline.md) · [docs/setup/12-promotion-stage-prod.md](../docs/setup/12-promotion-stage-prod.md)
+[docs/setup/09-ci-pipeline.md](../docs/setup/09-ci-pipeline.md) · [docs/setup/14-pr-ci.md](../docs/setup/14-pr-ci.md) · [docs/setup/12-promotion-stage-prod.md](../docs/setup/12-promotion-stage-prod.md) · [docs/setup/20-dast.md](../docs/setup/20-dast.md)
+
+Local equivalent of PR gates: `make pr-validate` or `./tests/ci/pr-validate.sh`. Checkov only: `make checkov`. Local DAST (live URL): `./tests/ci/dast-zap.sh`.
 
 ## Timing
 
-Topic 09: main pipeline. Topic 12: promote pipeline + stage/prod overlays.
+Topic 09: main pipeline. Topic 12: promote. Topic 14/16: PR + Checkov. Topic 17: SBOM attest. Topic 20: optional ZAP DAST (manual).

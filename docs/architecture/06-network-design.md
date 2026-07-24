@@ -61,13 +61,13 @@ flowchart TB
 | Internal gRPC | 3550, 50051, 7000, etc. | gRPC |
 | Kubernetes API | 443 | HTTPS (AAD auth) |
 
-## Segmentation (v1)
+## Segmentation
 
 | Control | Status |
 |---------|--------|
 | NSG on AKS subnet | Terraform module |
 | Kyverno pod hardening | Enforced Phase 8 |
-| Kubernetes NetworkPolicy | Optional Phase 13 |
+| Kubernetes NetworkPolicy | **Scaffolded** Phase 17 / Topic 15 (`gitops/apps/boutique/base/networkpolicies/`); set `aks_network_policy = "azure"` on rebuild to enforce |
 | Private ACR | Deferred |
 
 ## Egress

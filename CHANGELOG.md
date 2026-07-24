@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Phase 15+ plan:** [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md), [ADR-0013](docs/adr/0013-scaffold-first-phase15.md) — scaffold-first fuller DevSecOps packages 1–8 without requiring live Azure.
+- **Package 2 / Topic 14 (PR CI):** `pipelines/azure-pipelines-pr.yml`, `templates/pr-*.yml`, `tests/ci/pr-validate.sh`, `make pr-validate`, [docs/setup/14-pr-ci.md](docs/setup/14-pr-ci.md); `versions.yaml` `ci.*` pins.
+- **Package 3 / Topic 15 (NetworkPolicies):** `gitops/apps/boutique/base/networkpolicies/`, optional `aks_network_policy` Terraform hook, [docs/setup/15-network-policies.md](docs/setup/15-network-policies.md).
+- **Package 4 / Topic 16 (IaC scan):** Checkov `tests/terraform/.checkov.yaml` + PR job, [docs/setup/16-iac-scanning.md](docs/setup/16-iac-scanning.md); baseline skips for pilot tradeoffs.
+- **Package 5 / Topic 17 (SBOM + attestations):** Trivy SPDX + cosign attest in `build-scan-sign.yml`, Kyverno `05-verify-sbom-attestation.yaml` (Audit), [ADR-0014](docs/adr/0014-sbom-cosign-attestations.md), [docs/setup/17-sbom-attestations.md](docs/setup/17-sbom-attestations.md).
+- **Package 6 / Topic 18 (Runtime security):** Falco GitOps (`gitops/platform/falco/`), [ADR-0015](docs/adr/0015-falco-runtime-detection.md), Defender opt-in note, [docs/setup/18-runtime-security.md](docs/setup/18-runtime-security.md).
+- **Package 7 / Topic 19 (Namespace + KV hardening):** PSA labels, ResourceQuota/LimitRange, KV ACL/purge TF options, [ADR-0016](docs/adr/0016-namespace-kv-hardening.md), [docs/setup/19-namespace-hardening.md](docs/setup/19-namespace-hardening.md).
+- **Package 8 / Topic 20 (DAST):** Manual ZAP baseline pipeline, [ADR-0017](docs/adr/0017-optional-zap-dast.md), [docs/setup/20-dast.md](docs/setup/20-dast.md).
+- **Phase 15+ scaffold complete** (Packages 1–8 / Topics 14–20).
+- ROADMAP milestones M8a–M8e and Setup Topics **14–20** catalog in `docs/setup/README.md`.
 - README **Limitations** blurb and consolidated **CI story** (GitHub VCS + Azure DevOps CI; no GitHub Actions) for public-share clarity.
 - Morning checklist with Argo CD sync health as gate #1 in `docs/operations/08-health-checks.md`.
 - `gitops/platform/monitoring/extras/README.md` — single source of truth for custom alerts/dashboards.
@@ -16,8 +26,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- Status SSOT: Setup Topic **13** teardown complete; test offline — README hostnames note points readers to `assets/images/setup/` screenshots.
-- Terminology: project “lab” / “Lab” wording renamed to **test** / **Test** (docs, comments, ops guides).
+- Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.
+- Documentation review: setup/ops/architecture indexes aligned with Phase 15+ + torn-down Azure; removed **Wave N** branding (use Topics / Phases / Packages only); CHANGELOG [0.2.0] historical note clarified.
+- Terminology: environment wording standardized on **test** / **Test** (docs, comments, ops guides).
 - Alert catalog docs point only at `gitops/platform/monitoring/extras/alerts/` (`docs/operations/10-alerting.md`, architecture observability).
 - Fixed relative doc links from `terraform/` and `gitops/platform/monitoring/{loki,promtail}/` READMEs.
 
@@ -28,7 +39,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.2.0] — 2026-07-15
 
-Production-pilot test through Setup Topics **00–12** (live), with Topic **13** teardown authored but not executed.
+Production-pilot through Setup Topics **00–12** (live at tag time). Topic **13** teardown guide was authored in this release and **executed later** (see Unreleased / current README status).
 
 ### Added
 

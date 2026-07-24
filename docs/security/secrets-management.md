@@ -14,6 +14,7 @@ How this project stores, delivers, and rotates secrets for the production-pilot 
 3. **Delivery** uses Workload Identity + Secrets Store CSI (or ADO OIDC for pipeline-only reads).
 4. **Least privilege:** pipeline UAMI = Key Vault Secrets User + AcrPush; platform UAMI = Secrets User (+ DNS for cert-manager path).
 5. Public material (cosign **public** key) may live in Git for Kyverno; private material must not.
+6. **Hardening (Topic 19):** optional Key Vault network ACL Deny + purge protection; Boutique namespaces use PSA baseline + ResourceQuota/LimitRange ([ADR-0016](../adr/0016-namespace-kv-hardening.md)).
 
 ---
 

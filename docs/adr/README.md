@@ -14,6 +14,11 @@
 | [0010](0010-destroy-acr-on-teardown.md) | Destroy ACR on teardown | Accepted |
 | [0011](0011-aks-node-vm-sku.md) | AKS node VM SKUs and region | Accepted |
 | [0012](0012-loki-in-cluster-logging.md) | In-cluster Loki instead of Log Analytics | Accepted |
+| [0013](0013-scaffold-first-phase15.md) | Scaffold-first Phase 15+ (no live Azure) | Accepted |
+| [0014](0014-sbom-cosign-attestations.md) | SPDX SBOM + cosign attestations (key-based) | Accepted |
+| [0015](0015-falco-runtime-detection.md) | Falco for runtime detection (Defender opt-in) | Accepted |
+| [0016](0016-namespace-kv-hardening.md) | Namespace PSA + quotas; optional KV network ACL | Accepted |
+| [0017](0017-optional-zap-dast.md) | Optional ZAP baseline DAST (advisory by default) | Accepted |
 
 ## Format
 

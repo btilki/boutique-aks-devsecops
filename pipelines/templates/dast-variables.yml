@@ -1,0 +1,8 @@
+# DAST variables — keep aligned with versions.yaml (dast / hostnames).
+# SETUP: docs/setup/20-dast.md · ADR-0017
+variables:
+  zapImage: "ghcr.io/zaproxy/zaproxy:2.15.0"
+  # Default target — override at queue time or in ADO variables
+  dastTargetUrl: "https://dev-boutique.biroltilki.art"
+  # false = advisory (exit 0 even on WARN); true = fail job on ZAP WARN/FAIL
+  dastFailOnWarn: "false"

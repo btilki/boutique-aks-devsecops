@@ -1,0 +1,57 @@
+# Verify SPDX SBOM cosign attestations on ACR images (Topic 17 / ADR-0014).
+# SCAFFOLD: validationFailureAction is Audit until a full mirror+attest pipeline has run.
+# SETUP: replace public key with the same PEM as 02-verify-image-signatures.yaml;
+#        switch to Enforce only after cosign verify-attestation succeeds for all services.
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-sbom-attestations
+  annotations:
+    policies.kyverno.io/title: Verify SPDX SBOM Attestations
+    policies.kyverno.io/category: Supply Chain
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Requires cosign SPDX JSON attestations (predicate https://spdx.dev/Document)
+      on ACR images. Audit by default — see docs/setup/17-sbom-attestations.md.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: verify-spdx-sbom-attestation
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - kube-system
+                - kyverno
+                - argocd
+                - ingress-nginx
+                - cert-manager
+                - csi-test
+                - monitoring
+      verifyImages:
+        - imageReferences:
+            - "acrboutiquedevgwc.azurecr.io/*"
+          mutateDigest: true
+          required: true
+          verifyDigest: true
+          attestations:
+            - predicateType: https://spdx.dev/Document
+              attestors:
+                - count: 1
+                  entries:
+                    - keys:
+                        publicKeys: |-
+                          -----BEGIN PUBLIC KEY-----
+                          MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEza4vT3QtRFJDngvP1ZaSfYXJUClv
+                          twrngdLGGxTkmKa7fTudEYUaJQG11/8hNzbVGdxEWQrmPfI4KP42Hdx2lw==
+                          -----END PUBLIC KEY-----
+                        rekor:
+                          ignoreTlog: true
+                        ctlog:
+                          ignoreSCT: true

@@ -1,0 +1,80 @@
+# OWASP ZAP baseline against Boutique storefront (Topic 20 / ADR-0017).
+# Manual pipeline only — needs live HTTPS ingress.
+parameters:
+  - name: poolImage
+    type: string
+    default: ubuntu-22.04
+
+jobs:
+  - job: ZapBaseline
+    displayName: ZAP baseline DAST
+    pool:
+      vmImage: ${{ parameters.poolImage }}
+    steps:
+      - checkout: self
+        fetchDepth: 1
+
+      - bash: |
+          set -euo pipefail
+          TARGET="$(dastTargetUrl)"
+          FAIL_ON_WARN="$(dastFailOnWarn)"
+          ZAP_IMAGE="$(zapImage)"
+          OUT_DIR="$(Build.ArtifactStagingDirectory)/zap"
+          mkdir -p "${OUT_DIR}"
+
+          echo "Target: ${TARGET}"
+          echo "Image: ${ZAP_IMAGE}"
+          echo "Fail on WARN: ${FAIL_ON_WARN}"
+
+          # Preflight — do not scan unreachable or wrong hosts
+          if ! curl -fsS -o /dev/null --max-time 30 "${TARGET}/"; then
+            echo "ERROR: Target not reachable over HTTPS. Rebuild Topics 06+10 or override dastTargetUrl." >&2
+            exit 1
+          fi
+
+          # zap-baseline.py exit codes: 0 OK, 1 WARNINGS, 2 FAILURES
+          # -I suppresses WARN exit codes — use only in advisory mode
+          EXTRA_ARGS=()
+          if [[ "${FAIL_ON_WARN}" != "true" ]]; then
+            EXTRA_ARGS+=(-I)
+          fi
+
+          set +e
+          docker run --rm \
+            -v "${OUT_DIR}:/zap/wrk:rw" \
+            "${ZAP_IMAGE}" \
+            zap-baseline.py -t "${TARGET}" \
+              -r zap-report.html \
+              -J zap-report.json \
+              "${EXTRA_ARGS[@]}"
+          RC=$?
+          set -e
+
+          echo "ZAP exit code: ${RC}"
+          ls -la "${OUT_DIR}" || true
+
+          if [[ ! -f "${OUT_DIR}/zap-report.html" ]]; then
+            echo "ERROR: Expected zap-report.html missing — ZAP container may have failed hard." >&2
+            exit 1
+          fi
+
+          if [[ "${FAIL_ON_WARN}" == "true" ]]; then
+            if [[ "${RC}" -ne 0 ]]; then
+              echo "DAST gate failed (dastFailOnWarn=true, ZAP rc=${RC})." >&2
+              exit "${RC}"
+            fi
+          else
+            echo "Advisory mode: publishing reports regardless of ZAP WARN/FAIL (rc=${RC})."
+          fi
+        displayName: Run ZAP baseline
+        env:
+          # Ensure docker is available on Microsoft-hosted agents (usually preinstalled)
+          DOCKER_BUILDKIT: "0"
+
+      - task: PublishPipelineArtifact@1
+        displayName: Publish ZAP reports
+        condition: always()
+        inputs:
+          targetPath: $(Build.ArtifactStagingDirectory)/zap
+          artifact: zap-baseline
+          publishLocation: pipeline

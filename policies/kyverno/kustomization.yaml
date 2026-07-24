@@ -7,4 +7,5 @@ resources:
   - cluster/02-verify-image-signatures.yaml
   - cluster/03-require-pod-security-baseline.yaml
   - cluster/04-block-privileged-host-access.yaml
+  - cluster/05-verify-sbom-attestation.yaml
   - namespace/dev-exceptions-example.yaml

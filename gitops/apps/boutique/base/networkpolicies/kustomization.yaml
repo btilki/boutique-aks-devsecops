@@ -1,0 +1,13 @@
+# NetworkPolicies for Online Boutique (ingress default-deny + service graph)
+#
+# Applies to every overlay via base/kustomization.yaml (dev/stage/prod namespaces).
+# Requires AKS network_policy = "azure" (or Cilium) — see docs/setup/15-network-policies.md
+# and terraform/modules/aks (var.network_policy). Without an enforcement plugin, policies
+# are stored but not enforced.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - 00-default-deny-ingress.yaml
+  - 10-allow-frontend.yaml
+  - 20-allow-backends.yaml

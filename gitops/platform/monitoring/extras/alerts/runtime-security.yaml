@@ -1,0 +1,32 @@
+# Falco / runtime security alerts (Topic 18).
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: runtime-security
+  namespace: monitoring
+  annotations:
+    argocd.argoproj.io/sync-wave: "45"
+  labels:
+    release: kube-prometheus-stack
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+spec:
+  groups:
+    - name: platform.runtime
+      interval: 30s
+      rules:
+        - alert: FalcoDaemonSetUnavailable
+          expr: |
+            kube_daemonset_status_number_ready{namespace="falco", daemonset=~"falco.*"}
+              <
+            kube_daemonset_status_desired_number_scheduled{namespace="falco", daemonset=~"falco.*"}
+          for: 10m
+          labels:
+            severity: critical
+            team: platform
+          annotations:
+            summary: Falco DaemonSet not fully ready
+            description: >-
+              One or more Falco pods are not Ready in namespace falco.
+              Runtime detection may be degraded.
+            runbook_url: https://github.com/btilki/boutique-aks-devsecops/blob/main/docs/setup/18-runtime-security.md
+            dashboard_url: https://grafana-boutique.biroltilki.art/dashboards

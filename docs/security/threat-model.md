@@ -68,7 +68,7 @@ flowchart LR
 | ADO pipeline UAMI | Over-permissioned | AcrPush + KV Secrets User only |
 | Platform UAMI | DNS zone takeover | DNS Zone Contributor scoped to `biroltilki.art` |
 | Human operator | Long-lived PAT | Prefer OIDC; no PATs in repo |
-| Workload pods | Access other tenants | Namespace isolation; NetworkPolicy deferred v1 |
+| Workload pods | Access other tenants | Namespace isolation; NetworkPolicy scaffold Topic 15 (enforce with `aks_network_policy=azure`) |
 
 ---
 

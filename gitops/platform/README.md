@@ -7,6 +7,7 @@ Shared cluster services deployed via Argo CD (`platform-root` Application):
 | NGINX Ingress | `ingress-nginx/` | 06 ✅ files |
 | cert-manager | `cert-manager/` | 06 ✅ files |
 | Kyverno controller | `kyverno/` | 08 ✅ files |
+| Falco (runtime) | `falco/` | 18 ✅ scaffold |
 | Secrets Store CSI | `secrets-store-csi/` | 07 ✅ files |
 | Monitoring | `monitoring/` | 11 |
 

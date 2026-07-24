@@ -239,9 +239,9 @@ kube-prometheus-stack (Prometheus, Grafana, Alertmanager) + Loki/Promtail + OTel
 | Item | Prerequisite |
 |------|--------------|
 | Azure AD SSO for Argo CD | Entra app registration |
-| Trivy vuln attestations | Kyverno attestation policy |
+| Trivy vuln attestations | Stretch (SPDX SBOM attestations: Topic 17 / ADR-0014) |
 | Service mesh | Stable baseline |
-| NetworkPolicy default deny | Phase 13 hardening |
+| NetworkPolicy default deny | Topic 15 scaffold (`base/networkpolicies/`); enforce via `aks_network_policy=azure` on rebuild |
 
 See [ROADMAP.md](ROADMAP.md).
 

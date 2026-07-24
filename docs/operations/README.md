@@ -3,7 +3,8 @@
 Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap lives in [`docs/setup/`](../setup/). Deep promotion/teardown procedures live in [`docs/runbooks/`](../runbooks/). Symptom indexes live in [`docs/troubleshooting/`](../troubleshooting/).
 
 **Maturity:** Production pilot · **Owner:** You (solo operator)
-**Assumes:** Setup Topics 00–12 completed at least once.
+**Assumes:** Setup Topics 00–12 completed at least once (reference Azure test is currently **offline** — see root README).
+**Phase 15+:** Topics 14–20 are scaffolded ([phase15-plus.md](../implementation/phase15-plus.md)); Falco / NetworkPolicies / PR CI apply after rebuild.
 
 ---
 
@@ -32,6 +33,7 @@ Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap
 | Ingress + TLS | `ingress-nginx`, Certificate CRs | You | — | `IngressCertExpiringSoon` |
 | Kyverno | `kyverno` + ClusterPolicies | You | — | `KyvernoAdmissionDown` |
 | Monitoring stack | `monitoring` | You | Grafana / Alertmanager Overview | (platform rules) |
+| Falco (Topic 18) | `falco` (after Topic 18 apply) | You | Loki / Falco logs | `runtime-security` rules (scaffold) |
 | ACR + cosign | `acrboutiquedevgwc` · Key Vault | You | ACR portal / pipeline | (pipeline failure) |
 
 **Hostnames:** see [root README](../../README.md).

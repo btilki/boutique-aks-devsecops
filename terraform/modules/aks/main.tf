@@ -23,6 +23,7 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   network_profile {
     network_plugin    = "azure"
+    network_policy    = var.network_policy
     load_balancer_sku = "standard"
     outbound_type     = "loadBalancer"
     service_cidr      = var.service_cidr

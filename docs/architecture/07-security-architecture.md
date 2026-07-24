@@ -82,7 +82,7 @@ Kyverno policy must set `rekor.ignoreTlog: true` and `ctlog.ignoreSCT: true` to 
 |-----------------------|----------|
 | ADO pipeline (OIDC) | Scoped ACR push + sign key read |
 | Argo CD admin | All cluster manifests |
-| Boutique pod | Cluster network (NetworkPolicy deferred) |
+| Boutique pod | Cluster network + NetworkPolicy allow-list (Topic 15 scaffold; enforce with Azure NPM) |
 | Single namespace | Other namespaces without RBAC breakout |
 
 ## Tradeoffs

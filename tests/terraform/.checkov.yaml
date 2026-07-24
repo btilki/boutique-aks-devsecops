@@ -1,0 +1,55 @@
+# Checkov — Terraform IaC scan (Package 4 / Topic 16)
+# Keep aligned with versions.yaml ci.checkov and tests/terraform/checkov.sh
+# Docs: docs/setup/16-iac-scanning.md
+
+compact: true
+quiet: true
+framework:
+  - terraform
+directory:
+  - terraform
+download-external-modules: false
+# Fail the job on any finding not listed under skip-check
+soft-fail: false
+
+# --- Baseline skips (production-pilot tradeoffs) ---
+# Each ID is an accepted residual risk or deferred hardening item.
+# Remove an entry only when Terraform is changed to satisfy the check,
+# or when a Topic 14–20 (e.g. 19 KV ACL) explicitly closes it.
+skip-check:
+  # AKS — cost / single-cluster pilot (ARCHITECTURE Limitations, ADR-0002)
+  - CKV_AZURE_6    # API server authorized IP ranges — public API for test rebuild simplicity
+  - CKV_AZURE_115  # Private cluster — deferred (cost + jump-host complexity)
+  - CKV_AZURE_116  # Azure Policy add-on — Kyverno is admission SSOT (ROADMAP out of scope duplicate)
+  - CKV_AZURE_117  # Disk encryption set — deferred
+  - CKV_AZURE_141  # Disable local accounts — enable on next harden pass if Entra-only is proven
+  - CKV_AZURE_168  # max_pods >= 50 — small node SKUs; not required for pilot scale
+  - CKV_AZURE_170  # Paid SLA SKU — cost; Free/Standard OK for pilot
+  - CKV_AZURE_171  # Upgrade channel — pinned kubernetes_version in versions.yaml
+  - CKV_AZURE_172  # CSI secret autorotation at cluster flag — rotation runbooks cover ops
+  - CKV_AZURE_226  # Ephemeral OS disks — not required for pilot
+  - CKV_AZURE_227  # Host encryption — SKU/region dependent
+
+  # ACR — public endpoint + Trivy/cosign in ADO (ADR-0009 / Topic 09); private ACR deferred
+  - CKV_AZURE_139  # Disable public networking
+  - CKV_AZURE_164  # Trust policy / content trust — cosign+Kyverno instead
+  - CKV_AZURE_165  # Geo-replication — single region
+  - CKV_AZURE_166  # Quarantine — Trivy gate in CI
+  - CKV_AZURE_167  # Untagged retention — digest pins in GitOps
+  - CKV_AZURE_233  # Zone redundancy — cost
+  - CKV_AZURE_237  # Dedicated data endpoints
+
+  # Key Vault — soft-delete on; purge protection + network ACL = Topic 19 (enable then remove these skips)
+  - CKV_AZURE_42   # Recoverable / soft-delete nuance — soft_delete enabled in module
+  - CKV_AZURE_109  # Firewall rules — set kv_network_acls_default_action=Deny (Topic 19) then remove skip
+  - CKV_AZURE_110  # Purge protection — set kv_purge_protection_enabled=true (Topic 19) then remove skip
+  - CKV_AZURE_189  # Disable public network — satisfied when ACL Deny (Topic 19) then remove skip
+
+  # Networking — HTTP:80 for cert-manager / redirect to HTTPS (Topic 06)
+  - CKV_AZURE_160  # Restrict HTTP from internet — needed for HTTP→HTTPS redirect / ACME paths
+
+  # Storage (TF state bootstrap) — public blob access controls; pilot accepts defaults with private container
+  - CKV_AZURE_33   # Queue logging — state account is blob-centric
+  - CKV_AZURE_59   # Disallow public access — review on rebuild; container is private
+  - CKV_AZURE_190  # Restrict blob public access
+  - CKV_AZURE_206  # Replication — LRS sufficient for pilot state

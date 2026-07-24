@@ -68,11 +68,15 @@ module "acr" {
 module "key_vault" {
   source = "../../modules/key-vault"
 
-  name                       = var.key_vault_name
-  resource_group_name        = module.resource_group.name
-  location                   = module.resource_group.location
-  log_analytics_workspace_id = null
-  tags                       = var.tags
+  name                        = var.key_vault_name
+  resource_group_name         = module.resource_group.name
+  location                    = module.resource_group.location
+  log_analytics_workspace_id  = null
+  purge_protection_enabled    = var.kv_purge_protection_enabled
+  network_acls_default_action = var.kv_network_acls_default_action
+  network_acls_ip_rules       = var.kv_network_acls_ip_rules
+  network_acls_subnet_ids     = var.kv_network_acls_default_action == "Deny" ? [module.networking.aks_subnet_id] : []
+  tags                        = var.tags
 }
 
 module "aks" {
@@ -84,6 +88,7 @@ module "aks" {
   location                   = module.resource_group.location
   subnet_id                  = module.networking.aks_subnet_id
   kubernetes_version         = var.kubernetes_version
+  network_policy             = var.aks_network_policy
   system_node_vm_size        = var.system_node_vm_size
   system_node_count          = var.system_node_count
   user_node_vm_size          = var.user_node_vm_size

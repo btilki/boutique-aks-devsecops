@@ -1,0 +1,247 @@
+# East-west allow rules for Online Boutique v0.10.5 (label app: <service>).
+# Graph derived from *_SERVICE_ADDR / REDIS_ADDR in base/manifests.yaml.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-productcatalogservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: productcatalogservice
+spec:
+  podSelector:
+    matchLabels:
+      app: productcatalogservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+        - podSelector:
+            matchLabels:
+              app: recommendationservice
+      ports:
+        - protocol: TCP
+          port: 3550
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-currencyservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: currencyservice
+spec:
+  podSelector:
+    matchLabels:
+      app: currencyservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+      ports:
+        - protocol: TCP
+          port: 7000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-cartservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: cartservice
+spec:
+  podSelector:
+    matchLabels:
+      app: cartservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+      ports:
+        - protocol: TCP
+          port: 7070
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-recommendationservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: recommendationservice
+spec:
+  podSelector:
+    matchLabels:
+      app: recommendationservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-shippingservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: shippingservice
+spec:
+  podSelector:
+    matchLabels:
+      app: shippingservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+      ports:
+        - protocol: TCP
+          port: 50051
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-checkoutservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: checkoutservice
+spec:
+  podSelector:
+    matchLabels:
+      app: checkoutservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 5050
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-adservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: adservice
+spec:
+  podSelector:
+    matchLabels:
+      app: adservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 9555
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-emailservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: emailservice
+spec:
+  podSelector:
+    matchLabels:
+      app: emailservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+      ports:
+        - protocol: TCP
+          port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-paymentservice
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: paymentservice
+spec:
+  podSelector:
+    matchLabels:
+      app: paymentservice
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: checkoutservice
+      ports:
+        - protocol: TCP
+          port: 50051
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-redis-cart
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: network-policy
+    app: redis-cart
+spec:
+  podSelector:
+    matchLabels:
+      app: redis-cart
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: cartservice
+      ports:
+        - protocol: TCP
+          port: 6379

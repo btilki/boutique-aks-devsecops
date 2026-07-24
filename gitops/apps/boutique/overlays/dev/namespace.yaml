@@ -5,3 +5,8 @@ metadata:
   labels:
     app.kubernetes.io/part-of: boutique-aks-devsecops
     environment: dev
+    # Pod Security Admission (Topic 19 / ADR-0016) — enforce baseline; warn/audit restricted
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted

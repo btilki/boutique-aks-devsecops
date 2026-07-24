@@ -1,4 +1,5 @@
-# Mirror Online Boutique images, Trivy scan (CRITICAL gate), cosign sign by digest.
+# Mirror Online Boutique images, Trivy scan (CRITICAL gate), cosign sign by digest,
+# optional SPDX SBOM + cosign attest (Topic 17 / ADR-0014).
 # Requires ADO OIDC service connection and cosign key pair in Key Vault (Topic 09 setup).
 stages:
   - stage: MirrorScanSign
@@ -14,7 +15,7 @@ stages:
             fetchDepth: 1
 
           - task: AzureCLI@2
-            displayName: Mirror, Trivy scan, cosign sign
+            displayName: Mirror, Trivy scan, cosign sign, SBOM attest
             inputs:
               azureSubscription: $(azureServiceConnection)
               scriptType: bash
@@ -38,7 +39,7 @@ stages:
                 az acr login --name "$(acrName)"
 
                 WORK_DIR="$(Agent.TempDirectory)/boutique-supply-chain"
-                mkdir -p "${WORK_DIR}"
+                mkdir -p "${WORK_DIR}/sboms"
                 DIGEST_MANIFEST="${WORK_DIR}/digest-manifest.json"
                 echo "{}" > "${DIGEST_MANIFEST}"
 
@@ -50,6 +51,15 @@ stages:
                   --query value -o tsv > "${COSIGN_KEY}"
                 chmod 600 "${COSIGN_KEY}"
                 export COSIGN_PASSWORD=""
+
+                PUB_KEY="${WORK_DIR}/cosign.pub"
+                az keyvault secret show \
+                  --vault-name "$(keyVaultName)" \
+                  --name "$(cosignPublicKeySecretName)" \
+                  --query value -o tsv > "${PUB_KEY}"
+
+                ENABLE_SBOM="$(enableSbomAttest)"
+                ATTEST_TYPE="$(cosignAttestType)"
 
                 for SERVICE in $(boutiqueServices); do
                   echo "========================================"
@@ -83,12 +93,24 @@ stages:
                   cosign sign --key "${COSIGN_KEY}" --tlog-upload=false -y "${DEST_DIGEST_REF}"
 
                   echo "cosign verify (pipeline gate)"
-                  PUB_KEY="${WORK_DIR}/cosign.pub"
-                  az keyvault secret show \
-                    --vault-name "$(keyVaultName)" \
-                    --name "$(cosignPublicKeySecretName)" \
-                    --query value -o tsv > "${PUB_KEY}"
                   cosign verify --key "${PUB_KEY}" --insecure-ignore-tlog "${DEST_DIGEST_REF}"
+
+                  if [[ "${ENABLE_SBOM}" == "true" ]]; then
+                    SBOM_FILE="${WORK_DIR}/sboms/${SERVICE}.spdx.json"
+                    echo "Trivy SPDX SBOM → ${SBOM_FILE}"
+                    trivy image --format spdx-json --output "${SBOM_FILE}" "${DEST_DIGEST_REF}"
+
+                    echo "cosign attest --type ${ATTEST_TYPE}"
+                    cosign attest --predicate "${SBOM_FILE}" --type "${ATTEST_TYPE}" \
+                      --key "${COSIGN_KEY}" --tlog-upload=false -y "${DEST_DIGEST_REF}"
+
+                    echo "cosign verify-attestation (pipeline gate)"
+                    cosign verify-attestation --type "${ATTEST_TYPE}" \
+                      --key "${PUB_KEY}" --insecure-ignore-tlog "${DEST_DIGEST_REF}" \
+                      >/dev/null
+                  else
+                    echo "SBOM/attest skipped (enableSbomAttest=${ENABLE_SBOM})"
+                  fi
 
                   jq --arg svc "${SERVICE}" --arg digest "${DIGEST}" \
                     '. + {($svc): $digest}' "${DIGEST_MANIFEST}" > "${DIGEST_MANIFEST}.tmp"
@@ -99,6 +121,10 @@ stages:
                 cat "${DIGEST_MANIFEST}"
 
                 cp "${DIGEST_MANIFEST}" "$(Build.ArtifactStagingDirectory)/digest-manifest.json"
+                if [[ "${ENABLE_SBOM}" == "true" ]] && ls "${WORK_DIR}/sboms"/*.spdx.json >/dev/null 2>&1; then
+                  mkdir -p "$(Build.ArtifactStagingDirectory)/sboms"
+                  cp "${WORK_DIR}/sboms"/*.spdx.json "$(Build.ArtifactStagingDirectory)/sboms/"
+                fi
             env:
               boutiqueServices: $(boutiqueServices)
 
@@ -107,4 +133,12 @@ stages:
             inputs:
               targetPath: $(Build.ArtifactStagingDirectory)/digest-manifest.json
               artifact: digest-manifest
+              publishLocation: pipeline
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish SPDX SBOM files
+            condition: and(succeeded(), eq(variables['enableSbomAttest'], 'true'))
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)/sboms
+              artifact: sboms-spdx
               publishLocation: pipeline

@@ -4,7 +4,7 @@
 
 **Audience:** L2 implementer following topics manually, one step at a time, with validation after every step.
 
-**Status:** Guides for Topics **00–13** are authored. Test execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README).
+**Status:** Guides for Topics **00–13** are authored. Test execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README). **Phase 15+** (Topics **14–20**) scaffold complete — apply after rebuild; see [docs/implementation/phase15-plus.md](../implementation/phase15-plus.md).
 
 ---
 
@@ -20,6 +20,7 @@ End-to-end bootstrap of a **production-pilot Azure DevSecOps platform** for **On
 4. Secure supply chain (mirror → Trivy → cosign → Kyverno verify)
 5. Boutique deployment across dev / stage / prod namespaces
 6. Observability, promotion gates, integration validation, and teardown
+7. Phase 15+ fuller DevSecOps (Topics **14–20**) — scaffolded in Git; apply after a Topics 00–12 rebuild
 
 ### Estimated time and cost
 
@@ -29,6 +30,7 @@ End-to-end bootstrap of a **production-pilot Azure DevSecOps platform** for **On
 | Topics 06–10 (platform + CI + dev app) | ~10–14 hours | **AKS + ACR + Loki PVC** ~€150–250/mo |
 | Topics 11–12 (observability + promotion) | ~6–8 hours | Same cluster |
 | Topic 13 (teardown) | ~1–2 hours | Destroys billable resources |
+| Topics 14–20 (apply after rebuild) | ~6–12 hours | Same cluster (+ optional Falco/DAST) |
 
 Times assume familiarity with Azure, Terraform, and Kubernetes. First-time builders should add 30–50%.
 
@@ -71,7 +73,21 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 
 **Dependency chain:** `00 → 01 → 02 → 03 → 04 → 05 → 06 → 07` and `03 → 09 → 08 → 10 → 11 → 12 → 13`
 
-**Phase 13 (hardening & integration)** has no separate setup topic — validation runs via `tests/integration/` after Topic 12.
+**Phase 13 (hardening & integration)** has no separate setup topic — validation ran via `tests/integration/` after Topic 12. Further hardening is **Phase 15+** (Setup Topics **14–20**), scaffold-first per [ADR-0013](../adr/0013-scaffold-first-phase15.md).
+
+### Topics 14–20 (scaffold → apply later)
+
+| # | Topic | Guide | Phase | Package | Scaffold | Live apply |
+|---|-------|-------|-------|---------|----------|------------|
+| 14 | PR CI gates | [14-pr-ci.md](14-pr-ci.md) | 16 | 2 | ✅ | after rebuild |
+| 15 | NetworkPolicies | [15-network-policies.md](15-network-policies.md) | 17 | 3 | ✅ | after rebuild |
+| 16 | IaC scanning | [16-iac-scanning.md](16-iac-scanning.md) | 18 | 4 | ✅ | after rebuild |
+| 17 | SBOM + attestations | [17-sbom-attestations.md](17-sbom-attestations.md) | 19 | 5 | ✅ | after rebuild |
+| 18 | Runtime security | [18-runtime-security.md](18-runtime-security.md) | 20 | 6 | ✅ | after rebuild |
+| 19 | Namespace / KV hardening | [19-namespace-hardening.md](19-namespace-hardening.md) | 21 | 7 | ✅ | after rebuild |
+| 20 | DAST (optional) | [20-dast.md](20-dast.md) | 22 | 8 | ✅ | after rebuild |
+
+**Topics 14–20 dependency (apply):** Topics 00–12 live again → then `14 → 15 → 16` (CI/net/IaC), `17` (SBOM), `18`–`19` (runtime + hardening), `20` optional. Teardown remains Topic 13 when destroying a rebuild.
 
 ---
 
@@ -169,6 +185,7 @@ When asking for help (chat or issue), include:
 | [ARCHITECTURE.md](../../ARCHITECTURE.md) | Executive architecture |
 | [ROADMAP.md](../../ROADMAP.md) | Phase milestones |
 | [docs/implementation/plan.md](../implementation/plan.md) | Implementation plan |
+| [docs/implementation/phase15-plus.md](../implementation/phase15-plus.md) | Phase 15+ fuller DevSecOps packages |
 | [docs/architecture/](../architecture/) | Deep architecture series |
 | [docs/adr/](../adr/) | Architecture decision records |
 

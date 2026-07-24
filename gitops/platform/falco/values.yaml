@@ -1,0 +1,27 @@
+# Cost-conscious Falco on AKS — modern eBPF, JSON to stdout (Promtail → Loki).
+# Chart pin: versions.yaml gitops.falco_chart · ADR-0015 · docs/setup/18-runtime-security.md
+# SETUP: verify chart values schema on Artifact Hub if bumping major chart version.
+
+tty: true
+
+driver:
+  kind: modern_ebpf
+
+falco:
+  json_output: true
+  json_include_output_property: true
+  http_output:
+    enabled: false
+
+# Keep requests modest for the pilot node pool (Standard_D4s_v6 user pool).
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: "1"
+    memory: 1024Mi
+
+# Optional: enable after metrics scrape is wired (ServiceMonitor stretch).
+metrics:
+  enabled: false

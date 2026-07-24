@@ -8,8 +8,8 @@ Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secr
 
 | Item | State |
 |------|--------|
-| Planning | Complete |
-| Implementation | Setup Topics **00–13** complete; Azure test **torn down** |
+| Planning | Phase 15+ **scaffold complete** — [phase15-plus.md](docs/implementation/phase15-plus.md) |
+| Implementation | Setup Topics **00–13** complete; Azure test **torn down**; Topics **14–20** scaffolded (apply after rebuild) |
 | Region | `germanywestcentral` (when rebuilt) |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
 
@@ -59,6 +59,7 @@ YAML lives in [`pipelines/`](pipelines/). Auth is ADO **OIDC** (no long-lived pi
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Executive architecture summary |
 | [CHANGELOG.md](CHANGELOG.md) | Notable changes |
 | [ROADMAP.md](ROADMAP.md) | Phase tracker and milestones |
+| [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md) | Phase 15+ fuller DevSecOps packages (scaffold-first) |
 | [docs/setup/README.md](docs/setup/README.md) | Authoritative setup guide index |
 | [docs/operations/README.md](docs/operations/README.md) | Day-2 runbooks |
 | [docs/architecture/README.md](docs/architecture/README.md) | Deep architecture docs |
@@ -95,9 +96,10 @@ examples/     # Runnable demos (CSI secret test)
 
 ## Getting started
 
-1. **New test:** start at [docs/setup/00-prerequisites.md](docs/setup/00-prerequisites.md), then follow [docs/setup/](docs/setup/) in order.
-2. **Existing test:** run P0 checks in [tests/README.md](tests/README.md); do not re-apply foundation blindly.
-3. Confirm each topic before the next; authoritative steps live only under `docs/setup/`.
+1. **New test (Topics 00–13):** start at [docs/setup/00-prerequisites.md](docs/setup/00-prerequisites.md), then follow Topics **00–12** (and **13** when tearing down).
+2. **Rebuild after teardown:** same path; do not re-apply foundation blindly — see [tests/README.md](tests/README.md) P0 checks.
+3. **Phase 15+ (Topics 14–20):** scaffold is in Git; apply only after Topics 00–12 are live again — [phase15-plus.md](docs/implementation/phase15-plus.md).
+4. Confirm each topic before the next; authoritative steps live only under `docs/setup/`.
 
 ## Security
 

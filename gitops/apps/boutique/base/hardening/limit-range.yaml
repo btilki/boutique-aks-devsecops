@@ -1,0 +1,21 @@
+# Shared LimitRange for Boutique namespaces (Topic 19 / ADR-0016).
+# Applies via base → overlays set namespace.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: boutique-limit-range
+  labels:
+    app.kubernetes.io/part-of: boutique-aks-devsecops
+    app.kubernetes.io/component: namespace-hardening
+spec:
+  limits:
+    - type: Container
+      defaultRequest:
+        cpu: 50m
+        memory: 64Mi
+      default:
+        cpu: 200m
+        memory: 256Mi
+      max:
+        cpu: "2"
+        memory: 2Gi

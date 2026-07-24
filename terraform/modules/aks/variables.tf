@@ -82,6 +82,21 @@ variable "dns_service_ip" {
   default     = "10.1.0.10"
 }
 
+variable "network_policy" {
+  description = <<-EOT
+    Kubernetes NetworkPolicy plugin for Azure CNI. Null = no enforcement (policies may exist but are inert).
+    Set to \"azure\" for Azure Network Policy Manager when applying Topic 15 (Package 3).
+    Changing this on an existing cluster often requires recreate — set at first apply when rebuilding.
+  EOT
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.network_policy == null || contains(["azure", "calico"], var.network_policy)
+    error_message = "network_policy must be null, \"azure\", or \"calico\"."
+  }
+}
+
 variable "tags" {
   description = "Tags applied to the cluster."
   type        = map(string)

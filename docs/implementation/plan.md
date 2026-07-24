@@ -1,6 +1,6 @@
 # Implementation plan
 
-**Status:** Setup Topics **00–13** complete; Azure test torn down. Phase 13 hardening deferred (⏭️).
+**Status:** Setup Topics **00–13** complete; Azure test torn down. Phase 13 hardening deferred (⏭️), superseded by **Phase 15+** scaffold-first work ([phase15-plus.md](phase15-plus.md), [ADR-0013](../adr/0013-scaffold-first-phase15.md)).
 **Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 
@@ -12,10 +12,11 @@
 |-------|-------|
 | Project | boutique-aks-devsecops |
 | Goal | Production-pilot Azure DevSecOps for Online Boutique v0.10.5 on AKS |
-| Phases | 15 (0–14) |
+| Phases | 0–14 complete (lived pilot); 15–22 scaffold-first (Phase 15+) |
 | Region | `germanywestcentral` |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
-| Done | FR-01–FR-04 met; policies enforce; observability + promotion executed; teardown documented |
+| Lived pilot done | FR-01–FR-04 met; policies enforce; observability + promotion executed; teardown documented |
+| Phase 15+ mode | Scaffold files + setup Topics 14–20 **without** live Azure; apply after rebuild |
 
 ---
 
@@ -29,6 +30,13 @@
 | G-04 | Digest GitOps promotion | Same `@sha256` in stage/prod as dev |
 | G-05 | Observability | Grafana + test alert + SLO doc |
 | G-06 | Teachable reference | Setup 00–13 complete |
+| G-07 | PR-time gates | ADO PR pipeline fails on lint / TF / Kyverno test |
+| G-08 | East-west isolation | NetworkPolicies for Boutique graph |
+| G-09 | IaC scanning | Checkov (or tfsec) in CI |
+| G-10 | SBOM + attestations | Artifacts + policy path documented |
+| G-11 | Runtime detection | Falco and/or Defender for Containers |
+| G-12 | Namespace / KV hardening | PSA, quotas, KV network ACL |
+| G-13 | Optional DAST | ZAP baseline job template |
 
 ---
 
@@ -38,6 +46,7 @@
 - Educational docs with rationale (why OIDC, Kyverno, GitOps)
 - Realistic promotion and rollback on microservices
 - Cost-conscious single cluster with teardown path
+- **Phase 15+:** deeper shift-left and runtime controls without requiring Azure burn to author them
 
 ---
 
@@ -49,6 +58,13 @@
 | FR-02 | AKS, ACR, KV, OIDC | 3–4 |
 | FR-03 | GitOps platform services | 5–8, 11 |
 | FR-04 | ADO mirror/scan/sign/promote | 9–12 |
+| FR-05 | ADO PR pipeline (lint / TF / Kyverno) | 16 |
+| FR-06 | Boutique NetworkPolicies | 17 |
+| FR-07 | IaC scanner on `terraform/` | 18 |
+| FR-08 | SBOM + cosign attestations | 19 |
+| FR-09 | Runtime security (Falco/Defender) | 20 |
+| FR-10 | KV ACL + PSA / quotas | 21 |
+| FR-11 | Optional DAST against storefront | 22 |
 
 ---
 
@@ -66,19 +82,22 @@ See [docs/architecture/01-requirements.md](../architecture/01-requirements.md).
 | DNS delegation | Phase 2 |
 | Dsv6 in germanywestcentral | Phase 0/3 |
 | ADO federation rights | Phase 4 |
+| Phase 15+ scaffold readable without live cluster | Phase 15 |
+| Topics 14–20 apply after Topics 00–12 rebuild | Topics 14–20 |
 
 ---
 
 ## 7. Constraints
 
-Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on teardown; ADO env approval for prod only.
+Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on teardown; ADO env approval for prod only; **no GitHub Actions**; scaffold packages must not require `terraform apply`.
 
 ---
 
 ## 8. Scope
 
-**In:** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.
-**Out:** Multi-region DR, service mesh, Azure Policy duplicate, Trivy attestations v1.
+**In (lived pilot):** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.
+**In (Phase 15+):** PR CI, NetworkPolicies, IaC scan, SBOM/attestations, runtime security, KV ACL + PSA/quotas, optional DAST — scaffold then apply.
+**Out:** Multi-region DR, service mesh, Azure Policy duplicate, private AKS/ACR as required, WAF/DDoS, build-from-source app SAST, HSM cosign keys.
 
 ---
 
@@ -91,18 +110,20 @@ Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on
 | Kyverno vs busybox/redis | Kustomize patches |
 | cosign/Kyverno tlog | `--tlog-upload=false` + `ignoreTlog` |
 | XL mirror pipeline | Loop over 11 services |
+| Scaffold mistaken for lived proof | ADR-0013; Apply later sections in Topics 14–20 |
+| Phase 13 vs 15+ confusion | Phase 13 stays ⏭️; Phase 15+ owns hardening backlog |
 
 ---
 
 ## 10. Dependencies
 
-External: Azure sub, DNS registrar, ADO. Internal: phase order per roadmap.
+External: Azure sub, DNS registrar, ADO. Internal: lived-pilot phase order per roadmap; Phase 15+ packages 2–8 after Package 1 inventory.
 
 ---
 
 ## 11. Technology stack
 
-See [versions.yaml](../../versions.yaml).
+See [versions.yaml](../../versions.yaml). Phase 15+ may pin Checkov, Syft/Trivy SBOM, Falco chart versions when those packages land.
 
 ---
 
@@ -129,16 +150,23 @@ Variant A adapted: `terraform/`, `gitops/`, `policies/`, `pipelines/`. See root 
 | M5 Secure delivery | 9–10 |
 | M6 Operate | 11–12 |
 | M7 Complete | 13–14 |
+| M8a Plan | 15 |
+| M8b Shift-left CI | 16, 18 |
+| M8c Cluster hardening | 17, 21 |
+| M8d Supply chain depth | 19 |
+| M8e Runtime + DAST | 20, 22 |
 
 ---
 
 ## 15. Deliverables
 
-See [ROADMAP.md](../../ROADMAP.md) phase table.
+See [ROADMAP.md](../../ROADMAP.md) phase tables and [phase15-plus.md](phase15-plus.md) package checklist.
 
 ---
 
 ## 16. Implementation phases (summary)
+
+### Lived pilot (Topics 00–13)
 
 | Phase | Title | Complexity | Setup topic |
 |-------|-------|------------|-------------|
@@ -155,29 +183,57 @@ See [ROADMAP.md](../../ROADMAP.md) phase table.
 | 10 | Boutique dev | L | 10-boutique-dev |
 | 11 | Observability | M | 11-observability |
 | 12 | Promotion | XL | 12-promotion-stage-prod |
-| 13 | Hardening | M | — |
+| 13 | Hardening | M | — (skipped; see Phase 15+) |
 | 14 | Teardown | M | 13-teardown |
 
-Each phase: one PR, validation checklist, approval gate before next.
+### Phase 15+ (scaffold packages)
 
-**Detailed per-phase tasks** were approved in planning session; expand in setup topics when each phase starts.
+| Phase | Title | Complexity | Setup topic | Package |
+|-------|-------|------------|-------------|---------|
+| 15 | Backlog & plan | S | phase15-plus.md | 1 ✅ |
+| 16 | PR CI gates | M | 14-pr-ci | 2 ✅ |
+| 17 | NetworkPolicies | M | 15-network-policies | 3 ✅ |
+| 18 | IaC scanning | M | 16-iac-scanning | 4 ✅ |
+| 19 | SBOM + attestations | L | 17-sbom-attestations | 5 ✅ |
+| 20 | Runtime security | L | 18-runtime-security | 6 ✅ |
+| 21 | KV ACL + PSA/quotas | M | 19-namespace-hardening | 7 ✅ |
+| 22 | DAST (optional) | M | 20-dast | 8 ✅ |
+
+Each Phase 15+ package: one PR-sized scaffold, setup topic with **Apply later** validation, ROADMAP status update.
 
 ---
 
 ## 17. Complexity summary
 
-Peaks: Phase 9 (mirror/sign), Phase 12 (promotion). Overall **L** for solo builder.
+Peaks: Phase 9 (mirror/sign), Phase 12 (promotion), Phase 19 (attestations). Phase 15+ scaffold overall **M** for solo builder; live apply adds cluster time.
 
 ---
 
 ## 18. Success criteria
 
-- [ ] FR-01–FR-04 delivered
-- [ ] All phases validated
-- [ ] Setup 00–13 complete
-- [ ] Policies deny unsigned/:latest/non-ACR
-- [ ] Teardown runbook executed once
-- [ ] New engineer can bootstrap from docs
+### Lived pilot (Topics 00–13)
+
+- [x] FR-01–FR-04 delivered
+- [x] Setup 00–13 complete
+- [x] Policies deny unsigned/:latest/non-ACR
+- [x] Teardown runbook executed once
+- [x] New engineer can bootstrap from docs
+
+### Phase 15+ (scaffold)
+
+- [x] Phase 15 inventory + ADR-0013
+- [x] Package 2 / Topic 14 (PR CI) scaffolded
+- [x] Package 3 / Topic 15 (NetworkPolicies) scaffolded
+- [x] Package 4 / Topic 16 (Checkov IaC) scaffolded
+- [x] Package 5 / Topic 17 (SBOM + attestations) scaffolded
+- [x] Package 6 / Topic 18 (Falco runtime) scaffolded
+- [x] Package 7 / Topic 19 (namespace + KV hardening) scaffolded
+- [x] Package 8 / Topic 20 (optional DAST) scaffolded
+- [x] ROADMAP Phase 15+ scaffold column complete
+
+### Phase 15+ (apply later — after Azure rebuild)
+
+- [ ] FR-05–FR-11 validated on live cluster per topic checklists
 
 ---
 
@@ -199,6 +255,14 @@ Peaks: Phase 9 (mirror/sign), Phase 12 (promotion). Overall **L** for solo build
 | 11 | 11 | platform/monitoring | FR-03 |
 | 12 | 12 | overlays/stage,prod | FR-03,04 |
 | 14 | 13 | scripts/operations/teardown.sh | — |
+| 15 | phase15-plus | docs/implementation/, ADR-0013 | — |
+| 16 | 14 | pipelines/azure-pipelines-pr.yml | FR-05 |
+| 17 | 15 | gitops/apps/boutique/**/networkpolicy* | FR-06 |
+| 18 | 16 | pipelines + Checkov | FR-07 |
+| 19 | 17 | build-scan-sign + kyverno attest | FR-08 |
+| 20 | 18 | gitops/platform/falco or TF Defender | FR-09 |
+| 21 | 19 | key-vault module + namespace manifests | FR-10 |
+| 22 | 20 | pipelines DAST template | FR-11 |
 
 ---
 
@@ -219,7 +283,15 @@ graph LR
     P9 --> P10
     P10 --> P11[11 Obs]
     P10 --> P12[12 Promote]
-    P11 --> P13[13 Harden]
+    P11 --> P13[13 Harden skipped]
     P12 --> P13
     P13 --> P14[14 Teardown]
+    P14 --> P15[15 Plan Phase15+]
+    P15 --> P16[16 PR CI]
+    P15 --> P17[17 NetPol]
+    P16 --> P18[18 IaC scan]
+    P15 --> P19[19 SBOM]
+    P15 --> P20[20 Runtime]
+    P15 --> P21[21 PSA/KV]
+    P15 --> P22[22 DAST]
 ```

@@ -24,11 +24,17 @@ acr_name = "acrboutiquedevgwc"
 acr_sku  = "Standard"
 
 key_vault_name = "kv-boutique-dev-gwc"
+# Topic 19 (namespace/KV hardening) — optional; defaults keep teardown easy:
+# kv_purge_protection_enabled    = true
+# kv_network_acls_default_action = "Deny"
+# kv_network_acls_ip_rules       = ["x.x.x.x"]  # optional operator public IP
 
 aks_cluster_name = "aks-boutique-dev-gwc"
 aks_dns_prefix   = "aksboutiquedevgwc"
 
 kubernetes_version  = "1.34"
+# Topic 15 (NetworkPolicies): set to "azure" when rebuilding so policies are enforced.
+# aks_network_policy  = "azure"
 system_node_vm_size = "Standard_D2s_v6"
 system_node_count   = 1
 user_node_vm_size   = "Standard_D4s_v6"

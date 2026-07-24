@@ -319,7 +319,7 @@ Full reference: [teardown.md](../runbooks/teardown.md)
 
 ## Setup guide complete
 
-**All Topics 00–13** are authored. Phase C execution is complete when you confirm this teardown (or document intentional skip while keeping test running).
+**All Topics 00–13** are authored. Reference test teardown is **complete** (Azure platform destroyed). Rebuild via Topics 00–12, then optionally apply Phase 15+ Topics **14–20** ([phase15-plus.md](../implementation/phase15-plus.md)).
 
 ### Phase D — readiness validation (next)
 

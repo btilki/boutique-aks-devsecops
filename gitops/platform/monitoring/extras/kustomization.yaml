@@ -7,6 +7,7 @@ namespace: monitoring
 resources:
   - alerts/boutique-availability.yaml
   - alerts/platform-health.yaml
+  - alerts/runtime-security.yaml
   - servicemonitors/boutique-frontend.yaml
   - servicemonitors/ingress-nginx.yaml
 

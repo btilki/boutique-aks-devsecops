@@ -1,0 +1,7 @@
+# PR validation variables — keep aligned with versions.yaml (ci / gitops.kyverno).
+# No ACR/KV/OIDC required — static checks only.
+variables:
+  terraformVersion: "1.9.8"
+  kyvernoCliVersion: "1.12.6"
+  pythonVersion: "3.11"
+  checkovVersion: "3.2.510"

@@ -1,7 +1,7 @@
 # Platform GitOps — platform-root syncs Application CRs only (app-of-apps).
 # Child Applications deploy Helm/manifests to their own namespaces.
 # Topic 06: ingress-nginx, cert-manager, argocd-ingress
-# Topics 07–08, 11: CSI, Kyverno, monitoring Applications below
+# Topics 07–08, 11, 18: CSI, Kyverno, monitoring, Falco Applications below
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -17,4 +17,5 @@ resources:
   - secrets-store-csi/test-serviceaccount.yaml
   - secrets-store-csi/test-pod.yaml
   - kyverno/
+  - falco/Application.yaml
   - monitoring/

@@ -67,6 +67,24 @@ variable "key_vault_name" {
   type        = string
 }
 
+variable "kv_purge_protection_enabled" {
+  description = "Key Vault purge protection (Topic 19). Default false for teardown-friendly pilot."
+  type        = bool
+  default     = false
+}
+
+variable "kv_network_acls_default_action" {
+  description = "Key Vault network ACL default (Allow|Deny). Deny requires AKS subnet service endpoint (Topic 19)."
+  type        = string
+  default     = "Allow"
+}
+
+variable "kv_network_acls_ip_rules" {
+  description = "Optional public IPs allowed when KV ACL is Deny (operators / break-glass)."
+  type        = list(string)
+  default     = []
+}
+
 variable "aks_cluster_name" {
   description = "AKS cluster name."
   type        = string
@@ -83,6 +101,12 @@ variable "kubernetes_version" {
   description = "AKS Kubernetes version — see versions.yaml."
   type        = string
   default     = "1.34"
+}
+
+variable "aks_network_policy" {
+  description = "AKS NetworkPolicy plugin (null | azure | calico). Set \"azure\" for Topic 15. Default null keeps Topics 00–13 behavior."
+  type        = string
+  default     = null
 }
 
 variable "system_node_vm_size" {

@@ -1,0 +1,33 @@
+# Azure DevOps — PR static validation (shift-left)
+# pre-commit + Terraform validate + Checkov + Kyverno unit tests
+# Does NOT mirror/scan/sign images (see azure-pipelines.yml on main).
+# SETUP: docs/setup/14-pr-ci.md · docs/setup/16-iac-scanning.md
+# SCAFFOLD: register this YAML as a separate ADO pipeline; apply-later when Azure/ADO is live.
+
+trigger: none
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - terraform/**
+      - policies/**
+      - pipelines/**
+      - gitops/**
+      - tests/**
+      - .pre-commit-config.yaml
+      - .yamllint.yml
+      - .gitleaks.toml
+      - versions.yaml
+      - Makefile
+
+variables:
+  - template: templates/pr-variables.yml
+
+stages:
+  - stage: PRValidate
+    displayName: PR validate
+    jobs:
+      - template: templates/pr-validate.yml

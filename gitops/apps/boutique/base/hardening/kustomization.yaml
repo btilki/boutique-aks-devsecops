@@ -1,0 +1,8 @@
+# Namespace hardening (PSA labels live on overlay Namespace objects).
+# ResourceQuota + LimitRange are included from Boutique base.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - limit-range.yaml
+  - resource-quota.yaml

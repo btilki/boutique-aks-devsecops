@@ -19,3 +19,5 @@ Executive summary: [../../ARCHITECTURE.md](../../ARCHITECTURE.md)
 ## Maturity statement
 
 This design targets **production pilot** quality: real security controls and operability patterns on a **single** AKS cluster. It does not claim multi-region HA or enterprise-scale DR.
+
+**Phase 15+ (scaffold-first):** NetworkPolicies, PR CI, SBOM/attestations, Falco, namespace/KV hardening, and optional DAST are documented under Setup Topics **14–20** and ADRs **0013–0017**. Live apply requires a rebuilt cluster — see [phase15-plus.md](../implementation/phase15-plus.md).

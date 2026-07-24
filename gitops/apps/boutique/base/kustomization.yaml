@@ -5,6 +5,8 @@ kind: Kustomization
 
 resources:
   - manifests.yaml
+  - networkpolicies
+  - hardening
 
 images:
   - name: us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice

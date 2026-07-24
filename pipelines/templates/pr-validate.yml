@@ -1,0 +1,80 @@
+# PR validation jobs — pre-commit, Terraform validate, Checkov, Kyverno unit tests.
+# Used by azure-pipelines-pr.yml. SETUP: docs/setup/14-pr-ci.md · docs/setup/16-iac-scanning.md
+parameters:
+  - name: poolImage
+    type: string
+    default: ubuntu-22.04
+
+jobs:
+  - job: PreCommit
+    displayName: Pre-commit (lint, YAML, gitleaks, TF hooks)
+    pool:
+      vmImage: ${{ parameters.poolImage }}
+    steps:
+      - checkout: self
+        fetchDepth: 1
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: "$(pythonVersion)"
+        displayName: Use Python $(pythonVersion)
+      - bash: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install "pre-commit>=3.0"
+          pre-commit run --all-files --show-diff-on-failure
+        displayName: Run pre-commit --all-files
+
+  - job: TerraformValidate
+    displayName: Terraform fmt + validate
+    pool:
+      vmImage: ${{ parameters.poolImage }}
+    steps:
+      - checkout: self
+        fetchDepth: 1
+      - bash: |
+          set -euo pipefail
+          TF_VER="$(terraformVersion)"
+          curl -fsSL "https://releases.hashicorp.com/terraform/${TF_VER}/terraform_${TF_VER}_linux_amd64.zip" -o /tmp/terraform.zip
+          sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
+          terraform version
+        displayName: Install Terraform $(terraformVersion)
+      - bash: |
+          set -euo pipefail
+          ./tests/terraform/validate.sh
+        displayName: Run tests/terraform/validate.sh
+
+  - job: Checkov
+    displayName: Checkov IaC scan (terraform/)
+    pool:
+      vmImage: ${{ parameters.poolImage }}
+    steps:
+      - checkout: self
+        fetchDepth: 1
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: "$(pythonVersion)"
+        displayName: Use Python $(pythonVersion)
+      - bash: |
+          set -euo pipefail
+          pip install "checkov==$(checkovVersion)"
+          ./tests/terraform/checkov.sh
+        displayName: Run tests/terraform/checkov.sh
+
+  - job: KyvernoTest
+    displayName: Kyverno policy unit tests
+    pool:
+      vmImage: ${{ parameters.poolImage }}
+    steps:
+      - checkout: self
+        fetchDepth: 1
+      - bash: |
+          set -euo pipefail
+          KVER="$(kyvernoCliVersion)"
+          curl -fsSL "https://github.com/kyverno/kyverno/releases/download/v${KVER}/kyverno-cli_v${KVER}_linux_x86_64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin kyverno
+          kyverno version
+        displayName: Install Kyverno CLI $(kyvernoCliVersion)
+      - bash: |
+          set -euo pipefail
+          kyverno test policies/tests
+        displayName: Run kyverno test policies/tests
