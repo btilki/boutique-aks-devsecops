@@ -13,7 +13,7 @@
 
 When this topic is complete:
 
-1. **Falco** runs on every node (`namespace: falco`) with **modern eBPF**.
+1. **Falco** runs on every node (`namespace: falco`) with modern eBPF (**extended Berkeley Packet Filter**).
 2. Falco emits **JSON** logs scraped into **Loki** (same path as other workloads).
 3. Alert **FalcoDaemonSetUnavailable** is present in monitoring extras.
 4. You understand **Defender for Containers** is opt-in only ([DEFENDER-OPT-IN.md](../../terraform/modules/aks/DEFENDER-OPT-IN.md)).

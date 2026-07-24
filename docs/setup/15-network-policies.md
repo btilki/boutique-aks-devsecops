@@ -15,7 +15,7 @@ When this topic is complete:
 
 1. Each `boutique-*` namespace has **ingress default-deny** plus allow rules matching Online Boutique v0.10.5 call paths.
 2. North-south traffic still works: `ingress-nginx` → `frontend:8080`.
-3. AKS enforces NetworkPolicy via **Azure NPM** (`network_policy = "azure"`), set at cluster create when rebuilding.
+3. AKS enforces NetworkPolicy via Azure NPM (**Network Policy Manager**) (`network_policy = "azure"`), set at cluster create when rebuilding.
 
 ## Why this topic is required
 

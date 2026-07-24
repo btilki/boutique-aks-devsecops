@@ -1,4 +1,4 @@
-# 16 — IaC Scanning (Checkov)
+# 16 — IaC (**Infrastructure as Code**) Scanning (Checkov)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 30–45 minutes (local) · ADO already covered by Topic 14 registration
@@ -11,7 +11,7 @@
 
 ## Topic goal
 
-When this topic is complete, every PR (and `make pr-validate`) runs **Checkov** against `terraform/` and **fails on new findings**. Known production-pilot tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
+When this topic is complete, every PR (and `make pr-validate`) runs **IaC** scanning with **Checkov** against `terraform/` and **fails on new findings**. Known production-pilot tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
 
 ## Why this topic is required
 

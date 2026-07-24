@@ -1,4 +1,4 @@
-# 03 — Cluster Resources (AKS, ACR, Key Vault)
+# 03 — Cluster Resources (AKS (**Azure Kubernetes Service**), ACR (**Azure Container Registry**), Key Vault)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 120 minutes (AKS create ~15–20 min)
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, a production-pilot **AKS cluster** runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** registry for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
+When this topic is complete, a production-pilot **AKS** cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager. RBAC (**Role-Based Access Control**) binds those identities (AcrPull, Key Vault Secrets User, DNS Zone Contributor).
 
 ## Why this topic is required
 

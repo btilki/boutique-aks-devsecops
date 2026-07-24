@@ -1,4 +1,4 @@
-# 06 — Ingress + TLS
+# 06 — Ingress + TLS (**Transport Layer Security**)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 120 minutes (certificate issuance may add 5–15 min)
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, a **public Azure Load Balancer** fronts **NGINX Ingress**, **cert-manager** issues certificates via **Let's Encrypt DNS-01** against Azure DNS, and **Argo CD** is reachable at `https://argocd-boutique.biroltilki.art` with a valid certificate.
+When this topic is complete, a **public Azure Load Balancer** fronts **NGINX Ingress**, **cert-manager** issues certificates via **Let's Encrypt DNS-01** against Azure DNS, and **Argo CD** is reachable at `https://argocd-boutique.biroltilki.art` with **TLS** via a valid certificate.
 
 ## Why this topic is required
 

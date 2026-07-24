@@ -3,7 +3,7 @@
 **Audience:** L2 — Implementer
 **Estimated time:** 45–90 minutes
 **Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) · [07-secrets-csi.md](07-secrets-csi.md) · [10-boutique-dev.md](10-boutique-dev.md)
-**Creates:** PSA labels + ResourceQuota/LimitRange on Boutique namespaces; optional KV purge protection + network ACL Deny
+**Creates:** PSA (**Pod Security Admission**) labels + ResourceQuota/LimitRange on Boutique namespaces; optional KV purge protection + network ACL (**Access Control List**) Deny
 **Related ADRs:** [0016](../adr/0016-namespace-kv-hardening.md), [0010](../adr/0010-destroy-acr-on-teardown.md)
 **Mode:** GitOps hardening is in-repo now. KV Deny/purge flips are **Apply later** (and may complicate teardown).
 
@@ -13,9 +13,9 @@
 
 When this topic is complete:
 
-1. Each `boutique-*` namespace enforces **Pod Security Admission baseline** (warn/audit restricted).
+1. Each `boutique-*` namespace enforces **PSA** `baseline` (warn/audit `restricted`).
 2. **LimitRange** + **ResourceQuota** cap container defaults and namespace totals.
-3. You can optionally lock Key Vault with **network ACL Deny** (AKS subnet allow-list) and/or **purge protection**.
+3. You can optionally lock Key Vault with network **ACL** Deny (AKS subnet allow-list) and/or **purge protection**.
 
 ## Why this topic is required
 

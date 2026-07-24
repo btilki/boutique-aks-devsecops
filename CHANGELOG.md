@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Abbreviation style: first mention in the primary doc uses `ABBREV (**Full Form**)` — [CONTRIBUTING.md](CONTRIBUTING.md#abbreviations-first-mention); applied on README and Topics 03–07 / 14–20 / network design.
 - Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.
 - Documentation review: setup/ops/architecture indexes aligned with Phase 15+ + torn-down Azure; removed **Wave N** branding (use Topics / Phases / Packages only); CHANGELOG [0.2.0] historical note clarified.
 - Terminology: environment wording standardized on **test** / **Test** (docs, comments, ops guides).

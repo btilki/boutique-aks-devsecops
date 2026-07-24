@@ -1,4 +1,4 @@
-# 07 — Secrets Store CSI
+# 07 — Secrets Store CSI (**Container Storage Interface**)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 75 minutes
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, the **Secrets Store CSI driver** and **Azure Key Vault provider** run in `kube-system`, and a **test pod** mounts a Key Vault secret at `/mnt/secrets` using **Workload Identity** (platform UAMI). This proves the secret delivery path for cosign keys (Topic 09) and Grafana (Topic 11).
+When this topic is complete, the **CSI** Secrets Store driver and **Azure Key Vault provider** run in `kube-system`, and a **test pod** mounts a Key Vault secret at `/mnt/secrets` using **Workload Identity** (platform UAMI). This proves the secret delivery path for cosign keys (Topic 09) and Grafana (Topic 11).
 
 ## Why this topic is required
 

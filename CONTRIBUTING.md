@@ -33,6 +33,43 @@ Before merging README or top-level marketing copy:
 - Terraform modules document: Purpose, Inputs, Outputs, Dependencies, Usage.
 - Setup changes must update the matching `docs/setup/NN-topic.md`.
 
+### Abbreviations (first mention)
+
+On the **first mention** of a term in the document that **most closely relates** to it, write the **abbreviation first**, then the full form in **parentheses and bold**:
+
+```markdown
+SBOM (**Software Bill of Materials**)
+```
+
+Later mentions in that document (and in other docs) may use the abbreviation alone.
+
+| Abbreviation | Full form | Primary document |
+|--------------|-----------|------------------|
+| AKS | Azure Kubernetes Service | [docs/setup/03-cluster-resources.md](docs/setup/03-cluster-resources.md) |
+| ACR | Azure Container Registry | [docs/setup/03-cluster-resources.md](docs/setup/03-cluster-resources.md) |
+| ADO | Azure DevOps | [docs/setup/04-ado-oidc.md](docs/setup/04-ado-oidc.md) |
+| OIDC | OpenID Connect | [docs/setup/04-ado-oidc.md](docs/setup/04-ado-oidc.md) |
+| UAMI | User-Assigned Managed Identity | [docs/setup/04-ado-oidc.md](docs/setup/04-ado-oidc.md) |
+| RBAC | Role-Based Access Control | [docs/setup/03-cluster-resources.md](docs/setup/03-cluster-resources.md) |
+| CSI | Container Storage Interface | [docs/setup/07-secrets-csi.md](docs/setup/07-secrets-csi.md) |
+| TLS | Transport Layer Security | [docs/setup/06-ingress-tls.md](docs/setup/06-ingress-tls.md) |
+| CNI | Container Network Interface | [docs/architecture/06-network-design.md](docs/architecture/06-network-design.md) |
+| NSG | Network Security Group | [docs/architecture/06-network-design.md](docs/architecture/06-network-design.md) |
+| NPM | Network Policy Manager | [docs/setup/15-network-policies.md](docs/setup/15-network-policies.md) |
+| PR | Pull Request | [docs/setup/14-pr-ci.md](docs/setup/14-pr-ci.md) |
+| CI | Continuous Integration | [docs/setup/14-pr-ci.md](docs/setup/14-pr-ci.md) |
+| IaC | Infrastructure as Code | [docs/setup/16-iac-scanning.md](docs/setup/16-iac-scanning.md) |
+| SBOM | Software Bill of Materials | [docs/setup/17-sbom-attestations.md](docs/setup/17-sbom-attestations.md) |
+| SPDX | Software Package Data Exchange | [docs/setup/17-sbom-attestations.md](docs/setup/17-sbom-attestations.md) |
+| eBPF | extended Berkeley Packet Filter | [docs/setup/18-runtime-security.md](docs/setup/18-runtime-security.md) |
+| PSA | Pod Security Admission | [docs/setup/19-namespace-hardening.md](docs/setup/19-namespace-hardening.md) |
+| ACL | Access Control List | [docs/setup/19-namespace-hardening.md](docs/setup/19-namespace-hardening.md) |
+| DAST | Dynamic Application Security Testing | [docs/setup/20-dast.md](docs/setup/20-dast.md) |
+| ZAP | Zed Attack Proxy | [docs/setup/20-dast.md](docs/setup/20-dast.md) |
+| DevSecOps | Development, Security, and Operations | [README.md](README.md) |
+
+Do **not** expand ubiquitous file/format tokens (`YAML`, `JSON`, `HTTP`, `HTTPS`, `DNS`) unless the doc is introducing them to beginners.
+
 ## Code style
 
 - Terraform: `terraform fmt` (enforced by pre-commit).
