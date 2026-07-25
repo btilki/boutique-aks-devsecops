@@ -1,6 +1,6 @@
 # boutique-aks-devsecops
 
-Production-pilot Azure DevSecOps (**Development, Security, and Operations**) reference platform for [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo) **v0.10.5** on AKS.
+Production-pilot Azure DevSecOps reference platform for [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo) **v0.10.5** on AKS.
 
 Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secrets, and digest-based promotion across **dev / stage / prod namespaces** on **one** cost-conscious cluster in `germanywestcentral`.
 

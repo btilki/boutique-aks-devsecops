@@ -1,4 +1,4 @@
-# 14 — PR (**Pull Request**) CI (**Continuous Integration**) Gates (shift-left validation)
+# 14 — PR CI Gates (shift-left validation)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 45–60 minutes (ADO registration) + local dry-run
@@ -11,7 +11,7 @@
 
 ## Topic goal
 
-When this topic is complete, each **PR** targeting `main` runs a dedicated ADO **CI** pipeline that fails on:
+When this topic is complete, **PRs** (**pull requests**) targeting `main` run a dedicated ADO pipeline for CI that fails on:
 
 1. **pre-commit** (trailing whitespace, YAML, large files, Terraform fmt/validate hooks, yamllint, gitleaks)
 2. **`tests/terraform/validate.sh`** (fmt -check + validate bootstrap + `environments/dev`)

@@ -1,4 +1,4 @@
-# 20 — DAST (**Dynamic Application Security Testing**) (OWASP ZAP baseline, optional)
+# 20 — DAST (OWASP ZAP baseline, optional)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 30–45 minutes when Boutique HTTPS is live
@@ -11,11 +11,11 @@
 
 ## Topic goal
 
-When this topic is complete, you can manually run **DAST** with OWASP ZAP (**Zed Attack Proxy**) baseline against `https://dev-boutique.<DNS_ZONE>` (or another hostname **you operate**), download reports, and optionally fail the job on WARN/FAIL.
+When this topic is complete, you can manually run **OWASP** (**Open Worldwide Application Security Project**) **ZAP** (**Zed Attack Proxy**) baseline **DAST** (**Dynamic Application Security Testing**) against `https://dev-boutique.<DNS_ZONE>` (or another hostname **you operate**), download reports, and optionally fail the job on WARN/FAIL.
 
 ## Why this topic is required
 
-Container/IaC/admission gates do not exercise the HTTP UI. Baseline DAST closes that portfolio gap without blocking every merge (ADR-0017: advisory by default).
+Container/**IaC**/admission gates do not exercise the HTTP UI. Baseline DAST closes that portfolio gap without blocking every merge (ADR-0017: advisory by default).
 
 ---
 

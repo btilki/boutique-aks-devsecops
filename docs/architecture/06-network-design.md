@@ -9,8 +9,7 @@
 | AKS subnet (planned) | `10.0.0.0/20` |
 | Kubernetes service CIDR | `10.1.0.0/16` (must not overlap node subnet) |
 | CoreDNS service IP | `10.1.0.10` |
-| CNI (**Container Network Interface**) | Azure CNI |
-| NSG (**Network Security Group**) | On AKS subnet (Terraform networking module) |
+| CNI | Azure CNI |
 
 ## VPC layout
 

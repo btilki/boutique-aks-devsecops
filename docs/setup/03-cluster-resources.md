@@ -1,4 +1,4 @@
-# 03 — Cluster Resources (AKS (**Azure Kubernetes Service**), ACR (**Azure Container Registry**), Key Vault)
+# 03 — Cluster Resources (AKS, ACR, Key Vault)
 
 **Audience:** L2 — Implementer
 **Estimated time:** 120 minutes (AKS create ~15–20 min)
@@ -10,11 +10,11 @@
 
 ## Topic goal
 
-When this topic is complete, a production-pilot **AKS** cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager. RBAC (**Role-Based Access Control**) binds those identities (AcrPull, Key Vault Secrets User, DNS Zone Contributor).
+When this topic is complete, a production-pilot **AKS** (**Azure Kubernetes Service**) cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** (**Azure Container Registry**) for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform **UAMI** (**user-assigned managed identity**) can read Key Vault secrets and manage DNS records for cert-manager.
 
 ## Why this topic is required
 
-GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live cluster and private registry. Workload Identity and OIDC issuer must exist before ADO federation (Topic 04) and cert-manager DNS-01 (Topic 06). Applying cluster resources as a separate topic keeps Topic 02 networking stable and makes AKS failures easier to diagnose.
+GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live cluster and private registry. **WI** (**Workload Identity**) and an OIDC issuer must exist before ADO federation (Topic 04) and cert-manager DNS-01 (Topic 06). Applying cluster resources as a separate topic keeps Topic 02 networking stable and makes AKS failures easier to diagnose.
 
 ---
 

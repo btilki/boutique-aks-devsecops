@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, an **Azure DevOps pipeline** mirrors all **11 Online Boutique v0.10.5** service images from Google Artifact Registry to **ACR**, runs **Trivy** with a **CRITICAL** severity gate, and **cosign-signs** each image **by digest** with `--tlog-upload=false`. The cosign **public key** is pasted into Kyverno policy `02-verify-image-signatures.yaml` so admission can verify signed workloads in Topic 10.
+When this topic is complete, an ADO **CI** (**Continuous Integration**) pipeline mirrors all **11 Online Boutique v0.10.5** service images from Google Artifact Registry to **ACR**, runs **Trivy** with a **CRITICAL** severity gate, and **cosign-signs** each image **by digest** with `--tlog-upload=false`. The cosign **public key** is pasted into Kyverno policy `02-verify-image-signatures.yaml` so admission can verify signed workloads in Topic 10.
 
 ## Why this topic is required
 

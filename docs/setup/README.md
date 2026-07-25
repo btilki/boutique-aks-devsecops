@@ -145,9 +145,9 @@ Replace placeholders in commands and `terraform.tfvars` with your values:
 | cosign key pair | Key Vault or secure local path (Topic 09) — **not** in Git |
 | ADO PAT (if any) | Argo CD GitHub read access only; pipeline uses GitHub connection — prefer OIDC for Azure |
 
-### Abbreviation first mention
+### Version pins
 
-On first mention in the **primary** doc for a term: `ABBREV (**Full Form**)`. See [CONTRIBUTING.md](../../CONTRIBUTING.md#abbreviations-first-mention). Example: `SBOM (**Software Bill of Materials**)`.
+All platform versions: [versions.yaml](../../versions.yaml). Setup topics reference this file; do not hardcode divergent versions in guides.
 
 ---
 

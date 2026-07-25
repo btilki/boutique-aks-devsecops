@@ -1,6 +1,6 @@
 # Phase 15+ — Fuller DevSecOps (scaffold-first)
 
-**Status:** Packages **1–8** complete — Phase 15+ fuller DevSecOps scaffold finished. Live apply awaits Azure rebuild (Topics 14–20).
+**Status:** Packages **1–8** complete — Phase 15+ fuller **DevSecOps** (**Development, Security, and Operations**) scaffold finished. Live apply awaits Azure rebuild (Topics 14–20).
 
 **Mode:** **Scaffold only** — author files and setup topics for future apply. Do **not** require a live Azure cluster, Terraform apply, or re-run of Setup Topics 00–13.
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)

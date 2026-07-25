@@ -1,4 +1,4 @@
-# 04 — ADO (**Azure DevOps**) OIDC (**OpenID Connect**) Federation
+# 04 — ADO OIDC Federation
 
 **Audience:** L2 — Implementer
 **Estimated time:** 75 minutes
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, **ADO** pipelines authenticate to Azure using **OIDC** workload identity federation — no client secrets or PATs in service connections. The pipeline UAMI (**User-Assigned Managed Identity**) can **push to ACR** and **read secrets from Key Vault** (cosign key in Topic 09).
+When this topic is complete, **ADO** (**Azure DevOps**) pipelines authenticate to Azure using **OIDC** (**OpenID Connect**) workload identity federation — no client secrets or **PATs** (**personal access tokens**) in service connections. The pipeline identity can **push to ACR** and **read secrets from Key Vault** (cosign key in Topic 09).
 
 ## Why this topic is required
 
