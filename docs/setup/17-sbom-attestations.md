@@ -13,7 +13,7 @@
 
 When this topic is complete:
 
-1. The supply-chain pipeline generates an **SPDX** (**Software Package Data Exchange**) JSON **SBOM** (**Software Bill of Materials**) (via Trivy) for each of the 11 Boutique services and **`cosign attest`s** it to the image digest.
+1. The supply-chain pipeline generates an **SPDX** (**Software Package Data Exchange**) JSON **SBOM** (**Software Bill of Materials**) (via Trivy) for each of the 11 Boutique services and attaches it to the image digest with `cosign attest`.
 2. CI runs **`cosign verify-attestation`** (key-based, no Rekor).
 3. Kyverno policy `verify-sbom-attestations` is synced (**Audit** first, then **Enforce**).
 4. Pipeline artifact `sboms-spdx` holds the SBOM files for audit/download.
