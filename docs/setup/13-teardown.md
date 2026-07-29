@@ -3,7 +3,7 @@
 **Audience:** L2 — Implementer
 **Estimated time:** 60 minutes (destroy may take 15–30 minutes)
 **Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon test)
-**Destroys:** AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
+**Destroys:** **AKS** (**Azure Kubernetes Service**), **ACR** (**Azure Container Registry**), Key Vault, **VNet** (**Virtual Network**), Azure DNS zone, platform resource group
 **Related ADRs:** [0010](../adr/0010-destroy-acr-on-teardown.md)
 
 ---

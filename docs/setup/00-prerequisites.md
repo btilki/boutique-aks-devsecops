@@ -27,20 +27,20 @@ Do **not** use this guide for day-2 cluster operations — see [docs/operations/
 - macOS, Linux, or WSL2 on Windows
 - Internet access for package installs and Azure CLI login
 - An Azure subscription where you can create resource groups (Owner or Contributor)
-- Rights to register Azure DNS and create AKS resources (validated in later topics)
+- Rights to register Azure DNS and create **AKS** (**Azure Kubernetes Service**) resources (validated in later topics)
 - Git installed
 - A **GitHub account** with permission to create repositories (or access to an existing org repo)
 - This project directory on your machine (cloned from GitHub **or** copied locally — Step 4 connects Git either way)
 
 **Required knowledge:** basic shell, Git, and cloud CLI usage. No prior AKS experience required.
 
-**Version control:** **GitHub** is the sole Git remote for this project (local clone, Argo CD, and ADO pipelines). Azure DevOps is used for **CI/CD and OIDC only** — not Azure Repos.
+**Version control:** **GitHub** is the sole Git remote for this project (local clone, Argo CD, and **ADO** (**Azure DevOps**) pipelines). Azure DevOps is used for **CI/CD** (**Continuous Integration/Continuous Delivery**) and **OIDC** (**OpenID Connect**) only — not Azure Repos.
 
 **Git remote note:** All GitOps manifests, Argo CD Applications, and pipeline checkout use **GitHub**. Connect your repository in Topic 00 Step 4; patch `<GITHUB_ORG>` / `<REPO_NAME>` in GitOps YAML during Topics 05–12. Azure DevOps (Topics 04, 09) connects to the **same GitHub repo** for pipeline runs and digest promotion pushes.
 
 ## Architecture context
 
-This project provisions a single AKS platform in `germanywestcentral` with node pools **Standard_D2s_v6** (system) and **Standard_D4s_v6** (user). Tool versions are pinned in [versions.yaml](../../versions.yaml) so Terraform, Kubernetes, and pipeline stages stay compatible.
+This project provisions a single **AKS** platform in `germanywestcentral` with node pools **Standard_D2s_v6** (system) and **Standard_D4s_v6** (user). Tool versions are pinned in [versions.yaml](../../versions.yaml) so Terraform, Kubernetes, and pipeline stages stay compatible.
 
 ```mermaid
 flowchart LR
@@ -275,7 +275,7 @@ git push -u origin main
 **Authentication:** GitHub no longer accepts account passwords for HTTPS push. Use one of:
 
 - **GitHub CLI** (recommended): `gh auth login` then push
-- **Personal Access Token (PAT):** create at GitHub → Settings → Developer settings → Fine-grained token (Contents: Read and write)
+- **PAT** (**Personal Access Token**): create at GitHub → Settings → Developer settings → Fine-grained token (Contents: Read and write)
 - **SSH:** `git remote set-url origin git@github.com:<GITHUB_ORG>/<REPO_NAME>.git` and use an SSH key
 
 **B.4 — Optional: create repo via GitHub CLI**

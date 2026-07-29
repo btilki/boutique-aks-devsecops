@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, **Online Boutique v0.10.5** runs in namespace **`boutique-dev`**, deployed by **Argo CD** (auto-sync), with all workload images from **signed ACR** references. The storefront is reachable at **`https://dev-boutique.biroltilki.art`** and passes the dev smoke test.
+When this topic is complete, **Online Boutique v0.10.5** runs in namespace **`boutique-dev`**, deployed by **Argo CD** (auto-sync), with all workload images from **signed ACR** (**Azure Container Registry**) references. The storefront is reachable at **`https://dev-boutique.biroltilki.art`** and passes the dev smoke test.
 
 ## Why this topic is required
 

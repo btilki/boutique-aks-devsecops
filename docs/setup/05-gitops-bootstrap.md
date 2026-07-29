@@ -265,7 +265,7 @@ git push origin main
 1. **Settings** → **Repositories** → **Connect repo**
 2. Choose **VIA HTTPS**
 3. Repository URL: `https://github.com/<GITHUB_ORG>/<REPO_NAME>`
-4. Username: your GitHub username; Password: **GitHub PAT** with **Contents: Read** (fine-grained) or classic `repo` scope
+4. Username: your GitHub username; Password: **PAT** (**Personal Access Token**) with **Contents: Read** (fine-grained) or classic `repo` scope
 5. **Connect**
 
 Or CLI:

@@ -3,7 +3,7 @@
 **Audience:** L2 — Implementer
 **Estimated time:** 120 minutes
 **Prerequisites:** [10-boutique-dev.md](10-boutique-dev.md) ✅ · [11-observability.md](11-observability.md) ✅
-**Creates:** Stage/prod overlays, Argo CD apps, ADO prod approval gate, promotion/rollback smoke tests
+**Creates:** Stage/prod overlays, Argo CD apps, **ADO** (**Azure DevOps**) prod approval gate, promotion/rollback smoke tests
 **Related ADRs:** [0008](../adr/0008-ado-prod-approval-gate.md), [0002](../adr/0002-single-cluster-multi-namespace.md)
 
 ---

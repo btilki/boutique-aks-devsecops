@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, a **public Azure Load Balancer** fronts **NGINX Ingress**, **cert-manager** issues certificates via **Let's Encrypt DNS-01** against Azure DNS, and **Argo CD** is reachable at `https://argocd-boutique.biroltilki.art` with a valid certificate.
+When this topic is complete, a **public Azure Load Balancer** fronts **NGINX** (**NGINX Ingress Controller**), **cert-manager** issues certificates via **Let's Encrypt DNS-01** against Azure DNS, and **Argo CD** is reachable at `https://argocd-boutique.biroltilki.art` with a valid **TLS** (**Transport Layer Security**) certificate.
 
 ## Why this topic is required
 

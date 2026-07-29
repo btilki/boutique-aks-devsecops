@@ -3,7 +3,7 @@
 **Audience:** L2 — Implementer
 **Estimated time:** 180 minutes
 **Prerequisites:** [04-ado-oidc.md](04-ado-oidc.md) ✅ · [03-cluster-resources.md](03-cluster-resources.md) ✅
-**Creates:** ADO pipeline, cosign key pair in Key Vault, signed Boutique v0.10.5 images in ACR
+**Creates:** **ADO** (**Azure DevOps**) pipeline, cosign key pair in Key Vault, signed Boutique v0.10.5 images in **ACR** (**Azure Container Registry**)
 **Related ADRs:** [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/0009-mirror-upstream-images.md)
 
 ---

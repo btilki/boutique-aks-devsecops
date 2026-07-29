@@ -10,11 +10,11 @@
 
 ## Topic goal
 
-When this topic is complete, the **platform resource group** exists in `germanywestcentral` with a VNet (`10.0.0.0/16`), an AKS-ready subnet (`10.0.0.0/20`) with NSG, and an Azure DNS zone for `biroltilki.art`. DNS is **delegated** at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
+When this topic is complete, the **platform resource group** exists in `germanywestcentral` with a **VNet** (**Virtual Network**) (`10.0.0.0/16`), an **AKS** (**Azure Kubernetes Service**)-ready subnet (`10.0.0.0/20`) with **NSG** (**Network Security Group**), and an Azure DNS zone for `biroltilki.art`. DNS is **delegated** at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
 
 ## Why this topic is required
 
-AKS (Topic 03) requires a subnet ID and resource group. Ingress TLS (Topic 06) requires Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation separately keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
+AKS (Topic 03) requires a subnet ID and resource group. Ingress **TLS** (**Transport Layer Security**) (Topic 06) requires Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation separately keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
 
 ---
 

@@ -10,11 +10,11 @@
 
 ## Topic goal
 
-When this topic is complete, **Prometheus**, **Grafana**, and **Alertmanager** run in namespace **`monitoring`**, **Loki** and **Promtail** aggregate pod logs, Grafana is reachable at **`https://grafana-boutique.biroltilki.art`**, **Cluster Overview** and **Boutique Overview** dashboards load, platform/Boutique **PrometheusRules** are active, and the **OpenTelemetry Collector** accepts OTLP traces (10% sampling).
+When this topic is complete, **Prometheus**, **Grafana**, and **Alertmanager** run in namespace **`monitoring`**, **Loki** and **Promtail** aggregate pod logs, Grafana is reachable at **`https://grafana-boutique.biroltilki.art`**, **Cluster Overview** and **Boutique Overview** dashboards load, platform/Boutique **PrometheusRules** are active, and the **OTel** (**OpenTelemetry**) Collector accepts **OTLP** (**OpenTelemetry Protocol**) traces (10% sampling).
 
 ## Why this topic is required
 
-Operating a DevSecOps platform requires visibility into cluster health, ingress traffic, and Boutique availability before stage/prod promotion (Topic 12). SLO documentation and alerts define when to pause promotions.
+Operating a DevSecOps platform requires visibility into cluster health, ingress traffic, and Boutique availability before stage/prod promotion (Topic 12). **SLO** (**Service Level Objective**) documentation and alerts define when to pause promotions.
 
 ---
 

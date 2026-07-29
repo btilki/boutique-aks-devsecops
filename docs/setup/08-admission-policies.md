@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, **Kyverno** enforces cluster admission policies: **ACR allowlist**, **deny `:latest`**, **cosign signature verification** (key placeholder until Topic 09), **Pod Security baseline**, and **no privileged/hostPath** access. `kyverno test` passes for validation policies.
+When this topic is complete, **Kyverno** enforces cluster admission policies: **ACR** (**Azure Container Registry**) allowlist, **deny `:latest`**, **cosign signature verification** (key placeholder until Topic 09), **Pod Security baseline**, and **no privileged/hostPath** access. `kyverno test` passes for validation policies.
 
 ## Why this topic is required
 
