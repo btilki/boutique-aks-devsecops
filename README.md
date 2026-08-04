@@ -4,6 +4,19 @@ Production-pilot Azure DevSecOps reference platform for [Online Boutique](https:
 
 Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secrets, and digest-based promotion across **dev / stage / prod namespaces** on **one** cost-conscious cluster in `germanywestcentral`.
 
+Part of the [DevOps Engineering Playbook](https://github.com/btilki/devops-engineering-playbook) · Author: [Birol Tilki](https://www.linkedin.com/in/birol-tilki-48731326/)
+
+### At a glance (30 seconds)
+
+| | |
+|-|-|
+| **What** | DevSecOps on Azure AKS — signed digests, Kyverno admission, GitOps promotion |
+| **CI model** | **GitHub** = source of truth · **Azure DevOps** = pipelines (OIDC) · no GitHub Actions |
+| **Hard rule** | Unsigned / floating tags should not reach the cluster |
+| **Proven** | Setup Topics 00–13 lived and **torn down**; Topics 14–20 scaffold-only until rebuild |
+| **Start reading** | [CI story](#ci-story) → [ARCHITECTURE.md](ARCHITECTURE.md) → [docs/security/threat-model.md](docs/security/threat-model.md) |
+| **Playbook brief** | [featured project](https://github.com/btilki/devops-engineering-playbook/blob/main/featured-projects/boutique-aks-devsecops.md) |
+
 ## Status
 
 | Item | State |
@@ -104,6 +117,20 @@ examples/     # Runnable demos (CSI secret test)
 ## Security
 
 Do not commit secrets, keys, or `terraform.tfvars` with real values. See [SECURITY.md](SECURITY.md).
+
+## Related portfolio
+
+| Resource | Link |
+|----------|------|
+| **DevOps Engineering Playbook** (hub) | https://github.com/btilki/devops-engineering-playbook |
+| Playbook project brief | https://github.com/btilki/devops-engineering-playbook/blob/main/featured-projects/boutique-aks-devsecops.md |
+| Article A1 — GitHub + Azure DevOps on AKS | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A1.md |
+| Article A2 — Kyverno + Cosign unsigned deny | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A2.md |
+| Article A3 — Destroy ACR on teardown | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A3.md |
+| Sister platform — EKS GitOps | https://github.com/btilki/boutique-eks-gitops |
+| Sister platform — GKE SRE | https://github.com/btilki/boutique-gke-sre |
+| Workshop books | https://github.com/btilki/learn-devops-by-building |
+| LinkedIn | https://www.linkedin.com/in/birol-tilki-48731326/ |
 
 ## License
 
