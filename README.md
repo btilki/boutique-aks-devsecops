@@ -127,9 +127,11 @@ Do not commit secrets, keys, or `terraform.tfvars` with real values. See [SECURI
 | Article A1 — GitHub + Azure DevOps on AKS | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A1.md |
 | Article A2 — Kyverno + Cosign unsigned deny | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A2.md |
 | Article A3 — Destroy ACR on teardown | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A3.md |
+| Article X1 — Online Boutique on EKS, GKE, and AKS | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/X1.md |
+| Article X2 — Single cluster vs multi-cluster | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/X2.md |
 | Sister platform — EKS GitOps | https://github.com/btilki/boutique-eks-gitops |
 | Sister platform — GKE SRE | https://github.com/btilki/boutique-gke-sre |
-| Workshop books | https://github.com/btilki/learn-devops-by-building |
+| *Practical DevSecOps on Azure Kubernetes Service* (Boutique Production) | https://github.com/btilki/learn-devops-by-building/tree/main/boutique-production/aks-devsecops |
 | LinkedIn | https://www.linkedin.com/in/birol-tilki-48731326/ |
 
 ## License
