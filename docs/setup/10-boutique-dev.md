@@ -294,35 +294,31 @@ PASS: Boutique dev smoke test succeeded
 
 ---
 
-## Step 10.7: (Optional) Pin image digests from pipeline
+## Step 10.7: Confirm image digest pins
 
 ### Goal
 
-Use immutable `@sha256` digests from Topic 09 `digest-manifest` artifact.
+Dev overlay uses the same immutable `@sha256` digests as stage/prod (from Topic 09 `digest-manifest`).
 
 ### Why this step is required
 
-Digest pins survive tag overwrites and match promotion flow in Topic 12.
+Kyverno verifies signed digests. Floating tags on dev would diverge from promotion (Topic 12) and the unsigned/tag hard rule.
 
 ### Commands
 
-Download `digest-manifest.json` from latest green ADO pipeline run.
-
-Add to `gitops/apps/boutique/overlays/dev/kustomization.yaml`:
-
-```yaml
-images:
-  - name: <acr>.azurecr.io/frontend
-    digest: sha256:<from-manifest>
-  # ... repeat per service
+```bash
+# Digests must match across overlays (except env-specific patches).
+diff <(grep -A1 'name:.*frontend' gitops/apps/boutique/overlays/dev/kustomization.yaml) \
+     <(grep -A1 'name:.*frontend' gitops/apps/boutique/overlays/stage/kustomization.yaml)
 ```
 
-Or enable promote stage in `pipelines/azure-pipelines.yml` (Topic 09 optional block).
+After teardown/rebuild, replace the `images:` block from the latest pipeline `digest-manifest.json` (or enable the promote-to-dev template in `pipelines/azure-pipelines.yml`).
 
 Push and let Argo CD auto-sync.
 
 ### Validation
 
+- [ ] `overlays/dev/kustomization.yaml` has `digest: sha256:` for all Boutique services plus redis and busybox
 - [ ] `kubectl get deploy -n boutique-dev frontend -o jsonpath='{.spec.template.spec.containers[0].image}'` shows `@sha256:`
 
 ---

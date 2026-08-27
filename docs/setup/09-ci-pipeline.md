@@ -67,7 +67,7 @@ cat versions.yaml | grep -A30 "supply_chain:"
 ### Validation
 
 - [ ] `boutiqueVersion` is `v0.10.5`
-- [ ] `trivyVersion` is `0.51.4`, `cosignVersion` is `2.2.4`
+- [ ] `trivyVersion` is `0.72.0`, `cosignVersion` is `2.2.4` (must match [versions.yaml](../../versions.yaml))
 - [ ] Eleven services listed in `boutiqueServices`
 
 ---

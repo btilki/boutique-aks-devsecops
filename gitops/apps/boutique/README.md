@@ -7,7 +7,7 @@ Kustomize packaging for [Online Boutique v0.10.5](https://github.com/GoogleCloud
 ## Contents
 
 - `base/` — upstream-derived manifests; ACR image refs; patches for redis/busybox policy compliance; **NetworkPolicies** (`base/networkpolicies/`, Topic 15); **hardening** quotas (`base/hardening/`, Topic 19)
-- `overlays/dev/` — `dev-boutique.biroltilki.art`, auto-sync
+- `overlays/dev/` — `dev-boutique.biroltilki.art`, auto-sync, digest-pinned images
 - `overlays/stage/` — `stage-boutique.biroltilki.art`, manual sync
 - `overlays/prod/` — `boutique.biroltilki.art`, manual sync + ADO approval before Git update
 

@@ -166,7 +166,7 @@ When Audit is clean (no missing-attestation warnings on Boutique pods):
 |-------|------|
 | redis / busybox | Not in `boutiqueServices` loop — still signed manually in Topic 10; SBOM attest optional stretch |
 | Re-mirror after teardown | ACR wipe destroys attestations — re-run full pipeline |
-| Trivy version drift | Doc used to say 0.51.4; pin is `versions.yaml` / `trivyVersion` (**0.72.0**) |
+| Trivy version | Keep aligned with `versions.yaml` / `trivyVersion` (**0.72.0**) |
 | Vuln attestations | Not this topic — Trivy CRITICAL remains the gate; vuln predicate attestations are a future stretch |
 
 ---

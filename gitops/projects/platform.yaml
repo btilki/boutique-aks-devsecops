@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/part-of: boutique-aks-devsecops
 spec:
-  description: Platform services — ingress, cert-manager, Kyverno, CSI, Falco, monitoring, Argo CD self-management
+  description: Platform services — ingress, cert-manager, Kyverno, CSI, Falco, Argo CD self-management
   sourceRepos:
     # SETUP: tighten to your Git remote after bootstrap.
     - "*"
@@ -23,8 +23,6 @@ spec:
       namespace: kube-system
     - server: https://kubernetes.default.svc
       namespace: csi-test
-    - server: https://kubernetes.default.svc
-      namespace: monitoring
     - server: https://kubernetes.default.svc
       namespace: falco
   clusterResourceWhitelist:

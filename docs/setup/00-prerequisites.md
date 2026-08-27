@@ -366,7 +366,7 @@ pre-commit run --all-files
 | Symptom | Fix |
 |---------|-----|
 | `pre-commit install` fails — not a git repo | Complete Step 4 first |
-| `terraform validate` fails | Paste error — may need `terraform init` in module dirs |
+| `terraform validate` fails | Paste error — may need `terraform init` in `terraform/bootstrap` or `terraform/environments/dev` |
 | `yamllint` errors | Fix reported line numbers or run from repo root |
 | `gitleaks` false positive | Review match; never commit real secrets to verify |
 
@@ -428,7 +428,7 @@ pre-commit run --all-files
 | `kubectl` connects to wrong cluster | Old kubeconfig context | Phase 3 sets correct context; for now `kubectl config get-contexts` |
 | SKU list empty | Wrong region name | Use `germanywestcentral` exactly (no spaces) |
 | SKU `NotAvailableForSubscription` | Regional/subscription quota | Try ADR-0011 fallbacks; request quota increase in Azure Portal |
-| pre-commit hook fails on `terraform validate` | Provider plugins not initialized | Run `terraform init` in failing module dir; paste error if persists |
+| pre-commit hook fails on `terraform validate` | Provider plugins not initialized | Run `terraform init` in `terraform/bootstrap` or `terraform/environments/dev` (not under `modules/`); paste error if persists |
 | `git push` rejected (403/401) | GitHub auth | `gh auth login` or configure PAT / SSH key |
 | `origin` missing | Step 4 skipped | `git remote add origin <GITHUB_REPO_URL>` |
 | `az login` tenant mismatch | Multiple Entra tenants | `az login --tenant <TENANT_ID>` |

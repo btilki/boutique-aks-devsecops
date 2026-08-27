@@ -65,7 +65,7 @@ Key files:
 ### Validation
 
 - [ ] Chart version `6.7.18` in `argocd-install/kustomization.yaml`
-- [ ] `gitops/platform/kustomization.yaml` exists (empty until Topic 06)
+- [ ] `gitops/platform/kustomization.yaml` lists platform Applications (ingress, cert-manager, CSI, Kyverno, Falco, monitoring). Validate those workloads in Topics 06+; do not expect an empty directory.
 
 ---
 
@@ -190,7 +190,7 @@ Create Argo CD projects before Applications reference them.
 
 ### Why this step is required
 
-Applications reference `project: platform` — project must exist first.
+Applications reference `project: platform`, `applications`, or `monitoring` — those AppProjects must exist first. Destination lists: [gitops/projects/README.md](../../gitops/projects/README.md).
 
 ### Commands
 
@@ -209,7 +209,8 @@ appproject.argoproj.io/monitoring created
 
 ### Validation
 
-- [ ] Three AppProjects listed
+- [ ] Three AppProjects listed (`platform`, `applications`, `monitoring`)
+- [ ] Destinations match [gitops/projects/README.md](../../gitops/projects/README.md)
 
 ---
 
@@ -314,10 +315,10 @@ argocd app list
 | Application | Project | Sync Status | Health |
 |-------------|---------|-------------|--------|
 | root | platform | Synced | Healthy |
-| platform-root | platform | Synced | Healthy (0 resources OK) |
-| apps-root | applications | Synced | Healthy (0 resources OK) |
+| platform-root | platform | Synced | Healthy (Application CRs for ingress, cert-manager, CSI, Kyverno, Falco, monitoring) |
+| apps-root | platform | Synced | Healthy (creates boutique-dev/stage/prod Application CRs) |
 
-Empty `gitops/platform` and `gitops/apps` kustomizations are **expected** until later topics.
+`gitops/platform` and `gitops/apps` are **already populated** (Topics 06–12 lived; Topics 14–20 scaffold). Topic 05 only needs Argo CD, AppProjects, and root apps healthy. Validate child workloads in their own topics. `apps-root` uses project **`platform`** (Application CRs live in `argocd`); Boutique overlays use **`applications`**.
 
 ### Validation
 
@@ -335,7 +336,7 @@ argocd app get platform-root
 |---------|--------------|-----|
 | `appproject platform not found` | Skipped Step 5.5 | Apply projects |
 | Repo sync error | Auth / URL | See [argocd-sync.md](../troubleshooting/argocd-sync.md) |
-| `platform-root` OutOfSync empty dir | Normal | Will populate Topic 06+ |
+| `platform-root` OutOfSync / Progressing | Child apps (ingress, cert-manager, …) already in Git | Expected until those topics; confirm `root` stays Healthy |
 
 ---
 

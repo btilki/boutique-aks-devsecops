@@ -1,5 +1,6 @@
-# Terraform local artifacts (keep *.tfvars.example and .terraform.lock.hcl)
+# Terraform local artifacts (keep root .terraform.lock.hcl; never lock leaf modules)
 .terraform/
+terraform/modules/**/.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 crash.log

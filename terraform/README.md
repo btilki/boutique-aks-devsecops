@@ -27,6 +27,9 @@ See [docs/setup/01-terraform-bootstrap.md](../docs/setup/01-terraform-bootstrap.
 | `location` | `germanywestcentral` |
 | `system_node_vm_size` | `Standard_D2s_v6` |
 | `user_node_vm_size` | `Standard_D4s_v6` |
+| `azurerm` | `~> 3.100` (lock **3.117.1** in `bootstrap/` and `environments/dev/` only) |
+
+Leaf modules pin `azurerm ~> 3.100` in `versions.tf`. Do not commit `.terraform.lock.hcl` under `terraform/modules/` — those locks belong on the root stacks.
 
 ## Related documentation
 
