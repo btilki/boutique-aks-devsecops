@@ -111,9 +111,16 @@ If cosign is not installed locally:
 
 ```bash
 COSIGN_VERSION=2.2.4
-curl -fsSL -o /usr/local/bin/cosign \
-  "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-amd64"
-chmod +x /usr/local/bin/cosign
+COSIGN_ASSET="cosign-linux-amd64"
+WORKDIR="$(mktemp -d)"
+curl -fsSL -o "${WORKDIR}/${COSIGN_ASSET}" \
+  "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/${COSIGN_ASSET}"
+curl -fsSL -o "${WORKDIR}/checksums.txt" \
+  "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign_checksums.txt"
+awk -v asset="${COSIGN_ASSET}" '$2 == asset { print; found=1 } END { if (!found) exit 1 }' \
+  "${WORKDIR}/checksums.txt" > "${WORKDIR}/asset.sha256"
+(cd "${WORKDIR}" && sha256sum -c asset.sha256)
+install -m 0755 "${WORKDIR}/${COSIGN_ASSET}" /usr/local/bin/cosign
 ```
 
 ### Expected output

@@ -23,16 +23,35 @@ stages:
               inlineScript: |
                 set -euo pipefail
 
-                echo "=== Install Trivy $(trivyVersion) ==="
-                curl -sfL \
-                  https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-                  | sh -s -- -b /usr/local/bin "v$(trivyVersion)"
+                echo "=== Install Trivy $(trivyVersion) (checksum-verified release) ==="
+                TRIVY_VER="$(trivyVersion)"
+                TRIVY_ASSET="trivy_${TRIVY_VER}_Linux-64bit.tar.gz"
+                TRIVY_DIR="$(Agent.TempDirectory)/trivy-install"
+                mkdir -p "${TRIVY_DIR}"
+                curl -fsSL -o "${TRIVY_DIR}/${TRIVY_ASSET}" \
+                  "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VER}/${TRIVY_ASSET}"
+                curl -fsSL -o "${TRIVY_DIR}/checksums.txt" \
+                  "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VER}/trivy_${TRIVY_VER}_checksums.txt"
+                awk -v asset="${TRIVY_ASSET}" '$2 == asset { print; found=1 } END { if (!found) exit 1 }' \
+                  "${TRIVY_DIR}/checksums.txt" > "${TRIVY_DIR}/asset.sha256"
+                (cd "${TRIVY_DIR}" && sha256sum -c asset.sha256)
+                tar -xzf "${TRIVY_DIR}/${TRIVY_ASSET}" -C "${TRIVY_DIR}" trivy
+                install -m 0755 "${TRIVY_DIR}/trivy" /usr/local/bin/trivy
                 trivy --version
 
-                echo "=== Install cosign $(cosignVersion) ==="
-                COSIGN_URL="https://github.com/sigstore/cosign/releases/download/v$(cosignVersion)/cosign-linux-amd64"
-                curl -fsSL -o /usr/local/bin/cosign "${COSIGN_URL}"
-                chmod +x /usr/local/bin/cosign
+                echo "=== Install cosign $(cosignVersion) (checksum-verified release) ==="
+                COSIGN_VER="$(cosignVersion)"
+                COSIGN_ASSET="cosign-linux-amd64"
+                COSIGN_DIR="$(Agent.TempDirectory)/cosign-install"
+                mkdir -p "${COSIGN_DIR}"
+                curl -fsSL -o "${COSIGN_DIR}/${COSIGN_ASSET}" \
+                  "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VER}/${COSIGN_ASSET}"
+                curl -fsSL -o "${COSIGN_DIR}/checksums.txt" \
+                  "https://github.com/sigstore/cosign/releases/download/v${COSIGN_VER}/cosign_checksums.txt"
+                awk -v asset="${COSIGN_ASSET}" '$2 == asset { print; found=1 } END { if (!found) exit 1 }' \
+                  "${COSIGN_DIR}/checksums.txt" > "${COSIGN_DIR}/asset.sha256"
+                (cd "${COSIGN_DIR}" && sha256sum -c asset.sha256)
+                install -m 0755 "${COSIGN_DIR}/${COSIGN_ASSET}" /usr/local/bin/cosign
                 cosign version
 
                 echo "=== Azure / ACR login ==="
@@ -50,6 +69,8 @@ stages:
                   --name "$(cosignPrivateKeySecretName)" \
                   --query value -o tsv > "${COSIGN_KEY}"
                 chmod 600 "${COSIGN_KEY}"
+                # Pilot limit: passphrase is empty. The control is Key Vault RBAC on
+                # cosign-private-key, not a passphrase. A client key would use a passphrase or keyless signing.
                 export COSIGN_PASSWORD=""
 
                 PUB_KEY="${WORK_DIR}/cosign.pub"
@@ -86,7 +107,9 @@ stages:
                   DEST_DIGEST_REF="${DEST_REPO}@${DIGEST}"
                   echo "Digest: ${DEST_DIGEST_REF}"
 
-                  echo "Trivy scan (CRITICAL gate; test: ignore fixed upstream CVEs on pinned v0.10.5)"
+                  # Pilot limit: CRITICAL only. --ignore-status fixed skips CVEs that already
+                  # have an upstream fix. v0.10.5 is mirrored, not rebuilt, so those fixes are not in the image.
+                  echo "Trivy scan (CRITICAL gate; ignore fixed upstream CVEs on pinned v0.10.5)"
                   trivy image --scanners vuln --severity CRITICAL --ignore-status fixed --exit-code 1 "${DEST_DIGEST_REF}"
 
                   echo "cosign sign"

@@ -14,6 +14,8 @@ ADO checkouts this GitHub repository, mirrors/scans/signs images into ACR (OIDC)
 
 Mirror Online Boutique **v0.10.5**, Trivy CRITICAL gate, cosign sign (`--tlog-upload=false`), digest promotion.
 
+Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned release assets. Each download is checked with `sha256sum` against the checksum file published with that release.
+
 ## Contents
 
 | File | Role |

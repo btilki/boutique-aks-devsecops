@@ -29,11 +29,15 @@ Admission (Kyverno) and CI (Trivy/cosign) do not see malicious *behavior* after 
 ```bash
 cd /path/to/boutique-aks-devsecops
 ls gitops/platform/falco/
-grep -n falco gitops/platform/kustomization.yaml gitops/projects/platform.yaml
+# Comment lines may mention Falco. A resources entry must be absent until Step 18.2.
+grep -n -- '- falco/Application.yaml' gitops/platform/kustomization.yaml \
+  && echo "UNEXPECTED: Falco is already on the platform sync path" \
+  || echo "absent from kustomization (expected until Step 18.2)"
+grep -n "namespace: falco" gitops/projects/platform.yaml
 grep -n falco_chart versions.yaml
 ```
 
-**Expected:** `Application.yaml`, `values.yaml`, `README.md`; listed from platform kustomization; `falco` destination on AppProject `platform`; chart pin **9.1.0**.
+**Expected:** `Application.yaml`, `values.yaml`, `README.md`; `falco/Application.yaml` is **absent** from `gitops/platform/kustomization.yaml` until Step 18.2; `falco` destination on AppProject `platform`; chart pin **9.1.0**.
 
 ---
 
@@ -58,23 +62,31 @@ cat gitops/platform/falco/values.yaml
 
 ---
 
-## Step 18.2: Confirm GitOps wiring
+## Step 18.2: Add Falco to the platform sync — **Apply later**
 
 ### Goal
 
-`platform-root` will sync the Falco Application.
+`platform-root` syncs only what `gitops/platform/kustomization.yaml` lists. Falco is left out of that file so a Topics 00–13 rebuild does not deploy it. Add the line when you are ready to run this topic.
 
 ### Commands
 
 ```bash
-grep -n falco gitops/platform/kustomization.yaml
 grep -n "namespace: falco" gitops/projects/platform.yaml
 cat gitops/platform/monitoring/extras/alerts/runtime-security.yaml | head -20
 ```
 
+Edit `gitops/platform/kustomization.yaml` and add:
+
+```yaml
+resources:
+  - falco/Application.yaml
+```
+
+Place it with the other platform Applications, then commit and push so `platform-root` picks it up.
+
 ### Validation
 
-- [ ] `falco/Application.yaml` in platform kustomization
+- [ ] `falco/Application.yaml` added to platform kustomization for this apply
 - [ ] AppProject allows destination namespace `falco`
 - [ ] `runtime-security` alert listed in extras kustomization
 
@@ -152,7 +164,7 @@ Follow [terraform/modules/aks/DEFENDER-OPT-IN.md](../../terraform/modules/aks/DE
 ### Scaffold
 
 - [x] Falco Application + values + ADR-0015
-- [x] AppProject destination + platform kustomization
+- [x] AppProject destination; Application omitted from platform kustomization until apply
 - [x] FalcoDaemonSetUnavailable alert
 - [x] Defender opt-in note under AKS module
 

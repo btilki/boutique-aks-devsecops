@@ -113,7 +113,7 @@ trivy image --scanners vuln --severity CRITICAL --ignore-status fixed <acr>.azur
 
 **Cause:** Pinned version no longer published on GitHub / `get.trivy.dev` (common for older pins such as `0.51.4`).
 
-**Fix:** Set `trivy` in [versions.yaml](../../versions.yaml) and `trivyVersion` in [variables.yml](../../pipelines/templates/variables.yml) to a tag that exists on [Trivy releases](https://github.com/aquasecurity/trivy/releases) (e.g. `0.72.0`). Re-run pipeline — install uses official `contrib/install.sh`.
+**Fix:** Set `trivy` in [versions.yaml](../../versions.yaml) and `trivyVersion` in [variables.yml](../../pipelines/templates/variables.yml) to a tag that exists on [Trivy releases](https://github.com/aquasecurity/trivy/releases) (e.g. `0.72.0`). Re-run the pipeline. The install downloads `trivy_<version>_Linux-64bit.tar.gz` and checks it with `sha256sum` against `trivy_<version>_checksums.txt` from that same release.
 
 ---
 

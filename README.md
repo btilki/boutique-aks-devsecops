@@ -43,6 +43,24 @@ This is a **production pilot**, not enterprise production HA. Honesty here is pa
 
 **Cost:** ~€150–250/month when active. Teardown destroys ACR (re-mirror required). More detail: [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/architecture/08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md) · [docs/security/threat-model.md](docs/security/threat-model.md).
 
+## Interview boundary
+
+Use this split in a conversation. Later controls stay in the repo. They were not part of the cluster run.
+
+**Operated, then torn down (Topics 00–13).** Terraform foundation, ADO OIDC, Argo CD, NGINX and cert-manager, Key Vault CSI, Kyverno enforce policies (ACR allowlist, deny `:latest`, cosign verify, pod security baseline), mirror → Trivy → cosign → digest promotion, Boutique on `boutique-dev` / `boutique-stage` / `boutique-prod`, Grafana, and the ADO approval before prod.
+
+**In Git, not part of that run (Topics 14–20).** PR validation, Checkov, SBOM attestations, NetworkPolicies, namespace quotas, ZAP, and Falco. Falco’s Application lives in `gitops/platform/falco/` and is omitted from `gitops/platform/kustomization.yaml`, so `platform-root` does not sync it. Add that line only when applying [Topic 18](docs/setup/18-runtime-security.md). NetworkPolicy objects ship in the Boutique base and do not enforce while `aks_network_policy` is `null`. The SBOM Kyverno policy stays in `Audit`.
+
+**Limits inside the operated path.** These are deliberate pilot choices.
+
+| Limit | Where to point |
+|-------|----------------|
+| Public API server, system pool size 1, no availability zones | `terraform/modules/aks` |
+| Trivy fails only on CRITICAL. `--ignore-status fixed` skips CVEs that already have an upstream fix. Images are mirrored, not rebuilt. | `pipelines/templates/build-scan-sign.yml` |
+| Cosign key passphrase is empty. Key Vault RBAC is the control. | same pipeline, `COSIGN_PASSWORD` |
+| Signature verification skips platform namespaces (`kube-system`, `kyverno`, `argocd`, `ingress-nginx`, `cert-manager`, `monitoring`) | `policies/kyverno/cluster/02-verify-image-signatures.yaml` |
+| Transparency log is off (`--tlog-upload=false`) | [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
+
 **Public-share hygiene (keep):** no empty `.github/workflows`, no “production-ready” wording, no marketing badge grids — see [CONTRIBUTING.md](CONTRIBUTING.md#public-share-hygiene).
 
 ## CI story

@@ -1,4 +1,6 @@
 # Argo CD Application — Falco runtime detection (ADR-0015 / Topic 18).
+# Not listed in gitops/platform/kustomization.yaml. Topic 18 apply adds that line
+# so platform-root syncs this Application. Until then, this file does not deploy.
 # SETUP: replace <GITHUB_ORG>/<REPO_NAME> in the values source repoURL if not btilki/boutique-aks-devsecops.
 apiVersion: argoproj.io/v1alpha1
 kind: Application

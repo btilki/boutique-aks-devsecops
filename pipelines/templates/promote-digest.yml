@@ -37,8 +37,19 @@ stages:
 
                 - bash: |
                     set -euo pipefail
-                    KUSTOMIZE_INSTALL="https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"
-                    curl -sSL "${KUSTOMIZE_INSTALL}" | bash -s -- 5.4.1 /usr/local/bin
+                    # Pin kustomize 5.4.1. Check the release checksum file before install.
+                    KUST_VER="5.4.1"
+                    KUST_ASSET="kustomize_v${KUST_VER}_linux_amd64.tar.gz"
+                    KUST_DIR="$(mktemp -d)"
+                    curl -fsSL -o "${KUST_DIR}/${KUST_ASSET}" \
+                      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUST_VER}/${KUST_ASSET}"
+                    curl -fsSL -o "${KUST_DIR}/checksums.txt" \
+                      "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUST_VER}/checksums.txt"
+                    awk -v asset="${KUST_ASSET}" '$2 == asset { print; found=1 } END { if (!found) exit 1 }' \
+                      "${KUST_DIR}/checksums.txt" > "${KUST_DIR}/asset.sha256"
+                    (cd "${KUST_DIR}" && sha256sum -c asset.sha256)
+                    tar -xzf "${KUST_DIR}/${KUST_ASSET}" -C "${KUST_DIR}" kustomize
+                    install -m 0755 "${KUST_DIR}/kustomize" /usr/local/bin/kustomize
                     kustomize version
 
                     TARGET_ENV="${{ parameters.targetEnvironment }}"

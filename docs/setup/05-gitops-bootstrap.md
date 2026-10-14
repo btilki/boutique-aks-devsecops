@@ -65,7 +65,7 @@ Key files:
 ### Validation
 
 - [ ] Chart version `6.7.18` in `argocd-install/kustomization.yaml`
-- [ ] `gitops/platform/kustomization.yaml` lists platform Applications (ingress, cert-manager, CSI, Kyverno, Falco, monitoring). Validate those workloads in Topics 06+; do not expect an empty directory.
+- [ ] `gitops/platform/kustomization.yaml` lists platform Applications (ingress, cert-manager, CSI, Kyverno, monitoring). Falco stays out of that file until Topic 18. Validate those workloads in Topics 06+; do not expect an empty directory.
 
 ---
 
