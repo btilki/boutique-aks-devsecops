@@ -15,7 +15,7 @@ When this topic is complete, you can manually run **OWASP** (**Open Worldwide Ap
 
 ## Why this topic is required
 
-Container/**IaC**/admission gates do not exercise the HTTP UI. Baseline DAST closes that portfolio gap without blocking every merge (ADR-0017: advisory by default).
+Container/**IaC**/admission gates do not exercise the HTTP UI. Baseline DAST covers that gap without blocking every merge (ADR-0017: advisory by default).
 
 ---
 
@@ -99,7 +99,7 @@ Optional gate: re-run with `failOnWarn=true` once noise is understood.
 ## Rollback
 
 - Disable or delete the ADO DAST pipeline registration
-- Leave YAML in Git (optional portfolio evidence)
+- Leave YAML in Git (the pipeline definition stays in the repo)
 
 ---
 

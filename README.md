@@ -4,7 +4,7 @@ Production-pilot Azure DevSecOps reference platform for [Online Boutique](https:
 
 Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secrets, and digest-based promotion across **dev / stage / prod namespaces** on **one** cost-conscious cluster in `germanywestcentral`.
 
-Part of the [DevOps Engineering Playbook](https://github.com/btilki/devops-engineering-playbook) · Author: [Birol Tilki](https://www.linkedin.com/in/birol-tilki-48731326/)
+Author: Birol Tilki
 
 ### At a glance (30 seconds)
 
@@ -15,7 +15,6 @@ Part of the [DevOps Engineering Playbook](https://github.com/btilki/devops-engin
 | **Hard rule** | Unsigned / floating tags should not reach the cluster |
 | **Proven** | Setup Topics 00–13 lived and **torn down**; Topics 14–20 scaffold-only until rebuild |
 | **Start reading** | [CI story](#ci-story) → [ARCHITECTURE.md](ARCHITECTURE.md) → [docs/security/threat-model.md](docs/security/threat-model.md) |
-| **Playbook brief** | [featured project](https://github.com/btilki/devops-engineering-playbook/blob/main/featured-projects/boutique-aks-devsecops.md) |
 
 ## Status
 
@@ -136,21 +135,12 @@ examples/     # Runnable demos (CSI secret test)
 
 Do not commit secrets, keys, or `terraform.tfvars` with real values. See [SECURITY.md](SECURITY.md).
 
-## Related portfolio
+## Related projects
 
-| Resource | Link |
-|----------|------|
-| **DevOps Engineering Playbook** (hub) | https://github.com/btilki/devops-engineering-playbook |
-| Playbook project brief | https://github.com/btilki/devops-engineering-playbook/blob/main/featured-projects/boutique-aks-devsecops.md |
-| Article A1 — GitHub + Azure DevOps on AKS | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A1.md |
-| Article A2 — Kyverno + Cosign unsigned deny | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A2.md |
-| Article A3 — Destroy ACR on teardown | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/A3.md |
-| Article X1 — Online Boutique on EKS, GKE, and AKS | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/X1.md |
-| Article X2 — Single cluster vs multi-cluster | https://github.com/btilki/devops-engineering-playbook/blob/main/articles/X2.md |
-| Sister platform — EKS GitOps | https://github.com/btilki/boutique-eks-gitops |
-| Sister platform — GKE SRE | https://github.com/btilki/boutique-gke-sre |
-| *Practical DevSecOps on Azure Kubernetes Service* (Boutique Production) | https://github.com/btilki/learn-devops-by-building/tree/main/boutique-production/aks-devsecops |
-| LinkedIn | https://www.linkedin.com/in/birol-tilki-48731326/ |
+| Project | Link |
+|---------|------|
+| EKS GitOps | https://github.com/btilki/boutique-eks-gitops |
+| GKE SRE | https://github.com/btilki/boutique-gke-sre |
 
 ## License
 

@@ -17,6 +17,6 @@ Package 8 (Phase 22) adds dynamic application security testing against the lived
 
 ## Consequences
 
-- **Positive:** Completes the DevSecOps portfolio loop (SAST/IaC/container + runtime + DAST); low coupling to mirror pipeline.
+- **Positive:** Adds DAST beside the IaC, container, and runtime controls; low coupling to the mirror pipeline.
 - **Negative:** Requires live cluster/DNS/TLS; baseline is shallow vs full scan; false positives need triage.
 - **Not chosen:** ZAP full scan as merge gate; Burp Enterprise; scanning stage/prod by default.

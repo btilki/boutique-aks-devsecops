@@ -20,7 +20,7 @@ When this topic is complete:
 
 ## Why this topic is required
 
-Admission (Kyverno) and CI (Trivy/cosign) do not see malicious *behavior* after a signed image starts. Runtime detection closes that gap for the DevSecOps portfolio story.
+Admission (Kyverno) and CI (Trivy/cosign) do not see malicious *behavior* after a signed image starts. Runtime detection closes that gap.
 
 ---
 

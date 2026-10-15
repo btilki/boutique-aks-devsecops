@@ -42,7 +42,7 @@
 
 ## 3. Business value
 
-- End-to-end Azure DevSecOps portfolio piece
+- End-to-end Azure DevSecOps on one AKS cluster
 - Educational docs with rationale (why OIDC, Kyverno, GitOps)
 - Realistic promotion and rollback on microservices
 - Cost-conscious single cluster with teardown path
