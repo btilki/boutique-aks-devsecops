@@ -1,147 +1,172 @@
 # boutique-aks-devsecops
 
-Production-pilot Azure DevSecOps reference platform for [Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo) **v0.10.5** on AKS.
+Production-pilot Azure DevSecOps for Online Boutique **v0.10.5** on AKS — signed digests, Kyverno admission, GitOps promotion.
 
-Secure supply chain (Trivy + cosign + Kyverno), GitOps (Argo CD), Key Vault secrets, and digest-based promotion across **dev / stage / prod namespaces** on **one** cost-conscious cluster in `germanywestcentral`.
+> **Status:** Production pilot closed. Setup Topics **00–13** ran end to end; then the Azure resources were destroyed. There is no live AKS, ACR, or Key Vault from that run. To run again, follow [`docs/setup/`](docs/setup/).
 
-Author: Birol Tilki
+---
 
-### At a glance (30 seconds)
+## Problem
+
+Mutable tags and unsigned images make “what is running?” hard to trust. Long-lived CI secrets and a pipeline that can push straight into the cluster create a second deploy authority next to Git. A demo that only shows Terraform apply does not prove the supply-chain path.
+
+## Decision
+
+- **Mirror, scan, sign, promote by digest** — Azure DevOps mirrors Boutique v0.10.5 into ACR, fails on CRITICAL findings, cosign-signs digests, then updates GitOps overlays ([ADR-0005](docs/adr/0005-cosign-key-based-signing.md)).
+- **Admission blocks the easy mistakes** — Kyverno allows only ACR, denies `:latest`, and verifies signatures on Boutique workloads.
+- **Git is what Argo CD reconciles** — GitHub holds desired state; ADO uses OIDC to Azure (no long-lived pipeline secrets). Prod promotion needs an ADO environment approval.
+- **One AKS cluster, three namespaces** — cost over blast-radius isolation.
+
+## Result
+
+Topics **00–13** completed, then teardown. Cost when active was roughly €150–250/month; teardown destroys ACR, so a rebuild must re-mirror. File-backed claims: [`docs/pilot-claims.md`](docs/pilot-claims.md).
+
+---
+
+## At a glance
 
 | | |
 |-|-|
-| **What** | DevSecOps on Azure AKS — signed digests, Kyverno admission, GitOps promotion |
-| **CI model** | **GitHub** = source of truth · **Azure DevOps** = pipelines (OIDC) · no GitHub Actions |
-| **Hard rule** | Unsigned / floating tags should not reach the cluster |
-| **Proven** | Setup Topics 00–13 lived and **torn down**; Topics 14–20 scaffold-only until rebuild |
-| **Start reading** | [CI story](#ci-story) → [ARCHITECTURE.md](ARCHITECTURE.md) → [docs/security/threat-model.md](docs/security/threat-model.md) |
+| What | DevSecOps on one AKS cluster in `germanywestcentral` |
+| Hard rule | **Unsigned or floating tags should not reach the cluster** |
+| CI model | GitHub = source of truth · Azure DevOps = pipelines (OIDC) · no GitHub Actions |
+| Scope | Production pilot — one subscription, one region; not multi-region HA |
+| Stack | Terraform · AKS · ACR · Key Vault · Argo CD · Kyverno · Trivy · cosign · Prometheus / Loki / Grafana |
 
-## Status
+---
 
-| Item | State |
-|------|--------|
-| Planning | Phase 15+ **scaffold complete** — [phase15-plus.md](docs/implementation/phase15-plus.md) |
-| Implementation | Setup Topics **00–13** complete; Azure test **torn down**; Topics **14–20** scaffolded (apply after rebuild) |
-| Region | `germanywestcentral` (when rebuilt) |
-| Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
+## Proof
 
-## Limitations
+These screenshots are from the lived run. Full catalog: [`assets/images/README.md`](assets/images/README.md). Hostnames stay offline until you rebuild.
 
-This is a **production pilot**, not enterprise production HA. Honesty here is part of the design.
+**Argo CD** — Applications Healthy/Synced:
 
-**Do not call this production-ready.** Environments named `prod` are **logical namespaces on one cluster**, not a multi-cluster production estate.
+![Argo CD applications healthy](assets/images/setup/05-argocd-applications-healthy.png)
 
-| What this repo proves | What it does **not** claim |
-|-----------------------|----------------------------|
-| End-to-end DevSecOps on Azure AKS | Multi-region / multi-cluster failover |
-| Signed digests + Kyverno admission | Separate clusters per environment |
-| GitOps promotion with ADO prod approval | WAF, DDoS protection, HSM-backed keys |
-| Metrics, test SLO, Alertmanager UI | 24×7 on-call, Tempo/Jaeger, SOC SIEM |
-| Rebuild-from-Git DR (hours) | Enterprise RTO/RPO or automatic DR |
-| Boutique × up to 3 namespaces on one cluster | Unlimited scale; blast radius is the whole cluster |
+**Azure DevOps** — supply-chain pipeline green (mirror → Trivy → cosign):
 
-**Cost:** ~€150–250/month when active. Teardown destroys ACR (re-mirror required). More detail: [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/architecture/08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md) · [docs/security/threat-model.md](docs/security/threat-model.md).
+![ADO supply-chain pipeline success](assets/images/setup/09-ado-pipeline-supply-chain-success.png)
 
-## Interview boundary
+**Storefront** — `dev-boutique.biroltilki.art` over HTTPS (when the pilot was live):
 
-Use this split in a conversation. Later controls stay in the repo. They were not part of the cluster run.
+![Boutique dev homepage](assets/images/setup/10-dev-boutique-homepage.png)
 
-**Operated, then torn down (Topics 00–13).** Terraform foundation, ADO OIDC, Argo CD, NGINX and cert-manager, Key Vault CSI, Kyverno enforce policies (ACR allowlist, deny `:latest`, cosign verify, pod security baseline), mirror → Trivy → cosign → digest promotion, Boutique on `boutique-dev` / `boutique-stage` / `boutique-prod`, Grafana, and the ADO approval before prod.
+More: ACR digests, Grafana, stage/prod storefronts — [`assets/images/setup/`](assets/images/setup/). Claims without a live cluster: [`docs/pilot-claims.md`](docs/pilot-claims.md).
 
-**In Git, not part of that run (Topics 14–20).** PR validation, Checkov, SBOM attestations, NetworkPolicies, namespace quotas, ZAP, and Falco. Falco’s Application lives in `gitops/platform/falco/` and is omitted from `gitops/platform/kustomization.yaml`, so `platform-root` does not sync it. Add that line only when applying [Topic 18](docs/setup/18-runtime-security.md). NetworkPolicy objects ship in the Boutique base and do not enforce while `aks_network_policy` is `null`. The SBOM Kyverno policy stays in `Audit`.
+---
 
-**Limits inside the operated path.** These are deliberate pilot choices.
+## Tradeoffs / what I would change for real production
 
-| Limit | Where to point |
-|-------|----------------|
-| Public API server, system pool size 1, no availability zones | `terraform/modules/aks` |
-| Trivy fails only on CRITICAL. `--ignore-status fixed` skips CVEs that already have an upstream fix. Images are mirrored, not rebuilt. | `pipelines/templates/build-scan-sign.yml` |
-| Cosign key passphrase is empty. Key Vault RBAC is the control. | same pipeline, `COSIGN_PASSWORD` |
-| Signature verification skips platform namespaces (`kube-system`, `kyverno`, `argocd`, `ingress-nginx`, `cert-manager`, `monitoring`) | `policies/kyverno/cluster/02-verify-image-signatures.yaml` |
-| Transparency log is off (`--tlog-upload=false`) | [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
+- **Single cluster, three namespaces** — fine for a cost-capped pilot; not true env isolation. Separate clusters (or subscriptions) for prod.
+- **Public API server, system pool size 1, no availability zones** — rebuild would tighten API access and HA first.
+- **Trivy CRITICAL with `--ignore-status fixed`** — upstream v0.10.5 is mirrored, not rebuilt; fixed CVEs can still appear in the image.
+- **Cosign key passphrase empty; transparency log off** — Key Vault RBAC protects the key; a client path would use a passphrase or keyless signing and Rekor.
+- **Signature verify skips platform namespaces** — Boutique is gated; platform charts are a second trust domain.
 
-**Public-share hygiene (keep):** no empty `.github/workflows`, no “production-ready” wording, no marketing badge grids — see [CONTRIBUTING.md](CONTRIBUTING.md#public-share-hygiene).
+Do **not** call this production-ready. The namespace named `prod` is a promotion stage on the same cluster. Public-share rules: [CONTRIBUTING.md](CONTRIBUTING.md#public-share-hygiene).
 
-## CI story
+Optional hardening ideas after a rebuild (not part of the closed pilot): [`docs/setup/README.md`](docs/setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
 
-| Role | Platform | Notes |
-|------|----------|-------|
-| **Source of truth** | **GitHub** | Clone, PRs, Argo CD sync, digest commits |
-| **CI / CD runs** | **Azure DevOps** | Mirror → Trivy → cosign → promote; OIDC to Azure |
-| **GitHub Actions** | **Not used** | No `.github/workflows` — by design |
+---
 
-```text
-GitHub (git)  ──checkout──►  Azure DevOps pipelines/
-       ▲                              │
-       │                         push digests
-       └──────── Argo CD ◄────────────┘
-                    │
-                    ▼
-                 AKS + ACR
+## Where to start
+
+| I want to… | Read |
+|------------|------|
+| Understand the project in ~10 minutes | This page → [`ARCHITECTURE.md`](ARCHITECTURE.md) → [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
+| See pilot proof | [`docs/pilot-claims.md`](docs/pilot-claims.md) · [`assets/images/`](assets/images/README.md) |
+| Review design and delivery | [`docs/architecture/`](docs/architecture/README.md) · [`docs/ci.md`](docs/ci.md) · [`docs/promotion.md`](docs/promotion.md) · [`docs/rollback.md`](docs/rollback.md) · [`docs/security/threat-model.md`](docs/security/threat-model.md) |
+| Rebuild or operate | [`docs/setup/`](docs/setup/README.md) (Topics 00–13) · [`versions.yaml`](versions.yaml) · [`docs/runbooks/`](docs/runbooks/README.md) |
+
+Full index: [`docs/README.md`](docs/README.md)
+
+---
+
+## Supply-chain flow (summary)
+
+```mermaid
+flowchart LR
+  ADO[Azure DevOps] -->|OIDC mirror scan sign| ACR[ACR]
+  ADO -->|digest commit| Git[(GitHub)]
+  Git -->|pull| Argo[Argo CD]
+  Argo --> Dev[boutique-dev]
+  Argo --> Stage[boutique-stage]
+  Argo --> Prod[boutique-prod]
+  Users((Users)) -->|HTTPS NGINX + cert-manager| Dev & Stage & Prod
 ```
 
-YAML lives in [`pipelines/`](pipelines/). Auth is ADO **OIDC** (no long-lived pipeline secrets). Setup: [docs/setup/09-ci-pipeline.md](docs/setup/09-ci-pipeline.md). Index: [pipelines/README.md](pipelines/README.md). Local checks: `pre-commit` + [tests/README.md](tests/README.md).
+Promotion: `dev → stage → prod` (same digest; **ADO approval before prod**). Details: [`docs/architecture/05-deployment-flow.md`](docs/architecture/05-deployment-flow.md).
 
-## Quick links
+---
 
-| Document | Purpose |
-|----------|---------|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Executive architecture summary |
-| [CHANGELOG.md](CHANGELOG.md) | Notable changes |
-| [ROADMAP.md](ROADMAP.md) | Phase tracker and milestones |
-| [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md) | Phase 15+ fuller DevSecOps packages (scaffold-first) |
-| [docs/setup/README.md](docs/setup/README.md) | Authoritative setup guide index |
-| [docs/operations/README.md](docs/operations/README.md) | Day-2 runbooks |
-| [docs/architecture/README.md](docs/architecture/README.md) | Deep architecture docs |
-| [versions.yaml](versions.yaml) | Pinned tool, chart, and app versions |
+## Repository map and navigation
 
-## Hostnames
+This map shows repository layout, platform components, and where each engineering area lives.
 
-**Test offline.** These FQDNs were used for the lived pilot; they resolve only after you rebuild Topics 02–12. For storefront / UI proof, see [Visual evidence](#visual-evidence).
+![Boutique AKS DevSecOps — Repository Map and Navigation](assets/images/aks-devsecops-repository-map.jpg)
 
-| Service | FQDN (when test is live) |
-|---------|-------------------------|
-| Argo CD | `argocd-boutique.biroltilki.art` |
-| Grafana | `grafana-boutique.biroltilki.art` |
-| Boutique dev | `dev-boutique.biroltilki.art` |
-| Boutique stage | `stage-boutique.biroltilki.art` |
-| Boutique prod | `boutique.biroltilki.art` |
+---
 
-## Visual evidence
+## What the pilot demonstrated
 
-Setup screenshots live under [`assets/images/setup/`](assets/images/setup/) and are linked from matching [`docs/setup/`](docs/setup/) topics. Catalog: [`assets/images/README.md`](assets/images/README.md). Use these when public URLs are offline.
+- Terraform foundation: VNet, AKS (Workload Identity), ACR, Key Vault, Azure DNS, ADO OIDC
+- Argo CD app-of-apps; NGINX + cert-manager; Key Vault CSI; Kyverno Enforce for allowlist, deny `:latest`, and signature verify on Boutique
+- ADO: mirror → Trivy → cosign → digest promotion; Grafana + in-cluster Loki
+- Ordered teardown after validation (see [`docs/setup/13-teardown.md`](docs/setup/13-teardown.md))
+
+---
+
+## Technology stack
+
+| Area | Choices |
+|------|---------|
+| Cloud / region | Azure `germanywestcentral` |
+| IaC | Terraform ≥ 1.6 |
+| Kubernetes | AKS, Azure CNI |
+| GitOps / delivery | Argo CD, Kustomize overlays |
+| Policy / secrets | Kyverno, Secrets Store CSI, Key Vault |
+| Ingress / TLS | NGINX Ingress, cert-manager, Let's Encrypt DNS-01 |
+| CI / supply chain | Azure DevOps, ACR, Trivy, cosign |
+| Observability | kube-prometheus-stack, Loki, Promtail, Grafana |
+
+Pins: [`versions.yaml`](versions.yaml) · Deep design: [`docs/architecture/README.md`](docs/architecture/README.md)
+
+---
 
 ## Repository layout
 
 ```text
-terraform/    # Azure IaC (bootstrap, modules, environments/dev)
-gitops/       # Argo CD bootstrap, platform services, Boutique overlays
-policies/     # Kyverno cluster policies and tests
-pipelines/    # Azure DevOps CI (not GitHub Actions)
-docs/         # Architecture, setup, security, runbooks
-scripts/      # Guarded operational helpers (teardown, OIDC verify)
-tests/        # Terraform, policy, integration validation
-examples/     # Runnable demos (CSI secret test)
+boutique-aks-devsecops/
+├── terraform/    # Azure IaC (bootstrap, modules, environments/dev)
+├── gitops/       # Argo CD bootstrap, platform, Boutique overlays
+├── policies/     # Kyverno cluster policies and tests
+├── pipelines/    # Azure DevOps CI (not GitHub Actions)
+├── docs/         # Architecture, setup, security, runbooks
+├── scripts/      # Guarded helpers (teardown, OIDC verify)
+├── tests/        # Terraform, policy, integration validation
+└── examples/     # Runnable demos (CSI secret test)
 ```
 
-## Getting started
+---
 
-1. **New test (Topics 00–13):** start at [docs/setup/00-prerequisites.md](docs/setup/00-prerequisites.md), then follow Topics **00–12** (and **13** when tearing down).
-2. **Rebuild after teardown:** same path; do not re-apply foundation blindly — see [tests/README.md](tests/README.md) P0 checks.
-3. **Phase 15+ (Topics 14–20):** scaffold is in Git; apply only after Topics 00–12 are live again — [phase15-plus.md](docs/implementation/phase15-plus.md).
-4. Confirm each topic before the next; authoritative steps live only under `docs/setup/`.
+## Quick clone
 
-## Security
+```bash
+git clone https://github.com/btilki/boutique-aks-devsecops.git
+cd boutique-aks-devsecops
+```
 
-Do not commit secrets, keys, or `terraform.tfvars` with real values. See [SECURITY.md](SECURITY.md).
+Do not provision Azure from this file. Bootstrap and destroy live under [`docs/setup/`](docs/setup/).
 
-## Related projects
+---
 
-| Project | Link |
-|---------|------|
-| EKS GitOps | https://github.com/btilki/boutique-eks-gitops |
-| GKE SRE | https://github.com/btilki/boutique-gke-sre |
+## Contributing · License · References
 
-## License
+- Contributing: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Security: [`SECURITY.md`](SECURITY.md)
+- Changelog: [`CHANGELOG.md`](CHANGELOG.md)
+- Roadmap: [`ROADMAP.md`](ROADMAP.md)
 
-Apache License 2.0 — see [LICENSE](LICENSE).
+Licensed under Apache License 2.0 — see [`LICENSE`](LICENSE). Upstream app: [Google Online Boutique](https://github.com/GoogleCloudPlatform/microservices-demo).
+
+Stack references: [Argo CD](https://argo-cd.readthedocs.io/) · [Kyverno](https://kyverno.io/) · [cosign](https://docs.sigstore.dev/) · [Trivy](https://trivy.dev/) · [Azure AKS](https://learn.microsoft.com/azure/aks/)

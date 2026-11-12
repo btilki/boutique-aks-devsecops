@@ -1,6 +1,6 @@
 # 06 — Ingress + TLS
 
-**Audience:** L2 — Implementer
+Audience: Implementer
 **Estimated time:** 120 minutes (certificate issuance may add 5–15 min)
 **Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ complete · [02-azure-foundation.md](02-azure-foundation.md) DNS delegated
 **Creates:** NGINX Ingress, cert-manager, Let's Encrypt ClusterIssuer (DNS-01), Argo CD HTTPS ingress
@@ -10,11 +10,11 @@
 
 ## Topic goal
 
-When this topic is complete, a **public Azure Load Balancer** fronts **NGINX** (**NGINX Ingress Controller**), **cert-manager** issues certificates via **Let's Encrypt DNS-01** against Azure DNS, and **Argo CD** is reachable at `https://argocd-boutique.biroltilki.art` with a valid **TLS** (**Transport Layer Security**) certificate.
+When this topic is complete, a public Azure Load Balancer fronts NGINX Ingress, cert-manager issues certificates via Let's Encrypt DNS-01 against Azure DNS, and Argo CD is reachable at `https://argocd-boutique.biroltilki.art` with a valid TLS certificate.
 
 ## Why this topic is required
 
-All platform and Boutique hostnames share one ingress IP. TLS automation via DNS-01 avoids HTTP-01 challenges and works behind firewalls. cert-manager + Azure DNS + platform Workload Identity is the locked pattern for this project.
+All platform and Boutique hostnames share one ingress IP. TLS automation via DNS-01 avoids HTTP-01 challenges and works behind firewalls. **cert-manager + Azure DNS + platform Workload Identity is the locked pattern** for this project.
 
 ---
 
@@ -245,8 +245,8 @@ az network dns record-set a add-record \
 
 ### GUI instructions (alternative)
 
-1. **Azure Portal** → **DNS zones** → **biroltilki.art** → **+ Record set**
-2. Name: `argocd-boutique` → Type: **A** → IP: ingress IP → **OK**
+1. Azure Portal → DNS zones → biroltilki.art → + Record set
+2. Name: `argocd-boutique` → Type: A → IP: ingress IP → OK
 
 ### Validation
 
@@ -283,7 +283,7 @@ NAME                READY   SECRET
 argocd-server-tls   True    argocd-server-tls
 ```
 
-May take **5–15 minutes** on first issuance.
+May take 5–15 minutes on first issuance.
 
 ### Validation
 

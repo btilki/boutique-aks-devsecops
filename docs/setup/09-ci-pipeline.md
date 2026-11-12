@@ -1,20 +1,20 @@
 # 09 — CI Pipeline (Mirror, Scan, Sign)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 180 minutes
-**Prerequisites:** [04-ado-oidc.md](04-ado-oidc.md) ✅ · [03-cluster-resources.md](03-cluster-resources.md) ✅
-**Creates:** **ADO** (**Azure DevOps**) pipeline, cosign key pair in Key Vault, signed Boutique v0.10.5 images in **ACR** (**Azure Container Registry**)
-**Related ADRs:** [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/0009-mirror-upstream-images.md)
+Audience: Implementer
+Estimated time: 180 minutes
+Prerequisites: [04-ado-oidc.md](04-ado-oidc.md) ✅ · [03-cluster-resources.md](03-cluster-resources.md) ✅
+Creates: ADO pipeline, cosign key pair in Key Vault, signed Boutique v0.10.5 images in ACR
+Related ADRs: [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/0009-mirror-upstream-images.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, an ADO **CI** (**Continuous Integration**) pipeline mirrors all **11 Online Boutique v0.10.5** service images from Google Artifact Registry to **ACR**, runs **Trivy** with a **CRITICAL** severity gate, and **cosign-signs** each image **by digest** with `--tlog-upload=false`. The cosign **public key** is pasted into Kyverno policy `02-verify-image-signatures.yaml` so admission can verify signed workloads in Topic 10.
+When this topic is complete, your ADO CI pipeline mirrors all 11 Online Boutique v0.10.5 service images from Google Artifact Registry to ACR, runs Trivy with a **CRITICAL** severity gate, and cosign-signs each image **by digest** with `--tlog-upload=false`. The cosign **public key belongs in Git** (Kyverno policy `02-verify-image-signatures.yaml`) so admission can verify signed workloads in Topic 10.
 
 ## Why this topic is required
 
-Kyverno enforces ACR allowlist and signature verification at admission time. Images must exist in your ACR and be signed before Boutique deploys. This pipeline is the supply-chain gate between upstream Google images and your cluster.
+Kyverno enforces the ACR allowlist and signature verification at admission time. Images must land in your registry and be signed before Boutique deploys. This pipeline is the supply-chain gate between upstream Google images and your cluster.
 
 ---
 
@@ -23,7 +23,7 @@ Kyverno enforces ACR allowlist and signature verification at admission time. Ima
 - [ ] Topic 04 complete: ADO service connection `azure-boutique-oidc` works
 - [ ] Topic 03 complete: ACR and Key Vault exist
 - [ ] `terraform output` values available for `acr_name`, `key_vault_name`
-- [ ] Repository pushed to **GitHub** (Topic 00 Step 4) — pipeline YAML must be in GitHub
+- [ ] Repository pushed to GitHub (Topic 00 Step 4) — pipeline YAML must be in GitHub
 - [ ] Optional local tools: `cosign`, `trivy`, `jq`
 
 ```bash
@@ -224,7 +224,7 @@ echo "acrLoginServer: ${ACR_LOGIN}"
 echo "keyVaultName: ${KV_NAME}"
 ```
 
-Edit `pipelines/templates/variables.yml` if values differ from defaults, **or** override in ADO: **Pipelines** → your pipeline → **Edit** → **Variables** (pipeline-level overrides).
+Edit `pipelines/templates/variables.yml` if values differ from defaults, or override in ADO: Pipelines → your pipeline → Edit → Variables (pipeline-level overrides).
 
 ### Validation
 
@@ -241,25 +241,25 @@ Register the pipeline in ADO pointing at `pipelines/azure-pipelines.yml`.
 
 ### Why this step is required
 
-ADO must load YAML from your **GitHub** repository and use the OIDC service connection for Azure resources.
+ADO must load YAML from your GitHub repository and use the OIDC service connection for Azure resources.
 
 ### GUI steps
 
-1. Azure DevOps → your project → **Pipelines** → **New pipeline**
-2. **GitHub** → authorize Azure Pipelines if prompted → select **`boutique-aks-devsecops`**
-3. **Existing Azure Pipelines YAML file** → branch `main` → path `/pipelines/azure-pipelines.yml`
-4. **Continue** → review → **Run** (or Save without running)
+1. Azure DevOps → your project → Pipelines → New pipeline
+2. GitHub → authorize Azure Pipelines if prompted → select `boutique-aks-devsecops`
+3. Existing Azure Pipelines YAML file → branch `main` → path `/pipelines/azure-pipelines.yml`
+4. Continue → review → Run (or Save without running)
 
-**Grant pipeline access to GitHub:** When connecting the repo, allow Azure Pipelines to access your GitHub organization/repository. Digest promotion (Topic 12) requires **push** permission to `main` — enable **Grant access permission to all pipelines** on the GitHub service connection, or approve when prompted on first promote run.
+Grant pipeline access to GitHub: When connecting the repo, allow Azure Pipelines to access your GitHub organization/repository. Digest promotion (Topic 12) requires push permission to `main` — enable Grant access permission to all pipelines on the GitHub service connection, or approve when prompted on first promote run.
 
 On first run, authorize:
 
-- **azure-boutique-oidc** service connection (if prompted)
-- **Docker** (agent uses `docker pull` / `docker push`)
+- azure-boutique-oidc service connection (if prompted)
+- Docker (agent uses `docker pull` / `docker push`)
 
 ### Validation
 
-- [ ] Pipeline appears in ADO with stages **Validate** and **MirrorScanSign**
+- [ ] Pipeline appears in ADO with stages Validate and MirrorScanSign
 - [ ] YAML path is `pipelines/azure-pipelines.yml`
 
 ---
@@ -276,7 +276,7 @@ This is the end-to-end proof that OIDC, ACR push, Trivy, and cosign work togethe
 
 ### Commands
 
-Run pipeline from ADO (**Run pipeline** on `main`), or queue from CLI if configured:
+Run pipeline from ADO (Run pipeline on `main`), or queue from CLI if configured:
 
 ```bash
 # Optional — requires az devops extension and PAT; GUI run is fine
@@ -310,8 +310,8 @@ rm -f /tmp/cosign.pub
 
 ### Expected output
 
-- Pipeline stage **MirrorScanSign** green
-- Artifact **digest-manifest** published (JSON map of service → digest)
+- Pipeline stage MirrorScanSign green
+- Artifact digest-manifest published (JSON map of service → digest)
 - `cosign verify` succeeds for at least one service
 - All 11 repositories listed in ACR
 
@@ -352,7 +352,7 @@ In `pipelines/azure-pipelines.yml`, uncomment:
       targetEnvironment: dev
 ```
 
-Requires `kustomize` on the agent and `persistCredentials: true` for Git push to **GitHub**. See [12-promotion-stage-prod.md](12-promotion-stage-prod.md).
+Requires `kustomize` on the agent and `persistCredentials: true` for Git push to GitHub. See [12-promotion-stage-prod.md](12-promotion-stage-prod.md).
 
 ### Validation
 

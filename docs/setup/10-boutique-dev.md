@@ -1,20 +1,20 @@
 # 10 — Boutique Dev Deploy
 
-**Audience:** L2 — Implementer
-**Estimated time:** 90 minutes
-**Prerequisites:** [06-ingress-tls.md](06-ingress-tls.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) ✅
-**Creates:** Online Boutique v0.10.5 in `boutique-dev`, HTTPS ingress at `dev-boutique.biroltilki.art`
-**Related ADRs:** [0002](../adr/0002-single-cluster-multi-namespace.md), [0009](../adr/0009-mirror-upstream-images.md)
+Audience: Implementer
+Estimated time: 90 minutes
+Prerequisites: [06-ingress-tls.md](06-ingress-tls.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) ✅
+Creates: Online Boutique v0.10.5 in `boutique-dev`, HTTPS ingress at `dev-boutique.biroltilki.art`
+Related ADRs: [0002](../adr/0002-single-cluster-multi-namespace.md), [0009](../adr/0009-mirror-upstream-images.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **Online Boutique v0.10.5** runs in namespace **`boutique-dev`**, deployed by **Argo CD** (auto-sync), with all workload images from **signed ACR** (**Azure Container Registry**) references. The storefront is reachable at **`https://dev-boutique.biroltilki.art`** and passes the dev smoke test.
+When this topic is complete, Online Boutique v0.10.5 runs in namespace `boutique-dev`, deployed by Argo CD with automated sync, with workload images referenced from signed ACR digests. The storefront is reachable at `https://dev-boutique.biroltilki.art` and passes the dev smoke test.
 
 ## Why this topic is required
 
-This is the first end-to-end proof that supply chain (mirror → sign), admission (Kyverno), ingress/TLS, and GitOps work together. Stage and prod overlays build on the same base in Topic 12.
+This is your first end-to-end proof that the supply chain (mirror → sign), admission (Kyverno), ingress/TLS, and GitOps path work together. Stage and prod overlays build on the same base in Topic 12.
 
 ---
 
@@ -62,7 +62,7 @@ cat gitops/apps/boutique/overlays/dev/kustomization.yaml
 | `base/manifests.yaml` | Upstream v0.10.5 release manifests |
 | `base/kustomization.yaml` | ACR image transforms + remove `frontend-external` LB |
 | `overlays/dev/` | Namespace, ingress, dev patches |
-| `dev-application.yaml` | Argo CD app with **automated** sync |
+| `dev-application.yaml` | Argo CD app with automated sync |
 
 ### Validation
 
@@ -75,11 +75,11 @@ cat gitops/apps/boutique/overlays/dev/kustomization.yaml
 
 ### Goal
 
-Push **redis** and **busybox** to ACR with pinned tags and cosign signatures.
+Push redis and busybox to ACR with pinned tags and cosign signatures.
 
 ### Why this step is required
 
-Upstream Boutique uses `redis:alpine` and `busybox:latest` (init container). Kyverno requires **ACR-only**, **no `:latest`**, and **cosign signatures** in `boutique-dev`.
+Upstream Boutique uses `redis:alpine` and `busybox:latest` (init container). Kyverno requires ACR-only images, no `:latest`, and cosign signatures in `boutique-dev`.
 
 ### Commands
 
@@ -191,7 +191,7 @@ kubectl get application -n argocd boutique-dev
 kubectl describe application -n argocd boutique-dev | tail -20
 ```
 
-**GUI:** Argo CD → **apps-root** → Sync → then **boutique-dev** → Sync.
+GUI: Argo CD → apps-root → Sync → then boutique-dev → Sync.
 
 Watch sync:
 
@@ -201,8 +201,8 @@ watch -n5 'kubectl get application -n argocd boutique-dev; kubectl get pods -n b
 
 ### Expected output
 
-- `boutique-dev` Application: **Synced** / **Healthy**
-- Pods transition to **Running** (11 Boutique + redis-cart + loadgenerator)
+- `boutique-dev` Application: Synced / Healthy
+- Pods transition to Running (11 Boutique + redis-cart + loadgenerator)
 
 ### Validation
 

@@ -1,20 +1,20 @@
 # 02 — Azure Foundation
 
-**Audience:** L2 — Implementer
-**Estimated time:** 90 minutes (plus DNS propagation wait)
-**Prerequisites:** [01-terraform-bootstrap.md](01-terraform-bootstrap.md) ✅ complete
-**Creates:** Platform resource group, VNet + AKS subnet + NSG, Azure DNS zone `biroltilki.art`
-**Related ADRs:** [0001 — Azure cloud provider](../adr/0001-azure-cloud-provider.md), [0012 — Loki in-cluster logging](../adr/0012-loki-in-cluster-logging.md)
+Audience: Implementer
+Estimated time: 90 minutes (plus DNS propagation wait)
+Prerequisites: [01-terraform-bootstrap.md](01-terraform-bootstrap.md) ✅ complete
+Creates: Platform resource group, VNet + AKS subnet + NSG, Azure DNS zone `biroltilki.art`
+Related ADRs: [0001 — Azure cloud provider](../adr/0001-azure-cloud-provider.md), [0012 — Loki in-cluster logging](../adr/0012-loki-in-cluster-logging.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, the **platform resource group** exists in `germanywestcentral` with a **VNet** (**Virtual Network**) (`10.0.0.0/16`), an **AKS** (**Azure Kubernetes Service**)-ready subnet (`10.0.0.0/20`) with **NSG** (**Network Security Group**), and an Azure DNS zone for `biroltilki.art`. DNS is **delegated** at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
+When you finish this topic, the platform resource group exists in `germanywestcentral` with a VNet (`10.0.0.0/16`), an AKS-ready subnet (`10.0.0.0/20`) and NSG, plus an Azure DNS zone for `biroltilki.art`. You delegate DNS at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
 
 ## Why this topic is required
 
-AKS (Topic 03) requires a subnet ID and resource group. Ingress **TLS** (**Transport Layer Security**) (Topic 06) requires Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation separately keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
+AKS (Topic 03) needs a subnet ID and resource group. Ingress TLS (Topic 06) needs Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation on its own keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
 
 ---
 
@@ -22,8 +22,8 @@ AKS (Topic 03) requires a subnet ID and resource group. Ingress **TLS** (**Trans
 
 - [ ] Topic 01 complete: remote backend works (`terraform init` in `environments/dev`)
 - [ ] `az account show` targets the correct subscription
-- [ ] You control DNS at the **registrar** for `biroltilki.art` (or a subdomain delegation plan)
-- [ ] You understand this `apply` creates **billable** Azure resources (VNet is free; no Log Analytics per ADR-0012)
+- [ ] You control DNS at the registrar for `biroltilki.art` (or a subdomain delegation plan)
+- [ ] You understand this `apply` creates billable Azure resources (VNet is free; no Log Analytics per ADR-0012)
 
 ```bash
 cd terraform/environments/dev
@@ -95,7 +95,7 @@ Edit `terraform.tfvars` — at minimum confirm:
 
 ### Validation
 
-- [ ] `terraform.tfvars` exists and is **not** tracked by Git
+- [ ] `terraform.tfvars` exists and is not tracked by Git
 - [ ] `location` remains `germanywestcentral`
 
 ### Common problems
@@ -171,7 +171,7 @@ Plan adds resources similar to:
 - `module.networking.azurerm_subnet_network_security_group_association.aks`
 - `module.dns.azurerm_dns_zone.this`
 
-**Plan:** approximately **6 to add**, 0 change, 0 destroy (first apply).
+Plan: approximately 6 to add, 0 change, 0 destroy (first apply).
 
 ### Validation
 
@@ -238,7 +238,7 @@ terraform plan -input=false
 terraform apply -input=false
 ```
 
-To destroy **only** Topic 02 resources before Topic 03 (⚠️):
+To destroy only Topic 02 resources before Topic 03 (⚠️):
 
 ```bash
 terraform destroy -input=false
@@ -260,7 +260,7 @@ Catches wrong-subscription applies before DNS delegation.
 
 ### GUI instructions
 
-1. Navigate to: **Azure Portal** → **Resource groups** → **`rg-boutique-dev-gwc`**
+1. Navigate to: Azure Portal → Resource groups → `rg-boutique-dev-gwc`
 2. Confirm resources:
 
 | Resource type | Expected name |
@@ -269,7 +269,7 @@ Catches wrong-subscription applies before DNS delegation.
 | DNS zone | `biroltilki.art` |
 | Network security group | `aks-subnet-nsg` |
 
-3. Click **DNS zone** → **Overview** → copy **Name servers** list
+3. Click DNS zone → Overview → copy Name servers list
 
 ### CLI validation
 
@@ -307,12 +307,12 @@ terraform output -json dns_name_servers
 
 ### GUI instructions (registrar — example flow)
 
-**Platform:** Your domain registrar (e.g. Namecheap, Cloudflare Registrar, GoDaddy)
+Platform: Your domain registrar (e.g. Namecheap, Cloudflare Registrar, GoDaddy)
 
-1. Log in to registrar account for **`biroltilki.art`**
-2. Navigate to: **Domain** → **DNS** or **Nameservers**
-3. Choose **Custom nameservers** (not registrar parking DNS)
-4. Set **exactly** the four Azure name servers from `terraform output`, for example:
+1. Log in to registrar account for `biroltilki.art`
+2. Navigate to: Domain → DNS or Nameservers
+3. Choose Custom nameservers (not registrar parking DNS)
+4. Set exactly the four Azure name servers from `terraform output`, for example:
 
 | # | Nameserver |
 |---|------------|
@@ -324,9 +324,9 @@ terraform output -json dns_name_servers
 5. Save changes
 6. Wait for propagation (often 15–60 minutes; up to 48 hours)
 
-**Permissions:** Registrar account with permission to change NS records.
+Permissions: Registrar account with permission to change NS records.
 
-**Verification:** Registrar UI shows custom Azure nameservers saved.
+Verification: Registrar UI shows custom Azure nameservers saved.
 
 ### Security notes
 
@@ -425,7 +425,7 @@ terraform output
 dig NS biroltilki.art +short
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] Terraform outputs: `aks_subnet_id`, `dns_name_servers`
 - [ ] Azure Portal shows RG + VNet + DNS zone
@@ -434,7 +434,7 @@ dig NS biroltilki.art +short
 
 Update [Setup Index](README.md) Topic 02 to ✅ when complete.
 
-**Do not proceed to Topic 03** until NS delegation is confirmed or you accept TLS delay risk and document expected wait time.
+**Do not proceed to Topic 03** until NS delegation is confirmed, or you accept TLS delay risk and document the expected wait time.
 
 ---
 

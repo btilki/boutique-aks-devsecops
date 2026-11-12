@@ -1,20 +1,20 @@
 # 01 — Terraform Bootstrap
 
-**Audience:** L2 — Implementer
-**Estimated time:** 60 minutes
-**Prerequisites:** [00-prerequisites.md](00-prerequisites.md) ✅ complete
-**Creates:** Azure resource group + storage account + blob container for remote Terraform state; `terraform/environments/dev/` remote backend configuration
-**Related ADRs:** — (foundation for [FR-01](../../ARCHITECTURE.md))
+Audience: Implementer
+Estimated time: 60 minutes
+Prerequisites: [00-prerequisites.md](00-prerequisites.md) ✅ complete
+Creates: Azure resource group + storage account + blob container for remote Terraform state; `terraform/environments/dev/` remote backend configuration
+Related ADRs: — (foundation for [FR-01](../../ARCHITECTURE.md))
 
 ---
 
 ## Topic goal
 
-When this topic is complete, Azure hosts a dedicated **remote state backend** (resource group, storage account, private container), and `terraform/environments/dev/` successfully runs `terraform init` against that backend. The bootstrap stack itself remains on **local state** — only the platform stack uses remote state.
+When you finish this topic, Azure hosts a dedicated remote state backend (resource group, storage account, private container), and `terraform/environments/dev/` runs `terraform init` against it successfully. The bootstrap stack stays on local state — only the platform stack uses remote state.
 
 ## Why this topic is required
 
-Terraform state contains resource IDs, dependencies, and secrets metadata. Local state files are easy to lose, impossible to share safely, and block team workflows. Remote state in Azure Blob Storage with versioning enabled gives durable, recoverable state before any AKS or networking resources are created in Topic 02.
+Terraform state holds resource IDs, dependencies, and secrets metadata. Local state files are easy to lose, hard to share safely, and they get in the way of team workflows. Remote state in Azure Blob Storage with versioning gives you durable, recoverable state before Topic 02 creates any AKS or networking resources.
 
 Without this topic, `environments/dev/` cannot persist state across machines or survive laptop loss.
 
@@ -24,8 +24,8 @@ Without this topic, `environments/dev/` cannot persist state across machines or 
 
 - [ ] [00-prerequisites.md](00-prerequisites.md) validation checklist complete
 - [ ] `az account show` returns the intended subscription
-- [ ] You have **Contributor** or **Owner** on the subscription (to create storage account)
-- [ ] You chose a **globally unique** `storage_account_name` (see Step 1.2)
+- [ ] You have Contributor or Owner on the subscription (to create storage account)
+- [ ] You chose a globally unique `storage_account_name` (see Step 1.2)
 
 ```bash
 az account show --query "{subscription:id, tenant:tenantId}" -o json
@@ -64,9 +64,9 @@ Example tfvars shows:
 
 ### Validation
 
-- [ ] You understand bootstrap creates **3 Azure resources** (RG, storage account, container)
-- [ ] Bootstrap uses **local state** in `terraform/bootstrap/terraform.tfstate` (created on first apply)
-- [ ] Platform resources are **not** created in this topic
+- [ ] You understand bootstrap creates 3 Azure resources (RG, storage account, container)
+- [ ] Bootstrap uses local state in `terraform/bootstrap/terraform.tfstate` (created on first apply)
+- [ ] Platform resources are not created in this topic
 
 ### Common problems
 
@@ -81,8 +81,8 @@ No Azure resources yet — safe to re-read and continue.
 
 ### Security notes
 
-- State storage will hold platform resource metadata — keep container **private** (default in module)
-- Do not commit `terraform.tfvars` — it is gitignored
+- State storage will hold platform resource metadata — keep the container private (default in module)
+- **Do not commit** `terraform.tfvars` — it is gitignored
 
 ---
 
@@ -105,10 +105,10 @@ cp terraform.tfvars.example terraform.tfvars
 
 Edit `terraform.tfvars`:
 
-1. Set `storage_account_name` to a **globally unique** value (3–24 chars, lowercase letters and numbers only).
+1. Set `storage_account_name` to a globally unique value (3–24 chars, lowercase letters and numbers only).
 2. Optionally set `owner` tag in `tags`.
 
-**Name availability check (optional):**
+Name availability check (optional):
 
 ```bash
 az storage account check-name --name "<YOUR_STORAGE_ACCOUNT_NAME>"
@@ -120,7 +120,7 @@ az storage account check-name --name "<YOUR_STORAGE_ACCOUNT_NAME>"
 
 ### Validation
 
-- [ ] `terraform.tfvars` exists and is **not** staged for Git (`git status` should not show it)
+- [ ] `terraform.tfvars` exists and is not staged for Git (`git status` should not show it)
 - [ ] `storage_account_name` matches `^[a-z0-9]{3,24}$`
 
 ### Common problems
@@ -203,7 +203,7 @@ terraform plan -input=false -out=tfplan
 
 ### Expected output
 
-Plan shows **3 to add**:
+Plan shows 3 to add:
 
 - `azurerm_resource_group.state`
 - `azurerm_storage_account.state`
@@ -231,7 +231,7 @@ No resources created — fix variables and re-plan.
 ### Security notes
 
 - Review plan output for unexpected resources
-- **Cost:** storage account LRS is low cost (~€1–5/month) but not free
+- Cost: storage account LRS is low cost (~€1–5/month) but not free
 
 ---
 
@@ -326,10 +326,10 @@ Visual confirmation catches wrong-subscription mistakes before wiring dev backen
 
 ### GUI instructions
 
-1. Navigate to: **Azure Portal** → **Resource groups** → **`rg-tfstate-boutique-gwc`** (or your `state_resource_group_name`)
-2. Click the **storage account** resource
-3. Under **Data storage**, click **Containers**
-4. Confirm container **`tfstate`** exists with **Access level: Private**
+1. Navigate to: Azure Portal → Resource groups → `rg-tfstate-boutique-gwc` (or your `state_resource_group_name`)
+2. Click the storage account resource
+3. Under Data storage, click Containers
+4. Confirm container `tfstate` exists with Access level: Private
 
 | Field | Expected value | Notes |
 |-------|----------------|-------|
@@ -379,7 +379,7 @@ terraform output -json backend_config
 
 Compare with `terraform/environments/dev/backend.tf`.
 
-If you used **different** names in `terraform.tfvars`, edit `backend.tf` to match outputs:
+If you used different names in `terraform.tfvars`, edit `backend.tf` to match outputs:
 
 ```hcl
 terraform {
@@ -430,7 +430,7 @@ Successfully configured the backend "azurerm"!
 Terraform has been successfully initialized!
 ```
 
-If prompted to copy local state to backend, answer **no** — there is no prior dev state.
+If prompted to copy local state to backend, answer no — there is no prior dev state.
 
 ### Validation
 
@@ -445,14 +445,14 @@ terraform init -input=false 2>&1 | tail -5
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
-| `403 Authorization` on backend | RBAC on storage | Ensure your user has **Storage Blob Data Contributor** on the storage account, or use account key (not recommended). Easiest fix: assign **Contributor** on the state RG. |
+| `403 Authorization` on backend | RBAC on storage | Ensure your user has Storage Blob Data Contributor on the storage account, or use account key (not recommended). Easiest fix: assign Contributor on the state RG. |
 | `ContainerNotFound` | Bootstrap apply incomplete | Re-run Step 1.5 |
 | Backend config mismatch | Wrong literals in `backend.tf` | Fix Step 1.7 |
 
-**RBAC fix (GUI):**
+RBAC fix (GUI):
 
-1. Navigate to: **Storage account** → **Access control (IAM)** → **Add role assignment**
-2. Role: **Storage Blob Data Contributor**
+1. Navigate to: Storage account → Access control (IAM) → Add role assignment
+2. Role: Storage Blob Data Contributor
 3. Member: your user account
 4. Save and wait 1–2 minutes for propagation
 
@@ -485,12 +485,12 @@ az storage container exists \
 cd ../environments/dev && terraform init -input=false
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] Bootstrap `terraform output` shows all three values
 - [ ] Container exists (`true`)
 - [ ] `environments/dev` `terraform init` succeeds
-- [ ] `terraform validate` in `environments/dev` may warn **no configuration files** until Topic 02 — that is expected
+- [ ] `terraform validate` in `environments/dev` may warn no configuration files until Topic 02 — that is expected
 
 Update [Setup Index](README.md) Topic 01 status to ✅ when complete.
 
@@ -510,4 +510,4 @@ Update [Setup Index](README.md) Topic 01 status to ✅ when complete.
 
 ➡️ Continue to **[02-azure-foundation.md](02-azure-foundation.md)** (Topic 02) after you confirm Topic 01 validation.
 
-Do not run `terraform apply` in `environments/dev/` until Topic 02 guide and files are ready.
+**Do not run** `terraform apply` in `environments/dev/` until Topic 02 guide and files are ready.

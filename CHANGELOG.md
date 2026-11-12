@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Doc hub and delivery contracts: [`docs/README.md`](docs/README.md), [`docs/ci.md`](docs/ci.md), [`docs/promotion.md`](docs/promotion.md), [`docs/rollback.md`](docs/rollback.md), [`docs/pilot-claims.md`](docs/pilot-claims.md); repository map under `assets/images/`.
 - **Phase 15+ plan:** [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md), [ADR-0013](docs/adr/0013-scaffold-first-phase15.md) — scaffold-first fuller DevSecOps packages 1–8 without requiring live Azure.
 - **Package 2 / Topic 14 (PR CI):** `pipelines/azure-pipelines-pr.yml`, `templates/pr-*.yml`, `tests/ci/pr-validate.sh`, `make pr-validate`, [docs/setup/14-pr-ci.md](docs/setup/14-pr-ci.md); `versions.yaml` `ci.*` pins.
 - **Package 3 / Topic 15 (NetworkPolicies):** `gitops/apps/boutique/base/networkpolicies/`, optional `aks_network_policy` Terraform hook, [docs/setup/15-network-policies.md](docs/setup/15-network-policies.md).
@@ -26,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- README and architecture landing pages restructured as intent paths (understand / proof / design / rebuild); closed-pilot honesty; Topics 14–20 moved under optional-after-rebuild (not the critical path).
+- Fluency and abbreviation pass on setup Topics 00–13, architecture 01–11, ops/runbooks headers; CONTRIBUTING short-form abbreviation rule (no parenthetical expansions).
 - Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.
 - Documentation review: setup/ops/architecture indexes aligned with Phase 15+ + torn-down Azure; removed **Wave N** branding (use Topics / Phases / Packages only); CHANGELOG [0.2.0] historical note clarified.
 - Terminology: environment wording standardized on **test** / **Test** (docs, comments, ops guides).

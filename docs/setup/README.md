@@ -1,10 +1,13 @@
 # Setup Guide — boutique-aks-devsecops
 
-**Authority:** If README, chat, or scripts conflict with this directory, **`docs/setup/` wins**.
+Audience: Implementer
+Authority: This directory is the **single source of truth** for bootstrap. If README, chat, or scripts conflict with `docs/setup/`, this guide wins.
+[Doc index](../README.md) · [Architecture summary](../../ARCHITECTURE.md) · [Roadmap](../../ROADMAP.md) · [Pilot claims](../pilot-claims.md)
 
-**Audience:** L2 implementer following topics manually, one step at a time, with validation after every step.
-
-**Status:** Guides for Topics **00–13** are authored. Test execution: Topics **00–13** ✅ (Azure platform destroyed; see hostnames note in root README). **Phase 15+** (Topics **14–20**) scaffold complete — apply after rebuild; see [docs/implementation/phase15-plus.md](../implementation/phase15-plus.md).
+> **Pilot status:** Production pilot closed. Setup Topics **00–13** ran end to end; then Azure resources from that run were destroyed.
+> There is no live AKS, ACR, Key Vault, or Terraform-managed platform from the pilot.
+> This guide is for step-by-step rebuild and validation. Follow Topics **00 → 13** in order unless you abort early (still use Topic 13 teardown order).
+> Do not assume a cluster already exists because the repo is complete in Git.
 
 ---
 
@@ -12,7 +15,7 @@
 
 ### What this guide achieves
 
-End-to-end bootstrap of a **production-pilot Azure DevSecOps platform** for **Online Boutique v0.10.5** on a **single AKS cluster** in `germanywestcentral`:
+End-to-end bootstrap of a production-pilot Azure DevSecOps platform for Online Boutique **v0.10.5** on one AKS cluster in `germanywestcentral`:
 
 1. Remote Terraform state and Azure foundation (VNet, DNS, AKS, ACR, Key Vault)
 2. ADO OIDC federation (no long-lived CI secrets)
@@ -20,17 +23,15 @@ End-to-end bootstrap of a **production-pilot Azure DevSecOps platform** for **On
 4. Secure supply chain (mirror → Trivy → cosign → Kyverno verify)
 5. Boutique deployment across dev / stage / prod namespaces
 6. Observability, promotion gates, integration validation, and teardown
-7. Phase 15+ fuller DevSecOps (Topics **14–20**) — scaffolded in Git; apply after a Topics 00–12 rebuild
 
 ### Estimated time and cost
 
 | Scope | Time (solo) | Cost impact |
 |-------|-------------|-------------|
 | Topics 00–05 (foundation + GitOps) | ~8–12 hours | Low until AKS (Topic 03) |
-| Topics 06–10 (platform + CI + dev app) | ~10–14 hours | **AKS + ACR + Loki PVC** ~€150–250/mo |
+| Topics 06–10 (platform + CI + dev app) | ~10–14 hours | AKS + ACR + Loki PVC ~€150–250/mo |
 | Topics 11–12 (observability + promotion) | ~6–8 hours | Same cluster |
 | Topic 13 (teardown) | ~1–2 hours | Destroys billable resources |
-| Topics 14–20 (apply after rebuild) | ~6–12 hours | Same cluster (+ optional Falco/DAST) |
 
 Times assume familiarity with Azure, Terraform, and Kubernetes. First-time builders should add 30–50%.
 
@@ -42,13 +43,13 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | stage | `boutique-stage` | `stage-boutique.biroltilki.art` | Manual | — |
 | prod | `boutique-prod` | `boutique.biroltilki.art` | Manual | ADO environment approval |
 
-**Physical platform:** one AKS cluster provisioned via `terraform/environments/dev/`.
+Physical platform: one AKS cluster from `terraform/environments/dev/`.
 
-**Platform hostnames:** `argocd-boutique.biroltilki.art`, `grafana-boutique.biroltilki.art`
+Platform hostnames (when rebuilt): `argocd-boutique.biroltilki.art`, `grafana-boutique.biroltilki.art`
 
 ---
 
-## 2. Topic sequence
+## 2. Topic sequence (pilot path: 00–13)
 
 | # | Topic | Guide | Phase | Prerequisites | Est. time | Status |
 |---|-------|-------|-------|---------------|-----------|--------|
@@ -67,27 +68,27 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 | 12 | Promotion (stage + prod) | [12-promotion-stage-prod.md](12-promotion-stage-prod.md) | 12 | 10, 11 | 120 min | ✅ |
 | 13 | Teardown | [13-teardown.md](13-teardown.md) | 14 | 12 | 60 min | ✅ |
 
-† **Topic 08 note:** Kyverno installs after GitOps bootstrap (05). Image signature verification policy is validated after CI (09) produces signed digests. Topic 08 covers install + baseline policies; signature verify step references Topic 09.
+† Topic 08 note: Kyverno installs after GitOps bootstrap (05). Signature verification is validated after CI (09) produces signed digests. Topic 08 covers install and baseline policies; the verify step points at Topic 09.
 
-**Status legend:** ⬜ Not started · 🔄 In progress · ✅ Complete
+Status legend: ⬜ Not started · 🔄 In progress · ✅ Complete
 
-**Dependency chain:** `00 → 01 → 02 → 03 → 04 → 05 → 06 → 07` and `03 → 09 → 08 → 10 → 11 → 12 → 13`
+Dependency chain: `00 → 01 → 02 → 03 → 04 → 05 → 06 → 07` and `03 → 09 → 08 → 10 → 11 → 12 → 13`
 
-**Phase 13 (hardening & integration)** has no separate setup topic — validation ran via `tests/integration/` after Topic 12. Further hardening is **Phase 15+** (Setup Topics **14–20**), scaffold-first per [ADR-0013](../adr/0013-scaffold-first-phase15.md).
+This is the pilot story. Live execution through Topic 12 is complete; Topic 13 tore the stack down.
 
-### Topics 14–20 (scaffold → apply later)
+### Optional after rebuild — not part of the closed pilot
 
-| # | Topic | Guide | Phase | Package | Scaffold | Live apply |
-|---|-------|-------|-------|---------|----------|------------|
-| 14 | PR CI gates | [14-pr-ci.md](14-pr-ci.md) | 16 | 2 | ✅ | after rebuild |
-| 15 | NetworkPolicies | [15-network-policies.md](15-network-policies.md) | 17 | 3 | ✅ | after rebuild |
-| 16 | IaC scanning | [16-iac-scanning.md](16-iac-scanning.md) | 18 | 4 | ✅ | after rebuild |
-| 17 | SBOM + attestations | [17-sbom-attestations.md](17-sbom-attestations.md) | 19 | 5 | ✅ | after rebuild |
-| 18 | Runtime security | [18-runtime-security.md](18-runtime-security.md) | 20 | 6 | ✅ | after rebuild |
-| 19 | Namespace / KV hardening | [19-namespace-hardening.md](19-namespace-hardening.md) | 21 | 7 | ✅ | after rebuild |
-| 20 | DAST (optional) | [20-dast.md](20-dast.md) | 22 | 8 | ✅ | after rebuild |
+Guides 14–20 exist in Git as scaffolds only. They were not required for Topics 00–13 and are not claimed as demonstrated. Enable only after a deliberate rebuild; see [ROADMAP](../../ROADMAP.md) · [phase15-plus.md](../implementation/phase15-plus.md).
 
-**Topics 14–20 dependency (apply):** Topics 00–12 live again → then `14 → 15 → 16` (CI/net/IaC), `17` (SBOM), `18`–`19` (runtime + hardening), `20` optional. Teardown remains Topic 13 when destroying a rebuild.
+| # | Topic | Guide |
+|---|--------|-------|
+| 14 | PR CI gates | [14-pr-ci.md](14-pr-ci.md) |
+| 15 | NetworkPolicies | [15-network-policies.md](15-network-policies.md) |
+| 16 | IaC scanning | [16-iac-scanning.md](16-iac-scanning.md) |
+| 17 | SBOM + attestations | [17-sbom-attestations.md](17-sbom-attestations.md) |
+| 18 | Runtime security | [18-runtime-security.md](18-runtime-security.md) |
+| 19 | Namespace / KV hardening | [19-namespace-hardening.md](19-namespace-hardening.md) |
+| 20 | DAST (optional) | [20-dast.md](20-dast.md) |
 
 ---
 
@@ -95,16 +96,16 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 
 ### Shell and OS
 
-- **Shell:** bash or zsh on **macOS** or **Linux** (WSL2 acceptable)
-- **Working directory:** repository root unless a step says otherwise
-- Commands are copy-paste ready; do not abbreviate flags in live execution
+- Shell: bash or zsh on macOS or Linux (WSL2 is fine)
+- Working directory: repository root unless a step says otherwise
+- Commands are copy-paste ready; do not shorten flags when you run them
 
 ### Azure
 
 | Setting | Value |
 |---------|-------|
 | Cloud | Azure only |
-| Region | `germanywestcentral` (Germany West Central) |
+| Region | `germanywestcentral` |
 | DNS zone | `biroltilki.art` (Azure DNS) |
 | Subscription | Your test subscription — see placeholder below |
 
@@ -112,7 +113,7 @@ Times assume familiarity with Azure, Terraform, and Kubernetes. First-time build
 
 Replace placeholders in commands and `terraform.tfvars` with your values:
 
-**Version control:** Git lives on **GitHub** only. `<ADO_ORG>` / `<ADO_PROJECT>` refer to the Azure DevOps **organization and project for pipelines and OIDC** — not a Git remote.
+Version control: Git lives on GitHub only. `<ADO_ORG>` / `<ADO_PROJECT>` are the Azure DevOps org and project for pipelines and OIDC — not a Git remote.
 
 | Placeholder | Meaning | Example |
 |-------------|---------|---------|
@@ -133,7 +134,7 @@ Replace placeholders in commands and `terraform.tfvars` with your values:
 | `<TF_STATE_STORAGE>` | Bootstrap storage account | `stboutiquetfgwc` |
 | `<TF_STATE_CONTAINER>` | State blob container | `tfstate` |
 
-**Never commit** real `terraform.tfvars`, cosign keys, or service principal secrets.
+**Never commit** real `terraform.tfvars`, cosign keys, or service-principal secrets.
 
 ### Local state and credentials
 
@@ -141,9 +142,9 @@ Replace placeholders in commands and `terraform.tfvars` with your values:
 |----------|------------------|
 | Azure CLI session | `~/.azure/` |
 | kubeconfig (AKS) | `~/.kube/config` (context after Topic 03) |
-| Terraform state | Remote blob — **not** in Git (Topic 01) |
-| cosign key pair | Key Vault or secure local path (Topic 09) — **not** in Git |
-| ADO PAT (if any) | Argo CD GitHub read access only; pipeline uses GitHub connection — prefer OIDC for Azure |
+| Terraform state | Remote blob — not in Git (Topic 01) |
+| cosign key pair | Key Vault or a secure local path (Topic 09) — not in Git |
+| ADO PAT (if any) | Prefer OIDC for Azure; use a PAT only for GitHub access that OIDC cannot cover |
 
 ### Version pins
 
@@ -166,17 +167,15 @@ All platform versions: [versions.yaml](../../versions.yaml). Setup topics refere
 | Promotion failures | [docs/troubleshooting/promotion-failures.md](../troubleshooting/promotion-failures.md) |
 | Monitoring / alerting | [docs/troubleshooting/monitoring-alerting.md](../troubleshooting/monitoring-alerting.md) |
 
-Troubleshooting guides are authored incrementally in Phase B when each topic is written.
-
 ### How to report a failed step
 
-When asking for help (chat or issue), include:
+When asking for help, include:
 
-1. **Topic and step** — e.g. `03-cluster-resources`, Step 3.2
-2. **Command or GUI action** — exact input used
-3. **Full terminal output** or screenshot of Azure Portal / ADO error
-4. **Validation command** that failed
-5. **Placeholder values** used (redact secrets)
+1. Topic and step — e.g. `03-cluster-resources`, Step 3.2
+2. Command or GUI action — exact input
+3. Full terminal output or a screenshot of the Azure Portal / ADO error
+4. The validation command that failed
+5. Placeholder values you used (redact secrets)
 
 ### Related documentation
 
@@ -184,52 +183,32 @@ When asking for help (chat or issue), include:
 |----------|---------|
 | [ARCHITECTURE.md](../../ARCHITECTURE.md) | Executive architecture |
 | [ROADMAP.md](../../ROADMAP.md) | Phase milestones |
-| [docs/implementation/plan.md](../implementation/plan.md) | Implementation plan |
-| [docs/implementation/phase15-plus.md](../implementation/phase15-plus.md) | Phase 15+ fuller DevSecOps packages |
+| [docs/implementation/plan.md](../implementation/plan.md) | Implementation plan (maintainer) |
 | [docs/architecture/](../architecture/) | Deep architecture series |
 | [docs/adr/](../adr/) | Architecture decision records |
 
 ---
 
-## 5. Live implementation protocol
+## 5. How to run a rebuild
 
-During **Phase C** (live execution), each turn follows:
+Work one topic at a time. Finish the validation checklist before you open the next guide. Do not skip ahead. Do not replace documented steps with install-all scripts.
 
-1. **STATE** — current topic, step, last completed step
-2. **FILE CHECK** — required files for this step (fix missing immediately)
-3. **INSTRUCT** — commands and/or GUI (exact)
-4. **VALIDATE** — expected output + validation commands
-5. **WAIT** — stop until you confirm ✅ or report an error
+Hard rules: `docs/setup/` is authoritative · **never commit** secrets or real `terraform.tfvars` · tear down with Topic 13 when the test is done.
 
-**Hard rules:** one setup step per turn · no skip-ahead · no bypass scripts · `docs/setup/` is authoritative.
-
-**Phase B** (after your approval of this catalog) authors each topic guide **and** creates all Required Files for that topic in one delivery per topic.
+Stop at Topic 13 for a faithful repeat of the closed pilot. Optional guides 14–20 are linked above — not on the critical path.
 
 ---
 
-## 6. Phase A deliverables (this document)
+## 6. Progress tracker
 
-Phase A (planning) produced:
-
-- Setup topic catalog **00–13** with dependencies (see topic table above)
-- This index and progress tracker
-- Topic outlines and Required Files Inventory — **presented in Setup Chat for approval**
-- **Stop** — Phase B begins only after explicit approval
-
-**Approval phrase:** `Approved — begin Setup Phase B, Topic 01`
-
----
-
-## 7. Progress tracker (update as you go)
-
-Mark topics in the table in §2 when complete. Reference test: Topics **00–13** executed (platform torn down; rebuild via this guide).
+Mark topics in the table in §2 as you complete them. Reference pilot: Topics **00–13** executed; platform torn down; rebuild with this guide.
 
 | Milestone | Topics | Target |
 |-----------|--------|--------|
-| M1: Repo & state | 00–01 | Remote TF state exists |
-| M2: Azure foundation | 02–03 | `kubectl get nodes`; ACR push works |
-| M3: Trust & GitOps | 04–05 | OIDC pipeline green; Argo CD healthy |
-| M4: Platform services | 06–08 | TLS Ready; Kyverno enforces |
-| M5: Secure delivery | 09–10 | Signed digest in ACR; dev app live |
-| M6: Operate & promote | 11–12 | Grafana + SLO; prod promotion |
-| M7: Complete & teardown | 13 | Teardown validated; ACR destroyed |
+| Milestone 1: Repo & state | 00–01 | Remote Terraform state exists |
+| Milestone 2: Azure foundation | 02–03 | `kubectl get nodes`; ACR push works |
+| Milestone 3: Trust & GitOps | 04–05 | OIDC pipeline green; Argo CD healthy |
+| Milestone 4: Platform services | 06–08 | TLS Ready; Kyverno enforces |
+| Milestone 5: Secure delivery | 09–10 | Signed digest in ACR; dev app live |
+| Milestone 6: Operate & promote | 11–12 | Grafana + SLO; prod promotion |
+| Milestone 7: Complete & teardown | 13 | Teardown validated; ACR destroyed |

@@ -1,10 +1,13 @@
 # Operations — boutique-aks-devsecops
 
-Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap lives in [`docs/setup/`](../setup/). Deep promotion/teardown procedures live in [`docs/runbooks/`](../runbooks/). Symptom indexes live in [`docs/troubleshooting/`](../troubleshooting/).
+Audience: Operator / on-call (solo maintainer: you)
+Maturity: Production pilot. Enterprise multi-region on-call is out of scope.
+Authority: Day-2 procedures. Bootstrap stays in [`docs/setup/`](../setup/). Deep promotion and teardown stay in [`docs/runbooks/`](../runbooks/). Symptom indexes stay in [`docs/troubleshooting/`](../troubleshooting/).
+[Doc index](../README.md) · [Architecture](../../ARCHITECTURE.md) · [Promotion](../promotion.md) · [Rollback](../rollback.md)
 
-**Maturity:** Production pilot · **Owner:** You (solo operator)
-**Assumes:** Setup Topics 00–12 completed at least once (reference Azure test is currently **offline** — see root README).
-**Phase 15+:** Topics 14–20 are scaffolded ([phase15-plus.md](../implementation/phase15-plus.md)); Falco / NetworkPolicies / PR CI apply after rebuild.
+> No live cluster today. The closed pilot destroyed Azure resources after Setup Topic 13. These pages describe how to operate the platform when it is running again — not how to create it. Rebuild first with [`setup/README.md`](../setup/README.md) (Topics 00–13), then use this index and [`runbooks/`](../runbooks/README.md).
+
+When docs conflict: setup wins for bootstrap; runbooks win for symptom steps; this index routes between them.
 
 ---
 
@@ -19,7 +22,7 @@ Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap
 | Node NotReady / capacity | [04-scaling](04-scaling.md) · [17](17-common-incidents.md) | `kubectl get nodes` |
 | Full teardown | [teardown runbook](../runbooks/teardown.md) | Read runbook first |
 
-**Smoke suites:** [`tests/README.md`](../../tests/README.md)
+Smoke suites: [`tests/README.md`](../../tests/README.md)
 
 ---
 
@@ -33,19 +36,19 @@ Day-2 runbooks for the **production-pilot** test (single AKS cluster). Bootstrap
 | Ingress + TLS | `ingress-nginx`, Certificate CRs | You | — | `IngressCertExpiringSoon` |
 | Kyverno | `kyverno` + ClusterPolicies | You | — | `KyvernoAdmissionDown` |
 | Monitoring stack | `monitoring` | You | Grafana / Alertmanager Overview | (platform rules) |
-| Falco (Topic 18) | `falco` (after Topic 18 apply) | You | Loki / Falco logs | `runtime-security` rules (scaffold) |
+| Falco (optional after rebuild) | `falco` | You | Loki / Falco logs | `runtime-security` rules |
 | ACR + cosign | `acrboutiquedevgwc` · Key Vault | You | ACR portal / pipeline | (pipeline failure) |
 
-**Hostnames:** see [root README](../../README.md).
+Hostnames: see [root README](../../README.md) · [docs/README.md](../README.md).
 
 ---
 
-## Escalation (solo test)
+## Escalation (solo pilot)
 
 | Level | Role | When |
 |-------|------|------|
 | L1 | You | First response for all SEVs |
-| L2 | You (with calm checklist) | > 30 min or promote/ACR/KV risk |
+| L2 | You (platform) | > 30 min or promote/ACR/KV risk |
 | L3 | Azure subscription / Entra admin (You) | Billing lockout, subscription RBAC, DNS registrar |
 
 Test IR detail: [07-incident-response.md](07-incident-response.md) · [runbooks/incident-response.md](../runbooks/incident-response.md)

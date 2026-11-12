@@ -1,20 +1,20 @@
 # 12 — Promotion (Stage + Prod)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 120 minutes
-**Prerequisites:** [10-boutique-dev.md](10-boutique-dev.md) ✅ · [11-observability.md](11-observability.md) ✅
-**Creates:** Stage/prod overlays, Argo CD apps, **ADO** (**Azure DevOps**) prod approval gate, promotion/rollback smoke tests
-**Related ADRs:** [0008](../adr/0008-ado-prod-approval-gate.md), [0002](../adr/0002-single-cluster-multi-namespace.md)
+Audience: Implementer
+Estimated time: 120 minutes
+Prerequisites: [10-boutique-dev.md](10-boutique-dev.md) ✅ · [11-observability.md](11-observability.md) ✅
+Creates: Stage/prod overlays, Argo CD apps, ADO prod approval gate, promotion/rollback smoke tests
+Related ADRs: [0008](../adr/0008-ado-prod-approval-gate.md), [0002](../adr/0002-single-cluster-multi-namespace.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **the same signed image digest** validated in **dev** is promoted to **`boutique-stage`** and **`boutique-prod`** via GitOps, with **manual Argo CD sync** for stage/prod and **ADO environment approval** before prod Git updates. Stage is reachable at **`https://stage-boutique.biroltilki.art`** and prod at **`https://boutique.biroltilki.art`**.
+When this topic is complete, **the same signed image digest** you validated in dev is promoted to `boutique-stage` and `boutique-prod` via GitOps, with manual Argo CD sync for stage/prod and ADO environment approval before prod Git updates. Stage is reachable at `https://stage-boutique.biroltilki.art` and prod at `https://boutique.biroltilki.art`.
 
 ## Why this topic is required
 
-Production-pilot maturity requires environment separation, human gates, and repeatable promotion/rollback — not just a single dev deployment. This topic proves digest-immutable promotion across namespaces on one cluster.
+Production-pilot maturity means environment separation, human gates, and repeatable promotion/rollback — not only a single dev deployment. This topic proves **digest-only promotion** across namespaces on one cluster.
 
 ---
 
@@ -23,7 +23,7 @@ Production-pilot maturity requires environment separation, human gates, and repe
 - [ ] Topic 10: dev healthy (`./tests/integration/dev-smoke.sh`)
 - [ ] Topic 11: Grafana dashboards and alerts working
 - [ ] Topic 09: signed digests in ACR; optional `digest-manifest` artifact from pipeline
-- [ ] ADO permission to create **Environments** and **approvals**
+- [ ] ADO permission to create Environments and approvals
 
 ```bash
 kubectl get application -n argocd boutique-dev
@@ -58,13 +58,13 @@ cat gitops/apps/boutique/prod-application.yaml
 | Env | Namespace | Hostname | Argo sync | ADO gate |
 |-----|-----------|----------|-----------|----------|
 | dev | `boutique-dev` | `dev-boutique.biroltilki.art` | Automatic | — |
-| stage | `boutique-stage` | `stage-boutique.biroltilki.art` | **Manual** | — |
-| prod | `boutique-prod` | `boutique.biroltilki.art` | **Manual** | **Approval** |
+| stage | `boutique-stage` | `stage-boutique.biroltilki.art` | Manual | — |
+| prod | `boutique-prod` | `boutique.biroltilki.art` | Manual | Approval |
 
 ### Validation
 
 - [ ] Prod overlay includes `replicas-patch.yaml` (frontend `replicas: 2`)
-- [ ] Stage/prod Applications have **no** `automated` syncPolicy
+- [ ] Stage/prod Applications have no `automated` syncPolicy
 
 ---
 
@@ -115,7 +115,7 @@ kubectl get application -n argocd | grep boutique
 
 ### Goal
 
-Create **stage** and **prod** pipeline environments; prod requires manual approval.
+Create stage and prod pipeline environments; prod requires manual approval.
 
 ### Why this step is required
 
@@ -123,17 +123,17 @@ ADR-0008 mandates ADO approval before prod overlay Git updates via `promote-dige
 
 ### GUI steps
 
-1. Azure DevOps → **Pipelines** → **Environments**
-2. **New environment** → name: `stage` → Create (no checks required for test)
-3. **New environment** → name: `prod` → Create
-4. **prod** → **Approvals and checks** → **Approvals** → add yourself as approver → Save
+1. Azure DevOps → Pipelines → Environments
+2. New environment → name: `stage` → Create (no checks required for test)
+3. New environment → name: `prod` → Create
+4. prod → Approvals and checks → Approvals → add yourself as approver → Save
 
 Optional: add `dev` environment if using dev digest promotion from pipeline.
 
 ### Validation
 
 - [ ] Environments `stage` and `prod` visible in ADO
-- [ ] `prod` shows **Approvals** check enabled
+- [ ] `prod` shows Approvals check enabled
 
 ---
 
@@ -177,7 +177,7 @@ kubectl get pods -n boutique-stage -w
 
 Register `pipelines/azure-pipelines-promote.yml` in ADO (existing YAML path). Queue run on `main` — executes MirrorScanSign → Promote_stage → Promote_prod (prod waits for approval).
 
-For **stage only**, stop after stage promote or use manual Git (Option A).
+For stage only, stop after stage promote or use manual Git (Option A).
 
 ### DNS (stage)
 
@@ -207,7 +207,7 @@ kubectl get application -n argocd boutique-stage
 
 ### Goal
 
-Prod overlay receives **identical** digest pins; ADO approves prod Git update; manual Argo sync.
+Prod overlay receives identical digest pins; ADO approves prod Git update; manual Argo sync.
 
 ### Why this step is required
 
@@ -215,13 +215,13 @@ Prod is customer-facing hostname (`boutique.biroltilki.art`) with explicit human
 
 ### Commands
 
-**Manual Git (recommended):**
+Manual Git (recommended):
 
 1. Copy validated `images:` block from `overlays/stage/kustomization.yaml` to `overlays/prod/kustomization.yaml`
 2. Commit: `promote(prod): same digest as stage validated <date>`
 3. Push to `main`
 
-**Pipeline:** Approve **prod** environment when `Promote_prod` deployment waits.
+Pipeline: Approve prod environment when `Promote_prod` deployment waits.
 
 Deploy:
 

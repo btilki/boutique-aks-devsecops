@@ -1,29 +1,29 @@
 # 04 — ADO OIDC Federation
 
-**Audience:** L2 — Implementer
-**Estimated time:** 75 minutes
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete
-**Creates:** Pipeline UAMI, federated identity credential, AcrPush + Key Vault Secrets User RBAC; ADO ARM service connection (GUI)
-**Related ADRs:** [0008](../adr/0008-ado-prod-approval-gate.md) (trust foundation for CI gates)
+Audience: Implementer
+Estimated time: 75 minutes
+Prerequisites: [03-cluster-resources.md](03-cluster-resources.md) ✅ complete
+Creates: Pipeline UAMI, federated identity credential, AcrPush + Key Vault Secrets User RBAC; ADO ARM service connection (GUI)
+Related ADRs: [0008](../adr/0008-ado-prod-approval-gate.md) (trust foundation for CI gates)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **ADO** (**Azure DevOps**) pipelines authenticate to Azure using **OIDC** (**OpenID Connect**) workload identity federation — no client secrets or **PATs** (**personal access tokens**) in service connections. The pipeline identity can **push to ACR** and **read secrets from Key Vault** (cosign key in Topic 09).
+When you finish this topic, ADO pipelines authenticate to Azure through OIDC workload identity federation — **no client secrets or PATs** in service connections. The pipeline identity can push to ACR and read secrets from Key Vault (cosign key in Topic 09).
 
 ## Why this topic is required
 
-Long-lived secrets in CI are a top supply-chain risk. OIDC federation issues short-lived tokens per job. Topic 09 mirror/scan/sign pipeline depends on this service connection. The federation `subject` must match the ADO service connection name exactly.
+Long-lived secrets in CI are a top supply-chain risk. OIDC federation issues short-lived tokens per job. Topic 09 mirror/scan/sign pipeline depends on this service connection. The federation `subject` **must match** the ADO service connection name exactly.
 
 ---
 
 ## Before you begin
 
 - [ ] Topic 03 applied: AKS, ACR, Key Vault exist
-- [ ] Azure DevOps **organization** and **project** created (or use existing)
-- [ ] Permission to create **service connections** in the ADO project
-- [ ] Permission to create **federated credentials** (via Terraform Contributor on subscription)
+- [ ] Azure DevOps organization and project created (or use existing)
+- [ ] Permission to create service connections in the ADO project
+- [ ] Permission to create federated credentials (via Terraform Contributor on subscription)
 
 Gather ADO organization GUID:
 
@@ -32,7 +32,7 @@ Gather ADO organization GUID:
 az devops user show --organization "https://dev.azure.com/<ADO_ORG_NAME>" 2>/dev/null || true
 ```
 
-**Organization ID (GUID):** Azure DevOps → **Organization settings** → **Overview** → copy **Organization ID**.
+Organization ID (GUID): Azure DevOps → Organization settings → Overview → copy Organization ID.
 
 ---
 
@@ -69,7 +69,7 @@ Default service connection name: `azure-boutique-oidc`
 
 ### Validation
 
-- [ ] You have your ADO **organization GUID**, **org name**, and **project name** ready
+- [ ] You have your ADO organization GUID, org name, and project name ready
 
 ---
 
@@ -129,7 +129,7 @@ terraform output ado_pipeline_identity_client_id
 
 ### Expected output
 
-Plan adds approximately **4–5 resources**:
+Plan adds approximately 4–5 resources:
 
 - `azurerm_user_assigned_identity.pipeline`
 - `azurerm_federated_identity_credential.ado`
@@ -172,12 +172,12 @@ chmod +x scripts/register-ado-sc-federation.sh
 
 ### GUI instructions
 
-**Platform:** Azure DevOps
-**Permissions:** Project Administrator or equivalent to create service connections
+Platform: Azure DevOps
+Permissions: Project Administrator or equivalent to create service connections
 
-1. Navigate to: **`https://dev.azure.com/<ADO_ORG_NAME>/<ADO_PROJECT_NAME>`** → **Project settings** (bottom left) → **Service connections**
-2. Click **New service connection** → **Azure Resource Manager** → **Next**
-3. Select **Workload Identity federation (manual)** → **Next**
+1. Navigate to: `https://dev.azure.com/<ADO_ORG_NAME>/<ADO_PROJECT_NAME>` → Project settings (bottom left) → Service connections
+2. Click New service connection → Azure Resource Manager → Next
+3. Select Workload Identity federation (manual) → Next
 4. Fill fields:
 
 | Field | Value | Notes |
@@ -189,14 +189,14 @@ chmod +x scripts/register-ado-sc-federation.sh
 | Managed identity client ID | `terraform output -raw ado_pipeline_identity_client_id` | Pipeline UAMI — not platform UAMI |
 | Tenant ID | `terraform output -raw azure_tenant_id` | Entra tenant |
 
-5. Check **Grant access permission to all pipelines** (or authorize per pipeline later)
-6. Click **Save**
+5. Check Grant access permission to all pipelines (or authorize per pipeline later)
+6. Click Save
 
-**Verification:** Service connection list shows `azure-boutique-oidc` with green check; no secret fields configured.
+Verification: Service connection list shows `azure-boutique-oidc` with green check; no secret fields configured.
 
 ### Security notes
 
-- No client secret should appear — if prompted for secret, wrong authentication method selected
+- **No client secret** should appear — if prompted for secret, you picked the wrong authentication method
 - Scope to platform resource group where possible
 
 ---
@@ -243,7 +243,7 @@ End-to-end validation of federation before Topic 09 CI work.
 
 ### GUI instructions — create test pipeline
 
-1. Navigate to: **Pipelines** → **New pipeline** → select your repo → **Existing Azure Pipelines YAML file** (or create minimal YAML below)
+1. Navigate to: Pipelines → New pipeline → select your repo → Existing Azure Pipelines YAML file (or create minimal YAML below)
 2. Use this test `azure-pipelines-oidc-test.yml` content in repo (optional file for test only):
 
 ```yaml
@@ -268,8 +268,8 @@ steps:
         echo "OIDC test passed"
 ```
 
-3. **Run pipeline** manually
-4. Confirm step **OIDC trust smoke test** succeeds
+3. Run pipeline manually
+4. Confirm step OIDC trust smoke test succeeds
 
 ### Expected output
 
@@ -296,7 +296,7 @@ terraform output ado_oidc_subject
 - [ ] Terraform federation outputs populated
 - [ ] ADO service connection `azure-boutique-oidc` exists
 - [ ] Test pipeline `az account show` succeeds
-- [ ] No client secrets in service connection
+- [ ] **No client secrets** in service connection
 
 Update [Setup Index](README.md) Topic 04 to ✅ when complete.
 

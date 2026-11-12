@@ -1,5 +1,7 @@
 # Deployment flow
 
+How images move from mirror to overlays and how Argo syncs each environment. Prod stays behind human gates.
+
 ## Promotion path
 
 ```mermaid
@@ -20,7 +22,7 @@ flowchart TD
     J -->|rejected| X[Stop — no prod change]
 ```
 
-## CI pipeline stages (Azure DevOps)
+## CI pipeline stages (ADO)
 
 | Stage | Actions | Repo |
 |-------|---------|------|
@@ -32,9 +34,11 @@ flowchart TD
 
 ## GitOps model
 
-- **Root app** → platform apps + boutique apps
-- **Sync waves:** CRDs → cert-manager → ingress → kyverno → policies → applications
-- **Health:** Argo CD + frontend `/_healthz` endpoint
+**ADO commits digest pins to Git; Argo CD applies cluster state** — pipelines do not kubectl apply to prod.
+
+- Root app → platform apps + boutique apps
+- Sync waves: CRDs → cert-manager → ingress → kyverno → policies → applications
+- Health: Argo CD + frontend `/_healthz` endpoint
 
 ## Rollback
 
@@ -44,7 +48,7 @@ flowchart TD
 | Platform | Argo CD history rollback |
 | Infrastructure | Terraform state revert + apply |
 
-**Note:** Phase 14 destroys ACR — rollback to a prior digest requires the image still exist in ACR or re-run mirror pipeline.
+Phase 14 **destroys ACR**. Rollback to a prior digest only works if that image still exists in ACR; otherwise re-run the mirror pipeline.
 
 ## Human gates
 

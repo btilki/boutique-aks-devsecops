@@ -1,5 +1,7 @@
 # System context
 
+Who touches the platform, which external systems it depends on, and how traffic and supply chain cross the Azure boundary.
+
 ## Actors
 
 | Actor | Interactions |
@@ -66,4 +68,4 @@ graph TB
     AKS --> LOKI
 ```
 
-**Prose:** The platform runs entirely in one Azure region. External touchpoints are Git (desired state), ADO (build/sign/promote), Google public images (upstream), and the domain registrar (DNS delegation). Users never pull images directly from Google at runtime — only from ACR after mirror/sign.
+The platform runs in one Azure region. Git holds desired state; ADO builds, signs, and promotes; Google public images are upstream only until mirrored. The registrar delegates DNS. Runtime pulls never hit Google — only signed images from ACR after mirror/sign.

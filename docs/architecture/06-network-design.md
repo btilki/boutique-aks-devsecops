@@ -1,5 +1,7 @@
 # Network design
 
+Addressing, ingress, DNS, and segmentation for a single VNet and one public ingress IP in germanywestcentral.
+
 ## Region and addressing
 
 | Field | Value |
@@ -30,7 +32,7 @@ flowchart TB
     NODES --> KV[Key Vault API]
 ```
 
-**Prose:** All nodes live in a dedicated AKS subnet. North-south traffic enters via one Azure Load Balancer fronting NGINX. East-west traffic stays within the cluster virtual network.
+All nodes sit in a dedicated AKS subnet. North-south traffic hits one Azure Load Balancer in front of NGINX. East-west stays on the cluster VNet.
 
 ## Ingress path
 
@@ -67,7 +69,7 @@ flowchart TB
 |---------|--------|
 | NSG on AKS subnet | Terraform module |
 | Kyverno pod hardening | Enforced Phase 8 |
-| Kubernetes NetworkPolicy | **Scaffolded** Phase 17 / Topic 15 (`gitops/apps/boutique/base/networkpolicies/`); set `aks_network_policy = "azure"` on rebuild to enforce |
+| Kubernetes NetworkPolicy | Scaffolded Phase 17 / Topic 15 (`gitops/apps/boutique/base/networkpolicies/`); set `aks_network_policy = "azure"` on rebuild to enforce |
 | Private ACR | Deferred |
 
 ## Egress

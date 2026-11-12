@@ -1,6 +1,6 @@
 # 05 — GitOps Bootstrap
 
-**Audience:** L2 — Implementer
+Audience: Implementer
 **Estimated time:** 90 minutes
 **Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete (Topic 04 recommended before CI, not blocking GitOps)
 **Creates:** Argo CD v2.10.7, AppProjects, root app-of-apps, platform/apps root Applications
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, **Argo CD** runs in the `argocd` namespace, three **AppProjects** (`platform`, `applications`, `monitoring`) exist, and the **root app-of-apps** syncs child Applications for `gitops/platform` and `gitops/apps`. You can reach the Argo CD API/UI via port-forward (HTTPS ingress in Topic 06).
+When this topic is complete, Argo CD runs in the `argocd` namespace, three AppProjects (`platform`, `applications`, `monitoring`) exist, and the root app-of-apps syncs child Applications for `gitops/platform` and `gitops/apps`. You can reach the Argo CD API/UI via port-forward (HTTPS ingress in Topic 06).
 
 ## Why this topic is required
 
@@ -22,8 +22,8 @@ All platform services (ingress, cert-manager, Kyverno, monitoring) and Boutique 
 
 - [ ] `kubectl get nodes` shows Ready nodes (Topic 03)
 - [ ] Helm 3.14+ installed (`helm version`)
-- [ ] Git repository pushed to **GitHub** (Topic 00 Step 4) — Argo CD pulls from GitHub
-- [ ] You know your **GitHub repo URL** (`https://github.com/<GITHUB_ORG>/<REPO_NAME>`) and default branch (`main`)
+- [ ] Git repository pushed to GitHub (Topic 00 Step 4) — Argo CD pulls from GitHub
+- [ ] You know your GitHub repo URL (`https://github.com/<GITHUB_ORG>/<REPO_NAME>`) and default branch (`main`)
 
 ```bash
 kubectl config current-context
@@ -167,7 +167,7 @@ Validates server health independent of DNS/TLS.
 kubectl port-forward svc/argocd-server -n argocd 8080:80
 ```
 
-Open `http://localhost:8080` — login **admin** / password from Step 5.3.
+Open `http://localhost:8080` — login admin / password from Step 5.3.
 
 ### Expected output
 
@@ -176,7 +176,7 @@ Argo CD web UI loads; no applications yet (or only defaults).
 ### Validation
 
 - [ ] UI login succeeds
-- [ ] **Settings → Summary** shows version **v2.10.x**
+- [ ] Settings → Summary shows version v2.10.x
 
 Stop port-forward with Ctrl+C when done.
 
@@ -222,7 +222,7 @@ Replace `<GITHUB_ORG>` and `<REPO_NAME>` placeholders with your GitHub repositor
 
 ### Why this step is required
 
-Argo CD cannot sync without a reachable GitHub repository URL. This project uses **GitHub as the sole version control system** — not Azure Repos.
+Argo CD cannot sync without a reachable GitHub repository URL. **GitHub is the sole version control system for this project** — not Azure Repos.
 
 ### Commands
 
@@ -263,11 +263,11 @@ git push origin main
 
 **Platform:** Argo CD UI or CLI
 
-1. **Settings** → **Repositories** → **Connect repo**
-2. Choose **VIA HTTPS**
+1. Settings → Repositories → Connect repo
+2. Choose VIA HTTPS
 3. Repository URL: `https://github.com/<GITHUB_ORG>/<REPO_NAME>`
-4. Username: your GitHub username; Password: **PAT** (**Personal Access Token**) with **Contents: Read** (fine-grained) or classic `repo` scope
-5. **Connect**
+4. Username: your GitHub username; Password: PAT with Contents: Read (fine-grained) or classic `repo` scope
+5. Connect
 
 Or CLI:
 
@@ -282,7 +282,7 @@ argocd repo add "https://github.com/<GITHUB_ORG>/<REPO_NAME>" \
 
 ### Validation
 
-- [ ] `argocd repo list` shows connection **Successful** (private repo) or sync works without auth (public repo)
+- [ ] `argocd repo list` shows connection Successful (private repo) or sync works without auth (public repo)
 - [ ] No `<GITHUB_ORG>` or `<REPO_NAME>` literals remain in `gitops/`
 
 ---
@@ -318,7 +318,7 @@ argocd app list
 | platform-root | platform | Synced | Healthy (Application CRs for ingress, cert-manager, CSI, Kyverno, Falco, monitoring) |
 | apps-root | platform | Synced | Healthy (creates boutique-dev/stage/prod Application CRs) |
 
-`gitops/platform` and `gitops/apps` are **already populated** (Topics 06–12 lived; Topics 14–20 scaffold). Topic 05 only needs Argo CD, AppProjects, and root apps healthy. Validate child workloads in their own topics. `apps-root` uses project **`platform`** (Application CRs live in `argocd`); Boutique overlays use **`applications`**.
+`gitops/platform` and `gitops/apps` are already populated (Topics 06–12 lived; Topics 14–20 scaffold). Topic 05 only needs Argo CD, AppProjects, and root apps healthy. Validate child workloads in their own topics. `apps-root` uses project `platform` (Application CRs live in `argocd`); Boutique overlays use `applications`.
 
 ### Validation
 

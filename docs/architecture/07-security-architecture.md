@@ -1,5 +1,7 @@
 # Security architecture
 
+Trust boundaries, identity paths, secrets handling, and supply-chain controls for the pilot cluster.
+
 ## Trust zones
 
 ```mermaid
@@ -92,6 +94,6 @@ Kyverno policy must set `rekor.ignoreTlog: true` and `ctlog.ignoreSCT: true` to 
 | Admission | Kyverno | Azure Policy | No subscription policy |
 | Signing | cosign key | Keyless | Key rotation |
 | Prod gate | ADO env approval | PR reviewers | Simpler solo flow |
-| Teardown | Destroy ACR | Retain registry | Re-mirror cost |
+| Teardown | **Destroy ACR** | Retain registry | Re-mirror cost |
 
 See [../adr/](../adr/README.md).

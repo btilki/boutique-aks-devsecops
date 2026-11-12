@@ -1,5 +1,7 @@
 # Requirements
 
+What the pilot must deliver, traced to repo paths and phases. Functional rows are build targets; non-functional rows state how architecture meets them.
+
 ## Functional requirements
 
 | ID | Requirement | Priority | Phase | Repo path |
@@ -14,10 +16,10 @@
 | Category | Requirement | Architecture response |
 |----------|-------------|----------------------|
 | Availability | Production-minimum single cluster | Namespace isolation; documented rollback |
-| Security | Least privilege; signed images; no secrets in Git | OIDC, KV CSI, Kyverno |
+| Security | Least privilege; signed images; **no secrets in Git** | OIDC, KV CSI, Kyverno |
 | Observability | Metrics, dashboards, alerts, SLO | kube-prometheus-stack, OTel |
 | Maintainability | Modular IaC and GitOps | TF modules; Kustomize overlays |
-| Cost | Solo test budget | One cluster; teardown destroys ACR |
+| Cost | Solo test budget | One cluster; teardown **destroys ACR** |
 | Reproducibility | Pinned versions | `versions.yaml` |
 
 ## Derived requirements
@@ -28,7 +30,7 @@
 | DR-02 | Patch `busybox:latest` and `redis:alpine` in overlays | Kyverno deny `:latest` |
 | DR-03 | Azure DNS NS delegation before TLS | cert-manager DNS-01 |
 | DR-04 | Prod promotion via ADO environment approval only | Project decision |
-| DR-05 | Digest-pinned images in overlays | Immutable GitOps |
+| DR-05 | **Digest-pinned** images in overlays | Immutable GitOps |
 
 ## Online Boutique v0.10.5
 

@@ -1,20 +1,20 @@
 # 11 — Observability
 
-**Audience:** L2 — Implementer
-**Estimated time:** 90 minutes
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) ✅ · [10-boutique-dev.md](10-boutique-dev.md) ✅
-**Creates:** kube-prometheus-stack, Loki, Promtail, Grafana ingress, dashboards, alerts, OTel collector
-**Related docs:** [10-observability.md](../architecture/10-observability.md), [ADR-0012](../adr/0012-loki-in-cluster-logging.md), [boutique-availability.md](../slo/boutique-availability.md)
+Audience: Implementer
+Estimated time: 90 minutes
+Prerequisites: [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) ✅ · [10-boutique-dev.md](10-boutique-dev.md) ✅
+Creates: kube-prometheus-stack, Loki, Promtail, Grafana ingress, dashboards, alerts, OTel collector
+Related docs: [10-observability.md](../architecture/10-observability.md), [ADR-0012](../adr/0012-loki-in-cluster-logging.md), [boutique-availability.md](../slo/boutique-availability.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **Prometheus**, **Grafana**, and **Alertmanager** run in namespace **`monitoring`**, **Loki** and **Promtail** aggregate pod logs, Grafana is reachable at **`https://grafana-boutique.biroltilki.art`**, **Cluster Overview** and **Boutique Overview** dashboards load, platform/Boutique **PrometheusRules** are active, and the **OTel** (**OpenTelemetry**) Collector accepts **OTLP** (**OpenTelemetry Protocol**) traces (10% sampling).
+When this topic is complete, Prometheus, Grafana, and Alertmanager run in namespace `monitoring`, Loki and Promtail aggregate pod logs, Grafana is reachable at `https://grafana-boutique.biroltilki.art`, Cluster Overview and Boutique Overview dashboards load, platform and Boutique PrometheusRules are active, and the OTel Collector accepts OTLP traces with 10% sampling.
 
 ## Why this topic is required
 
-Operating a DevSecOps platform requires visibility into cluster health, ingress traffic, and Boutique availability before stage/prod promotion (Topic 12). **SLO** (**Service Level Objective**) documentation and alerts define when to pause promotions.
+You need visibility into cluster health, ingress traffic, and Boutique availability before stage/prod promotion (Topic 12). SLO documentation and alerts define when to pause promotions.
 
 ---
 
@@ -82,7 +82,7 @@ Grafana chart uses `existingSecret: grafana-admin-credentials` — no default pa
 
 ### Commands
 
-**Option A — Key Vault sourced (recommended):**
+Option A — Key Vault sourced (recommended):
 
 ```bash
 KV_NAME="$(cd terraform/environments/dev && terraform output -raw key_vault_name)"
@@ -99,7 +99,7 @@ kubectl create secret generic grafana-admin-credentials -n monitoring \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-**Option B — test password you choose:**
+Option B — test password you choose:
 
 ```bash
 kubectl create secret generic grafana-admin-credentials -n monitoring \
@@ -123,7 +123,7 @@ kubectl get secret -n monitoring grafana-admin-credentials
 
 ### Goal
 
-Ensure Argo CD Applications reference your **GitHub** repository.
+Ensure Argo CD Applications reference your GitHub repository.
 
 ### Why this step is required
 
@@ -174,9 +174,9 @@ argocd app sync otel-collector --prune
 kubectl get pods -n monitoring -w
 ```
 
-**GUI:** Argo CD → **platform-root** → Sync → verify child apps **kube-prometheus-stack** and **otel-collector** become Healthy.
+GUI: Argo CD → platform-root → Sync → verify child apps kube-prometheus-stack and otel-collector become Healthy.
 
-Large chart — first sync may take **5–15 minutes** (CRDs + Prometheus operator).
+Large chart — first sync may take 5–15 minutes (CRDs + Prometheus operator).
 
 ### Expected output
 
@@ -246,10 +246,10 @@ Confirms end-to-end metrics pipeline before relying on alerts for promotion gate
 
 ### Commands
 
-1. Open **`https://grafana-boutique.biroltilki.art`**
+1. Open `https://grafana-boutique.biroltilki.art`
 2. Login: `admin` + password from Step 11.2
-3. **Dashboards** → browse **Cluster Overview** and **Boutique Overview**
-4. **Explore** → Prometheus → run:
+3. Dashboards → browse Cluster Overview and Boutique Overview
+4. Explore → Prometheus → run:
 
 ```promql
 kube_deployment_status_replicas_available{namespace="boutique-dev", deployment="frontend"}

@@ -1,8 +1,10 @@
 # Resilience and disaster recovery
 
+Failure modes, backups, rebuild order, and teardown impact for a single-region production pilot.
+
 ## Maturity
 
-Production **pilot**: rebuild-from-Git is the primary DR strategy. No multi-region failover.
+Production pilot: rebuild-from-Git is the primary DR strategy. No multi-region failover.
 
 ## Failure scenarios
 
@@ -59,4 +61,4 @@ Reverse order documented in `docs/setup/13-teardown.md`.
 
 ## Teardown (Phase 14)
 
-Destroys **AKS, ACR**, load balancers, and other billable resources. Terraform bootstrap state may be retained by explicit choice.
+**Destroys AKS and ACR**, load balancers, and other billable resources. Terraform bootstrap state may be retained by explicit choice.

@@ -1,6 +1,6 @@
 # 07 — Secrets Store CSI
 
-**Audience:** L2 — Implementer
+Audience: Implementer
 **Estimated time:** 75 minutes
 **Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ · [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) recommended
 **Creates:** CSI driver 1.4.0, Azure provider 1.5.0, test SecretProviderClass + pod in `csi-test`
@@ -10,7 +10,7 @@
 
 ## Topic goal
 
-When this topic is complete, the **CSI** (**Container Storage Interface**) Secrets Store driver and **Azure Key Vault** provider run in `kube-system`, and a **test pod** mounts a Key Vault secret at `/mnt/secrets` using **WI** (**Workload Identity**) (platform UAMI). This proves the secret delivery path for cosign keys (Topic 09) and Grafana (Topic 11).
+When this topic is complete, the CSI Secrets Store driver and Azure Key Vault provider run in `kube-system`, and a test pod mounts a Key Vault secret at `/mnt/secrets` using WI (platform UAMI). That proves the secret delivery path for cosign keys (Topic 09) and Grafana (Topic 11).
 
 ## Why this topic is required
 
@@ -22,7 +22,7 @@ Application and platform secrets must not live in Git. Key Vault is the system o
 
 - [ ] Key Vault exists (Topic 03): `terraform output key_vault_name`
 - [ ] Platform UAMI exists: `terraform output platform_identity_client_id`
-- [ ] Platform UAMI has **Key Vault Secrets User** on the vault (Topic 03 identities module)
+- [ ] Platform UAMI has Key Vault Secrets User on the vault (Topic 03 identities module)
 - [ ] Argo CD `platform-root` syncing
 
 ```bash
@@ -167,7 +167,7 @@ kubectl get pods -n kube-system -l app=csi-secrets-store-provider-azure
 
 ### Expected output
 
-CSI driver and Azure provider pods **Running** in `kube-system`.
+CSI driver and Azure provider pods Running in `kube-system`.
 
 ### Validation
 

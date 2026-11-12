@@ -1,6 +1,8 @@
 # Implementation plan
 
-**Status:** Setup Topics **00–13** complete; Azure test torn down. Phase 13 hardening deferred (⏭️), superseded by **Phase 15+** scaffold-first work ([phase15-plus.md](phase15-plus.md), [ADR-0013](../adr/0013-scaffold-first-phase15.md)).
+> Maintainer reference — not a reader entry point. For status and milestones, use [ROADMAP.md](../../ROADMAP.md). To understand or rebuild, start at [README.md](../../README.md) → [docs/README.md](../README.md) → [setup/README.md](../setup/README.md). This file keeps phase inventories, FR cross-refs, and historical planning detail.
+
+**Status:** Setup Topics 00–13 complete; Azure test torn down. Phase 13 hardening deferred (⏭️), superseded by Phase 15+ scaffold-first work ([phase15-plus.md](phase15-plus.md), [ADR-0013](../adr/0013-scaffold-first-phase15.md)).
 **Architecture:** [ARCHITECTURE.md](../../ARCHITECTURE.md)
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 

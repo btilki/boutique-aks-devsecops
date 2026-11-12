@@ -1,10 +1,12 @@
 # Overview
 
-**Audience:** L3 — Operator
-**Applies to:** dev / stage / prod (one cluster)
-**Prerequisites:** Setup Topics 00–12 complete; kubectl context to the test AKS cluster
-**Estimated time:** 10 minutes (read)
-**Risk level:** Low
+Audience: Operator
+Applies to: dev / stage / prod (one cluster)
+Prerequisites: Setup Topics 00–12 complete; kubectl context to the test AKS cluster
+Estimated time: 10 minutes (read)
+Risk level: Low
+
+> No live cluster unless you have rebuilt after the closed pilot. These steps assume a running cluster from Setup Topics 00–12; otherwise rebuild first ([setup/README.md](../setup/README.md)).
 
 ## Purpose
 
@@ -12,7 +14,7 @@ Define the operational model: environments, ownership, test constraints, and whe
 
 ## When to use / When not to use
 
-**Use** when joining on-call, before first promotion, or after returning from teardown rebuild.
+**Use** when joining on-call, before first promotion, or after returning from a teardown rebuild.
 **Do not use** as a bootstrap guide — see [docs/setup/](../setup/).
 
 ## Prerequisites

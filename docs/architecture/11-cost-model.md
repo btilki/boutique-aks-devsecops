@@ -1,6 +1,6 @@
 # Cost model
 
-Estimates for **germanywestcentral**, test usage, order-of-magnitude (EUR/month). Actual cost varies with uptime and egress.
+Order-of-magnitude monthly cost for germanywestcentral test usage (EUR). Actual spend varies with uptime and egress. Phase 14 teardown is the cost stop.
 
 ## Core resources
 
@@ -15,7 +15,7 @@ Estimates for **germanywestcentral**, test usage, order-of-magnitude (EUR/month)
 | Azure DNS zone | ~€0.50 | Hosted zone | Keep or delete post-teardown |
 | Loki (in-cluster) | ~€0 Azure | PVC on node disk | 10Gi test default; no Log Analytics |
 
-**Typical active test:** ~€150–220/month with 2 nodes running (Log Analytics removed per ADR-0012).
+Typical active test: ~€150–220/month with 2 nodes running (Log Analytics removed per ADR-0012).
 
 ## Guardrails
 
@@ -24,8 +24,8 @@ Estimates for **germanywestcentral**, test usage, order-of-magnitude (EUR/month)
 | Max nodes | User pool `max_count: 3` |
 | VM SKUs locked | D2s_v6 system, D4s_v6 user — no larger without ADR |
 | Log retention | Loki PVC 10Gi; Prometheus 15d |
-| Teardown | Phase 14 mandatory for cost stop |
-| Destroy ACR | Removes storage + pull costs |
+| Teardown | **Phase 14 mandatory** for cost stop |
+| Destroy ACR | **Destroy on Phase 14**; removes storage + pull costs |
 
 ## Teardown savings
 

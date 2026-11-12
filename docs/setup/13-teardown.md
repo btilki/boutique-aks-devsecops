@@ -1,27 +1,29 @@
 # 13 — Teardown
 
-**Audience:** L2 — Implementer
-**Estimated time:** 60 minutes (destroy may take 15–30 minutes)
-**Prerequisites:** [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon test)
-**Destroys:** **AKS** (**Azure Kubernetes Service**), **ACR** (**Azure Container Registry**), Key Vault, **VNet** (**Virtual Network**), Azure DNS zone, platform resource group
-**Related ADRs:** [0010](../adr/0010-destroy-acr-on-teardown.md)
+Audience: Implementer
+Estimated time: 60 minutes (destroy may take 15–30 minutes)
+Prerequisites: [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or explicit decision to abandon the test)
+Destroys: AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
+Related: [ADR-0010](../adr/0010-destroy-acr-on-teardown.md) · [cost model](../architecture/11-cost-model.md) · [Setup guide](README.md) · [Runbook](../runbooks/teardown.md)
+
+> Pilot already torn down. Topic 13 was executed; Azure billables from this pilot are gone. Use this topic after a new rebuild through Topics 00–12, or when you abort an in-flight run. Live step order: [runbook](../runbooks/teardown.md). Claims: [pilot-claims.md](../pilot-claims.md).
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **billable Azure platform resources** from Topics 02–04 are **destroyed**, including **ACR and all mirrored images**. Terraform remote state **bootstrap** storage is **retained by default** for faster rebuild. You can verify **no AKS/ACR** resources remain in the subscription.
+When this topic is complete, billable Azure platform resources from Topics 02–04 are destroyed, including **ACR and all mirrored images**. Terraform remote-state bootstrap storage is retained by default for a faster rebuild. You can verify that no AKS or ACR resources remain in the subscription.
 
 ## Why this topic is required
 
-The test targets **€150–250/month** when active. Teardown stops ongoing compute, registry, and load balancer charges. ADR-0010 requires ACR destruction — rebuild requires re-running the mirror pipeline (Topic 09).
+The test costs roughly €150–250/month while it is active. Teardown stops ongoing compute, registry, and load balancer charges. **ACR is destroyed on teardown** (ADR-0010) — any rebuild must re-run the mirror pipeline (Topic 09).
 
 ---
 
 ## Before you begin
 
 - [ ] Promotion/smoke tests documented or no longer needed
-- [ ] Cosign **public** key preserved in Git (`policies/kyverno/cluster/02-verify-image-signatures.yaml`)
+- [ ] **Public cosign key in Git** (`policies/kyverno/cluster/02-verify-image-signatures.yaml`)
 - [ ] Optional: backup `terraform/environments/dev/terraform.tfvars` locally (no secrets in Git)
 - [ ] `az login` active on correct subscription
 - [ ] Understand DNS at registrar may need NS update if Azure DNS zone is destroyed
@@ -60,15 +62,15 @@ Export reminders:
 
 | Item | Location after teardown |
 |------|-------------------------|
-| Git repo | GitHub — **kept** |
-| Cosign public key | Git Kyverno policy — **kept** |
-| Cosign private key | Key Vault — **destroyed** with KV |
-| Signed images | ACR — **destroyed** |
-| TF state (dev) | Bootstrap blob — **kept** unless bootstrap destroyed |
+| Git repo | GitHub — kept |
+| Cosign public key | Git Kyverno policy — kept |
+| Cosign private key | Key Vault — destroyed with KV |
+| Signed images | ACR — destroyed |
+| TF state (dev) | Bootstrap blob — kept unless bootstrap destroyed |
 
 ### Validation
 
-- [ ] Public cosign key in Git
+- [ ] **Public cosign key in Git**
 - [ ] ADO pipelines paused or accepted failures
 
 ---
@@ -125,7 +127,7 @@ Primary cost stop — removes AKS, ACR, ingress LB, and supporting Azure resourc
 ./scripts/operations/teardown.sh --confirm destroy-boutique-platform
 ```
 
-**Manual alternative:**
+Manual alternative:
 
 ```bash
 cd terraform/environments/dev
@@ -134,7 +136,7 @@ terraform destroy
 # Type 'yes' when prompted
 ```
 
-**GUI cross-check:** Azure Portal → Resource groups → confirm platform RG deleting/ gone.
+GUI cross-check: Azure Portal → Resource groups → confirm platform RG deleting or gone.
 
 ### Expected output
 
@@ -215,7 +217,7 @@ dig NS biroltilki.art +short
 dig +short dev-boutique.biroltilki.art
 ```
 
-Remove Azure DNS **A records** are gone with zone destruction. If you **retained** DNS zone manually, delete A records for:
+Azure DNS A records are gone with zone destruction. If you retained the DNS zone manually, delete A records for:
 
 - `argocd-boutique`, `grafana-boutique`, `dev-boutique`, `stage-boutique`, `boutique`
 
@@ -234,7 +236,7 @@ Remove Terraform remote state storage (bootstrap Topic 01).
 
 ### Why this step is required
 
-Only when **fully decommissioning** the project — saves ~€1–2/month.
+Only when fully decommissioning the project — saves ~€1–2/month. **Do not destroy TF bootstrap while the platform stack still exists**; run platform destroy first.
 
 ### Commands
 
@@ -272,7 +274,7 @@ Future-you needs clear restart steps after ACR destruction.
 01 bootstrap → 02 foundation → 03 cluster → 04 OIDC → 05 GitOps → … → 09 mirror (required) → 10–12 apps
 ```
 
-ACR images **must** be re-mirrored and re-signed after teardown.
+ACR images must be re-mirrored and re-signed after teardown.
 
 ### Commands
 
@@ -312,14 +314,14 @@ Full reference: [teardown.md](../runbooks/teardown.md)
 - [ ] Platform `terraform destroy` succeeded
 - [ ] No AKS / ACR / platform RG in subscription
 - [ ] DNS/registrar updated if needed
-- [ ] Bootstrap retained **or** intentionally destroyed
+- [ ] Bootstrap retained or intentionally destroyed
 - [ ] Rebuild path understood (Topic 09 mirror required)
 
 ---
 
 ## Setup guide complete
 
-**All Topics 00–13** are authored. Reference test teardown is **complete** (Azure platform destroyed). Rebuild via Topics 00–12, then optionally apply Phase 15+ Topics **14–20** ([phase15-plus.md](../implementation/phase15-plus.md)).
+All Topics 00–13 are authored. Reference test teardown is complete (Azure platform destroyed). Rebuild via Topics 00–12, then Topic 13 again when you stop. Optional guides after a rebuild: [setup README](README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
 
 ### Phase D — readiness validation (next)
 
@@ -329,7 +331,7 @@ When ready for end-to-end project validation:
 2. Confirm Required Files Inventory satisfied per topic
 3. Request Phase D validation in Setup Chat
 
-**Phase D phrase:** `Begin Setup Phase D — readiness validation`
+Phase D phrase: `Begin Setup Phase D — readiness validation`
 
 ---
 

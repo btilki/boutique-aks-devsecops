@@ -1,5 +1,7 @@
 # Component design
 
+In-cluster platform services, Terraform modules, and how they map to the repo. One AKS cluster hosts dev, stage, and prod namespaces.
+
 ## In-cluster components
 
 ```mermaid
@@ -47,7 +49,7 @@ graph TB
     DevNS & StageNS & ProdNS -->|pull signed| ACR
 ```
 
-**Prose:** NGINX is the single north-south entry. Argo CD reconciles all namespaces. Kyverno admission applies to Boutique namespaces. Platform metrics collected via Prometheus ServiceMonitors.
+NGINX is the only north-south entry. Argo CD reconciles every namespace. Kyverno admission gates Boutique workloads. Platform metrics flow through Prometheus ServiceMonitors.
 
 ## Terraform components
 
@@ -74,9 +76,9 @@ graph TB
 
 ### Bottlenecks
 
-1. **Node CPU** — mitigate with autoscale and right-sized requests
-2. **Ingress LB throughput** — single controller; acceptable for pilot
-3. **Prometheus storage** — limit retention (15d default)
+1. Node CPU — mitigate with autoscale and right-sized requests
+2. Ingress LB throughput — single controller; acceptable for pilot
+3. Prometheus storage — limit retention (15d default)
 
 ## Repo mapping
 

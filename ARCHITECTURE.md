@@ -1,12 +1,36 @@
 # Architecture — boutique-aks-devsecops
 
-**Maturity:** Production pilot (single cluster). Limitations and CI story are stated in the [README](README.md#limitations).
-**Region:** `germanywestcentral` (Germany West Central)
+**Status:** Production pilot closed. Setup Topics **00–13** ran end to end, then Azure resources from that run were destroyed. There is no live AKS, ACR, or Key Vault from the pilot.
+**Maturity:** Production pilot — one subscription, one AKS cluster — decommissioned
+**Region:** `germanywestcentral` (when rebuilt)
 **Application:** Online Boutique [v0.10.5](https://github.com/GoogleCloudPlatform/microservices-demo/releases/tag/v0.10.5)
 
-**Deep docs:** [docs/architecture/](docs/architecture/README.md)
-**Implementation plan:** [docs/implementation/plan.md](docs/implementation/plan.md)
-**Version pins:** [versions.yaml](versions.yaml)
+[Project README](README.md) · [Doc index](docs/README.md) · [Deep architecture](docs/architecture/README.md) · [Setup](docs/setup/README.md) · [Roadmap](ROADMAP.md) · [Pilot claims](docs/pilot-claims.md)
+
+---
+
+## How to read this document
+
+| If you want… | Stay here for… | Then open… |
+|--------------|----------------|------------|
+| A 10-minute picture | Executive summary, diagrams, tradeoffs | [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
+| Design and delivery detail | Mapping table and deep-dive index | [`docs/architecture/`](docs/architecture/README.md) — especially [05-deployment-flow](docs/architecture/05-deployment-flow.md), [07-security-architecture](docs/architecture/07-security-architecture.md) |
+| Evidence without a cluster | — | [`docs/pilot-claims.md`](docs/pilot-claims.md) |
+| Rebuild | Component → setup mapping (orientation only) | [`docs/setup/README.md`](docs/setup/README.md) |
+
+This file is the architecture summary. Numbered pages under [`docs/architecture/`](docs/architecture/README.md) are the deep reference. Setup steps live only under [`docs/setup/`](docs/setup/README.md).
+
+---
+
+## Executive summary
+
+This repository delivers Online Boutique on Azure AKS with a signed supply chain and GitOps. Azure DevOps mirrors Boutique **v0.10.5** into ACR, fails the job on CRITICAL findings, cosign-signs digests, and commits those digests into Git. Argo CD reconciles desired state from GitHub. **Unsigned or floating tags should not reach the cluster.** Kyverno enforces that for Boutique workloads.
+
+`dev`, `stage`, and `prod` are namespaces on one cluster — cost over blast-radius isolation. Prod promotion needs an ADO environment approval and a manual Argo sync. Secrets stay in Key Vault (CSI + Workload Identity). Metrics and logs stay on-cluster (Prometheus, Loki, Grafana). After validation, the pilot was torn down — see [Setup Topic 13](docs/setup/13-teardown.md).
+
+Claims you can check without a cluster: [`docs/pilot-claims.md`](docs/pilot-claims.md). Landing-page tradeoffs: [README](README.md#tradeoffs--what-i-would-change-for-real-production).
+
+Version pins: [versions.yaml](versions.yaml). Maintainer plan: [docs/implementation/plan.md](docs/implementation/plan.md).
 
 ---
 
@@ -28,7 +52,7 @@
 | Security | Least privilege; no secrets in Git; signed images | [07-security-architecture.md](docs/architecture/07-security-architecture.md) |
 | Observability | Metrics, dashboards, alerts, SLO | [10-observability.md](docs/architecture/10-observability.md) |
 | Cost | One cluster; teardown destroys ACR | [11-cost-model.md](docs/architecture/11-cost-model.md) |
-| Reproducibility | Pinned `versions.yaml`; remote TF state | Phase 1 bootstrap |
+| Reproducibility | Pinned `versions.yaml`; remote TF state | Setup Topic 01 bootstrap |
 
 See [01-requirements.md](docs/architecture/01-requirements.md).
 
@@ -42,7 +66,7 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 | One AKS cluster | Namespace isolation for dev/stage/prod |
 | Budget minimal | `Standard_D2s_v6` system + `Standard_D4s_v6` user pool |
 | No long-lived CI secrets | ADO OIDC federation |
-| Destroy ACR on teardown | Phase 14 removes all mirrored images |
+| Destroy ACR on teardown | Roadmap Phase 14 / Setup Topic 13 removes mirrored images |
 
 ---
 
@@ -50,16 +74,18 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 
 | Assumption | Validate in |
 |------------|-------------|
-| Azure subscription admin | Phase 0 |
-| DNS `biroltilki.art` delegatable to Azure DNS | Phase 2 |
-| Dsv6 SKUs available in `germanywestcentral` | Phase 0/3 (`az vm list-skus`) |
-| ADO federation rights | Phase 4 |
+| Azure subscription admin | Setup Topic 00 |
+| DNS `biroltilki.art` delegatable to Azure DNS | Setup Topic 02 |
+| Dsv6 SKUs available in `germanywestcentral` | Setup Topics 00 and 03 (`az vm list-skus`) |
+| ADO federation rights | Setup Topic 04 |
 
 ---
 
 ## 4. High-level architecture
 
-Terraform provisions Azure: VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. **Logs are in-cluster via Loki** ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)) — Azure Log Analytics is not deployed on the default test path. Argo CD reconciles platform Helm/Kustomize and Boutique overlays from `gitops/`. Azure DevOps mirrors upstream v0.10.5 images to ACR, Trivy-scans (fail CRITICAL), cosign-signs by digest (`--tlog-upload=false`), then updates GitOps overlays. Kyverno enforces ACR allowlist, denies `:latest`, verifies signatures, and applies Pod Security baseline. NGINX Ingress + cert-manager expose five HTTPS hostnames via Let's Encrypt DNS-01.
+Terraform provisions the VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. Logs stay in-cluster with Loki ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Log Analytics stays off on the default pilot path.
+
+Argo CD reconciles platform charts and Boutique overlays from `gitops/`. ADO mirrors, scans, and signs images, then updates digests in Git. Kyverno enforces the ACR allowlist, denies `:latest`, verifies signatures, and applies a Pod Security baseline. NGINX Ingress and cert-manager expose five HTTPS hostnames with Let's Encrypt DNS-01.
 
 ### Layers
 
@@ -128,7 +154,7 @@ graph TB
     AKS --> DNS
 ```
 
-**Prose:** Engineers provision with Terraform and operate via GitOps. Pipelines mirror Google public images into private ACR, scan and sign, then update Git. Users reach Boutique and platform UIs through NGINX on shared ingress.
+Engineers provision with Terraform and operate via GitOps. Pipelines mirror Google public images into private ACR, scan and sign, then update Git. Users reach Boutique and platform UIs through NGINX on a shared ingress.
 
 Full diagram: [03-component-design.md](docs/architecture/03-component-design.md).
 
@@ -166,7 +192,7 @@ Details: [05-deployment-flow.md](docs/architecture/05-deployment-flow.md).
 
 ## 8. Network
 
-VNet with AKS subnet; Azure CNI; single NGINX Load Balancer; five hostnames → same ingress IP. Outbound via AKS managed egress. See [06-network-design.md](docs/architecture/06-network-design.md).
+One VNet hosts the AKS subnet. Azure CNI is in use. A single NGINX Load Balancer serves five hostnames on the same ingress IP. Outbound traffic uses AKS managed egress. Details: [06-network-design.md](docs/architecture/06-network-design.md).
 
 ---
 
@@ -200,25 +226,25 @@ Full table: [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md)
 
 ## 11. Scalability
 
-User pool autoscales 1–3 × `Standard_D4s_v6`. Full Boutique × 3 namespaces is the designed ceiling for this pilot; the reference test often runs a **slim** Boutique (core storefront only) for pod capacity. Bottleneck: node CPU and maxPods — mitigate with autoscale and optional HPA on frontend.
+The user pool autoscales from 1 to 3 nodes (`Standard_D4s_v6`). Three full Boutique namespaces is the designed ceiling for this pilot. The lived test often ran a slim Boutique (core storefront only) to stay within pod capacity. The usual bottleneck is node CPU and maxPods; mitigate with the autoscaler and optional HPA on the frontend.
 
 ---
 
 ## 12. Disaster recovery
 
-**RTO:** 4–8 hours rebuild from Git + Terraform. **RPO:** TF state 0 with versioning; Redis cart ephemeral. Multi-region out of scope. Rebuild order in [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md).
+Rebuild from Git and Terraform takes about 4–8 hours (RTO). With blob versioning, Terraform state RPO is effectively zero; the Redis cart is ephemeral. Multi-region is out of scope. Rebuild order: [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md).
 
 ---
 
 ## 13. Observability
 
-kube-prometheus-stack (Prometheus, Grafana, Alertmanager) + Loki/Promtail + OTel collector baseline. Grafana at `grafana-boutique.biroltilki.art`. In-cluster logging per [ADR-0012](docs/adr/0012-loki-in-cluster-logging.md). [10-observability.md](docs/architecture/10-observability.md).
+The stack is kube-prometheus-stack (Prometheus, Grafana, Alertmanager), Loki/Promtail, and a baseline OTel collector. Grafana was at `grafana-boutique.biroltilki.art` when the pilot was live. Logging stays in-cluster ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Details: [10-observability.md](docs/architecture/10-observability.md).
 
 ---
 
 ## 14. Cost
 
-~€150–250/month order-of-magnitude with 2 nodes active. Teardown Phase 14 destroys ACR and AKS. [11-cost-model.md](docs/architecture/11-cost-model.md).
+Expect about €150–250/month with two nodes active. Teardown (Roadmap Phase 14 / Setup Topic 13) destroys ACR and AKS. Details: [11-cost-model.md](docs/architecture/11-cost-model.md).
 
 ---
 
@@ -238,30 +264,12 @@ kube-prometheus-stack (Prometheus, Grafana, Alertmanager) + Loki/Promtail + OTel
 
 | Item | Prerequisite |
 |------|--------------|
-| Azure AD SSO for Argo CD | Entra app registration |
+| Entra SSO for Argo CD | Entra app registration |
 | Trivy vuln attestations | Stretch (SPDX SBOM attestations: Topic 17 / ADR-0014) |
 | Service mesh | Stable baseline |
-| NetworkPolicy default deny | Topic 15 scaffold (`base/networkpolicies/`); enforce via `aks_network_policy=azure` on rebuild |
+| NetworkPolicy default deny | Optional after rebuild (`base/networkpolicies/`); enforce via `aks_network_policy=azure` |
 
-See [ROADMAP.md](ROADMAP.md).
-
----
-
-## Proposed ADRs
-
-| ADR | Topic |
-|-----|-------|
-| [0001](docs/adr/0001-azure-cloud-provider.md) | Azure as sole cloud |
-| [0002](docs/adr/0002-single-cluster-multi-namespace.md) | Single AKS, three envs |
-| [0003](docs/adr/0003-kyverno-admission.md) | Kyverno admission |
-| [0004](docs/adr/0004-argocd-gitops.md) | Argo CD GitOps |
-| [0005](docs/adr/0005-cosign-key-based-signing.md) | cosign key-based signing |
-| [0006](docs/adr/0006-kustomize-boutique.md) | Kustomize for Boutique |
-| [0007](docs/adr/0007-no-service-mesh.md) | No service mesh v1 |
-| [0008](docs/adr/0008-ado-prod-approval-gate.md) | ADO env approval for prod |
-| [0009](docs/adr/0009-mirror-upstream-images.md) | Mirror v0.10.5 images |
-| [0010](docs/adr/0010-destroy-acr-on-teardown.md) | Destroy ACR on teardown |
-| [0011](docs/adr/0011-aks-node-vm-sku.md) | Node VM SKUs and region |
+See [ROADMAP.md](ROADMAP.md). Full ADR list: [docs/architecture/README.md](docs/architecture/README.md#architecture-decision-records) · [docs/adr/README.md](docs/adr/README.md).
 
 ---
 

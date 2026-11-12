@@ -1,5 +1,11 @@
 # Assets — screenshots & diagrams
 
+Architecture diagram (README hub):
+
+| File | What it shows |
+|------|---------------|
+| [aks-devsecops-repository-map.jpg](aks-devsecops-repository-map.jpg) | Repository map and navigation |
+
 Setup guide screenshots live under **`setup/`** using the naming pattern
 `NN-<short-description>.png` (topic number + subject).
 

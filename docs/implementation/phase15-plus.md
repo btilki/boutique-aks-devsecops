@@ -1,8 +1,9 @@
 # Phase 15+ — Fuller DevSecOps (scaffold-first)
 
-**Status:** Packages **1–8** complete — Phase 15+ fuller **DevSecOps** (**Development, Security, and Operations**) scaffold finished. Live apply awaits Azure rebuild (Topics 14–20).
+> Maintainer reference — scaffold inventory for Topics 14–20. Not a reader entry point. Rebuild and apply path: [setup/README.md](../setup/README.md). Parent detail: [plan.md](plan.md).
 
-**Mode:** **Scaffold only** — author files and setup topics for future apply. Do **not** require a live Azure cluster, Terraform apply, or re-run of Setup Topics 00–13.
+**Status:** Packages 1–8 complete — Phase 15+ scaffold finished. Live apply waits for an Azure rebuild (Topics 14–20).
+**Mode:** Scaffold only — author files and setup topics for future apply. No live Azure cluster, Terraform apply, or re-run of Setup Topics 00–13 is required.
 **Roadmap:** [ROADMAP.md](../../ROADMAP.md)
 **Parent plan:** [plan.md](plan.md)
 **ADR:** [ADR-0013](../adr/0013-scaffold-first-phase15.md)

@@ -1,5 +1,7 @@
 # Data flows
 
+End-to-end paths for user traffic, GitOps promotion, telemetry, secrets, and Terraform apply.
+
 ## Application request flow
 
 ```mermaid
@@ -22,7 +24,7 @@ sequenceDiagram
     NGINX-->>User: HTTPS 200
 ```
 
-**Prose:** External traffic terminates TLS at NGINX. The frontend proxies to internal ClusterIP services. Only the frontend is exposed via Ingress per environment.
+TLS terminates at NGINX. The frontend proxies to internal ClusterIP services; only the frontend is on Ingress per environment.
 
 ## GitOps and supply chain flow
 
@@ -49,7 +51,7 @@ sequenceDiagram
     Pod->>ACR: Pull @digest
 ```
 
-**Order rule:** Scan before sign; sign the same digest that was scanned.
+**Scan before sign; sign the same digest that was scanned.**
 
 ## Telemetry flow
 
@@ -74,7 +76,7 @@ flowchart LR
     GIT[Git] -.->|never stores secrets| X[—]
 ```
 
-Git stores only SecretProviderClass references and non-secret configuration.
+Git stores only SecretProviderClass references and non-secret configuration — **no secrets in Git**.
 
 ## Infrastructure flow
 

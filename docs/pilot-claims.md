@@ -1,0 +1,43 @@
+# What this pilot claims
+
+For anyone defending this repository in a DevOps interview. Closed pilot: Azure was torn down after Setup Topics **00–13**. Nothing here requires a live cluster to read. Screenshots: [`assets/images/`](../assets/images/README.md).
+
+ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. The pilot proved that path once, then the cloud resources were removed.
+
+## Operated, then torn down (Topics 00–13)
+
+- Terraform foundation, ADO OIDC, Argo CD, NGINX and cert-manager, Key Vault CSI
+- Kyverno Enforce: ACR allowlist, deny `:latest`, cosign verify, Pod Security baseline (Boutique workloads)
+- Mirror → Trivy → cosign → digest promotion; Boutique on `boutique-dev` / `boutique-stage` / `boutique-prod`
+- Grafana; in-cluster Loki; ADO environment approval before prod
+- Teardown validated ([setup/13-teardown](setup/13-teardown.md))
+
+## Also in Git (optional after rebuild)
+
+Extra guides 14–20 cover PR validation, Checkov, SBOM attestations, NetworkPolicies, namespace quotas, ZAP, and Falco. They were **not** part of the closed pilot path. Index: [setup README — optional after rebuild](setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot). Falco’s Application lives under `gitops/platform/falco/` and is **omitted** from `gitops/platform/kustomization.yaml` until deliberately enabled. NetworkPolicy objects in the Boutique base do not enforce while `aks_network_policy` is `null`. The SBOM Kyverno policy stays in Audit.
+
+## Limits inside the operated path
+
+These are deliberate pilot choices. Point at the file in an interview.
+
+| Limit | Where to point |
+|-------|----------------|
+| Public API server, system pool size 1, no availability zones | `terraform/modules/aks` |
+| Trivy fails only on CRITICAL; `--ignore-status fixed` skips CVEs that already have an upstream fix; images are mirrored, not rebuilt | `pipelines/templates/build-scan-sign.yml` |
+| Cosign key passphrase is empty; Key Vault RBAC is the control | same pipeline, `COSIGN_PASSWORD` |
+| Signature verification skips platform namespaces (`kube-system`, `kyverno`, `argocd`, `ingress-nginx`, `cert-manager`, `monitoring`) | `policies/kyverno/cluster/02-verify-image-signatures.yaml` |
+| Transparency log is off (`--tlog-upload=false`) | [ADR-0005](adr/0005-cosign-key-based-signing.md) |
+
+## Sentences to retire
+
+- “This is production-ready.” It is a **production pilot** on one cluster. Say so first.
+- “`prod` is a separate production estate.” It is a namespace next to `dev` and `stage`.
+- “Falco / NetworkPolicy / DAST blocked deploys in the lived run.” Those guides are optional after rebuild; Falco is off the default sync path.
+- “We rebuild Boutique from source.” The default path mirrors Google’s published images ([ADR-0009](adr/0009-mirror-upstream-images.md)).
+
+## Related
+
+- Architecture summary: [`../ARCHITECTURE.md`](../ARCHITECTURE.md)
+- CI / promotion / rollback contracts: [`ci.md`](ci.md) · [`promotion.md`](promotion.md) · [`rollback.md`](rollback.md)
+- Threat model: [`security/threat-model.md`](security/threat-model.md)
+- Setup index: [`setup/README.md`](setup/README.md)

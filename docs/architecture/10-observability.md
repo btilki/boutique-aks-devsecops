@@ -1,5 +1,7 @@
 # Observability
 
+Metrics, logs, traces, and alerts for the in-cluster monitoring stack (no Log Analytics on the default test path).
+
 ## Stack
 
 | Layer | Technology | Repo path |
@@ -10,9 +12,9 @@
 | Logs | Loki + Promtail | `gitops/platform/monitoring/loki/`, `promtail/` |
 | Traces | OpenTelemetry Collector | `gitops/platform/monitoring/otel/` |
 
-**Grafana hostname:** `grafana-boutique.biroltilki.art`
+Grafana hostname: `grafana-boutique.biroltilki.art`
 
-See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics is **not** deployed in the default test path.
+See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — **Log Analytics is not deployed** on the default test path.
 
 ## Metrics
 
@@ -23,13 +25,13 @@ See [ADR-0012](../adr/0012-loki-in-cluster-logging.md) — Azure Log Analytics i
 | Boutique frontend | ServiceMonitor |
 | Platform pods | ServiceMonitors as needed |
 
-**Retention:** 15 days (configurable in Helm values).
+Retention: 15 days (configurable in Helm values).
 
 ## Logs
 
-- **Centralized:** Promtail → Loki; query in Grafana Explore (LogQL)
-- **Ad-hoc:** `kubectl logs` for quick checks
-- **Retention:** Loki filesystem PVC (~10Gi test default)
+- Centralized: Promtail → Loki; query in Grafana Explore (LogQL)
+- Ad-hoc: `kubectl logs` for quick checks
+- Retention: Loki filesystem PVC (~10Gi test default)
 
 Example LogQL: `{namespace="boutique-dev", app="frontend"}`
 

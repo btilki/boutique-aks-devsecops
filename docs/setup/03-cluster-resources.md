@@ -1,20 +1,20 @@
 # 03 — Cluster Resources (AKS, ACR, Key Vault)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 120 minutes (AKS create ~15–20 min)
-**Prerequisites:** [02-azure-foundation.md](02-azure-foundation.md) ✅ complete
-**Creates:** AKS cluster (WI + OIDC), ACR, Key Vault, platform UAMI, RBAC (AcrPull, KV Secrets User, DNS Zone Contributor)
-**Related ADRs:** [0002](../adr/0002-single-cluster-multi-namespace.md), [0011](../adr/0011-aks-node-vm-sku.md)
+Audience: Implementer
+Estimated time: 120 minutes (AKS create ~15–20 min)
+Prerequisites: [02-azure-foundation.md](02-azure-foundation.md) ✅ complete
+Creates: AKS cluster (WI + OIDC), ACR, Key Vault, platform UAMI, RBAC (AcrPull, KV Secrets User, DNS Zone Contributor)
+Related ADRs: [0002](../adr/0002-single-cluster-multi-namespace.md), [0011](../adr/0011-aks-node-vm-sku.md)
 
 ---
 
 ## Topic goal
 
-When this topic is complete, a production-pilot **AKS** (**Azure Kubernetes Service**) cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an **ACR** (**Azure Container Registry**) for signed images, a **Key Vault** for platform secrets, and **identity wiring** so kubelet can pull from ACR and the platform **UAMI** (**user-assigned managed identity**) can read Key Vault secrets and manage DNS records for cert-manager.
+When you finish this topic, a production-pilot AKS cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an ACR for signed images, Key Vault for platform secrets, and identity wiring so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
 
 ## Why this topic is required
 
-GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live cluster and private registry. **WI** (**Workload Identity**) and an OIDC issuer must exist before ADO federation (Topic 04) and cert-manager DNS-01 (Topic 06). Applying cluster resources as a separate topic keeps Topic 02 networking stable and makes AKS failures easier to diagnose.
+GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live cluster and private registry. Workload Identity and an OIDC issuer must exist before ADO federation (Topic 04) and cert-manager DNS-01 (Topic 06). Splitting cluster resources into their own topic keeps Topic 02 networking stable and makes AKS failures easier to diagnose.
 
 ---
 
@@ -23,7 +23,7 @@ GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live clust
 - [ ] Topic 02 applied: `terraform output aks_subnet_id` is non-empty
 - [ ] DNS delegation in progress or complete (not blocking AKS, but needed before Topic 06)
 - [ ] `az vm list-skus` still shows D2s_v6 / D4s_v6 available (see [00-prerequisites.md](00-prerequisites.md))
-- [ ] You accept **AKS + nodes** monthly cost (~€100–200 order-of-magnitude)
+- [ ] You accept AKS + nodes monthly cost (~€100–200 order-of-magnitude)
 
 ```bash
 cd terraform/environments/dev
@@ -93,13 +93,13 @@ key_vault_name = "kv-boutique-dev-gwc" # change if taken
 aks_cluster_name = "aks-boutique-dev-gwc"
 ```
 
-**ACR name check:**
+ACR name check:
 
 ```bash
 az acr check-name --name acrboutiquedevgwc
 ```
 
-**Key Vault name check:**
+Key Vault name check:
 
 ```bash
 az keyvault list-deleted --query "[?name=='kv-boutique-dev-gwc']" -o table
@@ -134,7 +134,7 @@ terraform plan -input=false -out=tfplan
 
 ### Expected output
 
-Plan adds approximately **15–20 resources**, including:
+Plan adds approximately 15–20 resources, including:
 
 - `azurerm_kubernetes_cluster`
 - `azurerm_kubernetes_cluster_node_pool.user`
@@ -144,7 +144,7 @@ Plan adds approximately **15–20 resources**, including:
 - Multiple `azurerm_role_assignment`
 - `azurerm_monitor_diagnostic_setting` (AKS, ACR, KV)
 
-**No destroys** of Topic 02 VNet/DNS unless you changed addressing.
+No destroys of Topic 02 VNet/DNS unless you changed addressing.
 
 ### Validation
 
@@ -163,7 +163,7 @@ Plan adds approximately **15–20 resources**, including:
 
 ### Cost impact
 
-⚠️ **AKS control plane + 2 nodes** — primary monthly cost begins here.
+⚠️ AKS control plane + 2 nodes — primary monthly cost begins here.
 
 ---
 
@@ -184,7 +184,7 @@ cd terraform/environments/dev
 terraform apply -input=false tfplan
 ```
 
-**Expected duration:** 15–25 minutes (AKS provisioning is slow).
+Expected duration: 15–25 minutes (AKS provisioning is slow).
 
 ### Expected output
 
@@ -213,7 +213,7 @@ terraform plan -input=false
 terraform apply -input=false
 ```
 
-Do **not** manually delete the MC_* node resource group — let Terraform reconcile.
+Do not manually delete the MC_* node resource group — let Terraform reconcile.
 
 ---
 
@@ -260,15 +260,15 @@ kubectl get pods -A | head -20
 
 | Symptom | Likely cause | Fix |
 |---------|--------------|-----|
-| `kubectl` unauthorized | AAD RBAC not propagated | Assign yourself **Azure Kubernetes Service RBAC Cluster Admin** on the cluster (GUI below) |
+| `kubectl` unauthorized | AAD RBAC not propagated | Assign yourself Azure Kubernetes Service RBAC Cluster Admin on the cluster (GUI below) |
 | Nodes NotReady | CNI starting | Wait 5 minutes; check `kubectl describe node` |
 | Wrong context | Old kubeconfig | Re-run `az aks get-credentials --overwrite-existing` |
 
 ### GUI — grant yourself cluster admin (if needed)
 
-1. Navigate to: **Azure Portal** → **Kubernetes services** → **`aks-boutique-dev-gwc`**
-2. Click **Access control (IAM)** → **Add role assignment**
-3. Role: **Azure Kubernetes Service RBAC Cluster Admin**
+1. Navigate to: Azure Portal → Kubernetes services → `aks-boutique-dev-gwc`
+2. Click Access control (IAM) → Add role assignment
+3. Role: Azure Kubernetes Service RBAC Cluster Admin
 4. Member: your user account
 5. Save; wait 1–5 minutes; retry `kubectl get nodes`
 
@@ -297,7 +297,7 @@ az acr repository list --name "${ACR_NAME}" -o table
 
 Login succeeds; repository list is empty (no images mirrored yet).
 
-**Optional push smoke test:**
+Optional push smoke test:
 
 ```bash
 docker pull mcr.microsoft.com/azure-cli:latest
@@ -313,7 +313,7 @@ az acr repository show-tags --name "${ACR_NAME}" --repository smoke/azure-cli -o
 
 ### Security notes
 
-- Images must be signed before Kyverno allows them in Topic 08+ (except test policies)
+- **Images must be signed** before Kyverno allows them in Topic 08+ (except test policies)
 
 ---
 
@@ -356,7 +356,7 @@ az keyvault show --name "${KV_NAME}" --resource-group "${RG}" \
 az keyvault secret list --vault-name "${KV_NAME}" -o table
 ```
 
-Requires **Key Vault Administrator** or **Secrets Officer** (Terraform grants deployer Administrator on create).
+Requires Key Vault Administrator or Secrets Officer (Terraform grants deployer Administrator on create).
 
 ---
 
@@ -409,7 +409,7 @@ az acr show -n $(terraform output -raw acr_name) --query name -o tsv
 ./../../tests/terraform/foundation-post-apply.sh
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] AKS cluster Running with 2 node pools
 - [ ] ACR reachable via `az acr login`

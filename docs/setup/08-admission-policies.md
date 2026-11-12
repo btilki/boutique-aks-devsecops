@@ -1,6 +1,6 @@
 # 08 — Admission Policies (Kyverno)
 
-**Audience:** L2 — Implementer
+Audience: Implementer
 **Estimated time:** 120 minutes
 **Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [07-secrets-csi.md](07-secrets-csi.md) recommended (remove `csi-test` pod before enforce)
 **Creates:** Kyverno 1.12.6, ClusterPolicies (baseline five + Topic 17 SBOM attest Audit), policy test suite
@@ -10,11 +10,11 @@
 
 ## Topic goal
 
-When this topic is complete, **Kyverno** enforces cluster admission policies: **ACR** (**Azure Container Registry**) allowlist, **deny `:latest`**, **cosign signature verification** (key placeholder until Topic 09), **Pod Security baseline**, and **no privileged/hostPath** access. `kyverno test` passes for validation policies.
+When this topic is complete, Kyverno enforces cluster admission policies: ACR allowlist, deny `:latest`, cosign signature verification (key placeholder until Topic 09), Pod Security baseline, and no privileged/hostPath access. `kyverno test` passes for validation policies.
 
 ## Why this topic is required
 
-Admission control is the runtime enforcement layer for supply-chain decisions. CI (Topic 09) signs images; Kyverno ensures only compliant workloads run. Without admission, unsigned or public-registry images could deploy despite pipeline gates.
+Admission control is the runtime enforcement layer for supply-chain decisions. **CI (Topic 09) signs images; Kyverno ensures only compliant workloads run.** Without admission, unsigned or public-registry images could deploy despite pipeline gates.
 
 ---
 
@@ -121,7 +121,7 @@ kubectl get crd clusterpolicies.kyverno.io
 
 ### Expected output
 
-Kyverno pods **Running**; ClusterPolicy CRD registered.
+Kyverno pods Running; ClusterPolicy CRD registered.
 
 ### Validation
 
@@ -226,9 +226,9 @@ kubectl apply -f policies/tests/resources/allow-compliant-workload.yaml --dry-ru
 
 ### Expected output
 
-- `deny-non-acr-image` → **Error** from Kyverno (`registry-allowlist`)
-- `deny-latest-tag` → **Error** from Kyverno (`deny-latest-tag`)
-- `compliant-pod` → **configured** (allowed) — signature verify may fail later if key enforced and image unsigned
+- `deny-non-acr-image` → Error from Kyverno (`registry-allowlist`)
+- `deny-latest-tag` → Error from Kyverno (`deny-latest-tag`)
+- `compliant-pod` → configured (allowed) — signature verify may fail later if key enforced and image unsigned
 
 ### Validation
 

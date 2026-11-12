@@ -1,8 +1,16 @@
 # Teardown runbook
 
-Destroy billable Azure platform resources when the test is complete or paused long-term.
+Audience: Operator
+Setup: Topic 13 · Roadmap Phase 14
+Authority: [`../setup/13-teardown.md`](../setup/13-teardown.md) is the source of truth for live steps
+Cost: [`../architecture/11-cost-model.md`](../architecture/11-cost-model.md) · [ADR-0010](../adr/0010-destroy-acr-on-teardown.md)
+Setup index: [`../setup/README.md`](../setup/README.md)
 
-**Related:** [13-teardown.md](../setup/13-teardown.md), [ADR-0010](../adr/0010-destroy-acr-on-teardown.md), [11-cost-model.md](../architecture/11-cost-model.md)
+> When to use: you have a live pilot cluster and need to stop ongoing cost (after tests or an early abort). The closed pilot already completed Topic 13 — there is nothing to tear down today unless you have rebuilt. Authoritative numbered steps: [Topic 13](../setup/13-teardown.md).
+
+## Purpose
+
+Destroy billable Azure platform resources when the test is complete or paused long-term. **Never destroy the Terraform state bootstrap while platform resources still exist.**
 
 ---
 
