@@ -44,8 +44,6 @@ Use the short form only (`CI`, `AKS`, `ADO`, `OIDC`). Do **not** write `CI (Cont
 | Ordinary stack names | Stay plain (`EKS`, `ACR`, `OIDC`) unless the sentence states a hard rule |
 | Code identifiers | Keep as written (`ENABLE_PILOT_CI`, CLI flags, filenames) |
 
-Optional setup guides 14–20 stay off the closed-pilot path — see [docs/setup/README.md](docs/setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
-
 ## Code style
 
 - Terraform: `terraform fmt` (enforced by pre-commit).

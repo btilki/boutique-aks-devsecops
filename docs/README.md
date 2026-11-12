@@ -61,4 +61,4 @@ If this file disagrees with [`setup/`](setup/README.md) on bootstrap steps, the 
 
 Sister platforms (same author): [boutique-eks-gitops](https://github.com/btilki/boutique-eks-gitops) · [boutique-gke-sre](https://github.com/btilki/boutique-gke-sre)
 
-Maintainer planning (not a reader path): [`implementation/plan.md`](implementation/plan.md) · [`implementation/phase15-plus.md`](implementation/phase15-plus.md) · optional setup guides 14–20 after rebuild
+Maintainer planning (not a reader path): [`implementation/plan.md`](implementation/plan.md) · [`implementation/phase15-plus.md`](implementation/phase15-plus.md)

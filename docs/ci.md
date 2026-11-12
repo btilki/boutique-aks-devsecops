@@ -36,8 +36,6 @@ Pipeline YAML stays in Git under [`pipelines/`](../pipelines/). After a rebuild,
 | `azure-pipelines.yml` | Mirror, scan, sign | Topic 09 |
 | `templates/promote-digest.yml` | Commit digests into overlays | Topic 12 |
 
-Optional YAML after a rebuild (PR gates, Checkov, SBOM attest, ZAP): see [setup README — optional after rebuild](setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
-
 ## Where to go next
 
 | Need | Open |

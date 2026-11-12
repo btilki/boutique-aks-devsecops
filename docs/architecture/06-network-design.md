@@ -69,7 +69,7 @@ All nodes sit in a dedicated AKS subnet. North-south traffic hits one Azure Load
 |---------|--------|
 | NSG on AKS subnet | Terraform module |
 | Kyverno pod hardening | Enforced Phase 8 |
-| Kubernetes NetworkPolicy | Scaffolded Phase 17 / Topic 15 (`gitops/apps/boutique/base/networkpolicies/`); set `aks_network_policy = "azure"` on rebuild to enforce |
+| Kubernetes NetworkPolicy | Manifests in `gitops/apps/boutique/base/networkpolicies/`; set `aks_network_policy = "azure"` to enforce |
 | Private ACR | Deferred |
 
 ## Egress

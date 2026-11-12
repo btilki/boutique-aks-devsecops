@@ -57,7 +57,7 @@ Delivery contracts: [`../ci.md`](../ci.md) · [`../promotion.md`](../promotion.m
 | [ADR-0010](../adr/0010-destroy-acr-on-teardown.md) | Destroy ACR on teardown |
 | [ADR-0011](../adr/0011-aks-node-vm-sku.md) | Node VM SKUs and region |
 | [ADR-0012](../adr/0012-loki-in-cluster-logging.md) | In-cluster Loki instead of Log Analytics |
-| [ADR-0013](../adr/0013-scaffold-first-phase15.md) | Optional guides 14–20 after rebuild |
+| [ADR-0013](../adr/0013-scaffold-first-phase15.md) | Deferred hardening inventory (apply after rebuild) |
 | [ADR-0014](../adr/0014-sbom-cosign-attestations.md) | SPDX SBOM + cosign attestations |
 | [ADR-0015](../adr/0015-falco-runtime-detection.md) | Falco runtime detection |
 | [ADR-0016](../adr/0016-namespace-kv-hardening.md) | Namespace PSA / quotas; optional KV ACL |

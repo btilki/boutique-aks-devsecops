@@ -14,7 +14,7 @@ How this project secures container images from upstream mirror through cluster a
 | Registry | Private ACR | Mirror pipeline; Kyverno ACR allowlist |
 | Build integrity | Not applicable | Images mirrored, not rebuilt in-repo |
 | Vulnerability gate | Trivy CRITICAL | ADO pipeline fails on CRITICAL CVEs |
-| SBOM | Trivy SPDX JSON | Per-service SBOM; pipeline artifact `sboms-spdx` (Topic 17) |
+| SBOM | Trivy SPDX JSON | Per-service SBOM; pipeline artifact `sboms-spdx` ([ADR-0014](../adr/0014-sbom-cosign-attestations.md)) |
 | Integrity / authenticity | cosign 2.2.4 | Sign by digest; `--tlog-upload=false` |
 | SBOM attestation | cosign attest `spdxjson` | Same key; verify-attestation in CI (ADR-0014) |
 | Runtime enforcement | Kyverno 1.12 | `verifyImages` (signatures + optional SPDX attest Audit→Enforce), deny `:latest`, pod security baseline |
@@ -37,7 +37,7 @@ flowchart LR
 ```
 
 **Pipeline files:** `pipelines/azure-pipelines.yml`, `pipelines/templates/build-scan-sign.yml`
-**Toggle:** `enableSbomAttest` in `pipelines/templates/variables.yml` (Topic 17 / [ADR-0014](../adr/0014-sbom-cosign-attestations.md)).
+**Toggle:** `enableSbomAttest` in `pipelines/templates/variables.yml` ([ADR-0014](../adr/0014-sbom-cosign-attestations.md)).
 
 **Authentication:** Azure DevOps OIDC → UAMI `uami-ado-pipeline` → AcrPush + Key Vault Secrets User (no long-lived CI secrets).
 
@@ -122,7 +122,7 @@ Artifact `digest-manifest.json` maps service name → `sha256:...` from each pip
 | Compromised CI secret | OIDC federation; cosign private key in KV only |
 | Upstream registry swap | Fixed upstream path and tag in pipeline variables |
 | CVE in base image | Trivy CRITICAL gate; monitor upstream releases |
-| Missing component inventory | SPDX SBOM + cosign attest (Topic 17); Kyverno Audit→Enforce |
+| Missing component inventory | SPDX SBOM + cosign attest ([ADR-0014](../adr/0014-sbom-cosign-attestations.md)); Kyverno Audit→Enforce |
 
 **Residual risk:** Mirrored images trust Google's build; this project does not rebuild from source. Compromise of cosign private key allows signing **and** attesting malicious images until rotation.
 
@@ -132,7 +132,7 @@ Artifact `digest-manifest.json` maps service name → `sha256:...` from each pip
 
 - [ ] Pipeline green on `main` with all 11 services (sign + optional SBOM attest)
 - [ ] Kyverno signature policy contains live cosign public key (not placeholder)
-- [ ] Topic 17: attestation policy key matches; Enforce only after attestations exist
+- [ ] Attestation policy key matches; Enforce only after attestations exist
 - [ ] No cosign private key in Git, ADO variables, or logs
 - [ ] ACR retention: teardown destroys images — re-run pipeline after rebuild ([13-teardown.md](../setup/13-teardown.md))
 

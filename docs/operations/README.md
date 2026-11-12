@@ -36,7 +36,7 @@ Smoke suites: [`tests/README.md`](../../tests/README.md)
 | Ingress + TLS | `ingress-nginx`, Certificate CRs | You | — | `IngressCertExpiringSoon` |
 | Kyverno | `kyverno` + ClusterPolicies | You | — | `KyvernoAdmissionDown` |
 | Monitoring stack | `monitoring` | You | Grafana / Alertmanager Overview | (platform rules) |
-| Falco (optional after rebuild) | `falco` | You | Loki / Falco logs | `runtime-security` rules |
+| Falco | `falco` (when enabled) | You | Loki / Falco logs | `runtime-security` rules |
 | ACR + cosign | `acrboutiquedevgwc` · Key Vault | You | ACR portal / pipeline | (pipeline failure) |
 
 Hostnames: see [root README](../../README.md) · [docs/README.md](../README.md).

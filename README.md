@@ -65,8 +65,6 @@ More: ACR digests, Grafana, stage/prod storefronts — [`assets/images/setup/`](
 
 Do **not** call this production-ready. The namespace named `prod` is a promotion stage on the same cluster. Public-share rules: [CONTRIBUTING.md](CONTRIBUTING.md#public-share-hygiene).
 
-Optional hardening ideas after a rebuild (not part of the closed pilot): [`docs/setup/README.md`](docs/setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
-
 ---
 
 ## Where to start

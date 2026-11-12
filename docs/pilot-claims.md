@@ -12,10 +12,6 @@ ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. Th
 - Grafana; in-cluster Loki; ADO environment approval before prod
 - Teardown validated ([setup/13-teardown](setup/13-teardown.md))
 
-## Also in Git (optional after rebuild)
-
-Extra guides 14–20 cover PR validation, Checkov, SBOM attestations, NetworkPolicies, namespace quotas, ZAP, and Falco. They were **not** part of the closed pilot path. Index: [setup README — optional after rebuild](setup/README.md#optional-after-rebuild--not-part-of-the-closed-pilot). Falco’s Application lives under `gitops/platform/falco/` and is **omitted** from `gitops/platform/kustomization.yaml` until deliberately enabled. NetworkPolicy objects in the Boutique base do not enforce while `aks_network_policy` is `null`. The SBOM Kyverno policy stays in Audit.
-
 ## Limits inside the operated path
 
 These are deliberate pilot choices. Point at the file in an interview.
@@ -32,7 +28,7 @@ These are deliberate pilot choices. Point at the file in an interview.
 
 - “This is production-ready.” It is a **production pilot** on one cluster. Say so first.
 - “`prod` is a separate production estate.” It is a namespace next to `dev` and `stage`.
-- “Falco / NetworkPolicy / DAST blocked deploys in the lived run.” Those guides are optional after rebuild; Falco is off the default sync path.
+- “Falco / NetworkPolicy / DAST blocked deploys in the lived run.” They did not. Falco is off the default sync path; NetworkPolicy does not enforce while `aks_network_policy` is `null`.
 - “We rebuild Boutique from source.” The default path mirrors Google’s published images ([ADR-0009](adr/0009-mirror-upstream-images.md)).
 
 ## Related

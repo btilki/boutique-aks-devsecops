@@ -265,7 +265,7 @@ Expect about €150–250/month with two nodes active. Teardown (Roadmap Phase 1
 | Item | Prerequisite |
 |------|--------------|
 | Entra SSO for Argo CD | Entra app registration |
-| Trivy vuln attestations | Stretch (SPDX SBOM attestations: Topic 17 / ADR-0014) |
+| Trivy vuln attestations | Stretch (SPDX SBOM attestations: [ADR-0014](docs/adr/0014-sbom-cosign-attestations.md)) |
 | Service mesh | Stable baseline |
 | NetworkPolicy default deny | Optional after rebuild (`base/networkpolicies/`); enforce via `aks_network_policy=azure` |
 
