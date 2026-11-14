@@ -5,7 +5,7 @@ Estimated time: ~60 minutes
 Prerequisites: None
 Related: [Setup index](README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) · [versions.yaml](../../versions.yaml) · [ADR-0011](../adr/0011-aks-node-vm-sku.md)
 
-> No live cluster from the closed pilot. Azure resources were destroyed after Setup Topic 13 (teardown). This topic checks your machine and accounts only — it does not create AKS or other billable Azure resources. Full setup index: [setup README](README.md).
+> No live cluster from the closed reference. Azure resources were destroyed after Setup Topic 13 (teardown). This topic checks your machine and accounts only — it does not create AKS or other billable Azure resources. Full setup index: [setup README](README.md).
 
 ---
 
@@ -249,7 +249,7 @@ B.2 — Create an empty GitHub repository (GUI)
 2. Click + (top right) → New repository
 3. Owner: `<GITHUB_ORG>`
 4. Repository name: `<REPO_NAME>` (e.g. `boutique-aks-devsecops`)
-5. Description (optional): Azure AKS DevSecOps production pilot
+5. Description (optional): Azure AKS DevSecOps production reference
 6. Visibility: Private recommended (reduces exposure; still never put secrets in Git)
 7. Do not initialize with README, `.gitignore`, or license — your local tree already has these
 8. Click Create repository
@@ -460,7 +460,7 @@ pre-commit run --all-files
 
 ## Production considerations
 
-This pilot uses one AKS cluster and minimal node counts. Prerequisites here do not configure HA — that is an explicit non-goal. Before any shared or production-like usage:
+This reference uses one AKS cluster and minimal node counts. Prerequisites here do not configure HA — that is an explicit non-goal. Before any shared or production-like usage:
 
 - Use separate Azure subscriptions for test vs production
 - Enable MFA on Entra accounts with subscription access

@@ -8,7 +8,7 @@
 
 ## Purpose
 
-Describe what is backed up for this **demo/pilot** stack and how to restore critical control-plane data. Boutique has **no durable app database** to back up.
+Describe what is backed up for this **demo/reference** stack and how to restore critical control-plane data. Boutique has **no durable app database** to back up.
 
 ## When to use / When not to use
 

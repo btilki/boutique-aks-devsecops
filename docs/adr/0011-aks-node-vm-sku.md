@@ -17,7 +17,7 @@ During Topic 03 apply, subscription **Standard DSv5 Family vCPU quota** in `germ
 | Region | `germanywestcentral` |
 | System pool | `Standard_D2s_v6` (1 node, fixed) — **test default when DSv5 quota is 0** |
 | User pool | `Standard_D4s_v6` (1–3 nodes, autoscaler) — **test default when DSv5 quota is 0** |
-| Preferred (when quota allows) | `Standard_D2s_v5` / `Standard_D4s_v5` per original pilot design |
+| Preferred (when quota allows) | `Standard_D2s_v5` / `Standard_D4s_v5` per original reference design |
 
 ## Consequences
 

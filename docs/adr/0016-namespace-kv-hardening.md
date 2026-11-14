@@ -6,7 +6,7 @@ Accepted (scaffold — apply with Topic 19)
 
 ## Context
 
-Lived-pilot Boutique namespaces lack Pod Security Admission labels and ResourceQuota/LimitRange. Key Vault is reachable from the public internet (`network_acls` unset / allow), with `purge_protection_enabled = false` for cheap teardown ([ADR-0010](0010-destroy-acr-on-teardown.md) path). Checkov skips document these as pilot tradeoffs (Topic 16).
+Lived-reference Boutique namespaces lack Pod Security Admission labels and ResourceQuota/LimitRange. Key Vault is reachable from the public internet (`network_acls` unset / allow), with `purge_protection_enabled = false` for cheap teardown ([ADR-0010](0010-destroy-acr-on-teardown.md) path). Checkov skips document these as reference tradeoffs (Topic 16).
 
 ## Decision
 
@@ -19,4 +19,4 @@ Lived-pilot Boutique namespaces lack Pod Security Admission labels and ResourceQ
 
 - **Positive:** Namespace blast-radius controls; clear path to close KV public exposure; PSA reinforces Kyverno.
 - **Negative:** Restrictive quotas can block scale-up; KV Deny ACL breaks CSI/ADO if subnet/endpoints misconfigured; purge protection complicates teardown.
-- **Not chosen:** `enforce=restricted` PSA (may break redis/busybox patterns); mandatory purge protection on the pilot teardown path.
+- **Not chosen:** `enforce=restricted` PSA (may break redis/busybox patterns); mandatory purge protection on the reference teardown path.

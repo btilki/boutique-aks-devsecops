@@ -13,7 +13,7 @@ Recover from loss of cluster, subscription misconfiguration, or deliberate teard
 ## When to use / When not to use
 
 **Use** after catastrophic AKS failure, accidental destroy, or post-teardown rebuild.
-**Do not** expect automatic DR; this is a solo pilot test (no secondary region).
+**Do not** expect automatic DR; this is a solo reference test (no secondary region).
 
 ## Prerequisites
 

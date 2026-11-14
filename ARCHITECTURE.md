@@ -1,11 +1,11 @@
 # Architecture — boutique-aks-devsecops
 
-**Status:** Production pilot closed. Setup Topics **00–13** ran end to end, then Azure resources from that run were destroyed. There is no live AKS, ACR, or Key Vault from the pilot.
-**Maturity:** Production pilot — one subscription, one AKS cluster — decommissioned
+**Status:** Production reference closed. Setup Topics **00–13** ran end to end, then Azure resources from that run were destroyed. There is no live AKS, ACR, or Key Vault from the reference.
+**Maturity:** Production reference — one subscription, one AKS cluster — decommissioned
 **Region:** `germanywestcentral` (when rebuilt)
 **Application:** Online Boutique [v0.10.5](https://github.com/GoogleCloudPlatform/microservices-demo/releases/tag/v0.10.5)
 
-[Project README](README.md) · [Doc index](docs/README.md) · [Deep architecture](docs/architecture/README.md) · [Setup](docs/setup/README.md) · [Roadmap](ROADMAP.md) · [Pilot claims](docs/pilot-claims.md)
+[Project README](README.md) · [Doc index](docs/README.md) · [Deep architecture](docs/architecture/README.md) · [Setup](docs/setup/README.md) · [Roadmap](ROADMAP.md) · [Reference claims](docs/reference-claims.md)
 
 ---
 
@@ -15,7 +15,7 @@
 |--------------|----------------|------------|
 | A 10-minute picture | Executive summary, diagrams, tradeoffs | [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
 | Design and delivery detail | Mapping table and deep-dive index | [`docs/architecture/`](docs/architecture/README.md) — especially [05-deployment-flow](docs/architecture/05-deployment-flow.md), [07-security-architecture](docs/architecture/07-security-architecture.md) |
-| Evidence without a cluster | — | [`docs/pilot-claims.md`](docs/pilot-claims.md) |
+| Evidence without a cluster | — | [`docs/reference-claims.md`](docs/reference-claims.md) |
 | Rebuild | Component → setup mapping (orientation only) | [`docs/setup/README.md`](docs/setup/README.md) |
 
 This file is the architecture summary. Numbered pages under [`docs/architecture/`](docs/architecture/README.md) are the deep reference. Setup steps live only under [`docs/setup/`](docs/setup/README.md).
@@ -26,9 +26,9 @@ This file is the architecture summary. Numbered pages under [`docs/architecture/
 
 This repository delivers Online Boutique on Azure AKS with a signed supply chain and GitOps. Azure DevOps mirrors Boutique **v0.10.5** into ACR, fails the job on CRITICAL findings, cosign-signs digests, and commits those digests into Git. Argo CD reconciles desired state from GitHub. **Unsigned or floating tags should not reach the cluster.** Kyverno enforces that for Boutique workloads.
 
-`dev`, `stage`, and `prod` are namespaces on one cluster — cost over blast-radius isolation. Prod promotion needs an ADO environment approval and a manual Argo sync. Secrets stay in Key Vault (CSI + Workload Identity). Metrics and logs stay on-cluster (Prometheus, Loki, Grafana). After validation, the pilot was torn down — see [Setup Topic 13](docs/setup/13-teardown.md).
+`dev`, `stage`, and `prod` are namespaces on one cluster — cost over blast-radius isolation. Prod promotion needs an ADO environment approval and a manual Argo sync. Secrets stay in Key Vault (CSI + Workload Identity). Metrics and logs stay on-cluster (Prometheus, Loki, Grafana). After validation, the reference was torn down — see [Setup Topic 13](docs/setup/13-teardown.md).
 
-Claims you can check without a cluster: [`docs/pilot-claims.md`](docs/pilot-claims.md). Landing-page tradeoffs: [README](README.md#tradeoffs--what-i-would-change-for-real-production).
+Claims you can check without a cluster: [`docs/reference-claims.md`](docs/reference-claims.md). Landing-page tradeoffs: [README](README.md#tradeoffs--what-i-would-change-for-real-production).
 
 Version pins: [versions.yaml](versions.yaml). Maintainer plan: [docs/implementation/plan.md](docs/implementation/plan.md).
 
@@ -83,7 +83,7 @@ See [01-requirements.md](docs/architecture/01-requirements.md).
 
 ## 4. High-level architecture
 
-Terraform provisions the VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. Logs stay in-cluster with Loki ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Log Analytics stays off on the default pilot path.
+Terraform provisions the VNet, AKS (Workload Identity), ACR, Key Vault, and Azure DNS. Logs stay in-cluster with Loki ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Log Analytics stays off on the default reference path.
 
 Argo CD reconciles platform charts and Boutique overlays from `gitops/`. ADO mirrors, scans, and signs images, then updates digests in Git. Kyverno enforces the ACR allowlist, denies `:latest`, verifies signatures, and applies a Pod Security baseline. NGINX Ingress and cert-manager expose five HTTPS hostnames with Let's Encrypt DNS-01.
 
@@ -226,7 +226,7 @@ Full table: [08-resilience-and-dr.md](docs/architecture/08-resilience-and-dr.md)
 
 ## 11. Scalability
 
-The user pool autoscales from 1 to 3 nodes (`Standard_D4s_v6`). Three full Boutique namespaces is the designed ceiling for this pilot. The lived test often ran a slim Boutique (core storefront only) to stay within pod capacity. The usual bottleneck is node CPU and maxPods; mitigate with the autoscaler and optional HPA on the frontend.
+The user pool autoscales from 1 to 3 nodes (`Standard_D4s_v6`). Three full Boutique namespaces is the designed ceiling for this reference. The lived test often ran a slim Boutique (core storefront only) to stay within pod capacity. The usual bottleneck is node CPU and maxPods; mitigate with the autoscaler and optional HPA on the frontend.
 
 ---
 
@@ -238,7 +238,7 @@ Rebuild from Git and Terraform takes about 4–8 hours (RTO). With blob versioni
 
 ## 13. Observability
 
-The stack is kube-prometheus-stack (Prometheus, Grafana, Alertmanager), Loki/Promtail, and a baseline OTel collector. Grafana was at `grafana-boutique.biroltilki.art` when the pilot was live. Logging stays in-cluster ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Details: [10-observability.md](docs/architecture/10-observability.md).
+The stack is kube-prometheus-stack (Prometheus, Grafana, Alertmanager), Loki/Promtail, and a baseline OTel collector. Grafana was at `grafana-boutique.biroltilki.art` when the reference was live. Logging stays in-cluster ([ADR-0012](docs/adr/0012-loki-in-cluster-logging.md)). Details: [10-observability.md](docs/architecture/10-observability.md).
 
 ---
 

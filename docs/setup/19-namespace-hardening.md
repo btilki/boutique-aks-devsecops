@@ -19,7 +19,7 @@ When this topic is complete:
 
 ## Why this topic is required
 
-Kyverno baseline does not replace namespace PSA labels or quotas. Public Key Vault + no purge protection were intentional pilot tradeoffs (Checkov skips in Topic 16); this topic makes hardening a documented, reversible apply path.
+Kyverno baseline does not replace namespace PSA labels or quotas. Public Key Vault + no purge protection were intentional reference tradeoffs (Checkov skips in Topic 16); this topic makes hardening a documented, reversible apply path.
 
 ---
 

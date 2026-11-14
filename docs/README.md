@@ -1,6 +1,6 @@
 # Documentation — boutique-aks-devsecops
 
-Production pilot closed. The delivery path was validated, then Azure resources from the pilot were destroyed. These docs describe what was built and how to rebuild it.
+Production reference closed. The delivery path was validated, then Azure resources from the reference were destroyed. These docs describe what was built and how to rebuild it.
 
 If this file disagrees with [`setup/`](setup/README.md) on bootstrap steps, the setup guide wins.
 
@@ -11,7 +11,7 @@ If this file disagrees with [`setup/`](setup/README.md) on bootstrap steps, the 
 | I want to… | Read |
 |------------|------|
 | Understand the project quickly | [`../ARCHITECTURE.md`](../ARCHITECTURE.md) · [ADR-0005](adr/0005-cosign-key-based-signing.md) |
-| See pilot proof | [`pilot-claims.md`](pilot-claims.md) · [`../assets/images/README.md`](../assets/images/README.md) |
+| See reference proof | [`reference-claims.md`](reference-claims.md) · [`../assets/images/README.md`](../assets/images/README.md) |
 | Review design and delivery | [`architecture/`](architecture/README.md) · [`ci.md`](ci.md) · [`promotion.md`](promotion.md) · [`rollback.md`](rollback.md) · [`security/threat-model.md`](security/threat-model.md) |
 | Rebuild or operate | [`setup/`](setup/README.md) (Topics 00–13) · [`../versions.yaml`](../versions.yaml) · [`runbooks/`](runbooks/README.md) |
 
@@ -24,7 +24,7 @@ If this file disagrees with [`setup/`](setup/README.md) on bootstrap steps, the 
 | Architecture summary | [`../ARCHITECTURE.md`](../ARCHITECTURE.md) |
 | Architecture deep dive | [`architecture/README.md`](architecture/README.md) |
 | Design decisions | [`adr/`](adr/README.md) |
-| Pilot claims | [`pilot-claims.md`](pilot-claims.md) |
+| Reference claims | [`reference-claims.md`](reference-claims.md) |
 | Bootstrap & teardown | [`setup/README.md`](setup/README.md) |
 | Version pins | [`../versions.yaml`](../versions.yaml) |
 | Supply-chain CI | [`ci.md`](ci.md) · [`../pipelines/README.md`](../pipelines/README.md) · [setup/09](setup/09-ci-pipeline.md) |

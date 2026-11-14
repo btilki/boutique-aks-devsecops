@@ -3,7 +3,7 @@
 **Audience:** L2 — Implementer
 **Estimated time:** 30–45 minutes (local) · ADO already covered by Topic 14 registration
 **Prerequisites:** [14-pr-ci.md](14-pr-ci.md) scaffold ✅ · Terraform tree under `terraform/`
-**Creates:** Checkov baseline config, local/CI gate on `terraform/`, documented skip list for pilot tradeoffs
+**Creates:** Checkov baseline config, local/CI gate on `terraform/`, documented skip list for reference tradeoffs
 **Related:** [phase15-plus.md](../implementation/phase15-plus.md) · [tests/terraform/.checkov.yaml](../../tests/terraform/.checkov.yaml) · [ARCHITECTURE.md](../../ARCHITECTURE.md) Limitations
 **Mode:** Runnable locally today. ADO job runs once Topic 14 pipeline is registered (**Apply later** for live PR status).
 
@@ -11,11 +11,11 @@
 
 ## Topic goal
 
-When this topic is complete, every PR (and `make pr-validate`) runs **Checkov** against `terraform/` for **IaC** (**Infrastructure as Code**) scanning and **fails on new findings**. Known production-pilot tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
+When this topic is complete, every PR (and `make pr-validate`) runs **Checkov** against `terraform/` for **IaC** (**Infrastructure as Code**) scanning and **fails on new findings**. Known production-reference tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
 
 ## Why this topic is required
 
-`terraform validate` only checks syntax/schema. Checkov catches misconfigurations (public ACR, missing purge protection, open API server, etc.) before merge. Without a baseline skip list, the pilot design would fail CI on every intentional cost/scope choice.
+`terraform validate` only checks syntax/schema. Checkov catches misconfigurations (public ACR, missing purge protection, open API server, etc.) before merge. Without a baseline skip list, the reference design would fail CI on every intentional cost/scope choice.
 
 ---
 
@@ -57,7 +57,7 @@ cat tests/terraform/.checkov.yaml
 
 | Area | Examples | Why skipped |
 |------|----------|-------------|
-| AKS | private cluster, authorized IPs, paid SLA | Cost / pilot Limitations |
+| AKS | private cluster, authorized IPs, paid SLA | Cost / reference Limitations |
 | ACR | public network, quarantine | Cosign+Kyverno+Trivy instead; private ACR deferred |
 | Key Vault | firewall, purge protection | Topic 19 / cheap teardown |
 | NSG HTTP:80 | CKV_AZURE_160 | Ingress redirect / ACME |

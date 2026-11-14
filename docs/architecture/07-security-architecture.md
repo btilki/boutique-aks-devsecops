@@ -1,6 +1,6 @@
 # Security architecture
 
-Trust boundaries, identity paths, secrets handling, and supply-chain controls for the pilot cluster.
+Trust boundaries, identity paths, secrets handling, and supply-chain controls for the reference cluster.
 
 ## Trust zones
 

@@ -14,7 +14,7 @@ When this topic is complete, **the same signed image digest** you validated in d
 
 ## Why this topic is required
 
-Production-pilot maturity means environment separation, human gates, and repeatable promotion/rollback — not only a single dev deployment. This topic proves **digest-only promotion** across namespaces on one cluster.
+Production-reference maturity means environment separation, human gates, and repeatable promotion/rollback — not only a single dev deployment. This topic proves **digest-only promotion** across namespaces on one cluster.
 
 ---
 
@@ -295,7 +295,7 @@ Practice Git revert + Argo sync rollback procedure.
 
 ### Why this step is required
 
-Rollback confidence is required for production-pilot credibility.
+Rollback confidence is required for production-reference credibility.
 
 ### Commands
 

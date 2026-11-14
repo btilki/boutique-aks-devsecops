@@ -6,7 +6,7 @@ Accepted (scaffold — apply with Topic 17)
 
 ## Context
 
-The lived pilot signs images with cosign but does not attach an SBOM or vulnerability attestation. Roadmap Phase 19 / Package 5 adds supply-chain depth without rebuilding Boutique from source (ADR-0009).
+The lived reference signs images with cosign but does not attach an SBOM or vulnerability attestation. Roadmap Phase 19 / Package 5 adds supply-chain depth without rebuilding Boutique from source (ADR-0009).
 
 ## Decision
 

@@ -72,12 +72,12 @@ NGINX is the only north-south entry. Argo CD reconciles every namespace. Kyverno
 | Horizontal | User pool autoscaler 1–3; optional HPA on frontend |
 | Vertical | `Standard_D4s_v6` user nodes |
 | Multi-tenancy | Namespace + RBAC + Kyverno |
-| Ceiling | Full Boutique × 3 envs on one cluster (pilot) |
+| Ceiling | Full Boutique × 3 envs on one cluster (reference) |
 
 ### Bottlenecks
 
 1. Node CPU — mitigate with autoscale and right-sized requests
-2. Ingress LB throughput — single controller; acceptable for pilot
+2. Ingress LB throughput — single controller; acceptable for reference
 3. Prometheus storage — limit retention (15d default)
 
 ## Repo mapping

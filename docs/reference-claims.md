@@ -1,8 +1,8 @@
-# What this pilot claims
+# What this reference claims
 
-For anyone defending this repository in a DevOps interview. Closed pilot: Azure was torn down after Setup Topics **00–13**. Nothing here requires a live cluster to read. Screenshots: [`assets/images/`](../assets/images/README.md).
+Closed reference: Azure was torn down after Setup Topics **00–13**. Nothing here requires a live cluster to read. Screenshots: [`assets/images/`](../assets/images/README.md).
 
-ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. The pilot proved that path once, then the cloud resources were removed.
+ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. The reference proved that path once, then the cloud resources were removed.
 
 ## Operated, then torn down (Topics 00–13)
 
@@ -14,7 +14,7 @@ ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. Th
 
 ## Limits inside the operated path
 
-These are deliberate pilot choices. Point at the file in an interview.
+These are deliberate reference choices. Each limit maps to a file you can open.
 
 | Limit | Where to point |
 |-------|----------------|
@@ -26,7 +26,7 @@ These are deliberate pilot choices. Point at the file in an interview.
 
 ## Sentences to retire
 
-- “This is production-ready.” It is a **production pilot** on one cluster. Say so first.
+- “This is production-ready.” It is a **production reference** on one cluster. Say so first.
 - “`prod` is a separate production estate.” It is a namespace next to `dev` and `stage`.
 - “Falco / NetworkPolicy / DAST blocked deploys in the lived run.” They did not. Falco is off the default sync path; NetworkPolicy does not enforce while `aks_network_policy` is `null`.
 - “We rebuild Boutique from source.” The default path mirrors Google’s published images ([ADR-0009](adr/0009-mirror-upstream-images.md)).

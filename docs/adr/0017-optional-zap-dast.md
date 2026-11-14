@@ -6,7 +6,7 @@ Accepted (scaffold — apply with Topic 20)
 
 ## Context
 
-Package 8 (Phase 22) adds dynamic application security testing against the lived Boutique storefront. The app is mirrored upstream (ADR-0009); DAST finds runtime/HTTP issues CI image scans cannot. Full authenticated/API scans are out of scope for the pilot.
+Package 8 (Phase 22) adds dynamic application security testing against the lived Boutique storefront. The app is mirrored upstream (ADR-0009); DAST finds runtime/HTTP issues CI image scans cannot. Full authenticated/API scans are out of scope for the reference.
 
 ## Decision
 

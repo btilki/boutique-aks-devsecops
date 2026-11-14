@@ -12,7 +12,7 @@
 
 ## 1. Purpose
 
-Extend the lived pilot (Topics 00–13) with additional DevSecOps controls that were deferred or skipped (especially Roadmap **Phase 13** hardening).
+Extend the lived reference (Topics 00–13) with additional DevSecOps controls that were deferred or skipped (especially Roadmap **Phase 13** hardening).
 
 | Mode | What | Azure required? |
 |------|------|-----------------|
@@ -25,7 +25,7 @@ Extend the lived pilot (Topics 00–13) with additional DevSecOps controls that 
 
 ## 2. Relationship to Phase 13
 
-Roadmap **Phase 13** (hardening & integration) was **skipped** (⏭️) during the pilot. Phase **15+** **supersedes** that deferred backlog — do not reopen Phase 13 as a live workstream.
+Roadmap **Phase 13** (hardening & integration) was **skipped** (⏭️) during the reference. Phase **15+** **supersedes** that deferred backlog — do not reopen Phase 13 as a live workstream.
 
 Items absorbed from [docs/operations/20-automation-opportunities.md](../operations/20-automation-opportunities.md) and Phase 13 intent:
 

@@ -6,7 +6,7 @@ Prerequisites: [12-promotion-stage-prod.md](12-promotion-stage-prod.md) ✅ (or 
 Destroys: AKS, ACR, Key Vault, VNet, Azure DNS zone, platform resource group
 Related: [ADR-0010](../adr/0010-destroy-acr-on-teardown.md) · [cost model](../architecture/11-cost-model.md) · [Setup guide](README.md) · [Runbook](../runbooks/teardown.md)
 
-> Pilot already torn down. Topic 13 was executed; Azure billables from this pilot are gone. Use this topic after a new rebuild through Topics 00–12, or when you abort an in-flight run. Live step order: [runbook](../runbooks/teardown.md). Claims: [pilot-claims.md](../pilot-claims.md).
+> Reference already torn down. Topic 13 was executed; Azure billables from this reference are gone. Use this topic after a new rebuild through Topics 00–12, or when you abort an in-flight run. Live step order: [runbook](../runbooks/teardown.md). Claims: [reference-claims.md](../reference-claims.md).
 
 ---
 
@@ -321,7 +321,7 @@ Full reference: [teardown.md](../runbooks/teardown.md)
 
 ## Setup guide complete
 
-All Topics 00–13 are authored. Reference test teardown is complete (Azure platform destroyed). Rebuild via Topics 00–12, then Topic 13 again when you stop. Optional guides after a rebuild: [setup README](README.md#optional-after-rebuild--not-part-of-the-closed-pilot).
+All Topics 00–13 are authored. Reference test teardown is complete (Azure platform destroyed). Rebuild via Topics 00–12, then Topic 13 again when you stop. Optional guides after a rebuild: [setup README](README.md#optional-after-rebuild--not-part-of-the-closed-reference).
 
 ### Phase D — readiness validation (next)
 

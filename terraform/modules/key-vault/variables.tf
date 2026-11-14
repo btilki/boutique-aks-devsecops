@@ -31,7 +31,7 @@ variable "purge_protection_enabled" {
 }
 
 variable "network_acls_default_action" {
-  description = "Key Vault network ACL default action: Allow (pilot default) or Deny (Topic 19 harden)."
+  description = "Key Vault network ACL default action: Allow (reference default) or Deny (Topic 19 harden)."
   type        = string
   default     = "Allow"
 

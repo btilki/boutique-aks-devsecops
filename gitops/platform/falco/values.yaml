@@ -13,7 +13,7 @@ falco:
   http_output:
     enabled: false
 
-# Keep requests modest for the pilot node pool (Standard_D4s_v6 user pool).
+# Keep requests modest for the reference node pool (Standard_D4s_v6 user pool).
 resources:
   requests:
     cpu: 100m

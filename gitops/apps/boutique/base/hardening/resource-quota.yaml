@@ -1,5 +1,5 @@
 # Shared ResourceQuota for Boutique namespaces (Topic 19 / ADR-0016).
-# Sized for Online Boutique v0.10.5 on the pilot node pool — raise before scaling replicas.
+# Sized for Online Boutique v0.10.5 on the reference node pool — raise before scaling replicas.
 apiVersion: v1
 kind: ResourceQuota
 metadata:

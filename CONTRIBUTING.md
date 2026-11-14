@@ -24,7 +24,7 @@ Before merging README or top-level marketing copy:
 | Avoid | Why / Do instead |
 |-------|------------------|
 | Empty `.github/workflows` (even “with README later”) | CI is ADO only — never create this tree |
-| Claiming **production-ready** / enterprise-ready | Say **production pilot**; link [Tradeoffs](README.md#tradeoffs--what-i-would-change-for-real-production) |
+| Claiming **production-ready** / enterprise-ready | Say **production reference**; link [Tradeoffs](README.md#tradeoffs--what-i-would-change-for-real-production) |
 | Shields.io / badge grids on README | Status tables and prose only — no badge walls |
 
 ## Documentation

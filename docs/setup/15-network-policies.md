@@ -199,7 +199,7 @@ Do **not** flip `network_policy` off/on casually on a lived cluster without read
 |------|-------|
 | Egress default-deny | Stretch — needs DNS + same-ns egress rules |
 | Cross-namespace Boutique calls | Not in app design |
-| Cilium / Calico advanced | TF allows `calico`; pilot docs use `azure` |
+| Cilium / Calico advanced | TF allows `calico`; reference docs use `azure` |
 | NetworkPolicy unit tests in CI | Optional follow-up (kubeconform / Kyverno not a substitute) |
 
 ---

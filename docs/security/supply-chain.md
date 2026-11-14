@@ -96,7 +96,7 @@ cosign sign --key cosign.key --tlog-upload=false -y <acr>.azurecr.io/<service>@s
 | Scan target | ACR image `@digest` after push |
 | SBOM | `--format spdx-json` when `enableSbomAttest=true` |
 
-HIGH/MEDIUM findings are visible in logs but do not fail the test pipeline. Tighten for production pilots as needed.
+HIGH/MEDIUM findings are visible in logs but do not fail the test pipeline. Tighten for production references as needed.
 
 ---
 

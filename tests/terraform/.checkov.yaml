@@ -12,22 +12,22 @@ download-external-modules: false
 # Fail the job on any finding not listed under skip-check
 soft-fail: false
 
-# --- Baseline skips (production-pilot tradeoffs) ---
+# --- Baseline skips (production-reference tradeoffs) ---
 # Each ID is an accepted residual risk or deferred hardening item.
 # Remove an entry only when Terraform is changed to satisfy the check,
 # or when a Topic 14–20 (e.g. 19 KV ACL) explicitly closes it.
 skip-check:
-  # AKS — cost / single-cluster pilot (ARCHITECTURE Limitations, ADR-0002)
+  # AKS — cost / single-cluster reference (ARCHITECTURE Limitations, ADR-0002)
   - CKV_AZURE_6    # API server authorized IP ranges — public API for test rebuild simplicity
   - CKV_AZURE_115  # Private cluster — deferred (cost + jump-host complexity)
   - CKV_AZURE_116  # Azure Policy add-on — Kyverno is admission SSOT (ROADMAP out of scope duplicate)
   - CKV_AZURE_117  # Disk encryption set — deferred
   - CKV_AZURE_141  # Disable local accounts — enable on next harden pass if Entra-only is proven
-  - CKV_AZURE_168  # max_pods >= 50 — small node SKUs; not required for pilot scale
-  - CKV_AZURE_170  # Paid SLA SKU — cost; Free/Standard OK for pilot
+  - CKV_AZURE_168  # max_pods >= 50 — small node SKUs; not required for reference scale
+  - CKV_AZURE_170  # Paid SLA SKU — cost; Free/Standard OK for reference
   - CKV_AZURE_171  # Upgrade channel — pinned kubernetes_version in versions.yaml
   - CKV_AZURE_172  # CSI secret autorotation at cluster flag — rotation runbooks cover ops
-  - CKV_AZURE_226  # Ephemeral OS disks — not required for pilot
+  - CKV_AZURE_226  # Ephemeral OS disks — not required for reference
   - CKV_AZURE_227  # Host encryption — SKU/region dependent
 
   # ACR — public endpoint + Trivy/cosign in ADO (ADR-0009 / Topic 09); private ACR deferred
@@ -48,8 +48,8 @@ skip-check:
   # Networking — HTTP:80 for cert-manager / redirect to HTTPS (Topic 06)
   - CKV_AZURE_160  # Restrict HTTP from internet — needed for HTTP→HTTPS redirect / ACME paths
 
-  # Storage (TF state bootstrap) — public blob access controls; pilot accepts defaults with private container
+  # Storage (TF state bootstrap) — public blob access controls; reference accepts defaults with private container
   - CKV_AZURE_33   # Queue logging — state account is blob-centric
   - CKV_AZURE_59   # Disallow public access — review on rebuild; container is private
   - CKV_AZURE_190  # Restrict blob public access
-  - CKV_AZURE_206  # Replication — LRS sufficient for pilot state
+  - CKV_AZURE_206  # Replication — LRS sufficient for reference state

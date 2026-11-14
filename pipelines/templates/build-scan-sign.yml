@@ -69,7 +69,7 @@ stages:
                   --name "$(cosignPrivateKeySecretName)" \
                   --query value -o tsv > "${COSIGN_KEY}"
                 chmod 600 "${COSIGN_KEY}"
-                # Pilot limit: passphrase is empty. The control is Key Vault RBAC on
+                # Reference limit: passphrase is empty. The control is Key Vault RBAC on
                 # cosign-private-key, not a passphrase. A client key would use a passphrase or keyless signing.
                 export COSIGN_PASSWORD=""
 
@@ -107,7 +107,7 @@ stages:
                   DEST_DIGEST_REF="${DEST_REPO}@${DIGEST}"
                   echo "Digest: ${DEST_DIGEST_REF}"
 
-                  # Pilot limit: CRITICAL only. --ignore-status fixed skips CVEs that already
+                  # Reference limit: CRITICAL only. --ignore-status fixed skips CVEs that already
                   # have an upstream fix. v0.10.5 is mirrored, not rebuilt, so those fixes are not in the image.
                   echo "Trivy scan (CRITICAL gate; ignore fixed upstream CVEs on pinned v0.10.5)"
                   trivy image --scanners vuln --severity CRITICAL --ignore-status fixed --exit-code 1 "${DEST_DIGEST_REF}"

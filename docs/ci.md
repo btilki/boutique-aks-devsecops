@@ -4,7 +4,7 @@ Audience: Implementer or reviewer · Topic 09 (lived path) · ADR [0005](adr/000
 
 ## After teardown
 
-The closed pilot left no live ACR and no live ADO OIDC federation. Rebuild Topics 03–04 before you expect mirror or sign jobs to succeed.
+The closed reference left no live ACR and no live ADO OIDC federation. Rebuild Topics 03–04 before you expect mirror or sign jobs to succeed.
 
 Pipeline YAML stays in Git under [`pipelines/`](../pipelines/). After a rebuild, register and run it in Azure DevOps — see [setup/09-ci-pipeline.md](setup/09-ci-pipeline.md).
 
@@ -24,7 +24,7 @@ Pipeline YAML stays in Git under [`pipelines/`](../pipelines/). After a rebuild,
 |------|--------|
 | No long-lived Azure secrets in the pipeline | ADO OIDC federated credential |
 | Images are mirrored, not rebuilt from Boutique source | ADR-0009 |
-| Trivy fails the job on CRITICAL | `--ignore-status fixed` is a pilot compromise — see [pilot-claims.md](pilot-claims.md) |
+| Trivy fails the job on CRITICAL | `--ignore-status fixed` is a reference compromise — see [reference-claims.md](reference-claims.md) |
 | cosign signs by digest with `--tlog-upload=false` | ADR-0005; Kyverno ignores the transparency log and SCT to match |
 | Tool installs are checksum-verified | Trivy, cosign, and Kustomize release assets checked with `sha256sum` |
 | Prod promote needs human approval | ADO environment approval (ADR-0008) |
@@ -43,4 +43,4 @@ Pipeline YAML stays in Git under [`pipelines/`](../pipelines/). After a rebuild,
 | Full CI story and file list | [`pipelines/README.md`](../pipelines/README.md) |
 | Setup steps for a rebuild | [setup/09-ci-pipeline.md](setup/09-ci-pipeline.md) |
 | Promotion after digests exist | [promotion.md](promotion.md) |
-| What the pilot proved | [pilot-claims.md](pilot-claims.md) |
+| What the reference proved | [reference-claims.md](reference-claims.md) |

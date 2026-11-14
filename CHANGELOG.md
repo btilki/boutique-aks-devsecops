@@ -8,11 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- Doc hub and delivery contracts: [`docs/README.md`](docs/README.md), [`docs/ci.md`](docs/ci.md), [`docs/promotion.md`](docs/promotion.md), [`docs/rollback.md`](docs/rollback.md), [`docs/pilot-claims.md`](docs/pilot-claims.md); repository map under `assets/images/`.
+- Doc hub and delivery contracts: [`docs/README.md`](docs/README.md), [`docs/ci.md`](docs/ci.md), [`docs/promotion.md`](docs/promotion.md), [`docs/rollback.md`](docs/rollback.md), [`docs/reference-claims.md`](docs/reference-claims.md); repository map under `assets/images/`.
+- Maturity wording standardized on reference (`production-reference`, closed reference, `docs/reference-claims.md`).
 - **Phase 15+ plan:** [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md), [ADR-0013](docs/adr/0013-scaffold-first-phase15.md) — scaffold-first fuller DevSecOps packages 1–8 without requiring live Azure.
 - **Package 2 / Topic 14 (PR CI):** `pipelines/azure-pipelines-pr.yml`, `templates/pr-*.yml`, `tests/ci/pr-validate.sh`, `make pr-validate`, [docs/setup/14-pr-ci.md](docs/setup/14-pr-ci.md); `versions.yaml` `ci.*` pins.
 - **Package 3 / Topic 15 (NetworkPolicies):** `gitops/apps/boutique/base/networkpolicies/`, optional `aks_network_policy` Terraform hook, [docs/setup/15-network-policies.md](docs/setup/15-network-policies.md).
-- **Package 4 / Topic 16 (IaC scan):** Checkov `tests/terraform/.checkov.yaml` + PR job, [docs/setup/16-iac-scanning.md](docs/setup/16-iac-scanning.md); baseline skips for pilot tradeoffs.
+- **Package 4 / Topic 16 (IaC scan):** Checkov `tests/terraform/.checkov.yaml` + PR job, [docs/setup/16-iac-scanning.md](docs/setup/16-iac-scanning.md); baseline skips for reference tradeoffs.
 - **Package 5 / Topic 17 (SBOM + attestations):** Trivy SPDX + cosign attest in `build-scan-sign.yml`, Kyverno `05-verify-sbom-attestation.yaml` (Audit), [ADR-0014](docs/adr/0014-sbom-cosign-attestations.md), [docs/setup/17-sbom-attestations.md](docs/setup/17-sbom-attestations.md).
 - **Package 6 / Topic 18 (Runtime security):** Falco GitOps (`gitops/platform/falco/`), [ADR-0015](docs/adr/0015-falco-runtime-detection.md), Defender opt-in note, [docs/setup/18-runtime-security.md](docs/setup/18-runtime-security.md).
 - **Package 7 / Topic 19 (Namespace + KV hardening):** PSA labels, ResourceQuota/LimitRange, KV ACL/purge TF options, [ADR-0016](docs/adr/0016-namespace-kv-hardening.md), [docs/setup/19-namespace-hardening.md](docs/setup/19-namespace-hardening.md).
@@ -27,7 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- README and architecture landing pages restructured as intent paths (understand / proof / design / rebuild); closed-pilot honesty; Topics 14–20 moved under optional-after-rebuild (not the critical path).
+- README and architecture landing pages restructured as intent paths (understand / proof / design / rebuild); closed-reference honesty; Topics 14–20 moved under optional-after-rebuild (not the critical path).
 - Fluency and abbreviation pass on setup Topics 00–13, architecture 01–11, ops/runbooks headers; CONTRIBUTING short-form abbreviation rule (no parenthetical expansions).
 - Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.
 - Documentation review: setup/ops/architecture indexes aligned with Phase 15+ + torn-down Azure; removed **Wave N** branding (use Topics / Phases / Packages only); CHANGELOG [0.2.0] historical note clarified.
@@ -42,7 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.2.0] — 2026-07-15
 
-Production-pilot through Setup Topics **00–12** (live at tag time). Topic **13** teardown guide was authored in this release and **executed later** (see Unreleased / current README status).
+Production-reference through Setup Topics **00–12** (live at tag time). Topic **13** teardown guide was authored in this release and **executed later** (see Unreleased / current README status).
 
 ### Added
 

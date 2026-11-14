@@ -1,6 +1,6 @@
 # Requirements
 
-What the pilot must deliver, traced to repo paths and phases. Functional rows are build targets; non-functional rows state how architecture meets them.
+What the reference must deliver, traced to repo paths and phases. Functional rows are build targets; non-functional rows state how architecture meets them.
 
 ## Functional requirements
 

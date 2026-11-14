@@ -1,6 +1,6 @@
 # Tests — boutique-aks-devsecops
 
-**Maturity target:** Production pilot (single AKS cluster test)
+**Maturity target:** Production reference (single AKS cluster test)
 **Authority:** [ROADMAP.md](../ROADMAP.md), [docs/implementation/plan.md](../docs/implementation/plan.md), [docs/architecture/01-requirements.md](../docs/architecture/01-requirements.md)
 
 This directory holds **runnable** validation. Empty folders are intentional placeholders until scripts exist (do not invent greenwash tests).
@@ -92,13 +92,13 @@ There is **no GitHub Actions** CI for this repo. Gates:
 
 ## Maturity notes
 
-| Category | Pilot bar | This repo |
+| Category | Reference bar | This repo |
 |----------|-----------|-----------|
 | Terraform validate/fmt | Required | Yes |
 | Manifest schema (kubeconform) | Required | **Missing** |
 | Policy checks (Kyverno) | Required | Yes (unit); live dry-run ad hoc |
 | Integration / smoke | Required | Yes (dev/stage/prod) |
-| Basic load | Pilot | **Waived** — loadgenerator scaled to 0 for capacity |
+| Basic load | Reference | **Waived** — loadgenerator scaled to 0 for capacity |
 | Chaos / DR drill | Enterprise / roadmap | **Out of scope** for test teardown path |
 
 ---

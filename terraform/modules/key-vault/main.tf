@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "this" {
   enable_rbac_authorization  = true
   tags                       = var.tags
 
-  # Default Allow keeps pilot teardown simple. Topic 19: set default_action = "Deny"
+  # Default Allow keeps reference teardown simple. Topic 19: set default_action = "Deny"
   # and pass AKS subnet IDs (subnet must have Microsoft.KeyVault service endpoint).
   network_acls {
     default_action             = var.network_acls_default_action

@@ -6,7 +6,7 @@ Prerequisites: Setup Topics 00–12 complete; kubectl context to the test AKS cl
 Estimated time: 10 minutes (read)
 Risk level: Low
 
-> No live cluster unless you have rebuilt after the closed pilot. These steps assume a running cluster from Setup Topics 00–12; otherwise rebuild first ([setup/README.md](../setup/README.md)).
+> No live cluster unless you have rebuilt after the closed reference. These steps assume a running cluster from Setup Topics 00–12; otherwise rebuild first ([setup/README.md](../setup/README.md)).
 
 ## Purpose
 
@@ -54,7 +54,7 @@ kubectl get application -n argocd | grep boutique
 
 **Test capacity:** Two user nodes with `maxPods≈30` often cannot run full Boutique × 3 + monitoring. Overlays may set optional services and loadgenerator to **0 replicas** (slim storefront). Documented in overlay patches.
 
-**SLO (pilot):** [boutique-availability.md](../slo/boutique-availability.md) — 99.5% frontend health (test measurement).
+**SLO (reference):** [boutique-availability.md](../slo/boutique-availability.md) — 99.5% frontend health (test measurement).
 
 ## End-to-end validation
 

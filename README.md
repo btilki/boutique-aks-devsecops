@@ -1,8 +1,8 @@
 # boutique-aks-devsecops
 
-Production-pilot Azure DevSecOps for Online Boutique **v0.10.5** on AKS — signed digests, Kyverno admission, GitOps promotion.
+Production-reference Azure DevSecOps for Online Boutique on AKS — signed digests, Kyverno admission, GitOps promotion.
 
-> **Status:** Production pilot closed. Setup Topics **00–13** ran end to end; then the Azure resources were destroyed. There is no live AKS, ACR, or Key Vault from that run. To run again, follow [`docs/setup/`](docs/setup/).
+> **Status:** Production reference closed. Setup Topics **00–13** ran end to end; then the Azure resources were destroyed. There is no live AKS, ACR, or Key Vault from that run. To run again, follow [`docs/setup/`](docs/setup/).
 
 ---
 
@@ -12,14 +12,14 @@ Mutable tags and unsigned images make “what is running?” hard to trust. Long
 
 ## Decision
 
-- **Mirror, scan, sign, promote by digest** — Azure DevOps mirrors Boutique v0.10.5 into ACR, fails on CRITICAL findings, cosign-signs digests, then updates GitOps overlays ([ADR-0005](docs/adr/0005-cosign-key-based-signing.md)).
+- **Mirror, scan, sign, promote by digest** — Azure DevOps mirrors Boutique into ACR, fails on CRITICAL findings, cosign-signs digests, then updates GitOps overlays ([ADR-0005](docs/adr/0005-cosign-key-based-signing.md)).
 - **Admission blocks the easy mistakes** — Kyverno allows only ACR, denies `:latest`, and verifies signatures on Boutique workloads.
 - **Git is what Argo CD reconciles** — GitHub holds desired state; ADO uses OIDC to Azure (no long-lived pipeline secrets). Prod promotion needs an ADO environment approval.
 - **One AKS cluster, three namespaces** — cost over blast-radius isolation.
 
 ## Result
 
-Topics **00–13** completed, then teardown. Cost when active was roughly €150–250/month; teardown destroys ACR, so a rebuild must re-mirror. File-backed claims: [`docs/pilot-claims.md`](docs/pilot-claims.md).
+Topics **00–13** completed, then teardown. Cost when active was roughly €150–250/month; teardown destroys ACR, so a rebuild must re-mirror. File-backed claims: [`docs/reference-claims.md`](docs/reference-claims.md).
 
 ---
 
@@ -30,7 +30,7 @@ Topics **00–13** completed, then teardown. Cost when active was roughly €150
 | What | DevSecOps on one AKS cluster in `germanywestcentral` |
 | Hard rule | **Unsigned or floating tags should not reach the cluster** |
 | CI model | GitHub = source of truth · Azure DevOps = pipelines (OIDC) · no GitHub Actions |
-| Scope | Production pilot — one subscription, one region; not multi-region HA |
+| Scope | Production reference — one subscription, one region; not multi-region HA |
 | Stack | Terraform · AKS · ACR · Key Vault · Argo CD · Kyverno · Trivy · cosign · Prometheus / Loki / Grafana |
 
 ---
@@ -47,19 +47,19 @@ These screenshots are from the lived run. Full catalog: [`assets/images/README.m
 
 ![ADO supply-chain pipeline success](assets/images/setup/09-ado-pipeline-supply-chain-success.png)
 
-**Storefront** — `dev-boutique.biroltilki.art` over HTTPS (when the pilot was live):
+**Storefront** — `dev-boutique.biroltilki.art` over HTTPS (when the reference was live):
 
 ![Boutique dev homepage](assets/images/setup/10-dev-boutique-homepage.png)
 
-More: ACR digests, Grafana, stage/prod storefronts — [`assets/images/setup/`](assets/images/setup/). Claims without a live cluster: [`docs/pilot-claims.md`](docs/pilot-claims.md).
+More: ACR digests, Grafana, stage/prod storefronts — [`assets/images/setup/`](assets/images/setup/). Claims without a live cluster: [`docs/reference-claims.md`](docs/reference-claims.md).
 
 ---
 
 ## Tradeoffs / what I would change for real production
 
-- **Single cluster, three namespaces** — fine for a cost-capped pilot; not true env isolation. Separate clusters (or subscriptions) for prod.
+- **Single cluster, three namespaces** — fine for a cost-capped reference; not true env isolation. Separate clusters (or subscriptions) for prod.
 - **Public API server, system pool size 1, no availability zones** — rebuild would tighten API access and HA first.
-- **Trivy CRITICAL with `--ignore-status fixed`** — upstream v0.10.5 is mirrored, not rebuilt; fixed CVEs can still appear in the image.
+- **Trivy CRITICAL with `--ignore-status fixed`** — upstream Boutique is mirrored, not rebuilt; fixed CVEs can still appear in the image.
 - **Cosign key passphrase empty; transparency log off** — Key Vault RBAC protects the key; a client path would use a passphrase or keyless signing and Rekor.
 - **Signature verify skips platform namespaces** — Boutique is gated; platform charts are a second trust domain.
 
@@ -72,7 +72,7 @@ Do **not** call this production-ready. The namespace named `prod` is a promotion
 | I want to… | Read |
 |------------|------|
 | Understand the project in ~10 minutes | This page → [`ARCHITECTURE.md`](ARCHITECTURE.md) → [ADR-0005](docs/adr/0005-cosign-key-based-signing.md) |
-| See pilot proof | [`docs/pilot-claims.md`](docs/pilot-claims.md) · [`assets/images/`](assets/images/README.md) |
+| See reference proof | [`docs/reference-claims.md`](docs/reference-claims.md) · [`assets/images/`](assets/images/README.md) |
 | Review design and delivery | [`docs/architecture/`](docs/architecture/README.md) · [`docs/ci.md`](docs/ci.md) · [`docs/promotion.md`](docs/promotion.md) · [`docs/rollback.md`](docs/rollback.md) · [`docs/security/threat-model.md`](docs/security/threat-model.md) |
 | Rebuild or operate | [`docs/setup/`](docs/setup/README.md) (Topics 00–13) · [`versions.yaml`](versions.yaml) · [`docs/runbooks/`](docs/runbooks/README.md) |
 
@@ -105,7 +105,7 @@ This map shows repository layout, platform components, and where each engineerin
 
 ---
 
-## What the pilot demonstrated
+## What the reference demonstrated
 
 - Terraform foundation: VNet, AKS (Workload Identity), ACR, Key Vault, Azure DNS, ADO OIDC
 - Argo CD app-of-apps; NGINX + cert-manager; Key Vault CSI; Kyverno Enforce for allowlist, deny `:latest`, and signature verify on Boutique

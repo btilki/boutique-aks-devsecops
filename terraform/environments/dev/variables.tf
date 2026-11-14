@@ -68,7 +68,7 @@ variable "key_vault_name" {
 }
 
 variable "kv_purge_protection_enabled" {
-  description = "Key Vault purge protection (Topic 19). Default false for teardown-friendly pilot."
+  description = "Key Vault purge protection (Topic 19). Default false for teardown-friendly reference."
   type        = bool
   default     = false
 }

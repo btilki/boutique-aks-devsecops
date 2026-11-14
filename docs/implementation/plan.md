@@ -13,11 +13,11 @@
 | Field | Value |
 |-------|-------|
 | Project | boutique-aks-devsecops |
-| Goal | Production-pilot Azure DevSecOps for Online Boutique v0.10.5 on AKS |
-| Phases | 0–14 complete (lived pilot); 15–22 scaffold-first (Phase 15+) |
+| Goal | Production-reference Azure DevSecOps for Online Boutique v0.10.5 on AKS |
+| Phases | 0–14 complete (lived reference); 15–22 scaffold-first (Phase 15+) |
 | Region | `germanywestcentral` |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |
-| Lived pilot done | FR-01–FR-04 met; policies enforce; observability + promotion executed; teardown documented |
+| Lived reference done | FR-01–FR-04 met; policies enforce; observability + promotion executed; teardown documented |
 | Phase 15+ mode | Scaffold files + setup Topics 14–20 **without** live Azure; apply after rebuild |
 
 ---
@@ -97,7 +97,7 @@ Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on
 
 ## 8. Scope
 
-**In (lived pilot):** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.
+**In (lived reference):** Terraform, GitOps, Kyverno, ADO CI, Boutique v0.10.5, observability, runbooks, teardown.
 **In (Phase 15+):** PR CI, NetworkPolicies, IaC scan, SBOM/attestations, runtime security, KV ACL + PSA/quotas, optional DAST — scaffold then apply.
 **Out:** Multi-region DR, service mesh, Azure Policy duplicate, private AKS/ACR as required, WAF/DDoS, build-from-source app SAST, HSM cosign keys.
 
@@ -119,7 +119,7 @@ Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on
 
 ## 10. Dependencies
 
-External: Azure sub, DNS registrar, ADO. Internal: lived-pilot phase order per roadmap; Phase 15+ packages 2–8 after Package 1 inventory.
+External: Azure sub, DNS registrar, ADO. Internal: lived-reference phase order per roadmap; Phase 15+ packages 2–8 after Package 1 inventory.
 
 ---
 
@@ -168,7 +168,7 @@ See [ROADMAP.md](../../ROADMAP.md) phase tables and [phase15-plus.md](phase15-pl
 
 ## 16. Implementation phases (summary)
 
-### Lived pilot (Topics 00–13)
+### Lived reference (Topics 00–13)
 
 | Phase | Title | Complexity | Setup topic |
 |-------|-------|------------|-------------|
@@ -213,7 +213,7 @@ Peaks: Phase 9 (mirror/sign), Phase 12 (promotion), Phase 19 (attestations). Pha
 
 ## 18. Success criteria
 
-### Lived pilot (Topics 00–13)
+### Lived reference (Topics 00–13)
 
 - [x] FR-01–FR-04 delivered
 - [x] Setup 00–13 complete

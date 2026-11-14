@@ -10,7 +10,7 @@ Related ADRs: [0002](../adr/0002-single-cluster-multi-namespace.md), [0011](../a
 
 ## Topic goal
 
-When you finish this topic, a production-pilot AKS cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an ACR for signed images, Key Vault for platform secrets, and identity wiring so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
+When you finish this topic, a production-reference AKS cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an ACR for signed images, Key Vault for platform secrets, and identity wiring so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
 
 ## Why this topic is required
 

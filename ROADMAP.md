@@ -28,7 +28,7 @@ Build a production-style reference platform that proves secure delivery end-to-e
 
 ## Phase overview
 
-### Lived pilot — Topics 00–13 (complete)
+### Lived reference — Topics 00–13 (complete)
 
 | Phase | Title | Status | Setup topic | Key validation |
 |-------|-------|--------|-------------|----------------|

@@ -1,10 +1,10 @@
 # Resilience and disaster recovery
 
-Failure modes, backups, rebuild order, and teardown impact for a single-region production pilot.
+Failure modes, backups, rebuild order, and teardown impact for a single-region production reference.
 
 ## Maturity
 
-Production pilot: rebuild-from-Git is the primary DR strategy. No multi-region failover.
+Production reference: rebuild-from-Git is the primary DR strategy. No multi-region failover.
 
 ## Failure scenarios
 
@@ -21,7 +21,7 @@ Production pilot: rebuild-from-Git is the primary DR strategy. No multi-region f
 | Observability down | Reduced visibility | Prometheus self-monitoring | Helm rollback | Argo sync |
 | ADO OIDC failure | CI blocked | Pipeline auth errors | Fix federated creds | Re-run verify script |
 
-## DR targets (pilot)
+## DR targets (reference)
 
 | Metric | Target |
 |--------|--------|

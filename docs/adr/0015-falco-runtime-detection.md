@@ -6,7 +6,7 @@ Accepted (scaffold — apply with Topic 18)
 
 ## Context
 
-The lived pilot has no runtime threat detection. Package 6 / Phase 20 needs a teachable control that fits the pilot: single cluster, cost-conscious, in-cluster logs ([ADR-0012](0012-loki-in-cluster-logging.md)).
+The lived reference has no runtime threat detection. Package 6 / Phase 20 needs a teachable control that fits the reference: single cluster, cost-conscious, in-cluster logs ([ADR-0012](0012-loki-in-cluster-logging.md)).
 
 Microsoft Defender for Containers is Azure-native but typically pairs with **Log Analytics** (ingestion cost) and was previously only ignored for Terraform drift — not provisioned as a first-class module.
 

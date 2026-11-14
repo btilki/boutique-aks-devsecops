@@ -2,10 +2,10 @@
 
 Audience: Implementer
 Authority: This directory is the **single source of truth** for bootstrap. If README, chat, or scripts conflict with `docs/setup/`, this guide wins.
-[Doc index](../README.md) · [Architecture summary](../../ARCHITECTURE.md) · [Roadmap](../../ROADMAP.md) · [Pilot claims](../pilot-claims.md)
+[Doc index](../README.md) · [Architecture summary](../../ARCHITECTURE.md) · [Roadmap](../../ROADMAP.md) · [Reference claims](../reference-claims.md)
 
-> **Pilot status:** Production pilot closed. Setup Topics **00–13** ran end to end; then Azure resources from that run were destroyed.
-> There is no live AKS, ACR, Key Vault, or Terraform-managed platform from the pilot.
+> **Reference status:** Production reference closed. Setup Topics **00–13** ran end to end; then Azure resources from that run were destroyed.
+> There is no live AKS, ACR, Key Vault, or Terraform-managed platform from the reference.
 > This guide is for step-by-step rebuild and validation. Follow Topics **00 → 13** in order unless you abort early (still use Topic 13 teardown order).
 > Do not assume a cluster already exists because the repo is complete in Git.
 
@@ -15,7 +15,7 @@ Authority: This directory is the **single source of truth** for bootstrap. If RE
 
 ### What this guide achieves
 
-End-to-end bootstrap of a production-pilot Azure DevSecOps platform for Online Boutique **v0.10.5** on one AKS cluster in `germanywestcentral`:
+End-to-end bootstrap of a production-reference Azure DevSecOps platform for Online Boutique **v0.10.5** on one AKS cluster in `germanywestcentral`:
 
 1. Remote Terraform state and Azure foundation (VNet, DNS, AKS, ACR, Key Vault)
 2. ADO OIDC federation (no long-lived CI secrets)
@@ -49,7 +49,7 @@ Platform hostnames (when rebuilt): `argocd-boutique.biroltilki.art`, `grafana-bo
 
 ---
 
-## 2. Topic sequence (pilot path: 00–13)
+## 2. Topic sequence (reference path: 00–13)
 
 | # | Topic | Guide | Phase | Prerequisites | Est. time | Status |
 |---|-------|-------|-------|---------------|-----------|--------|
@@ -74,9 +74,9 @@ Status legend: ⬜ Not started · 🔄 In progress · ✅ Complete
 
 Dependency chain: `00 → 01 → 02 → 03 → 04 → 05 → 06 → 07` and `03 → 09 → 08 → 10 → 11 → 12 → 13`
 
-This is the pilot story. Live execution through Topic 12 is complete; Topic 13 tore the stack down.
+This is the reference story. Live execution through Topic 12 is complete; Topic 13 tore the stack down.
 
-### Optional after rebuild — not part of the closed pilot
+### Optional after rebuild — not part of the closed reference
 
 Guides 14–20 exist in Git as scaffolds only. They were not required for Topics 00–13 and are not claimed as demonstrated. Enable only after a deliberate rebuild; see [ROADMAP](../../ROADMAP.md) · [phase15-plus.md](../implementation/phase15-plus.md).
 
@@ -195,13 +195,13 @@ Work one topic at a time. Finish the validation checklist before you open the ne
 
 Hard rules: `docs/setup/` is authoritative · **never commit** secrets or real `terraform.tfvars` · tear down with Topic 13 when the test is done.
 
-Stop at Topic 13 for a faithful repeat of the closed pilot. Optional guides 14–20 are linked above — not on the critical path.
+Stop at Topic 13 for a faithful repeat of the closed reference. Optional guides 14–20 are linked above — not on the critical path.
 
 ---
 
 ## 6. Progress tracker
 
-Mark topics in the table in §2 as you complete them. Reference pilot: Topics **00–13** executed; platform torn down; rebuild with this guide.
+Mark topics in the table in §2 as you complete them. Lived reference: Topics **00–13** executed; platform torn down; rebuild with this guide.
 
 | Milestone | Topics | Target |
 |-----------|--------|--------|

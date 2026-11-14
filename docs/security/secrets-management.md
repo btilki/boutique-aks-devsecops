@@ -1,6 +1,6 @@
 # Secrets management
 
-How this project stores, delivers, and rotates secrets for the production-pilot test.
+How this project stores, delivers, and rotates secrets for the production-reference test.
 
 **Audience:** L2 implementer / operator
 **Related:** [Topic 07 CSI setup](../setup/07-secrets-csi.md), [Topic 09 CI](../setup/09-ci-pipeline.md), [07-security-architecture.md](../architecture/07-security-architecture.md), [supply-chain.md](supply-chain.md), [SECURITY.md](../../SECURITY.md)

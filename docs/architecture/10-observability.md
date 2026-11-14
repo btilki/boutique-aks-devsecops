@@ -37,7 +37,7 @@ Example LogQL: `{namespace="boutique-dev", app="frontend"}`
 
 ## Traces
 
-OTel collector deployed with baseline OTLP receiver. Full Tempo/Jaeger backend deferred. Sampling: ~10% for pilot.
+OTel collector deployed with baseline OTLP receiver. Full Tempo/Jaeger backend deferred. Sampling: ~10% for reference.
 
 ## Alerting
 

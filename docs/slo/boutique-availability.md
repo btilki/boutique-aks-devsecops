@@ -1,6 +1,6 @@
 # Boutique availability SLO
 
-Service level objective for Online Boutique **frontend** in the dev environment (pilot). Stage and prod inherit the same target when promoted.
+Service level objective for Online Boutique **frontend** in the dev environment (reference). Stage and prod inherit the same target when promoted.
 
 **Related:** [10-observability.md](../architecture/10-observability.md), PrometheusRule `boutique-availability`
 

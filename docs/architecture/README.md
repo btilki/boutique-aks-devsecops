@@ -1,6 +1,6 @@
 # Architecture deep dive — boutique-aks-devsecops
 
-Production pilot closed. Azure resources from the pilot were destroyed.
+Production reference closed. Azure resources from the reference were destroyed.
 These pages describe the design as it exists in Git. They do not provision Azure.
 
 If you skipped the summary, start here: [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md) (executive summary, diagrams, tradeoffs).
@@ -18,7 +18,7 @@ If you skipped the summary, start here: [`../../ARCHITECTURE.md`](../../ARCHITEC
 | Walk requirements and constraints | [01-requirements.md](01-requirements.md) |
 | Network and ingress | [06-network-design.md](06-network-design.md) |
 
-Pilot claims (no cluster required): [`../pilot-claims.md`](../pilot-claims.md)
+Reference claims (no cluster required): [`../reference-claims.md`](../reference-claims.md)
 Delivery contracts: [`../ci.md`](../ci.md) · [`../promotion.md`](../promotion.md) · [`../rollback.md`](../rollback.md)
 
 ---
@@ -69,7 +69,7 @@ Full ADR index: [`../adr/README.md`](../adr/README.md)
 
 ## Maturity
 
-This is a **production pilot**: real security controls and day-2 patterns on one AKS cluster. It does not claim multi-region HA or enterprise-scale DR.
+This is a **production reference**: real security controls and day-2 patterns on one AKS cluster. It does not claim multi-region HA or enterprise-scale DR.
 
 ---
 
