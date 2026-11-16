@@ -11,9 +11,9 @@ Mode: Pipeline + policy files are in Git. Generating attestations and flipping K
 
 ## Topic goal
 
-When this topic is complete:
+When this topic is complete (requires `enableSbomAttest=true` and a live ACR/ADO run):
 
-1. The supply-chain pipeline generates an SPDX JSON SBOM (via Trivy) for each of the 11 Boutique services and attaches it to the image digest with `cosign attest`.
+1. With `enableSbomAttest=true`, the supply-chain pipeline generates an SPDX JSON SBOM (via Trivy) for each of the 11 Boutique services and attaches it with `cosign attest`.
 2. CI runs `cosign verify-attestation` (key-based, no Rekor).
 3. Kyverno policy `verify-sbom-attestations` is synced (Audit first, then Enforce).
 4. Pipeline artifact `sboms-spdx` holds the SBOM files for audit/download.

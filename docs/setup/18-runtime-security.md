@@ -15,7 +15,7 @@ When this topic is complete:
 
 1. Falco runs on every node (`namespace: falco`) with modern eBPF.
 2. Falco emits JSON logs scraped into Loki (same path as other workloads).
-3. Alert `FalcoDaemonSetUnavailable` is wired into monitoring-extras (off the default sync until this topic).
+3. Alert `FalcoDaemonSetUnavailable` is added to monitoring-extras when you enable Falco in this topic.
 4. You understand Microsoft Defender for Containers is opt-in only ([DEFENDER-OPT-IN.md](../../terraform/modules/aks/DEFENDER-OPT-IN.md)).
 
 ## Why this topic is required

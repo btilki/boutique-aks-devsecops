@@ -249,4 +249,4 @@ Keep these three files aligned when bumping tools.
 | [pipelines/README.md](../../pipelines/README.md) | Pipeline index |
 | [tests/README.md](../../tests/README.md) | TEST IDs / CI matrix |
 | [docs/troubleshooting/pipeline-failures.md](../troubleshooting/pipeline-failures.md) | ADO failure patterns |
-| [16-iac-scanning.md](16-iac-scanning.md) | Next: Checkov on PRs (Package 4) — may not exist until scaffolded |
+| [16-iac-scanning.md](16-iac-scanning.md) | Next: Checkov on PRs (Package 4) — scaffolded; apply after rebuild |

@@ -14,7 +14,7 @@ When this topic is complete, the CSI Secrets Store driver and Azure Key Vault pr
 
 ## Why this topic is required
 
-Application and platform secrets must not live in Git. Key Vault is the system of record; CSI mounts secrets at runtime with least privilege. Validating with an isolated test pod catches WI misconfiguration before production secrets depend on it.
+Application and platform secrets must not live in Git. Key Vault is the system of record; CSI mounts secrets at runtime with least privilege.
 
 ---
 

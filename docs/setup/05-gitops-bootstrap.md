@@ -14,7 +14,7 @@ When this topic is complete, Argo CD runs in the `argocd` namespace, three AppPr
 
 ## Why this topic is required
 
-Platform and Boutique workloads reconcile from Git via Argo CD; the root app-of-apps bootstraps `platform-root` and `apps-root` in one repeatable pass.
+Platform and Boutique workloads reconcile from Git via Argo CD — later topics assume this controller is already running.
 
 ---
 

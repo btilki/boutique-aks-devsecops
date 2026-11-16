@@ -119,7 +119,7 @@ Azure only; one cluster; no secrets in Git; digest-pinned images; destroy ACR on
 
 ## 10. Dependencies
 
-External: Azure sub, DNS registrar, ADO. Internal: lived-reference phase order per roadmap; Phase 15+ packages 2–8 after Package 1 inventory.
+External: Azure sub, DNS registrar, ADO. Internal: lived reference phase order per roadmap; Phase 15+ packages 2–8 after Package 1 inventory.
 
 ---
 

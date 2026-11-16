@@ -50,8 +50,8 @@ Build a production-style reference platform that proves secure delivery end-to-e
 
 ### Phase 15+ — Fuller DevSecOps (scaffold-first)
 
-| Phase | Title | Scaffold | Setup topic (future) | Package | Apply-later validation |
-|-------|-------|----------|----------------------|---------|------------------------|
+| Phase | Title | Scaffold | Setup topic (future) | Package | Apply-later validation (not closed-run proof) |
+|-------|-------|----------|----------------------|---------|-----------------------------------------------|
 | 15 | Backlog & plan | ✅ | [phase15-plus.md](docs/implementation/phase15-plus.md) | 1 | N/A (docs only) |
 | 16 | PR CI gates | ✅ | [14-pr-ci](docs/setup/14-pr-ci.md) | 2 | PR pipeline green on sample PR |
 | 17 | NetworkPolicies | ✅ | [15-network-policies](docs/setup/15-network-policies.md) | 3 | Default-deny + Boutique paths enforce |
@@ -62,7 +62,7 @@ Build a production-style reference platform that proves secure delivery end-to-e
 | 22 | DAST (optional) | ✅ | [20-dast](docs/setup/20-dast.md) | 8 | ZAP baseline job completes |
 
 Status: ⬜ not started · 🔄 in progress · ✅ complete · ⏭️ skipped
-**Scaffold ✅** means files + setup topic exist in Git. **Live apply** is a separate checklist inside each Topic 14–20.
+**Scaffold ✅** means files + setup topic exist in Git. The **Apply-later validation** column is a future rebuild checklist — not proof from the closed Topics 00–13 run. Live apply steps live inside each Topic 14–20.
 
 ## Incremental value
 

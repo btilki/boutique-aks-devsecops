@@ -13,4 +13,4 @@ Symptom → diagnosis → fix guides for the platform test.
 | [promotion-failures.md](promotion-failures.md) | Stage/prod promotion |
 | [monitoring-alerting.md](monitoring-alerting.md) | Grafana / Prometheus / Alertmanager |
 
-Expand further during hardening (Phase 13) as new failure modes appear.
+Expand further during Phase 15+ hardening (Topics 14–20) as new failure modes appear.
