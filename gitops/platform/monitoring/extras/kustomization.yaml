@@ -7,7 +7,7 @@ namespace: monitoring
 resources:
   - alerts/boutique-availability.yaml
   - alerts/platform-health.yaml
-  - alerts/runtime-security.yaml
+  # Topic 18: add alerts/runtime-security.yaml only with Falco (see docs/setup/18-runtime-security.md)
   - servicemonitors/boutique-frontend.yaml
   - servicemonitors/ingress-nginx.yaml
 

@@ -15,7 +15,7 @@ When this topic is complete:
 
 1. Falco runs on every node (`namespace: falco`) with modern eBPF.
 2. Falco emits JSON logs scraped into Loki (same path as other workloads).
-3. Alert FalcoDaemonSetUnavailable is present in monitoring extras.
+3. Alert `FalcoDaemonSetUnavailable` is wired into monitoring-extras (off the default sync until this topic).
 4. You understand Microsoft Defender for Containers is opt-in only ([DEFENDER-OPT-IN.md](../../terraform/modules/aks/DEFENDER-OPT-IN.md)).
 
 ## Why this topic is required
@@ -37,7 +37,7 @@ grep -n "namespace: falco" gitops/projects/platform.yaml
 grep -n falco_chart versions.yaml
 ```
 
-**Expected:** `Application.yaml`, `values.yaml`, `README.md`; `falco/Application.yaml` is **absent** from `gitops/platform/kustomization.yaml` until Step 18.2; `falco` destination on AppProject `platform`; chart pin **9.1.0**.
+**Expected:** `Application.yaml`, `values.yaml`, `README.md`; `falco/Application.yaml` is **absent** from `gitops/platform/kustomization.yaml` until Step 18.2; `alerts/runtime-security.yaml` is **absent** from `gitops/platform/monitoring/extras/kustomization.yaml` until Step 18.2; `falco` destination on AppProject `platform`; chart pin **9.1.0**.
 
 ---
 
@@ -66,29 +66,40 @@ cat gitops/platform/falco/values.yaml
 
 ### Goal
 
-`platform-root` syncs only what `gitops/platform/kustomization.yaml` lists. Falco is left out of that file so a Topics 00–13 rebuild does not deploy it. Add the line when you are ready to run this topic.
+`platform-root` syncs only what `gitops/platform/kustomization.yaml` lists. Falco and its PrometheusRule are left out of the default sync so a Topics 00–13 rebuild does not deploy Falco or fire `FalcoDaemonSetUnavailable` without a DaemonSet. Add both when you are ready to run this topic.
 
 ### Commands
 
 ```bash
 grep -n "namespace: falco" gitops/projects/platform.yaml
 cat gitops/platform/monitoring/extras/alerts/runtime-security.yaml | head -20
+grep -n runtime-security gitops/platform/monitoring/extras/kustomization.yaml \
+  && echo "UNEXPECTED: runtime-security already on extras sync" \
+  || echo "absent from extras kustomization (expected until this step)"
 ```
 
-Edit `gitops/platform/kustomization.yaml` and add:
+1. Edit `gitops/platform/kustomization.yaml` and add:
 
 ```yaml
 resources:
   - falco/Application.yaml
 ```
 
-Place it with the other platform Applications, then commit and push so `platform-root` picks it up.
+Place it with the other platform Applications.
+
+2. Edit `gitops/platform/monitoring/extras/kustomization.yaml` and add under `resources:`:
+
+```yaml
+  - alerts/runtime-security.yaml
+```
+
+3. Commit and push so `platform-root` / `monitoring-extras` pick up the changes.
 
 ### Validation
 
 - [ ] `falco/Application.yaml` added to platform kustomization for this apply
 - [ ] AppProject allows destination namespace `falco`
-- [ ] `runtime-security` alert listed in extras kustomization
+- [ ] `alerts/runtime-security.yaml` listed in extras kustomization
 
 ---
 
@@ -154,8 +165,8 @@ Follow [terraform/modules/aks/DEFENDER-OPT-IN.md](../../terraform/modules/aks/DE
 ## Rollback
 
 1. Remove `falco/Application.yaml` from `gitops/platform/kustomization.yaml` (or delete Argo Application `falco`) and sync
-2. Delete namespace `falco` if leftover
-3. Remove or silence `runtime-security` PrometheusRule if desired
+2. Remove `alerts/runtime-security.yaml` from `gitops/platform/monitoring/extras/kustomization.yaml` and sync `monitoring-extras`
+3. Delete namespace `falco` if leftover
 
 ---
 
@@ -165,7 +176,7 @@ Follow [terraform/modules/aks/DEFENDER-OPT-IN.md](../../terraform/modules/aks/DE
 
 - [x] Falco Application + values + ADR-0015
 - [x] AppProject destination; Application omitted from platform kustomization until apply
-- [x] FalcoDaemonSetUnavailable alert
+- [x] `FalcoDaemonSetUnavailable` alert file present; listed in extras kustomization only when applying this topic
 - [x] Defender opt-in note under AKS module
 
 ### Apply later

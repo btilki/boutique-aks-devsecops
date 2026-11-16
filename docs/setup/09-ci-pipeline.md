@@ -10,11 +10,11 @@ Related ADRs: [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/000
 
 ## Topic goal
 
-When this topic is complete, your ADO CI pipeline mirrors all 11 Online Boutique v0.10.5 service images from Google Artifact Registry to ACR, runs Trivy with a CRITICAL severity gate, and cosign-signs each image by digest with `--tlog-upload=false`. The cosign public key **belongs in Git** (Kyverno policy `02-verify-image-signatures.yaml`) so admission can verify signed workloads in Topic 10.
+ADO CI mirrors all 11 Boutique v0.10.5 images to ACR, fails on Trivy CRITICAL, and cosign-signs each digest with `--tlog-upload=false`. The cosign public key **belongs in Git** (`policies/kyverno/cluster/02-verify-image-signatures.yaml`) for Topic 08 admission.
 
 ## Why this topic is required
 
-Kyverno admission requires mirrored, signed ACR images before Boutique deploys — this pipeline is the gate between upstream Google images and the cluster.
+Topic 10 cannot deploy until mirrored, signed digests exist in ACR.
 
 ---
 
@@ -272,7 +272,7 @@ Execute mirror/scan/sign for all 11 services; confirm signed digests in ACR.
 
 ### Why this step is required
 
-This is the end-to-end proof that OIDC, ACR push, Trivy, and cosign work together.
+Validates OIDC, ACR push, Trivy, and cosign in one run.
 
 ### Commands
 

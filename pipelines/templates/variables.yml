@@ -15,8 +15,9 @@ variables:
   cosignVersion: 2.2.4
   cosignSignArgs: --tlog-upload=false
 
-  # Topic 17 / ADR-0014 — SPDX SBOM + cosign attest (set false to skip on emergency rebuild)
-  enableSbomAttest: "true"
+  # Topic 17 / ADR-0014 — SPDX SBOM + cosign attest (default off = lived Topics 00–13 path)
+  # Set "true" when applying docs/setup/17-sbom-attestations.md; keep aligned with versions.yaml supply_chain.enable_sbom_attest
+  enableSbomAttest: "false"
   cosignAttestType: spdxjson
   sbomPredicateType: "https://spdx.dev/Document"
 

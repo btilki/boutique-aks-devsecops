@@ -1,6 +1,6 @@
 # boutique-aks-devsecops
 
-Production-reference Azure DevSecOps for Online Boutique on AKS — signed digests, Kyverno admission, GitOps promotion.
+Production reference Azure DevSecOps for Online Boutique on AKS — signed digests, Kyverno admission, GitOps promotion.
 
 > **Status:** Production reference closed. Setup Topics **00–13** ran end to end; then the Azure resources were destroyed. There is no live AKS, ACR, or Key Vault from that run. To run again, follow [`docs/setup/`](docs/setup/).
 

@@ -15,7 +15,7 @@ Authority: This directory is the **single source of truth** for bootstrap. If RE
 
 ### What this guide achieves
 
-End-to-end bootstrap of a production-reference Azure DevSecOps platform for Online Boutique **v0.10.5** on one AKS cluster in `germanywestcentral`:
+End-to-end bootstrap of a production reference Azure DevSecOps platform for Online Boutique **v0.10.5** on one AKS cluster in `germanywestcentral`:
 
 1. Remote Terraform state and Azure foundation (VNet, DNS, AKS, ACR, Key Vault)
 2. ADO OIDC federation (no long-lived CI secrets)

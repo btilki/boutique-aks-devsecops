@@ -10,11 +10,11 @@ Related docs: [10-observability.md](../architecture/10-observability.md), [ADR-0
 
 ## Topic goal
 
-When this topic is complete, Prometheus, Grafana, and Alertmanager run in namespace `monitoring`, Loki and Promtail aggregate pod logs, Grafana is reachable at `https://grafana-boutique.biroltilki.art`, Cluster Overview and Boutique Overview dashboards load, platform and Boutique PrometheusRules are active, and the OTel Collector accepts OTLP traces with 10% sampling.
+`monitoring` runs Prometheus, Grafana, Alertmanager, Loki, and Promtail; Grafana at `https://grafana-boutique.biroltilki.art`; dashboards and PrometheusRules live; OTel Collector samples OTLP at 10%.
 
 ## Why this topic is required
 
-You need visibility into cluster health, ingress traffic, and Boutique availability before stage/prod promotion (Topic 12). SLO documentation and alerts define when to pause promotions.
+Topic 12 promotions need metrics, logs, and SLO alerts before you move digests to stage/prod.
 
 ---
 

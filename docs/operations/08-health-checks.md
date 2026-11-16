@@ -8,12 +8,12 @@ Risk level: Low
 
 ## Purpose
 
-Prove the platform is healthy after deploy, rollback, incident mitigation, or a morning check. Use smoke tests, kubectl probes, and Argo CD sync health.
+Confirm health after deploy, rollback, incidents, or a morning pass—smokes, kubectl, and Argo sync state.
 
 ## When to use / When not to use
 
-Use after every promote, rollback, maintenance window, or morning check.
-**Do not** treat a single green curl as full cluster health when critical Argo apps are OutOfSync or Degraded.
+Use after promote, rollback, maintenance, or daily checks.
+**Do not** trust one green curl if critical Argo apps are OutOfSync or Degraded.
 
 ## Prerequisites
 

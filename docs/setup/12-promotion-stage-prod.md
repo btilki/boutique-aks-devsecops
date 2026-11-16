@@ -10,11 +10,11 @@ Related ADRs: [0008](../adr/0008-ado-prod-approval-gate.md), [0002](../adr/0002-
 
 ## Topic goal
 
-When this topic is complete, **the same signed image digest** you validated in dev is promoted to `boutique-stage` and `boutique-prod` via GitOps, with manual Argo CD sync for stage/prod and ADO environment approval before prod Git updates. Stage is reachable at `https://stage-boutique.biroltilki.art` and prod at `https://boutique.biroltilki.art`.
+Promote the dev-validated digest to `boutique-stage` and `boutique-prod` via GitOps (manual Argo sync; ADO approval before prod Git). Hostnames: `https://stage-boutique.biroltilki.art`, `https://boutique.biroltilki.art`.
 
 ## Why this topic is required
 
-Production-reference maturity means environment separation, human gates, and repeatable promotion/rollback — not only a single dev deployment. This topic proves **digest-only promotion** across namespaces on one cluster.
+Proves **digest-only promotion** with human gates on one cluster—not dev-only deploy.
 
 ---
 
@@ -295,7 +295,7 @@ Practice Git revert + Argo sync rollback procedure.
 
 ### Why this step is required
 
-Rollback confidence is required for production-reference credibility.
+Rollback confidence is required for production reference credibility.
 
 ### Commands
 

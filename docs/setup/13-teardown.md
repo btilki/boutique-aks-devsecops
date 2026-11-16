@@ -12,11 +12,11 @@ Related: [ADR-0010](../adr/0010-destroy-acr-on-teardown.md) · [cost model](../a
 
 ## Topic goal
 
-When this topic is complete, billable Azure platform resources from Topics 02–04 are destroyed, including **ACR and all mirrored images**. Terraform remote-state bootstrap storage is retained by default for a faster rebuild. You can verify that no AKS or ACR resources remain in the subscription.
+Destroy billable platform resources from Topics 02–04, including **ACR and mirrored images**; keep bootstrap state storage by default. Confirm no AKS or ACR remains in the subscription.
 
 ## Why this topic is required
 
-The test costs roughly €150–250/month while it is active. Teardown stops ongoing compute, registry, and load balancer charges. **ACR is destroyed on teardown** (ADR-0010) — any rebuild must re-run the mirror pipeline (Topic 09).
+Stops ~€150–250/month burn. **ACR is destroyed on teardown** (ADR-0010)—rebuild requires Topic 09 remirror.
 
 ---
 

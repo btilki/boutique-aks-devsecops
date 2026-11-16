@@ -1,5 +1,7 @@
 # Single source of truth for pinned platform, tool, and application versions.
 # Referenced by docs/setup/, pipelines/templates/variables.yml, and Terraform/GitOps docs.
+# ADO cannot import this file directly — keep pipelines/templates/variables.yml in sync by hand
+# (especially boutiqueVersion, trivyVersion, cosignVersion, enableSbomAttest ↔ supply_chain.enable_sbom_attest).
 
 azure:
   region: germanywestcentral
@@ -55,11 +57,11 @@ supply_chain:
   cosign: "2.2.4"
   cosign_sign_args:
     - "--tlog-upload=false"
-  # Topic 17 / ADR-0014
+  # Topic 17 / ADR-0014 — default false matches lived Topics 00–13; flip with pipelines/templates/variables.yml enableSbomAttest
   sbom_format: spdx-json
   cosign_attest_type: spdxjson
   sbom_predicate_type: "https://spdx.dev/Document"
-  enable_sbom_attest: true
+  enable_sbom_attest: false
 
 dast:
   zap_image: "ghcr.io/zaproxy/zaproxy:2.15.0"

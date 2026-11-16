@@ -11,9 +11,7 @@ Related: [Setup index](README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) ·
 
 ## Purpose
 
-Prepare your workstation and Azure access so later setup topics run without missing tools, the wrong subscription, or unavailable VM SKUs in `germanywestcentral`.
-
-When you finish, you have verified CLI versions, Azure login, node SKU availability for this subscription, a GitHub remote on your local clone, and a passing pre-commit run.
+Prepare your workstation and Azure access for Topics 01+. Exit criteria: supported CLI versions, logged-in subscription, D2s_v6/D4s_v6 availability in `germanywestcentral`, GitHub `origin`, and passing pre-commit.
 
 ## When to use
 
@@ -37,7 +35,7 @@ Do not use this guide for day-2 cluster operations — see [docs/operations/](..
 
 Required knowledge: basic shell, Git, and cloud CLI usage. No prior AKS experience required.
 
-Version control: GitHub is the sole Git remote (clone, Argo CD, ADO pipelines, digest promotion). Azure DevOps is CI and OIDC only — not Azure Repos. Connect `origin` in Step 4; patch `<GITHUB_ORG>` / `<REPO_NAME>` in GitOps YAML in Topics 05–12.
+Version control: GitHub is the sole Git remote (Argo CD, ADO, promotion). Azure DevOps is CI and OIDC only. Connect `origin` in Step 4; patch `<GITHUB_ORG>` / `<REPO_NAME>` in GitOps YAML in Topics 05–12.
 
 ## Architecture context
 

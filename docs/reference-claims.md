@@ -14,6 +14,8 @@ ADO mirrors and signs images, Git stores digest pins, and Argo CD reconciles. Th
 
 SBOM generation, cosign attestations, PR CI, NetworkPolicies, Falco, namespace/KV hardening, and optional DAST exist in Git as later guides. They were **not** required for the closed Topics 00–13 path. See [setup README — optional after rebuild](setup/README.md#optional-after-rebuild--not-part-of-the-closed-reference).
 
+**Present in Git ≠ lived proof.** After the closed run, some Topic 14–20 files sit on default trees (Boutique base `networkpolicies` / `hardening`, Kyverno `05-verify-sbom-attestation` in Audit). Pipeline SBOM/attest stays **off** by default (`enableSbomAttest: "false"`). NetworkPolicy **enforcement** still needs `aks_network_policy` set. Falco Application and `runtime-security` alert stay off default sync until Topic 18.
+
 ## Limits inside the operated path
 
 These are deliberate reference choices. Each limit maps to a file you can open.
@@ -25,7 +27,7 @@ These are deliberate reference choices. Each limit maps to a file you can open.
 | Cosign key passphrase is empty; Key Vault RBAC is the control | same pipeline, `COSIGN_PASSWORD` |
 | Signature verification skips platform namespaces (`kube-system`, `kyverno`, `argocd`, `ingress-nginx`, `cert-manager`, `monitoring`) | `policies/kyverno/cluster/02-verify-image-signatures.yaml` |
 | Transparency log is off (`--tlog-upload=false`) | [ADR-0005](adr/0005-cosign-key-based-signing.md) |
-| SBOM / cosign attest may exist in pipeline YAML | Optional after rebuild ([ADR-0014](adr/0014-sbom-cosign-attestations.md)); not part of the closed 00–13 claim set |
+| SBOM / cosign attest may exist in pipeline YAML; default toggle is off | Optional after rebuild ([ADR-0014](adr/0014-sbom-cosign-attestations.md)); enable via Topic 17 (`enableSbomAttest`); not part of the closed 00–13 claim set |
 
 ## Claims to avoid
 

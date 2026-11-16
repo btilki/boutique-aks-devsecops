@@ -10,11 +10,11 @@ Related ADRs: [0002](../adr/0002-single-cluster-multi-namespace.md), [0009](../a
 
 ## Topic goal
 
-When this topic is complete, Online Boutique v0.10.5 runs in namespace `boutique-dev`, deployed by Argo CD with automated sync, with workload images referenced from signed ACR digests. The storefront is reachable at `https://dev-boutique.biroltilki.art` and passes the dev smoke test.
+Boutique v0.10.5 in `boutique-dev` via Argo CD auto-sync, signed ACR digests, HTTPS at `https://dev-boutique.biroltilki.art`, and a passing dev smoke test.
 
 ## Why this topic is required
 
-This is your first end-to-end proof that the supply chain (mirror → sign), admission (Kyverno), ingress/TLS, and GitOps path work together. Stage and prod overlays build on the same base in Topic 12.
+First end-to-end check of mirror/sign, Kyverno, ingress/TLS, and GitOps before Topic 12 overlays.
 
 ---
 

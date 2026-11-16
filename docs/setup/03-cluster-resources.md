@@ -10,11 +10,11 @@ Related ADRs: [0002](../adr/0002-single-cluster-multi-namespace.md), [0011](../a
 
 ## Topic goal
 
-When you finish this topic, a production-reference AKS cluster runs in `germanywestcentral` with system (`Standard_D2s_v6`) and user (`Standard_D4s_v6`) node pools, an ACR for signed images, Key Vault for platform secrets, and identity wiring so kubelet can pull from ACR and the platform UAMI can read Key Vault secrets and manage DNS records for cert-manager.
+AKS in `germanywestcentral` (system `Standard_D2s_v6`, user `Standard_D4s_v6`), private ACR, Key Vault, and RBAC so kubelet pulls from ACR and the platform UAMI reads KV and manages DNS for cert-manager.
 
 ## Why this topic is required
 
-GitOps, CI, and Kyverno need a live cluster and private ACR; Workload Identity and OIDC must exist before Topics 04 and 06 — isolated from Topic 02 networking for easier AKS diagnosis.
+Topics 04–10 need a live cluster, ACR, and WI/OIDC; keeping this apply separate from Topic 02 simplifies AKS troubleshooting.
 
 ---
 
@@ -41,7 +41,7 @@ Understand new modules and naming before `plan`.
 
 ### Why this step is required
 
-ACR and Key Vault names are globally unique. AKS subnet cannot change after cluster creation.
+Globally unique ACR/KV names; AKS subnet is immutable after create.
 
 ### Commands
 

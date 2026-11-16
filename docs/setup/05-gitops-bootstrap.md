@@ -361,7 +361,7 @@ kubectl auth can-i create applications.argoproj.io -n argocd
 ### Validation
 
 - [ ] All Argo CD pods healthy
-- [ ] Three Applications synced
+- [ ] Root Applications synced (`root`, `platform-root`, `apps-root`) — child apps appear after platform sync
 - [ ] You documented Git remote URL and branch for the team
 
 ---

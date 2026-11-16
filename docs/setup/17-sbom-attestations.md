@@ -33,7 +33,7 @@ ls policies/kyverno/cluster/05-verify-sbom-attestation.yaml
 grep -n "05-verify-sbom" policies/kyverno/kustomization.yaml
 ```
 
-**Expected:** `enableSbomAttest: "true"`; policy present and listed in kustomization; `validationFailureAction: Audit`.
+**Expected:** default `enableSbomAttest: "false"` (lived path); set to `"true"` for this topic; policy present and listed in kustomization; `validationFailureAction: Audit`. Also set `versions.yaml` `supply_chain.enable_sbom_attest: true` to match.
 
 ---
 
@@ -76,7 +76,7 @@ pull → push → Trivy CRITICAL → cosign sign → verify
   → Trivy SPDX SBOM → cosign attest → verify-attestation
 ```
 
-Emergency bypass: set ADO pipeline variable `enableSbomAttest` = `false` (or edit `variables.yml`) and re-run.
+Default is off (lived Topics 00–13). For this topic, set `enableSbomAttest` = `true` in `variables.yml` (and matching `versions.yaml`), then re-run. To skip again, set back to `false`.
 
 ### Validation
 
@@ -113,8 +113,9 @@ Produce signatures + SPDX attestations in ACR; publish SBOM artifact.
 ### Commands / GUI
 
 1. Ensure Topics 03–04, 09 Key Vault cosign secrets exist
-2. Run ADO pipeline from `pipelines/azure-pipelines.yml` on `main`
-3. Download artifact `sboms-spdx` — expect 11 `*.spdx.json` files
+2. Set `enableSbomAttest: "true"` in `pipelines/templates/variables.yml` and `enable_sbom_attest: true` in `versions.yaml`
+3. Run ADO pipeline from `pipelines/azure-pipelines.yml` on `main`
+4. Download artifact `sboms-spdx` — expect 11 `*.spdx.json` files
 
 ### Validation
 

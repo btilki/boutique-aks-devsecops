@@ -1,5 +1,8 @@
 # Online Boutique v0.10.5 base — upstream manifests with ACR image refs.
 # SETUP: replace acrboutiquedevgwc.azurecr.io with terraform output acr_login_server (no https://).
+# Topics 15/19 scaffold: networkpolicies + hardening ship in Git with the base. They were not
+# part of closed Topics 00–13 proof. NetworkPolicy enforcement still needs aks_network_policy
+# (see terraform/environments/dev and docs/reference-claims.md).
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 

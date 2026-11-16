@@ -1,6 +1,6 @@
 # Threat model — boutique-aks-devsecops
 
-Production-reference threat model for the **single-cluster** Online Boutique v0.10.5 platform. Complements [07-security-architecture.md](../architecture/07-security-architecture.md).
+Production reference threat model for the **single-cluster** Online Boutique v0.10.5 platform. Complements [07-security-architecture.md](../architecture/07-security-architecture.md).
 
 **Scope:** Azure AKS test in `germanywestcentral` · dev/stage/prod namespaces · ADO CI · GitOps
 

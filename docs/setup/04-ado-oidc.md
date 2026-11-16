@@ -14,7 +14,7 @@ When you finish this topic, ADO pipelines authenticate to Azure through OIDC wor
 
 ## Why this topic is required
 
-Long-lived secrets in CI are a top supply-chain risk. OIDC federation issues short-lived tokens per job. Topic 09 mirror/scan/sign pipeline depends on this service connection. The federation `subject` **must match** the ADO service connection name exactly.
+Topic 09 depends on OIDC instead of long-lived CI secrets. The federation `subject` **must match** the ADO service connection name exactly.
 
 ---
 

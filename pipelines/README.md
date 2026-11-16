@@ -29,7 +29,7 @@ Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned rel
 | `templates/dast-zap.yml` | ZAP baseline job |
 | `templates/pr-variables.yml` | PR pipeline tool pins (Terraform / Kyverno CLI / Python) |
 | `templates/pr-validate.yml` | PR validation jobs |
-| `templates/build-scan-sign.yml` | Mirror / scan / sign / SPDX attest (Topic 17) |
+| `templates/build-scan-sign.yml` | Mirror / scan / sign; SPDX attest when `enableSbomAttest=true` (Topic 17; default off) |
 | `templates/promote-digest.yml` | GitOps overlay digest updates |
 
 ## Prerequisites
@@ -48,4 +48,4 @@ Local equivalent of PR gates: `make pr-validate` or `./tests/ci/pr-validate.sh`.
 
 ## Timing
 
-Topic 09: main pipeline. Topic 12: promote. Topic 14/16: PR + Checkov. Topic 17: SBOM attest. Topic 20: optional ZAP DAST (manual).
+Topic 09: main pipeline (mirror → Trivy → cosign; `enableSbomAttest` default off). Topic 12: promote. Topic 14/16: PR + Checkov. Topic 17: set `enableSbomAttest=true` for SBOM attest. Topic 20: optional ZAP DAST (manual).

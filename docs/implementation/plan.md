@@ -13,7 +13,7 @@
 | Field | Value |
 |-------|-------|
 | Project | boutique-aks-devsecops |
-| Goal | Production-reference Azure DevSecOps for Online Boutique v0.10.5 on AKS |
+| Goal | Production reference Azure DevSecOps for Online Boutique v0.10.5 on AKS |
 | Phases | 0–14 complete (lived reference); 15–22 scaffold-first (Phase 15+) |
 | Region | `germanywestcentral` |
 | Node SKUs | System `Standard_D2s_v6`, User `Standard_D4s_v6` |

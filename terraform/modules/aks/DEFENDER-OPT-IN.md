@@ -1,6 +1,6 @@
 # Microsoft Defender for Containers — opt-in only (ADR-0015)
 
-**Do not enable by default** on the production-reference rebuild. Falco is the in-cluster runtime SSOT for this repo.
+**Do not enable by default** on the production reference rebuild. Falco is the in-cluster runtime SSOT for this repo.
 
 ## Why opt-in
 

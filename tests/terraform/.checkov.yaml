@@ -12,7 +12,7 @@ download-external-modules: false
 # Fail the job on any finding not listed under skip-check
 soft-fail: false
 
-# --- Baseline skips (production-reference tradeoffs) ---
+# --- Baseline skips (production reference tradeoffs) ---
 # Each ID is an accepted residual risk or deferred hardening item.
 # Remove an entry only when Terraform is changed to satisfy the check,
 # or when a Topic 14–20 (e.g. 19 KV ACL) explicitly closes it.

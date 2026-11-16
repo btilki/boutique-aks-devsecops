@@ -4,7 +4,7 @@ Argo CD Application: **`monitoring-extras`** → this directory.
 
 | Path | Contents |
 |------|----------|
-| `alerts/` | PrometheusRules (`boutique-availability`, `platform-health`, `runtime-security`) |
+| `alerts/` | PrometheusRules (`boutique-availability`, `platform-health`; `runtime-security` only when Topic 18 enables Falco) |
 | `servicemonitors/` | Boutique frontend + ingress-nginx scrapes |
 | `dashboards/` | Grafana JSON → ConfigMaps labeled `grafana_dashboard=1` |
 

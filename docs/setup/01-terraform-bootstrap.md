@@ -10,11 +10,11 @@ Related ADRs: — (foundation for [FR-01](../../ARCHITECTURE.md))
 
 ## Topic goal
 
-When you finish this topic, Azure hosts a dedicated remote state backend (resource group, storage account, private container), and `terraform/environments/dev/` runs `terraform init` against it successfully. The bootstrap stack stays on local state — only the platform stack uses remote state.
+Azure hosts a remote state backend (RG, storage account, private container) and `terraform/environments/dev/` initializes against it. Bootstrap stays on local state; only the platform stack uses the blob backend.
 
 ## Why this topic is required
 
-Remote Blob state (versioning on) must exist before Topic 02 creates AKS or networking — otherwise `environments/dev/` cannot persist durable state across machines.
+Topic 02+ needs versioned blob state before any AKS or networking apply.
 
 ---
 
@@ -142,7 +142,7 @@ Download providers and initialize the bootstrap working directory.
 
 ### Why this step is required
 
-`terraform plan/apply` require provider plugins and a initialized backend (local default).
+Providers and backend must initialize before plan or apply.
 
 ### Commands
 

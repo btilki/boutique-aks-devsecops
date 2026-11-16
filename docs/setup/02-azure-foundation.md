@@ -10,11 +10,11 @@ Related ADRs: [0001 — Azure cloud provider](../adr/0001-azure-cloud-provider.m
 
 ## Topic goal
 
-When you finish this topic, the platform resource group exists in `germanywestcentral` with a VNet (`10.0.0.0/16`), an AKS-ready subnet (`10.0.0.0/20`) and NSG, plus an Azure DNS zone for `biroltilki.art`. You delegate DNS at your registrar to Azure name servers so cert-manager DNS-01 can succeed in Topic 06.
+Platform RG in `germanywestcentral` with VNet `10.0.0.0/16`, AKS subnet `10.0.0.0/20`, NSG, and Azure DNS zone `biroltilki.art`. Delegate registrar NS to Azure so Topic 06 DNS-01 can succeed.
 
 ## Why this topic is required
 
-Topic 03 needs the subnet and RG; Topic 06 needs Azure DNS on `biroltilki.art`. A separate foundation apply keeps plans reviewable and limits blast radius (Loki in-cluster per ADR-0012 — no Log Analytics here).
+Topic 03 needs the subnet/RG; Topic 06 needs the DNS zone. A separate apply keeps plans small (no Log Analytics per ADR-0012).
 
 ---
 
@@ -41,7 +41,7 @@ Confirm Topic 02 Terraform sources and addressing match the architecture before 
 
 ### Why this step is required
 
-VNet CIDR and DNS zone name are hard to change after AKS is deployed. Review now avoids rework in Topic 03.
+VNet CIDR and DNS zone name are costly to change after Topic 03.
 
 ### Commands
 

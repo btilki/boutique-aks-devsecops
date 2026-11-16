@@ -10,12 +10,12 @@ Risk level: Low
 
 ## Purpose
 
-Define the operational model: environments, ownership, reference constraints, and where other runbooks fit.
+Map environments, ownership, and where setup, operations, and runbooks divide labor.
 
 ## When to use / When not to use
 
-Use when joining on-call, before first promotion, or after returning from a teardown rebuild.
-**Do not use** as a bootstrap guide — see [docs/setup/](../setup/).
+Use before first on-call shift or promotion, or after a teardown rebuild.
+**Do not use** for bootstrap — [docs/setup/](../setup/).
 
 ## Prerequisites
 

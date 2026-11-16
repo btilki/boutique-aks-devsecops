@@ -11,7 +11,7 @@ Mode: Runnable locally today. ADO job runs once Topic 14 pipeline is registered 
 
 ## Topic goal
 
-When this topic is complete, every PR (and `make pr-validate`) runs Checkov against `terraform/` for IaC scanning and **fails on new findings**. Known production-reference tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
+When this topic is complete, every PR (and `make pr-validate`) runs Checkov against `terraform/` for IaC scanning and **fails on new findings**. Known production reference tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
 
 ## Why this topic is required
 

@@ -1,7 +1,7 @@
 # Common incidents
 
 Audience: Operator
-Applies to: Production-reference test
+Applies to: Production reference test
 Prerequisites: [07-incident-response.md](07-incident-response.md)
 Estimated time: 10–45 minutes per playbook
 Risk level: Medium–High

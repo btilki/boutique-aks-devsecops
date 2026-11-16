@@ -12,7 +12,7 @@ Capture high-value automations that supplement Setup Guide and these runbooks.
 
 ## When to use / When not to use
 
-Use when prioritizing hardening (Phase 15+ / scaffold packages) or after postmortems. Phase 13 was skipped; backlog lives in [phase15-plus.md](../implementation/phase15-plus.md).
+Use when planning Phase 15+ work or after postmortems ([phase15-plus.md](../implementation/phase15-plus.md)).
 **Do not** ship `fix-prod.sh` as the primary ops interface.
 
 ## Prerequisites
