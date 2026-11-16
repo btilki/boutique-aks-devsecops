@@ -1,6 +1,6 @@
 # Roadmap — boutique-aks-devsecops
 
-**Status:** Setup Topics **00–13** complete. Azure test torn down (reference repo + screenshots retained). **Phase 15+** fuller DevSecOps work in progress (scaffold-first — [ADR-0013](docs/adr/0013-scaffold-first-phase15.md)).
+**Status:** Setup Topics **00–13** complete; Azure resources destroyed (repo + screenshots retained). Phase 15+ packages are **scaffolded in Git** (Topics 14–20) — not live-validated on Azure ([ADR-0013](docs/adr/0013-scaffold-first-phase15.md)).
 **Numbering note:** Setup **Topic 13** = teardown (`docs/setup/13-teardown.md`). Roadmap **Phase 13** = hardening/integration (skipped; superseded by Phase 15+). **Phase 14** = teardown. Setup Topics **14–20** = Phase 15+ apply guides (scaffold packages 2–8).
 **Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md) · [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md)
 **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)

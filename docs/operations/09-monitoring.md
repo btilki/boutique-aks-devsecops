@@ -1,10 +1,10 @@
 # Monitoring
 
-**Audience:** L3 — Operator
-**Applies to:** `monitoring` namespace · Grafana
-**Prerequisites:** Topic 11 complete; Grafana admin secret
-**Estimated time:** 10 minutes
-**Risk level:** Low
+Audience: Operator
+Applies to: `monitoring` namespace · Grafana
+Prerequisites: Topic 11 complete; Grafana admin secret
+Estimated time: 10 minutes
+Risk level: Low
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Navigate the metrics/dashboards stack and know which views matter during inciden
 
 ## When to use / When not to use
 
-**Use** for golden signals, capacity, and alert validation.
+Use for golden signals, capacity, and alert validation.
 **Do not** use Azure Log Analytics (not deployed — ADR-0012); use Grafana + Loki.
 
 ## Prerequisites

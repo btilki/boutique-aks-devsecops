@@ -1,18 +1,18 @@
 # Secret rotation
 
-**Audience:** L3 — Operator
-**Applies to:** Cosign keys, Grafana admin, CSI-mounted secrets
-**Prerequisites:** [secrets-management.md](../security/secrets-management.md)
-**Estimated time:** 30–60 minutes (cosign)
-**Risk level:** High
+Audience: Operator
+Applies to: Cosign keys, Grafana admin, CSI-mounted secrets
+Prerequisites: [secrets-management.md](../security/secrets-management.md)
+Estimated time: 30–60 minutes (cosign)
+Risk level: High
 
 ## Purpose
 
-Rotate platform secrets without leaving Git or pipelines on stale material. This section summarizes; **canonical detail** is the security doc.
+Rotate platform secrets without leaving Git or pipelines on stale material. Full steps live in the security doc; this page is a short ops entry point.
 
 ## When to use / When not to use
 
-**Use** after suspected leak, operator offboarding, or scheduled test rotation.
+Use after suspected leak, operator offboarding, or scheduled test rotation.
 **Do not** commit private keys to Git “temporarily.”
 
 ## Prerequisites

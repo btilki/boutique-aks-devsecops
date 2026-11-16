@@ -1,10 +1,10 @@
 # Rollback
 
-**Audience:** L3 — Operator
-**Applies to:** stage / prod (dev via Git revert + auto-sync)
-**Prerequisites:** Git history for overlay; Argo app access
-**Estimated time:** 15–30 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: stage / prod (dev via Git revert + auto-sync)
+Prerequisites: Git history for overlay; Argo app access
+Estimated time: 15–30 minutes
+Risk level: Medium
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Return an environment to the last known-good digest pins after a bad promote.
 
 ## When to use / When not to use
 
-**Use** when smoke fails, error budget burn, or Kyverno/runtime failure after sync.
+Use when smoke fails, error budget burn, or Kyverno/runtime failure after sync.
 **Do not use** Argo “History Rollback” without fixing Git afterward (creates drift). Preferred: **Git revert**.
 
 ## Prerequisites

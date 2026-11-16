@@ -1,11 +1,11 @@
 # 17 — SBOM + Cosign Attestations
 
-**Audience:** L2 — Implementer
-**Estimated time:** 60–90 minutes (pipeline re-run) after Topics 08–09
-**Prerequisites:** [09-ci-pipeline.md](09-ci-pipeline.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅
-**Creates:** SPDX JSON SBOM per Boutique image, cosign attestation on digest, Kyverno attestation policy (Audit → Enforce)
-**Related ADRs:** [0014](../adr/0014-sbom-cosign-attestations.md), [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/0009-mirror-upstream-images.md)
-**Mode:** Pipeline + policy files are in Git. Generating attestations and flipping Kyverno to **Enforce** need a live ACR/ADO/cluster (**Apply later**).
+Audience: Implementer
+Estimated time: 60–90 minutes (pipeline re-run) after Topics 08–09
+Prerequisites: [09-ci-pipeline.md](09-ci-pipeline.md) ✅ · [08-admission-policies.md](08-admission-policies.md) ✅
+Creates: SPDX JSON SBOM per Boutique image, cosign attestation on digest, Kyverno attestation policy (Audit → Enforce)
+Related: [0014](../adr/0014-sbom-cosign-attestations.md), [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/0009-mirror-upstream-images.md)
+Mode: Pipeline + policy files are in Git. Generating attestations and flipping Kyverno to **Enforce** need a live ACR/ADO/cluster (**Apply later**).
 
 ---
 
@@ -13,9 +13,9 @@
 
 When this topic is complete:
 
-1. The supply-chain pipeline generates an **SPDX** (**Software Package Data Exchange**) JSON **SBOM** (**Software Bill of Materials**) (via Trivy) for each of the 11 Boutique services and attaches it to the image digest with `cosign attest`.
-2. CI runs **`cosign verify-attestation`** (key-based, no Rekor).
-3. Kyverno policy `verify-sbom-attestations` is synced (**Audit** first, then **Enforce**).
+1. The supply-chain pipeline generates an SPDX JSON SBOM (via Trivy) for each of the 11 Boutique services and attaches it to the image digest with `cosign attest`.
+2. CI runs `cosign verify-attestation` (key-based, no Rekor).
+3. Kyverno policy `verify-sbom-attestations` is synced (Audit first, then Enforce).
 4. Pipeline artifact `sboms-spdx` holds the SBOM files for audit/download.
 
 ## Why this topic is required

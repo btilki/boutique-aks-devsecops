@@ -1,11 +1,11 @@
 # 15 — NetworkPolicies (Boutique east-west isolation)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 60–90 minutes (after cluster supports NetworkPolicy)
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) · [10-boutique-dev.md](10-boutique-dev.md) · [06-ingress-tls.md](06-ingress-tls.md)
-**Creates:** Ingress default-deny + Boutique service-graph NetworkPolicies (all overlays); optional AKS `network_policy = "azure"`
-**Related:** [phase15-plus.md](../implementation/phase15-plus.md) · [06-network-design.md](../architecture/06-network-design.md) · [base/networkpolicies/README.md](../../gitops/apps/boutique/base/networkpolicies/README.md)
-**Mode:** Manifests + Terraform hooks are in Git. Enforcement and negative tests need a live cluster (**Apply later**).
+Audience: Implementer
+Estimated time: 60–90 minutes (after cluster supports NetworkPolicy)
+Prerequisites: [03-cluster-resources.md](03-cluster-resources.md) · [10-boutique-dev.md](10-boutique-dev.md) · [06-ingress-tls.md](06-ingress-tls.md)
+Creates: Ingress default-deny + Boutique service-graph NetworkPolicies (all overlays); optional AKS `network_policy = "azure"`
+Related: [phase15-plus.md](../implementation/phase15-plus.md) · [06-network-design.md](../architecture/06-network-design.md) · [base/networkpolicies/README.md](../../gitops/apps/boutique/base/networkpolicies/README.md)
+Mode: Manifests + Terraform hooks are in Git. Enforcement and negative tests need a live cluster (**Apply later**).
 
 ---
 
@@ -13,19 +13,19 @@
 
 When this topic is complete:
 
-1. Each `boutique-*` namespace has **ingress default-deny** plus allow rules matching Online Boutique v0.10.5 call paths.
+1. Each `boutique-*` namespace has ingress default-deny plus allow rules matching Online Boutique v0.10.5 call paths.
 2. North-south traffic still works: `ingress-nginx` → `frontend:8080`.
-3. AKS enforces Kubernetes NetworkPolicy via **Azure NPM** (**Network Policy Manager**) (`network_policy = "azure"`), set at cluster create when rebuilding.
+3. AKS enforces Kubernetes NetworkPolicy via Azure NPM (`network_policy = "azure"`), set at cluster create when rebuilding.
 
 ## Why this topic is required
 
-Without NetworkPolicy, any pod in the cluster (or namespace) that can resolve a Service can speak to Boutique backends. Default-deny + allow-list shrinks east-west blast radius — deferred from Phase 13, now Phase 17 / Package 3. **CNI** (**Container Network Interface**) alone does not enforce these objects until NPM (or another policy plugin) is enabled.
+Without NetworkPolicy, any pod in the cluster (or namespace) that can resolve a Service can speak to Boutique backends. Default-deny + allow-list shrinks east-west blast radius — deferred from Phase 13, now Phase 17 / Package 3. CNI alone does not enforce these objects until NPM (or another policy plugin) is enabled.
 
 ---
 
 ## Before you begin
 
-- [ ] Understand: Azure CNI **without** `network_policy` **does not enforce** these objects
+- [ ] Understand: Azure CNI without `network_policy` does **not** enforce these objects
 - [ ] Scaffold present:
 
 ```bash

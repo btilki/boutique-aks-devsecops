@@ -1,19 +1,19 @@
 # Health checks
 
-**Audience:** L3 — Operator
-**Applies to:** Boutique + platform ingress + GitOps sync
-**Prerequisites:** DNS/TLS for hostnames; scripts executable
-**Estimated time:** 5–15 minutes
-**Risk level:** Low
+Audience: Operator
+Applies to: Boutique + platform ingress + GitOps sync
+Prerequisites: DNS/TLS for hostnames; scripts executable
+Estimated time: 5–15 minutes
+Risk level: Low
 
 ## Purpose
 
-Prove the platform is healthy after deploy, rollback, incident mitigation, or a **morning check** using smoke tests, kubectl probes, and **Argo CD sync health**.
+Prove the platform is healthy after deploy, rollback, incident mitigation, or a morning check. Use smoke tests, kubectl probes, and Argo CD sync health.
 
 ## When to use / When not to use
 
-**Use** after every promote, rollback, maintenance window, or morning check.
-**Do not** treat a single green curl as full cluster health if Argo shows **OutOfSync** or **Degraded** on critical apps.
+Use after every promote, rollback, maintenance window, or morning check.
+**Do not** treat a single green curl as full cluster health when critical Argo apps are OutOfSync or Degraded.
 
 ## Prerequisites
 

@@ -1,11 +1,11 @@
 # 18 — Runtime Security (Falco + Defender opt-in)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 45–75 minutes after Topics 05 + 11
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [11-observability.md](11-observability.md) recommended (Loki/Promtail)
-**Creates:** Falco DaemonSet via Argo CD; optional Defender for Containers (documented, not default)
-**Related ADRs:** [0015](../adr/0015-falco-runtime-detection.md), [0012](../adr/0012-loki-in-cluster-logging.md)
-**Mode:** GitOps + docs scaffolded. Live Falco needs a rebuilt cluster (**Apply later**).
+Audience: Implementer
+Estimated time: 45–75 minutes after Topics 05 + 11
+Prerequisites: [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [11-observability.md](11-observability.md) recommended (Loki/Promtail)
+Creates: Falco DaemonSet via Argo CD; optional Defender for Containers (documented, not default)
+Related: [0015](../adr/0015-falco-runtime-detection.md), [0012](../adr/0012-loki-in-cluster-logging.md)
+Mode: GitOps + docs scaffolded. Live Falco needs a rebuilt cluster (**Apply later**).
 
 ---
 
@@ -13,10 +13,10 @@
 
 When this topic is complete:
 
-1. **Falco** runs on every node (`namespace: falco`) with **modern eBPF** (**extended Berkeley Packet Filter**).
-2. Falco emits JSON logs scraped into **Loki** (same path as other workloads).
-3. Alert **FalcoDaemonSetUnavailable** is present in monitoring extras.
-4. You understand **Microsoft Defender for Containers** is opt-in only ([DEFENDER-OPT-IN.md](../../terraform/modules/aks/DEFENDER-OPT-IN.md)).
+1. Falco runs on every node (`namespace: falco`) with modern eBPF.
+2. Falco emits JSON logs scraped into Loki (same path as other workloads).
+3. Alert FalcoDaemonSetUnavailable is present in monitoring extras.
+4. You understand Microsoft Defender for Containers is opt-in only ([DEFENDER-OPT-IN.md](../../terraform/modules/aks/DEFENDER-OPT-IN.md)).
 
 ## Why this topic is required
 

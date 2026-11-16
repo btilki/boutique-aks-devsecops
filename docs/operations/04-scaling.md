@@ -1,10 +1,10 @@
 # Scaling
 
-**Audience:** L3 — Operator
-**Applies to:** Boutique Deployments; AKS user node pool
-**Prerequisites:** Understanding of test maxPods ≈ 30/node; TF ignore on `node_count`
-**Estimated time:** 10–30 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: Boutique Deployments; AKS user node pool
+Prerequisites: Understanding of test maxPods ≈ 30/node; TF ignore on `node_count`
+Estimated time: 10–30 minutes
+Risk level: Medium
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Adjust application replicas or node capacity without breaking GitOps or exhausti
 
 ## When to use / When not to use
 
-**Use** for temporary capacity reclaim or raising frontend replicas in Git.
+Use for temporary capacity reclaim or raising frontend replicas in Git.
 **Do not** repeatedly `kubectl scale` on auto-synced apps without a Git patch (dev will self-heal).
 
 ## Prerequisites

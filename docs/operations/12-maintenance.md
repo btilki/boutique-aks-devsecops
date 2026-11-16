@@ -1,10 +1,10 @@
 # Maintenance
 
-**Audience:** L3 — Operator
-**Applies to:** Nodes, GitOps sync, planned downtime
-**Prerequisites:** Capacity awareness; optional maintenance window communication
-**Estimated time:** 30–90 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: Nodes, GitOps sync, planned downtime
+Prerequisites: Capacity awareness; optional maintenance window communication
+Estimated time: 30–90 minutes
+Risk level: Medium
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Perform planned work (node recycle, chart bumps prep, capacity reclaim) with min
 
 ## When to use / When not to use
 
-**Use** for node upgrades, disk pressure, or controlled Argo pauses.
+Use for node upgrades, disk pressure, or controlled Argo pauses.
 **Do not** drain the only Ready user node without ensuring workloads can schedule elsewhere.
 
 ## Prerequisites

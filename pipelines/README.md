@@ -4,15 +4,15 @@
 
 | | |
 |--|--|
-| **CI platform** | **Azure DevOps** |
-| **Git remote** | **GitHub** (this repo — not Azure Repos) |
-| **GitHub Actions** | **Not used** (no `.github/workflows`) |
+| CI platform | Azure DevOps |
+| Git remote | GitHub (this repo — not Azure Repos) |
+| GitHub Actions | **Not used** (no `.github/workflows`) |
 
 ADO checkouts this GitHub repository, mirrors/scans/signs images into ACR (OIDC), and can commit digest pins back to Git for Argo CD.
 
 ## Purpose
 
-Mirror Online Boutique **v0.10.5**, Trivy CRITICAL gate, cosign sign (`--tlog-upload=false`), digest promotion.
+Mirror Online Boutique, Trivy CRITICAL gate, cosign sign (`--tlog-upload=false`), digest promotion. Pin: [`versions.yaml`](../versions.yaml).
 
 Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned release assets. Each download is checked with `sha256sum` against the checksum file published with that release.
 
@@ -21,6 +21,8 @@ Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned rel
 | File | Role |
 |------|------|
 | `azure-pipelines.yml` | Main supply-chain pipeline (`main` push; `pr: none`) |
+| `azure-pipelines-promote.yml` | Digest promotion pipeline (stage/prod; Topic 12) |
+| `azure-pipelines-pr.yml` | PR validation pipeline (Topic 14) |
 | `azure-pipelines-dast.yml` | Optional ZAP baseline DAST (manual) — Topic 20 |
 | `templates/variables.yml` | Versions, ACR/KV names, service list |
 | `templates/dast-variables.yml` | ZAP image + target defaults |
@@ -35,8 +37,8 @@ Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned rel
 | Pipeline | Needs |
 |----------|--------|
 | Supply-chain / promote | ADO OIDC (Topic 04), ACR + KV (Topic 03), GitHub↔ADO (Topic 09) |
-| **PR validate** | GitHub↔ADO only — **no** OIDC/ACR (Topic 14) |
-| **DAST (ZAP)** | Live HTTPS Boutique URL; Docker on agent (Topic 20) — **no** OIDC |
+| PR validate | GitHub↔ADO only — **no** OIDC/ACR (Topic 14) |
+| DAST (ZAP) | Live HTTPS Boutique URL; Docker on agent (Topic 20) — **no** OIDC |
 
 ## Usage
 

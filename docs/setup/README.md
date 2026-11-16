@@ -74,7 +74,7 @@ Status legend: ⬜ Not started · 🔄 In progress · ✅ Complete
 
 Dependency chain: `00 → 01 → 02 → 03 → 04 → 05 → 06 → 07` and `03 → 09 → 08 → 10 → 11 → 12 → 13`
 
-This is the reference story. Live execution through Topic 12 is complete; Topic 13 tore the stack down.
+This is the reference story. Live execution through Topic 12 is complete; Topic 13 destroyed the platform.
 
 ### Optional after rebuild — not part of the closed reference
 

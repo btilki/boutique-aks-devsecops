@@ -1,18 +1,18 @@
 # Backup and restore
 
-**Audience:** L3 — Operator
-**Applies to:** Terraform state, Key Vault, Git (primary)
-**Prerequisites:** Azure RBAC on state storage + Key Vault
-**Estimated time:** 15–45 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: Terraform state, Key Vault, Git (primary)
+Prerequisites: Azure RBAC on state storage + Key Vault
+Estimated time: 15–45 minutes
+Risk level: Medium
 
 ## Purpose
 
-Describe what is backed up for this **demo/reference** stack and how to restore critical control-plane data. Boutique has **no durable app database** to back up.
+Describe what is backed up for this demo/reference stack and how to restore critical control-plane data. Boutique has no durable app database to back up.
 
 ## When to use / When not to use
 
-**Use** before risky TF apply, key rotation, or teardown.
+Use before risky TF apply, key rotation, or teardown.
 **Do not** expect volume snapshots for Redis emptyDir cart data (ephemeral).
 
 ## Prerequisites

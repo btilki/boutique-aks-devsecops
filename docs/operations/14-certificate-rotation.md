@@ -1,10 +1,10 @@
 # Certificate rotation
 
-**Audience:** L3 — Operator
-**Applies to:** cert-manager Certificates / ClusterIssuer
-**Prerequisites:** Azure DNS-01; platform UAMI DNS Zone Contributor
-**Estimated time:** 15–45 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: cert-manager Certificates / ClusterIssuer
+Prerequisites: Azure DNS-01; platform UAMI DNS Zone Contributor
+Estimated time: 15–45 minutes
+Risk level: Medium
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Keep Let’s Encrypt certificates valid for Boutique, Grafana, and Argo CD hostn
 
 ## When to use / When not to use
 
-**Use** on `IngressCertExpiringSoon`, browser TLS errors, or DNS zone changes.
+Use on `IngressCertExpiringSoon`, browser TLS errors, or DNS zone changes.
 **Do not** manually delete Secrets before a replacement Certificate is Ready (causes outage).
 
 ## Prerequisites

@@ -19,7 +19,7 @@ Mutable tags and unsigned images make “what is running?” hard to trust. Long
 
 ## Result
 
-Topics **00–13** completed, then teardown. Cost when active was roughly €150–250/month; teardown destroys ACR, so a rebuild must re-mirror. File-backed claims: [`docs/reference-claims.md`](docs/reference-claims.md).
+Setup Topics **00–13** ran end to end, then the platform was torn down. The lived path covered Terraform foundation, ADO OIDC, Argo CD and platform services, Kyverno Enforce on Boutique, mirror → Trivy → cosign → digest promotion, Grafana and Loki, and ordered destroy. While active, cost was roughly €150–250/month. Teardown destroys ACR, so a rebuild must re-mirror. Claims: [`docs/reference-claims.md`](docs/reference-claims.md).
 
 ---
 
@@ -28,6 +28,7 @@ Topics **00–13** completed, then teardown. Cost when active was roughly €150
 | | |
 |-|-|
 | What | DevSecOps on one AKS cluster in `germanywestcentral` |
+| App pin | Online Boutique — see [`versions.yaml`](versions.yaml) |
 | Hard rule | **Unsigned or floating tags should not reach the cluster** |
 | CI model | GitHub = source of truth · Azure DevOps = pipelines (OIDC) · no GitHub Actions |
 | Scope | Production reference — one subscription, one region; not multi-region HA |
@@ -37,7 +38,7 @@ Topics **00–13** completed, then teardown. Cost when active was roughly €150
 
 ## Proof
 
-These screenshots are from the lived run. Full catalog: [`assets/images/README.md`](assets/images/README.md). Hostnames stay offline until you rebuild.
+Screenshots from the lived run (hostnames offline until rebuild). Full catalog: [`assets/images/README.md`](assets/images/README.md).
 
 **Argo CD** — Applications Healthy/Synced:
 
@@ -47,11 +48,11 @@ These screenshots are from the lived run. Full catalog: [`assets/images/README.m
 
 ![ADO supply-chain pipeline success](assets/images/setup/09-ado-pipeline-supply-chain-success.png)
 
-**Storefront** — `dev-boutique.biroltilki.art` over HTTPS (when the reference was live):
+**Storefront** — `dev-boutique.biroltilki.art` over HTTPS (when live):
 
 ![Boutique dev homepage](assets/images/setup/10-dev-boutique-homepage.png)
 
-More: ACR digests, Grafana, stage/prod storefronts — [`assets/images/setup/`](assets/images/setup/). Claims without a live cluster: [`docs/reference-claims.md`](docs/reference-claims.md).
+More: ACR digests, Grafana, stage/prod — [`assets/images/setup/`](assets/images/setup/).
 
 ---
 
@@ -102,15 +103,6 @@ Promotion: `dev → stage → prod` (same digest; **ADO approval before prod**).
 This map shows repository layout, platform components, and where each engineering area lives.
 
 ![Boutique AKS DevSecOps — Repository Map and Navigation](assets/images/aks-devsecops-repository-map.jpg)
-
----
-
-## What the reference demonstrated
-
-- Terraform foundation: VNet, AKS (Workload Identity), ACR, Key Vault, Azure DNS, ADO OIDC
-- Argo CD app-of-apps; NGINX + cert-manager; Key Vault CSI; Kyverno Enforce for allowlist, deny `:latest`, and signature verify on Boutique
-- ADO: mirror → Trivy → cosign → digest promotion; Grafana + in-cluster Loki
-- Ordered teardown after validation (see [`docs/setup/13-teardown.md`](docs/setup/13-teardown.md))
 
 ---
 

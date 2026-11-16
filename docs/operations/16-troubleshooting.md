@@ -1,10 +1,10 @@
 # Troubleshooting
 
-**Audience:** L3 — Operator
-**Applies to:** All test components
-**Prerequisites:** kubectl; access to [docs/troubleshooting/](../troubleshooting/)
-**Estimated time:** Varies
-**Risk level:** Medium
+Audience: Operator
+Applies to: All test components
+Prerequisites: kubectl; access to [docs/troubleshooting/](../troubleshooting/)
+Estimated time: Varies
+Risk level: Medium
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Provide a short diagnostic flowchart, then route to symptom-indexed guides (no d
 
 ## When to use / When not to use
 
-**Use** after SEV triage when the first playbook is unclear.
+Use after SEV triage when the first playbook is unclear.
 **Do not** copy Setup Guide steps here.
 
 ## Prerequisites

@@ -1,10 +1,10 @@
 # Alerting
 
-**Audience:** L3 — Operator
-**Applies to:** PrometheusRule → Alertmanager
-**Prerequisites:** kube-prometheus-stack Healthy
-**Estimated time:** 15 minutes
-**Risk level:** Low
+Audience: Operator
+Applies to: PrometheusRule → Alertmanager
+Prerequisites: kube-prometheus-stack Healthy
+Estimated time: 15 minutes
+Risk level: Low
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Know which alerts exist, where they are defined, and how to attach runbook links
 
 ## When to use / When not to use
 
-**Use** when wiring notifications, silencing, or verifying alert firing.
+Use when wiring notifications, silencing, or verifying alert firing.
 **Do not** expect PagerDuty enterprise routing in this solo test unless you configured receivers.
 
 ## Prerequisites

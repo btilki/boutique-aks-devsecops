@@ -1,17 +1,17 @@
 # 16 — IaC Scanning (Checkov)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 30–45 minutes (local) · ADO already covered by Topic 14 registration
-**Prerequisites:** [14-pr-ci.md](14-pr-ci.md) scaffold ✅ · Terraform tree under `terraform/`
-**Creates:** Checkov baseline config, local/CI gate on `terraform/`, documented skip list for reference tradeoffs
-**Related:** [phase15-plus.md](../implementation/phase15-plus.md) · [tests/terraform/.checkov.yaml](../../tests/terraform/.checkov.yaml) · [ARCHITECTURE.md](../../ARCHITECTURE.md) Limitations
-**Mode:** Runnable locally today. ADO job runs once Topic 14 pipeline is registered (**Apply later** for live PR status).
+Audience: Implementer
+Estimated time: 30–45 minutes (local) · ADO already covered by Topic 14 registration
+Prerequisites: [14-pr-ci.md](14-pr-ci.md) scaffold ✅ · Terraform tree under `terraform/`
+Creates: Checkov baseline config, local/CI gate on `terraform/`, documented skip list for reference tradeoffs
+Related: [phase15-plus.md](../implementation/phase15-plus.md) · [tests/terraform/.checkov.yaml](../../tests/terraform/.checkov.yaml) · [ARCHITECTURE.md](../../ARCHITECTURE.md) Limitations
+Mode: Runnable locally today. ADO job runs once Topic 14 pipeline is registered (**Apply later** for live PR status).
 
 ---
 
 ## Topic goal
 
-When this topic is complete, every PR (and `make pr-validate`) runs **Checkov** against `terraform/` for **IaC** (**Infrastructure as Code**) scanning and **fails on new findings**. Known production-reference tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
+When this topic is complete, every PR (and `make pr-validate`) runs Checkov against `terraform/` for IaC scanning and **fails on new findings**. Known production-reference tradeoffs are explicitly skipped in `.checkov.yaml` with rationale — not silently ignored.
 
 ## Why this topic is required
 

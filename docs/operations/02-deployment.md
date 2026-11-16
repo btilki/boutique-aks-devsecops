@@ -1,18 +1,18 @@
 # Deployment
 
-**Audience:** L3 — Operator
-**Applies to:** stage / prod (dev usually auto-synced)
-**Prerequisites:** Signed digests in ACR; [promotion-rollback.md](../runbooks/promotion-rollback.md)
-**Estimated time:** 20–40 minutes
-**Risk level:** Medium
+Audience: Operator
+Applies to: stage / prod (dev usually auto-synced)
+Prerequisites: Signed digests in ACR; [promotion-rollback.md](../runbooks/promotion-rollback.md)
+Estimated time: 20–40 minutes
+Risk level: Medium
 
 ## Purpose
 
-Promote the **same signed image digests** via GitOps into stage or prod and prove health with smoke tests.
+Promote the same signed image digests via GitOps into stage or prod, then prove health with smoke tests.
 
 ## When to use / When not to use
 
-**Use** after a green ADO mirror/scan/sign run and stage validation before prod.
+Use after a green ADO mirror/scan/sign run and stage validation before prod.
 **Do not use** to redeploy from Setup Topic 00–05 (wrong layer).
 
 ## Prerequisites

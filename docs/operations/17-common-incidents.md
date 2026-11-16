@@ -1,10 +1,10 @@
 # Common incidents
 
-**Audience:** L3 — Operator
-**Applies to:** Production-reference test
-**Prerequisites:** [07-incident-response.md](07-incident-response.md)
-**Estimated time:** 10–45 minutes per playbook
-**Risk level:** Medium–High
+Audience: Operator
+Applies to: Production-reference test
+Prerequisites: [07-incident-response.md](07-incident-response.md)
+Estimated time: 10–45 minutes per playbook
+Risk level: Medium–High
 
 ## Purpose
 
@@ -12,7 +12,7 @@ First-response playbooks for the highest-likelihood failures.
 
 ## When to use / When not to use
 
-**Use** immediately after SEV assignment.
+Use immediately after SEV assignment.
 **Do not** skip diagnosis and jump to teardown.
 
 ---

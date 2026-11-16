@@ -1,10 +1,10 @@
 # Upgrades
 
-**Audience:** L3 — Operator
-**Applies to:** AKS / platform Helm / policies / app digests
-**Prerequisites:** `versions.yaml`; healthy backups of state ([06](06-backup-and-restore.md))
-**Estimated time:** 1–3 hours depending on layer
-**Risk level:** High
+Audience: Operator
+Applies to: AKS / platform Helm / policies / app digests
+Prerequisites: `versions.yaml`; healthy backups of state ([06](06-backup-and-restore.md))
+Estimated time: 1–3 hours depending on layer
+Risk level: High
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Define a safe upgrade order so control plane, platform add-ons, and apps stay co
 
 ## When to use / When not to use
 
-**Use** for AKS minor upgrades, Helm chart bumps, Kyverno/Argo versions, Boutique digest rolls.
+Use for AKS minor upgrades, Helm chart bumps, Kyverno/Argo versions, Boutique digest rolls.
 **Do not** upgrade everything in one unreviewable commit.
 
 ## Prerequisites

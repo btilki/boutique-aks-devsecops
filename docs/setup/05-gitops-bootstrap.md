@@ -315,7 +315,7 @@ argocd app list
 | Application | Project | Sync Status | Health |
 |-------------|---------|-------------|--------|
 | root | platform | Synced | Healthy |
-| platform-root | platform | Synced | Healthy (Application CRs for ingress, cert-manager, CSI, Kyverno, Falco, monitoring) |
+| platform-root | platform | Synced | Healthy (Application CRs for ingress, cert-manager, CSI, Kyverno, monitoring — Falco omitted until Topic 18) |
 | apps-root | platform | Synced | Healthy (creates boutique-dev/stage/prod Application CRs) |
 
 `gitops/platform` and `gitops/apps` are already populated (Topics 06–12 lived; Topics 14–20 scaffold). Topic 05 only needs Argo CD, AppProjects, and root apps healthy. Validate child workloads in their own topics. `apps-root` uses project `platform` (Application CRs live in `argocd`); Boutique overlays use `applications`.

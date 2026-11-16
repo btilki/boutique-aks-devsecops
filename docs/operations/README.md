@@ -45,11 +45,11 @@ Hostnames: see [root README](../../README.md) · [docs/README.md](../README.md).
 
 ## Escalation (solo reference)
 
-| Level | Role | When |
-|-------|------|------|
-| L1 | You | First response for all SEVs |
-| L2 | You (platform) | > 30 min or promote/ACR/KV risk |
-| L3 | Azure subscription / Entra admin (You) | Billing lockout, subscription RBAC, DNS registrar |
+| Role | When |
+|------|------|
+| On-call (you) | First response for all SEVs |
+| Platform (you) | > 30 min or promote/ACR/KV risk |
+| Subscription / Entra admin (you) | Billing lockout, subscription RBAC, DNS registrar |
 
 Test IR detail: [07-incident-response.md](07-incident-response.md) · [runbooks/incident-response.md](../runbooks/incident-response.md)
 

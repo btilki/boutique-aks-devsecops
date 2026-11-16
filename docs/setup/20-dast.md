@@ -1,21 +1,21 @@
 # 20 — DAST (OWASP ZAP baseline, optional)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 30–45 minutes when Boutique HTTPS is live
-**Prerequisites:** [10-boutique-dev.md](10-boutique-dev.md) ✅ (dev storefront reachable) · ADO project (Topic 09/14 pattern)
-**Creates:** Manual ADO DAST pipeline; ZAP HTML/JSON artifacts
-**Related ADRs:** [0017](../adr/0017-optional-zap-dast.md)
-**Mode:** Pipeline scaffolded. Running the scan needs a **live** target (**Apply later**). This topic is **optional** — Phase 15+ is complete without enforcing DAST.
+Audience: Implementer
+Estimated time: 30–45 minutes when Boutique HTTPS is live
+Prerequisites: [10-boutique-dev.md](10-boutique-dev.md) ✅ (dev storefront reachable) · ADO project (Topic 09/14 pattern)
+Creates: Manual ADO DAST pipeline; ZAP HTML/JSON artifacts
+Related: [0017](../adr/0017-optional-zap-dast.md)
+Mode: Pipeline scaffolded. Running the scan needs a **live** target (**Apply later**). This topic is **optional** — Phase 15+ is complete without enforcing DAST.
 
 ---
 
 ## Topic goal
 
-When this topic is complete, you can manually run **OWASP** (**Open Worldwide Application Security Project**) **ZAP** (**Zed Attack Proxy**) baseline **DAST** (**Dynamic Application Security Testing**) against `https://dev-boutique.<DNS_ZONE>` (or another hostname **you operate**), download reports, and optionally fail the job on WARN/FAIL.
+When this topic is complete, you can manually run OWASP ZAP baseline DAST against `https://dev-boutique.<DNS_ZONE>` (or another hostname you operate), download reports, and optionally fail the job on WARN/FAIL.
 
 ## Why this topic is required
 
-Container/**IaC**/admission gates do not exercise the HTTP UI. Baseline DAST covers that gap without blocking every merge (ADR-0017: advisory by default).
+Container/IaC/admission gates do not exercise the HTTP UI. Baseline DAST covers that gap without blocking every merge (ADR-0017: advisory by default).
 
 ---
 

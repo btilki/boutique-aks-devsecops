@@ -1,10 +1,10 @@
 # Incident response
 
-**Audience:** L3 — Operator
-**Applies to:** All test environments
-**Prerequisites:** kubectl, Grafana access, [runbooks/incident-response.md](../runbooks/incident-response.md)
-**Estimated time:** Continuous until mitigated
-**Risk level:** High (SEV-1/2)
+Audience: Operator
+Applies to: All test environments
+Prerequisites: kubectl, Grafana access, [runbooks/incident-response.md](../runbooks/incident-response.md)
+Estimated time: Continuous until mitigated
+Risk level: High (SEV-1/2)
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Triage severity, mitigate user impact, and hand off to common-incident playbooks
 
 ## When to use / When not to use
 
-**Use** on alert, user report, or failed smoke.
+Use on alert, user report, or failed smoke.
 **Do not** start Terraform destroy as first response.
 
 ## Prerequisites

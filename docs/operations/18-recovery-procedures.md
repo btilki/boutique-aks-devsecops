@@ -1,10 +1,10 @@
 # Recovery procedures
 
-**Audience:** L3 — Operator
-**Applies to:** Major multi-component failures
-**Prerequisites:** [05-disaster-recovery.md](05-disaster-recovery.md), [17-common-incidents.md](17-common-incidents.md)
-**Estimated time:** 30 minutes–hours
-**Risk level:** High
+Audience: Operator
+Applies to: Major multi-component failures
+Prerequisites: [05-disaster-recovery.md](05-disaster-recovery.md), [17-common-incidents.md](17-common-incidents.md)
+Estimated time: 30 minutes–hours
+Risk level: High
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Ordered recovery paths when several subsystems fail together.
 
 ## When to use / When not to use
 
-**Use** if common playbooks alone do not restore SEV-1.
+Use if common playbooks alone do not restore SEV-1.
 **Do not** skip health validation between steps.
 
 ## Prerequisites

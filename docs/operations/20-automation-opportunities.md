@@ -1,18 +1,18 @@
 # Automation opportunities
 
-**Audience:** L3 — Operator / platform
-**Applies to:** Toil reduction backlog
-**Prerequisites:** Working manual runbooks (this folder)
-**Estimated time:** Planning only
-**Risk level:** Low
+Audience: Operator / platform
+Applies to: Toil reduction backlog
+Prerequisites: Working manual runbooks (this folder)
+Estimated time: Planning only
+Risk level: Low
 
 ## Purpose
 
-List high-value automations **that do not replace** Setup Guide or these runbooks. Master Prompt: no install-all bypass scripts.
+Capture high-value automations that supplement Setup Guide and these runbooks.
 
 ## When to use / When not to use
 
-**Use** when prioritizing hardening (**Phase 15+** / scaffold packages) or after postmortems. Phase 13 was skipped; backlog lives in [phase15-plus.md](../implementation/phase15-plus.md).
+Use when prioritizing hardening (Phase 15+ / scaffold packages) or after postmortems. Phase 13 was skipped; backlog lives in [phase15-plus.md](../implementation/phase15-plus.md).
 **Do not** ship `fix-prod.sh` as the primary ops interface.
 
 ## Prerequisites

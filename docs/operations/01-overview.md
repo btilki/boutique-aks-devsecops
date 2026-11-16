@@ -14,7 +14,7 @@ Define the operational model: environments, ownership, test constraints, and whe
 
 ## When to use / When not to use
 
-**Use** when joining on-call, before first promotion, or after returning from a teardown rebuild.
+Use when joining on-call, before first promotion, or after returning from a teardown rebuild.
 **Do not use** as a bootstrap guide — see [docs/setup/](../setup/).
 
 ## Prerequisites

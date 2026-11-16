@@ -1,24 +1,24 @@
 # 14 — PR CI Gates (shift-left validation)
 
-**Audience:** L2 — Implementer
-**Estimated time:** 45–60 minutes (ADO registration) + local dry-run
-**Prerequisites:** [00-prerequisites.md](00-prerequisites.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) recommended (ADO + GitHub already connected)
-**Creates:** Separate ADO pipeline from `pipelines/azure-pipelines-pr.yml`; optional branch policy requiring it
-**Related:** [ADR-0013](../adr/0013-scaffold-first-phase15.md) · [phase15-plus.md](../implementation/phase15-plus.md) · [tests/README.md](../../tests/README.md)
-**Mode:** Scaffold present in Git. Steps marked **Apply later** need a live ADO project (and optional live Azure only if you also rebuild Topics 00–12).
+Audience: Implementer
+Estimated time: 45–60 minutes (ADO registration) + local dry-run
+Prerequisites: [00-prerequisites.md](00-prerequisites.md) ✅ · [09-ci-pipeline.md](09-ci-pipeline.md) recommended (ADO + GitHub already connected)
+Creates: Separate ADO pipeline from `pipelines/azure-pipelines-pr.yml`; optional branch policy requiring it
+Related: [ADR-0013](../adr/0013-scaffold-first-phase15.md) · [phase15-plus.md](../implementation/phase15-plus.md) · [tests/README.md](../../tests/README.md)
+Mode: Scaffold present in Git. Steps marked **Apply later** need a live ADO project (and optional live Azure only if you also rebuild Topics 00–12).
 
 ---
 
 ## Topic goal
 
-When this topic is complete, **PRs** (**pull requests**) targeting `main` run a dedicated ADO pipeline for CI that fails on:
+When this topic is complete, PRs targeting `main` run a dedicated ADO pipeline for CI that fails on:
 
-1. **pre-commit** (trailing whitespace, YAML, large files, Terraform fmt/validate hooks, yamllint, gitleaks)
-2. **`tests/terraform/validate.sh`** (fmt -check + validate bootstrap + `environments/dev`)
-3. **`tests/terraform/checkov.sh`** (Checkov on `terraform/` — Topic 16)
-4. **`kyverno test policies/tests`** (admission policy unit tests)
+1. pre-commit (trailing whitespace, YAML, large files, Terraform fmt/validate hooks, yamllint, gitleaks)
+2. `tests/terraform/validate.sh` (fmt -check + validate bootstrap + `environments/dev`)
+3. `tests/terraform/checkov.sh` (Checkov on `terraform/` — Topic 16)
+4. `kyverno test policies/tests` (admission policy unit tests)
 
-The supply-chain pipeline (`azure-pipelines.yml`) stays on **`main` pushes only** (`pr: none`) — PRs do **not** mirror/scan/sign images.
+The supply-chain pipeline (`azure-pipelines.yml`) stays on `main` pushes only (`pr: none`) — PRs do **not** mirror/scan/sign images.
 
 ## Why this topic is required
 
@@ -28,7 +28,7 @@ Without PR CI, broken Terraform, policy, or YAML can merge and only fail on `mai
 
 ## Before you begin
 
-- [ ] Repo on **GitHub**; ADO project can checkout this GitHub repo (same as Topic 09)
+- [ ] Repo on GitHub; ADO project can checkout this GitHub repo (same as Topic 09)
 - [ ] Local tools for dry-run: `pre-commit`, `terraform` (>= 1.6), `kyverno` CLI (~1.12.6)
 - [ ] Scaffold files present (Package 2):
 

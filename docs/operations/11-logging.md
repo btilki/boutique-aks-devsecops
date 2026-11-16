@@ -1,10 +1,10 @@
 # Logging
 
-**Audience:** L3 — Operator
-**Applies to:** Loki + Promtail in `monitoring`
-**Prerequisites:** ADR-0012; Grafana Loki datasource
-**Estimated time:** 10 minutes
-**Risk level:** Low
+Audience: Operator
+Applies to: Loki + Promtail in `monitoring`
+Prerequisites: ADR-0012; Grafana Loki datasource
+Estimated time: 10 minutes
+Risk level: Low
 
 ## Purpose
 
@@ -12,7 +12,7 @@ Query workload and platform logs during incidents without Azure Log Analytics.
 
 ## When to use / When not to use
 
-**Use** for pod crash loops, ingress 5xx, Kyverno denials (if logged).
+Use for pod crash loops, ingress 5xx, Kyverno denials (if logged).
 **Do not** expect infinite retention — PVC-sized Loki (test ~10Gi).
 
 ## Prerequisites

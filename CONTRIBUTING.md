@@ -41,8 +41,8 @@ Use the short form only (`CI`, `AKS`, `ADO`, `OIDC`). Do **not** write `CI (Cont
 |------|--------|
 | First mention | Short form is enough; no parenthetical expansion |
 | Bold | Only hard rules / constraints (for example **CI never deploys**, **never commit** secrets) |
-| Ordinary stack names | Stay plain (`EKS`, `ACR`, `OIDC`) unless the sentence states a hard rule |
-| Code identifiers | Keep as written (`ENABLE_PILOT_CI`, CLI flags, filenames) |
+| Ordinary stack names | Stay plain (`AKS`, `ACR`, `OIDC`) unless the sentence states a hard rule |
+| Code identifiers | Keep as written (env vars, CLI flags, filenames) |
 
 ## Code style
 
@@ -60,6 +60,6 @@ phase-3: provision AKS with germanywestcentral node SKUs
 Wire aks module with Standard_D2s_v6 system pool and Standard_D4s_v6 user pool.
 ```
 
-## Approval gates
+## Reviews
 
-Architecture, plan, and structure are approved. Implementation proceeds phase-by-phase with explicit confirmation after each validation.
+Keep each PR scoped to one roadmap phase or setup topic when possible. Prefer linking the matching `docs/setup/` topic or ADR in the PR description.
