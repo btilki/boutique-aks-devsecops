@@ -14,7 +14,7 @@ When you finish this topic, the platform resource group exists in `germanywestce
 
 ## Why this topic is required
 
-AKS (Topic 03) needs a subnet ID and resource group. Ingress TLS (Topic 06) needs Azure DNS control of `biroltilki.art`. Logs run in-cluster via Loki (Topic 11, ADR-0012) — no Log Analytics workspace in this topic. Applying foundation on its own keeps `terraform plan` reviewable and limits blast radius if networking or DNS values are wrong.
+Topic 03 needs the subnet and RG; Topic 06 needs Azure DNS on `biroltilki.art`. A separate foundation apply keeps plans reviewable and limits blast radius (Loki in-cluster per ADR-0012 — no Log Analytics here).
 
 ---
 

@@ -1,10 +1,10 @@
 # 05 — GitOps Bootstrap
 
 Audience: Implementer
-**Estimated time:** 90 minutes
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ complete (Topic 04 recommended before CI, not blocking GitOps)
-**Creates:** Argo CD v2.10.7, AppProjects, root app-of-apps, platform/apps root Applications
-**Related ADRs:** [0004](../adr/0004-argocd-gitops.md)
+Estimated time: 90 minutes
+Prerequisites: [03-cluster-resources.md](03-cluster-resources.md) ✅ complete (Topic 04 recommended before CI, not blocking GitOps)
+Creates: Argo CD v2.10.7, AppProjects, root app-of-apps, platform/apps root Applications
+Related ADRs: [0004](../adr/0004-argocd-gitops.md)
 
 ---
 
@@ -14,7 +14,7 @@ When this topic is complete, Argo CD runs in the `argocd` namespace, three AppPr
 
 ## Why this topic is required
 
-All platform services (ingress, cert-manager, Kyverno, monitoring) and Boutique overlays deploy via GitOps. Argo CD is the reconciliation engine. The app-of-apps pattern keeps bootstrap repeatable: one `root` Application manages `platform-root` and `apps-root` children.
+Platform and Boutique workloads reconcile from Git via Argo CD; the root app-of-apps bootstraps `platform-root` and `apps-root` in one repeatable pass.
 
 ---
 
@@ -233,7 +233,7 @@ Edit these files — use the **same** `repoURL` everywhere:
 - All `gitops/platform/*/Application.yaml` (and `kyverno/policies-application.yaml`)
 - All `gitops/apps/boutique/*-application.yaml` (Topics 10–12)
 
-**GitHub `repoURL` format:**
+GitHub `repoURL` format:
 
 ```text
 https://github.com/<GITHUB_ORG>/<REPO_NAME>
@@ -261,7 +261,7 @@ git push origin main
 
 ### Register private GitHub repo credentials (if repo is private)
 
-**Platform:** Argo CD UI or CLI
+Platform: Argo CD UI or CLI
 
 1. Settings → Repositories → Connect repo
 2. Choose VIA HTTPS
@@ -278,7 +278,7 @@ argocd repo add "https://github.com/<GITHUB_ORG>/<REPO_NAME>" \
   --username <github-user> --password <GITHUB_PAT>
 ```
 
-**Public repositories:** Argo CD can sync without credentials if the repo is public.
+Public repositories: Argo CD can sync without credentials if the repo is public.
 
 ### Validation
 
@@ -373,7 +373,7 @@ kubectl get pods -n argocd
 kubectl get appprojects,applications -n argocd
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] Argo CD v2.10.x running
 - [ ] AppProjects: platform, applications, monitoring
@@ -381,7 +381,7 @@ kubectl get appprojects,applications -n argocd
 - [ ] Repository connection successful
 - [ ] Admin UI accessible (port-forward)
 
-**Screenshot reference** (Healthy / Synced applications):
+Screenshot reference (lived run: Synced + Healthy filter; visible cards include `apps-root`, `platform-root`, `cert-manager-issuer`, `monitoring-extras`, `otel-collector`, `promtail` — all still defined under `gitops/`):
 
 ![Argo CD applications Healthy](../../assets/images/setup/05-argocd-applications-healthy.png)
 

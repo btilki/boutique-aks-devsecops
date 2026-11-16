@@ -10,7 +10,7 @@ Kyverno 1.12.x `verifyImages` is stable with key-based cosign. Keyless/cosign v3
 
 ## Decision
 
-Sign with **cosign 2.2.4** using a key pair stored in Key Vault. Pipeline uses `--tlog-upload=false`. Kyverno sets `ignoreTlog: true` and `ignoreSCT: true`.
+Sign with cosign 2.2.4 using a key pair stored in Key Vault. Pipeline uses `--tlog-upload=false`. Kyverno sets `ignoreTlog: true` and `ignoreSCT: true`.
 
 ## Consequences
 

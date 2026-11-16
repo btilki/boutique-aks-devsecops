@@ -10,7 +10,7 @@ Online Boutique v0.10.5 ships Kubernetes manifests. We need digest-pinned images
 
 ## Decision
 
-Use **Kustomize** base (from upstream v0.10.5) plus overlays for dev/stage/prod.
+Use Kustomize base (from upstream v0.10.5) plus overlays for dev/stage/prod.
 
 ## Consequences
 

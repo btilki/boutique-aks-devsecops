@@ -10,7 +10,7 @@ Workload admission must enforce registry allowlist, deny `:latest`, verify cosig
 
 ## Decision
 
-Use **Kyverno** ClusterPolicy `verifyImages` and validation rules. Do not enable Azure Policy for Kubernetes in v1.
+Use Kyverno ClusterPolicy `verifyImages` and validation rules. Do not enable Azure Policy for Kubernetes in v1.
 
 ## Consequences
 

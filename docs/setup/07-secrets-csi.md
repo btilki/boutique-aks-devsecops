@@ -1,10 +1,10 @@
 # 07 — Secrets Store CSI
 
 Audience: Implementer
-**Estimated time:** 75 minutes
-**Prerequisites:** [03-cluster-resources.md](03-cluster-resources.md) ✅ · [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) recommended
-**Creates:** CSI driver 1.4.0, Azure provider 1.5.0, test SecretProviderClass + pod in `csi-test`
-**Related ADRs:** — (see [07-security-architecture.md](../architecture/07-security-architecture.md))
+Estimated time: 75 minutes
+Prerequisites: [03-cluster-resources.md](03-cluster-resources.md) ✅ · [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [06-ingress-tls.md](06-ingress-tls.md) recommended
+Creates: CSI driver 1.4.0, Azure provider 1.5.0, test SecretProviderClass + pod in `csi-test`
+Related ADRs: — (see [07-security-architecture.md](../architecture/07-security-architecture.md))
 
 ---
 
@@ -269,7 +269,7 @@ kubectl get secretproviderclass -n csi-test
 kubectl exec -n csi-test csi-test-pod -- test -f /mnt/secrets/csi-test-secret
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] CSI driver + Azure provider Running
 - [ ] Test pod mounts `csi-test-secret`

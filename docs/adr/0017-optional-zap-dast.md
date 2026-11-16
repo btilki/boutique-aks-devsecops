@@ -10,8 +10,8 @@ Package 8 (Phase 22) adds dynamic application security testing against the lived
 
 ## Decision
 
-1. Provide a **manual** Azure DevOps pipeline (`azure-pipelines-dast.yml`) that runs **OWASP ZAP baseline** (`zap-baseline.py`) against a configurable HTTPS target (default: `https://dev-boutique.biroltilki.art`).
-2. Default **`dastFailOnWarn: false`** — publish HTML/JSON reports as artifacts; do not block delivery unless the operator opts into failing the job.
+1. Provide a **manual** Azure DevOps pipeline (`azure-pipelines-dast.yml`) that runs OWASP ZAP baseline (`zap-baseline.py`) against a configurable HTTPS target (default: `https://dev-boutique.biroltilki.art`).
+2. Default `dastFailOnWarn: false` — publish HTML/JSON reports as artifacts; do not block delivery unless the operator opts into failing the job.
 3. Do **not** wire DAST into every PR or `main` supply-chain run (noise + needs live ingress).
 4. Only scan hostnames **you operate** (this project's Boutique FQDNs).
 

@@ -37,13 +37,11 @@ Do not use this guide for day-2 cluster operations — see [docs/operations/](..
 
 Required knowledge: basic shell, Git, and cloud CLI usage. No prior AKS experience required.
 
-Version control: GitHub is the sole Git remote (local clone, Argo CD, and ADO pipelines). Azure DevOps is for CI and OIDC only — not Azure Repos.
-
-Git remote note: GitOps manifests, Argo CD Applications, and pipeline checkout use GitHub. Connect your repository in Topic 00 Step 4; patch `<GITHUB_ORG>` / `<REPO_NAME>` in GitOps YAML during Topics 05–12. Azure DevOps (Topics 04 and 09) connects to the same GitHub repo for pipeline runs and digest promotion pushes.
+Version control: GitHub is the sole Git remote (clone, Argo CD, ADO pipelines, digest promotion). Azure DevOps is CI and OIDC only — not Azure Repos. Connect `origin` in Step 4; patch `<GITHUB_ORG>` / `<REPO_NAME>` in GitOps YAML in Topics 05–12.
 
 ## Architecture context
 
-This project provisions one AKS platform in `germanywestcentral` with node pools `Standard_D2s_v6` (system) and `Standard_D4s_v6` (user). Tool versions are pinned in [versions.yaml](../../versions.yaml) so Terraform, Kubernetes, and pipeline stages stay compatible.
+One AKS platform in `germanywestcentral` (`Standard_D2s_v6` system, `Standard_D4s_v6` user pools) with versions pinned in [versions.yaml](../../versions.yaml). Your workstation drives every CLI step from Topic 01 — no pre-provisioned cluster.
 
 ```mermaid
 flowchart LR
@@ -52,8 +50,6 @@ flowchart LR
     REPO -->|Topic 01+| TF[Terraform state]
     TF --> AZURE
 ```
-
-Your machine drives every CLI step. Nothing here assumes a pre-provisioned cluster — you build it from Topic 01 onward.
 
 ---
 

@@ -13,7 +13,7 @@ Setup guide screenshots live under **`setup/`** using the naming pattern
 
 | File | Topic | What it shows |
 |------|-------|---------------|
-| [05-argocd-applications-healthy.png](setup/05-argocd-applications-healthy.png) | 05 GitOps | Argo CD Applications cards Healthy/Synced |
+| [05-argocd-applications-healthy.png](setup/05-argocd-applications-healthy.png) | 05 GitOps | Argo CD Applications — filtered Synced + Healthy cards (lived run) |
 | [09-ado-pipeline-supply-chain-success.png](setup/09-ado-pipeline-supply-chain-success.png) | 09 CI | ADO pipeline run green (mirror / Trivy / cosign) |
 | [09-acr-repositories-frontend.png](setup/09-acr-repositories-frontend.png) | 09 CI | ACR repos with `frontend` `v0.10.5` + digest tags |
 | [10-dev-boutique-homepage.png](setup/10-dev-boutique-homepage.png) | 10 Boutique | `dev-boutique.biroltilki.art` storefront |

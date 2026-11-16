@@ -10,9 +10,9 @@ Lived-reference Boutique namespaces lack Pod Security Admission labels and Resou
 
 ## Decision
 
-1. Label `boutique-*` namespaces with **Pod Security Admission `enforce=baseline`** (aligns with Kyverno baseline); **warn/audit=`restricted`**.
-2. Apply shared **LimitRange** + **ResourceQuota** via Boutique base hardening manifests (all overlays inherit).
-3. Extend the Key Vault module with optional **`purge_protection_enabled`** and **`network_acls`** (default **Allow** / purge **false** so rebuild+teardown stay easy). Topic 19 documents flipping to **Deny** + AKS subnet allow-list after enabling **Microsoft.KeyVault** service endpoints on the AKS subnet.
+1. Label `boutique-*` namespaces with Pod Security Admission `enforce=baseline` (aligns with Kyverno baseline); warn/audit=`restricted`.
+2. Apply shared LimitRange + ResourceQuota via Boutique base hardening manifests (all overlays inherit).
+3. Extend the Key Vault module with optional `purge_protection_enabled` and `network_acls` (default Allow / purge false so rebuild+teardown stay easy). Topic 19 documents flipping to **Deny** + AKS subnet allow-list after enabling Microsoft.KeyVault service endpoints on the AKS subnet.
 4. When Deny ACL / purge protection are enabled in a long-lived environment, remove the matching Checkov skip IDs.
 
 ## Consequences

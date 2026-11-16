@@ -10,7 +10,7 @@ Platform and application delivery must be declarative, auditable, and digest-pro
 
 ## Decision
 
-Use **Argo CD** with app-of-apps pattern. Dev auto-sync; stage/prod manual sync.
+Use Argo CD with app-of-apps pattern. Dev auto-sync; stage/prod manual sync.
 
 ## Consequences
 

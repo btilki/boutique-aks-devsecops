@@ -8,12 +8,12 @@ Accepted (scaffold — apply with Topic 18)
 
 The lived reference has no runtime threat detection. Package 6 / Phase 20 needs a teachable control that fits the reference: single cluster, cost-conscious, in-cluster logs ([ADR-0012](0012-loki-in-cluster-logging.md)).
 
-Microsoft Defender for Containers is Azure-native but typically pairs with **Log Analytics** (ingestion cost) and was previously only ignored for Terraform drift — not provisioned as a first-class module.
+Microsoft Defender for Containers is Azure-native but typically pairs with Log Analytics (ingestion cost) and was previously only ignored for Terraform drift — not provisioned as a first-class module.
 
 ## Decision
 
-1. **Primary:** Deploy **Falco** via Argo CD (`gitops/platform/falco/`) using the **modern eBPF** driver, JSON logs to stdout → Promtail → Loki (same path as other platform logs).
-2. **Secondary:** Document **Defender for Containers** as an **opt-in** Azure control (subscription/portal or future TF); do **not** enable it by default in `terraform/environments/dev`.
+1. Primary: Deploy Falco via Argo CD (`gitops/platform/falco/`) using the modern eBPF driver, JSON logs to stdout → Promtail → Loki (same path as other platform logs).
+2. Secondary: Document Defender for Containers as an **opt-in** Azure control (subscription/portal or future TF); do **not** enable it by default in `terraform/environments/dev`.
 3. Keep AKS `lifecycle.ignore_changes` on `microsoft_defender` so subscription-level Defender does not fight Terraform when left unmanaged.
 
 ## Consequences

@@ -1,10 +1,10 @@
 # 08 — Admission Policies (Kyverno)
 
 Audience: Implementer
-**Estimated time:** 120 minutes
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [07-secrets-csi.md](07-secrets-csi.md) recommended (remove `csi-test` pod before enforce)
-**Creates:** Kyverno 1.12.6, ClusterPolicies (baseline five + Topic 17 SBOM attest Audit), policy test suite
-**Related ADRs:** [0003](../adr/0003-kyverno-admission.md), [0005](../adr/0005-cosign-key-based-signing.md)
+Estimated time: 120 minutes
+Prerequisites: [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ · [07-secrets-csi.md](07-secrets-csi.md) recommended (remove `csi-test` pod before enforce)
+Creates: Kyverno 1.12.6, ClusterPolicies (baseline five + Topic 17 SBOM attest Audit), policy test suite
+Related ADRs: [0003](../adr/0003-kyverno-admission.md), [0005](../adr/0005-cosign-key-based-signing.md)
 
 ---
 
@@ -14,7 +14,7 @@ When this topic is complete, Kyverno enforces cluster admission policies: ACR al
 
 ## Why this topic is required
 
-Admission control is the runtime enforcement layer for supply-chain decisions. **CI (Topic 09) signs images; Kyverno ensures only compliant workloads run.** Without admission, unsigned or public-registry images could deploy despite pipeline gates.
+Admission control is the runtime enforcement layer for supply-chain decisions: Topic 09 signs images; Kyverno ensures only compliant workloads run. Without admission, unsigned or public-registry images could deploy despite pipeline gates.
 
 ---
 
@@ -278,7 +278,7 @@ cd policies/tests && kyverno test kyverno-test.yaml
 kubectl apply -f policies/tests/resources/deny-non-acr-image.yaml --dry-run=server
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] Kyverno Healthy
 - [ ] Five ClusterPolicies active

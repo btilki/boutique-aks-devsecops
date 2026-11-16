@@ -10,7 +10,7 @@ Prod promotion must have a human gate suitable for a solo builder without PR rev
 
 ## Decision
 
-Require **Azure DevOps environment approval** before prod overlay updates. Stage uses manual Argo sync only (no ADO gate).
+Require Azure DevOps environment approval before prod overlay updates. Stage uses manual Argo sync only (no ADO gate).
 
 ## Consequences
 

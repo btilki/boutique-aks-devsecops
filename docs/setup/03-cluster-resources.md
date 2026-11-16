@@ -14,7 +14,7 @@ When you finish this topic, a production-reference AKS cluster runs in `germanyw
 
 ## Why this topic is required
 
-GitOps (Topic 05), CI (Topic 09), and Kyverno (Topic 08) all assume a live cluster and private registry. Workload Identity and an OIDC issuer must exist before ADO federation (Topic 04) and cert-manager DNS-01 (Topic 06). Splitting cluster resources into their own topic keeps Topic 02 networking stable and makes AKS failures easier to diagnose.
+GitOps, CI, and Kyverno need a live cluster and private ACR; Workload Identity and OIDC must exist before Topics 04 and 06 — isolated from Topic 02 networking for easier AKS diagnosis.
 
 ---
 

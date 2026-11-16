@@ -14,9 +14,7 @@ When you finish this topic, Azure hosts a dedicated remote state backend (resour
 
 ## Why this topic is required
 
-Terraform state holds resource IDs, dependencies, and secrets metadata. Local state files are easy to lose, hard to share safely, and they get in the way of team workflows. Remote state in Azure Blob Storage with versioning gives you durable, recoverable state before Topic 02 creates any AKS or networking resources.
-
-Without this topic, `environments/dev/` cannot persist state across machines or survive laptop loss.
+Remote Blob state (versioning on) must exist before Topic 02 creates AKS or networking — otherwise `environments/dev/` cannot persist durable state across machines.
 
 ---
 
@@ -42,7 +40,7 @@ Understand what the bootstrap stack creates and confirm naming before any `apply
 
 ### Why this step is required
 
-Storage account names are globally unique and immutable. A failed apply due to name collision wastes time; wrong names in `backend.tf` break `environments/dev` init.
+Storage account names are globally unique — a collision or wrong name in `backend.tf` breaks bootstrap and dev `init`.
 
 ### Commands
 

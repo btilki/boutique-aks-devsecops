@@ -1,10 +1,10 @@
 # 06 — Ingress + TLS
 
 Audience: Implementer
-**Estimated time:** 120 minutes (certificate issuance may add 5–15 min)
-**Prerequisites:** [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ complete · [02-azure-foundation.md](02-azure-foundation.md) DNS delegated
-**Creates:** NGINX Ingress, cert-manager, Let's Encrypt ClusterIssuer (DNS-01), Argo CD HTTPS ingress
-**Related ADRs:** — (implements [06-network-design.md](../architecture/06-network-design.md))
+Estimated time: 120 minutes (certificate issuance may add 5–15 min)
+Prerequisites: [05-gitops-bootstrap.md](05-gitops-bootstrap.md) ✅ complete · [02-azure-foundation.md](02-azure-foundation.md) DNS delegated
+Creates: NGINX Ingress, cert-manager, Let's Encrypt ClusterIssuer (DNS-01), Argo CD HTTPS ingress
+Related ADRs: — (implements [06-network-design.md](../architecture/06-network-design.md))
 
 ---
 
@@ -344,7 +344,7 @@ dig +short argocd-boutique.biroltilki.art
 curl -sI "https://argocd-boutique.biroltilki.art" | head -5
 ```
 
-**Success criteria:**
+Success criteria:
 
 - [ ] Ingress LB IP assigned
 - [ ] DNS A record resolves

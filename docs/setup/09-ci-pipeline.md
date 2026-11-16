@@ -10,11 +10,11 @@ Related ADRs: [0005](../adr/0005-cosign-key-based-signing.md), [0009](../adr/000
 
 ## Topic goal
 
-When this topic is complete, your ADO CI pipeline mirrors all 11 Online Boutique v0.10.5 service images from Google Artifact Registry to ACR, runs Trivy with a **CRITICAL** severity gate, and cosign-signs each image **by digest** with `--tlog-upload=false`. The cosign **public key belongs in Git** (Kyverno policy `02-verify-image-signatures.yaml`) so admission can verify signed workloads in Topic 10.
+When this topic is complete, your ADO CI pipeline mirrors all 11 Online Boutique v0.10.5 service images from Google Artifact Registry to ACR, runs Trivy with a CRITICAL severity gate, and cosign-signs each image by digest with `--tlog-upload=false`. The cosign public key **belongs in Git** (Kyverno policy `02-verify-image-signatures.yaml`) so admission can verify signed workloads in Topic 10.
 
 ## Why this topic is required
 
-Kyverno enforces the ACR allowlist and signature verification at admission time. Images must land in your registry and be signed before Boutique deploys. This pipeline is the supply-chain gate between upstream Google images and your cluster.
+Kyverno admission requires mirrored, signed ACR images before Boutique deploys — this pipeline is the gate between upstream Google images and the cluster.
 
 ---
 
@@ -391,7 +391,7 @@ Full reference: [docs/troubleshooting/pipeline-failures.md](../troubleshooting/p
 - [ ] 11 Boutique v0.10.5 images in ACR, signed by digest
 - [ ] `digest-manifest` artifact published
 
-**Screenshot references:**
+Screenshot references:
 
 ADO pipeline green (mirror / Trivy / cosign):
 
@@ -405,7 +405,7 @@ ACR repositories with `frontend` `v0.10.5` and digest tags:
 
 ## Next step
 
-**Topic 10 — Boutique dev deploy:** GitOps manifests for dev namespace, image digests from ACR, ingress at `dev-boutique.biroltilki.art`.
+Topic 10 — Boutique dev deploy: GitOps manifests for dev namespace, image digests from ACR, ingress at `dev-boutique.biroltilki.art`.
 
 Guide: [10-boutique-dev.md](10-boutique-dev.md)
 

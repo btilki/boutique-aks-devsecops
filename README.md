@@ -40,7 +40,7 @@ Setup Topics **00–13** ran end to end, then the platform was torn down. The li
 
 Screenshots from the lived run (hostnames offline until rebuild). Full catalog: [`assets/images/README.md`](assets/images/README.md).
 
-**Argo CD** — Applications Healthy/Synced:
+**Argo CD** — filtered Synced + Healthy view from the lived run (apps shown still match GitOps Application CRs; Falco stays opt-in):
 
 ![Argo CD applications healthy](assets/images/setup/05-argocd-applications-healthy.png)
 

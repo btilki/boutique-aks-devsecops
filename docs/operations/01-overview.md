@@ -1,8 +1,8 @@
 # Overview
 
 Audience: Operator
-Applies to: dev / stage / prod (one cluster)
-Prerequisites: Setup Topics 00–12 complete; kubectl context to the test AKS cluster
+Applies to: dev / stage / prod (one cluster, when rebuilt)
+Prerequisites: Rebuilt cluster from Setup Topics 00–12; kubectl context only when the platform is live
 Estimated time: 10 minutes (read)
 Risk level: Low
 
@@ -10,7 +10,7 @@ Risk level: Low
 
 ## Purpose
 
-Define the operational model: environments, ownership, test constraints, and where other runbooks fit.
+Define the operational model: environments, ownership, reference constraints, and where other runbooks fit.
 
 ## When to use / When not to use
 
@@ -19,7 +19,7 @@ Use when joining on-call, before first promotion, or after returning from a tear
 
 ## Prerequisites
 
-- [ ] `kubectl get nodes` works
+- [ ] Platform rebuilt (Topics 00–12) and `kubectl get nodes` works
 - [ ] Grafana and Argo CD hostnames resolve (or you use port-forward)
 
 ## Procedure

@@ -8,15 +8,15 @@ Accepted (amended 2026-07-15 — Dsv6 test fallback)
 
 Platform runs in EU Central. VM SKUs must be available in the target region for this subscription. Verified via `az vm list-skus` (2026-07-14).
 
-During Topic 03 apply, subscription **Standard DSv5 Family vCPU quota** in `germanywestcentral` was **0** (`ErrCode_InsufficientVCPUQuota`), while **Standard Dsv6 Family** quota was **10**. SKUs remain available in-region for both families.
+During Topic 03 apply, subscription Standard DSv5 Family vCPU quota in `germanywestcentral` was 0 (`ErrCode_InsufficientVCPUQuota`), while Standard Dsv6 Family quota was 10. SKUs remain available in-region for both families.
 
 ## Decision
 
 | Setting | Value |
 |---------|-------|
 | Region | `germanywestcentral` |
-| System pool | `Standard_D2s_v6` (1 node, fixed) — **test default when DSv5 quota is 0** |
-| User pool | `Standard_D4s_v6` (1–3 nodes, autoscaler) — **test default when DSv5 quota is 0** |
+| System pool | `Standard_D2s_v6` (1 node, fixed) — test default when DSv5 quota is 0 |
+| User pool | `Standard_D4s_v6` (1–3 nodes, autoscaler) — test default when DSv5 quota is 0 |
 | Preferred (when quota allows) | `Standard_D2s_v5` / `Standard_D4s_v5` per original reference design |
 
 ## Consequences

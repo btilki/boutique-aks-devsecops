@@ -10,7 +10,7 @@ Scope prioritizes supply chain, GitOps, and observability depth over mesh featur
 
 ## Decision
 
-Deploy **without** a service mesh (no Istio/Linkerd) in v1.
+Deploy without a service mesh (no Istio/Linkerd) in v1.
 
 ## Consequences
 

@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Docs quality pass (post-audit): Falco kept off default `platform-root` sync; CI/SBOM/ROADMAP honesty; repository map section Repository Navigation Flow; ops overview rebuild-first wording; Argo screenshot captions note filtered Synced + Healthy view vs current GitOps apps; light setup intro trim + decorative bold cleanup in setup/ADRs.
 - README and architecture landing pages restructured as intent paths (understand / proof / design / rebuild); closed-reference honesty; Topics 14–20 moved under optional-after-rebuild (not the critical path).
 - Fluency and abbreviation pass on setup Topics 00–13, architecture 01–11, ops/runbooks headers; CONTRIBUTING short-form abbreviation rule (no parenthetical expansions).
 - Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.
