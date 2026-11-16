@@ -29,7 +29,7 @@ Without PR CI, broken Terraform, policy, or YAML can merge and only fail on `mai
 ## Before you begin
 
 - [ ] Repo on GitHub; ADO project can checkout this GitHub repo (same as Topic 09)
-- [ ] Local tools for dry-run: `pre-commit`, `terraform` (>= 1.6), `kyverno` CLI (~1.12.6)
+- [ ] Local tools for dry-run: `pre-commit`, `terraform` (>= 1.6), `checkov`, `kyverno` CLI (~1.12.6) — pins in `versions.yaml` `ci.*`
 - [ ] Scaffold files present (Package 2):
 
 ```bash
@@ -68,8 +68,8 @@ head -n 40 pipelines/templates/pr-validate.yml
 | File | Purpose |
 |------|---------|
 | `azure-pipelines-pr.yml` | `trigger: none`; `pr:` to `main` with path filters |
-| `templates/pr-variables.yml` | Terraform / Kyverno CLI / Python pins |
-| `templates/pr-validate.yml` | Three parallel jobs: PreCommit, TerraformValidate, KyvernoTest |
+| `templates/pr-variables.yml` | Terraform / Kyverno CLI / Checkov / Python pins |
+| `templates/pr-validate.yml` | Four parallel jobs: PreCommit, TerraformValidate, Checkov, KyvernoTest |
 
 ### Validation
 
@@ -87,7 +87,7 @@ grep -n "pr:" pipelines/azure-pipelines.yml pipelines/azure-pipelines-pr.yml
 
 ### Goal
 
-Prove the same three gates pass on your workstation.
+Prove the same four gates pass on your workstation.
 
 ### Why this step is required
 
@@ -109,6 +109,8 @@ chmod +x tests/ci/pr-validate.sh   # once, if needed
 ...
 [pr-validate] terraform validate
 [validate] OK
+[pr-validate] checkov
+...
 [pr-validate] kyverno test
 ...
 [pr-validate] OK — same gates as azure-pipelines-pr.yml
@@ -117,12 +119,14 @@ chmod +x tests/ci/pr-validate.sh   # once, if needed
 ### Validation
 
 - [ ] Exit code 0
+- [ ] Checkov version matches `versions.yaml` → `ci.checkov`
 - [ ] Kyverno CLI version is compatible with policies (pin in `versions.yaml` → `ci.kyverno_cli`)
 
 **Common problems:**
 
 | Symptom | Fix |
 |---------|-----|
+| `checkov: command not found` | Install matching `ci.checkov` (see Topic 16 / `make checkov`) |
 | `kyverno: command not found` | Install CLI matching `ci.kyverno_cli` (see Topic 08 / Kyverno releases) |
 | Terraform provider download fails offline | Need network for first `terraform init -backend=false` |
 | pre-commit hook fails on vendored charts | Hooks already exclude Argo CD chart paths — do not widen blindly |
@@ -152,12 +156,12 @@ ADO does not auto-discover every YAML file. The Topic 09 supply-chain pipeline m
 ### Expected output
 
 - Pipeline appears in ADO list alongside the supply-chain pipeline
-- Manual run or PR run shows stage **PR validate** with three jobs
+- Manual run or PR run shows stage **PR validate** with four jobs
 
 ### Validation
 
 - [ ] YAML path is `pipelines/azure-pipelines-pr.yml`
-- [ ] First run: PreCommit, TerraformValidate, KyvernoTest all green (or failures are real repo issues)
+- [ ] First run: PreCommit, TerraformValidate, Checkov, KyvernoTest all green (or failures are real repo issues)
 
 **Deferred validation (needs live ADO + GitHub PR):**
 
@@ -199,7 +203,7 @@ Exact UI depends on whether status is published via the Azure Pipelines GitHub A
 |--------------|----------------|
 | Mirror / Trivy / cosign | `azure-pipelines.yml` on `main` (Topic 09) |
 | Digest promotion | `azure-pipelines-promote.yml` (Topic 12) |
-| Checkov / tfsec | Topic 16 / Package 4 — **scaffolded** (`make checkov`) |
+| tfsec / deeper IaC beyond Checkov baseline | Optional stretch; Checkov already runs in this PR pipeline (Topic 16) |
 | Live cluster smokes | `tests/integration/*` (manual / post-deploy) |
 
 ### Path filters
@@ -212,9 +216,10 @@ PRs that only change docs outside the `paths.include` list will **not** trigger 
 |----------|--------|
 | `terraformVersion` | `pipelines/templates/pr-variables.yml` ↔ `versions.yaml` `ci.terraform` |
 | `kyvernoCliVersion` | ↔ `versions.yaml` `ci.kyverno_cli` / cluster `gitops.kyverno` |
+| `checkovVersion` | ↔ `versions.yaml` `ci.checkov` |
 | `pythonVersion` | ↔ `versions.yaml` `ci.python` |
 
-Keep these three files aligned when bumping tools.
+Keep `pr-variables.yml` and `versions.yaml` aligned when bumping tools.
 
 ---
 
@@ -236,7 +241,7 @@ Keep these three files aligned when bumping tools.
 ### Apply later (ADO live)
 
 - [ ] Pipeline registered from `pipelines/azure-pipelines-pr.yml`
-- [ ] Sample PR runs three jobs green
+- [ ] Sample PR runs four jobs green (including Checkov)
 - [ ] Optional: required status on `main`
 
 ---

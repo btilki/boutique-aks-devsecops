@@ -32,7 +32,7 @@
 | G-04 | Digest GitOps promotion | Same `@sha256` in stage/prod as dev |
 | G-05 | Observability | Grafana + test alert + SLO doc |
 | G-06 | Teachable reference | Setup 00–13 complete |
-| G-07 | PR-time gates | ADO PR pipeline fails on lint / TF / Kyverno test |
+| G-07 | PR-time gates | ADO PR pipeline fails on lint / TF / Checkov / Kyverno test |
 | G-08 | East-west isolation | NetworkPolicies for Boutique graph |
 | G-09 | IaC scanning | Checkov (or tfsec) in CI |
 | G-10 | SBOM + attestations | Artifacts + policy path documented |
@@ -125,7 +125,7 @@ External: Azure sub, DNS registrar, ADO. Internal: lived reference phase order p
 
 ## 11. Technology stack
 
-See [versions.yaml](../../versions.yaml). Phase 15+ may pin Checkov, Syft/Trivy SBOM, Falco chart versions when those packages land.
+See [versions.yaml](../../versions.yaml). Phase 15+ pins (Checkov, SBOM/attest, Falco chart, and related) are already in `versions.yaml`; live apply remains Topics 14–20 after rebuild.
 
 ---
 

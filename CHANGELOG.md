@@ -36,6 +36,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Topic 14 Related table: Checkov Package 4 marked scaffolded (not “may not exist”); troubleshooting index points to Phase 15+ / Topics 14–20.
 - Topic 17/18 goal wording qualified for toggle / Falco enablement; ROADMAP Apply-later column labeled not closed-run proof.
 - `lived-reference` → lived reference in plan.md; light Why trim on setup Topics 05 and 07.
+- Topic 14 PR CI: document four jobs including Checkov; add `checkovVersion` pin row.
+- plan.md G-07 includes Checkov; Phase 15+ pins noted as present; setup README progress through Topics 00–13; ADR-0016 lived reference spacing.
+- Ops automation backlog: PR CI row includes Checkov; Package 4 notes scaffolded in `pr-validate.yml`.
 - README and architecture landing pages restructured as intent paths (understand / proof / design / rebuild); closed-reference honesty; Topics 14–20 moved under optional-after-rebuild (not the critical path).
 - Fluency and abbreviation pass on setup Topics 00–13, architecture 01–11, ops/runbooks headers; CONTRIBUTING short-form abbreviation rule (no parenthetical expansions).
 - Status SSOT: Topic **13** teardown executed (Azure destroyed); hostnames **Test offline** with screenshot proof; Phase 15+ Topics **14–20** scaffold documented.

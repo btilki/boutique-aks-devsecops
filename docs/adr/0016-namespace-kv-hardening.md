@@ -6,7 +6,7 @@ Accepted (scaffold — apply with Topic 19)
 
 ## Context
 
-Lived-reference Boutique namespaces lack Pod Security Admission labels and ResourceQuota/LimitRange. Key Vault is reachable from the public internet (`network_acls` unset / allow), with `purge_protection_enabled = false` for cheap teardown ([ADR-0010](0010-destroy-acr-on-teardown.md) path). Checkov skips document these as reference tradeoffs (Topic 16).
+Lived reference Boutique namespaces lack Pod Security Admission labels and ResourceQuota/LimitRange. Key Vault is reachable from the public internet (`network_acls` unset / allow), with `purge_protection_enabled = false` for cheap teardown ([ADR-0010](0010-destroy-acr-on-teardown.md) path). Checkov skips document these as reference tradeoffs (Topic 16).
 
 ## Decision
 

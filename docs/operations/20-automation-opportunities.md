@@ -25,13 +25,13 @@ Use when planning Phase 15+ work or after postmortems ([phase15-plus.md](../impl
 
 | Opportunity | Cuts toil from | Effort | Phase / package | Notes |
 |-------------|----------------|--------|-------------|-------|
-| ADO **PR** pipeline: pre-commit + `validate.sh` + `kyverno test` | Broken merges | M | Phase 16 / Package 2 | Complements supply-chain on `main` |
+| ADO **PR** pipeline: pre-commit + `validate.sh` + Checkov + `kyverno test` | Broken merges | M | Phase 16 / Package 2 (+ Package 4 Checkov) | Complements supply-chain on `main`; Checkov also in Topic 16 |
 | Alert `runbook_url` annotations | SEV triage | S | Ops (anytime) | See [10-alerting.md](10-alerting.md) |
 | BoutiqueFrontendDown for stage/prod namespaces | Blind spots | S | Ops (anytime) | Today expr is boutique-dev-centric |
 | `ops-status` report script (read-only) | Morning checks | S | Ops (anytime) | Print apps + smoke codes — still document usage here |
 | KV network ACL + diagnostics | Security SEC-001 | M | Phase 21 / Package 7 | Manual first when applying |
 | NetworkPolicies for boutique-* | East-west | M | Phase 17 / Package 3 | Scaffold then apply |
-| IaC scan (Checkov) on PRs | Misconfig merges | M | Phase 18 / Package 4 | See phase15-plus |
+| IaC scan (Checkov) on PRs | Misconfig merges | M | Phase 18 / Package 4 | Scaffolded in PR CI (`pr-validate.yml`); Topic 16 for apply notes |
 | SBOM + cosign attestations | Supply-chain depth | L | Phase 19 / Package 5 | Was deferred in v1 |
 | Runtime security (Falco/Defender) | Blind runtime | L | Phase 20 / Package 6 | GitOps/TF stubs |
 | Optional DAST (ZAP) | Storefront gaps | M | Phase 22 / Package 8 ✅ | Manual pipeline; advisory by default |
