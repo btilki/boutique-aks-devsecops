@@ -4,7 +4,7 @@ Audience: Implementer
 Estimated time: 30–45 minutes (local) · ADO already covered by Topic 14 registration
 Prerequisites: [14-pr-ci.md](14-pr-ci.md) scaffold ✅ · Terraform tree under `terraform/`
 Creates: Checkov baseline config, local/CI gate on `terraform/`, documented skip list for reference tradeoffs
-Related: [phase15-plus.md](../implementation/phase15-plus.md) · [tests/terraform/.checkov.yaml](../../tests/terraform/.checkov.yaml) · [ARCHITECTURE.md](../../ARCHITECTURE.md) Limitations
+Related: [phase15-plus.md](../implementation/phase15-plus.md) · [tests/terraform/.checkov.yaml](../../tests/terraform/.checkov.yaml) · [ARCHITECTURE.md](../../ARCHITECTURE.md#15-tradeoffs) · [README tradeoffs](../../README.md#tradeoffs--what-i-would-change-for-real-production)
 Mode: Runnable locally today. ADO job runs once Topic 14 pipeline is registered (**Apply later** for live PR status).
 
 ---

@@ -88,6 +88,8 @@ There is **no GitHub Actions** CI for this repo. Gates:
 
 **Note:** Supply-chain pipeline keeps `pr: none` by design. Register the PR YAML as a **separate** ADO pipeline ([docs/setup/14-pr-ci.md](../docs/setup/14-pr-ci.md)). Live PR status is **apply-later** until ADO is reconnected.
 
+**Terraform pin:** Docs require Terraform `>= 1.6`; the ADO PR job downloads **`versions.yaml` → `ci.terraform`** (e.g. **1.9.8**). Keep local CLI compatible with `validate.sh`; CI may use a stricter patch pin.
+
 ---
 
 ## Maturity notes

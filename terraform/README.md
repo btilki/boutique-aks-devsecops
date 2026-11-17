@@ -39,3 +39,7 @@ Leaf modules pin `azurerm ~> 3.100` in `versions.tf`. Do not commit `.terraform.
 ## Timing
 
 SETUP_REQUIRED — modules and env root populated Phases 1–4.
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../ROADMAP.md) and [docs/setup/README.md](../docs/setup/README.md).

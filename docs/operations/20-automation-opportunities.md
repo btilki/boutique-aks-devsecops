@@ -1,67 +1,45 @@
 # Automation opportunities
 
 Audience: Operator / platform
-Applies to: Toil reduction backlog
-Prerequisites: Working manual runbooks (this folder)
-Estimated time: Planning only
-Risk level: Low
+Use when prioritizing toil reduction after rebuilds or postmortems. Backlog lives here — update rows when something ships.
+
+Related: [phase15-plus.md](../implementation/phase15-plus.md) · [reference-claims.md](../reference-claims.md)
 
 ## Purpose
 
-Capture high-value automations that supplement Setup Guide and these runbooks.
+Separate **already scaffolded** Phase 15+ work (apply after rebuild) from **true backlog** items that still need design or implementation.
 
-## When to use / When not to use
+## Scaffolded in Git (apply later — not closed-run proof)
 
-Use when planning Phase 15+ work or after postmortems ([phase15-plus.md](../implementation/phase15-plus.md)).
-**Do not** ship `fix-prod.sh` as the primary ops interface.
+These have setup topics, pipelines, or GitOps stubs. Local validation works today; live Azure/ADO proof waits for rebuild.
 
-## Prerequisites
+| Item | Setup / entry | Notes |
+|------|----------------|-------|
+| ADO PR pipeline: pre-commit + `validate.sh` + Checkov + `kyverno test` | Topics [14](../setup/14-pr-ci.md), [16](../setup/16-iac-scanning.md) | `pipelines/azure-pipelines-pr.yml`, `make pr-validate` |
+| IaC scan (Checkov) on PRs | Topic 16 | Same four-job PR pipeline as above |
+| NetworkPolicies for Boutique | Topic [15](../setup/15-network-policies.md) | Manifests in Git; enforcement needs `aks_network_policy=azure` |
+| SBOM + cosign attestations | Topic [17](../setup/17-sbom-attestations.md) | Default off (`enableSbomAttest`); YAML + Kyverno Audit policy in repo |
+| Runtime security (Falco) + Defender opt-in doc | Topic [18](../setup/18-runtime-security.md) | Falco not on default `platform-root` sync until you enable it |
+| KV ACL + PSA/quotas | Topic [19](../setup/19-namespace-hardening.md) | Terraform/GitOps stubs; Checkov skips document reference tradeoffs |
+| Optional DAST (ZAP) | Topic [20](../setup/20-dast.md) | Manual `azure-pipelines-dast.yml`; advisory by default |
 
-- [ ] Manual procedure exists and was executed once
+## Backlog (not yet a full operator shortcut)
 
-## Procedure
+| Opportunity | Cuts toil from | Effort | Notes |
+|-------------|----------------|--------|-------|
+| Alert `runbook_url` annotations | SEV triage | S | See [10-alerting.md](10-alerting.md) |
+| BoutiqueFrontendDown for stage/prod namespaces | Blind spots | S | Today expr is boutique-dev-centric |
+| `ops-status` report script (read-only) | Morning checks | S | Print apps + smoke codes; document in this repo when added |
+| KV network ACL + diagnostics (live apply) | Security SEC-001 | M | Scaffold in Topic 19; operators still run manual path first |
+| Grafana synthetic probe CronJob | Gaps between alerts | M | Not a Phase 15+ package |
+| Quarterly teardown + rebuild drill calendar | DR muscle | S | Uses Setup + [05-disaster-recovery.md](05-disaster-recovery.md) |
 
-### Step 1: Prioritize backlog
-
-| Opportunity | Cuts toil from | Effort | Phase / package | Notes |
-|-------------|----------------|--------|-------------|-------|
-| ADO **PR** pipeline: pre-commit + `validate.sh` + Checkov + `kyverno test` | Broken merges | M | Phase 16 / Package 2 (+ Package 4 Checkov) | Complements supply-chain on `main`; Checkov also in Topic 16 |
-| Alert `runbook_url` annotations | SEV triage | S | Ops (anytime) | See [10-alerting.md](10-alerting.md) |
-| BoutiqueFrontendDown for stage/prod namespaces | Blind spots | S | Ops (anytime) | Today expr is boutique-dev-centric |
-| `ops-status` report script (read-only) | Morning checks | S | Ops (anytime) | Print apps + smoke codes — still document usage here |
-| KV network ACL + diagnostics | Security SEC-001 | M | Phase 21 / Package 7 | Manual first when applying |
-| NetworkPolicies for boutique-* | East-west | M | Phase 17 / Package 3 | Scaffold then apply |
-| IaC scan (Checkov) on PRs | Misconfig merges | M | Phase 18 / Package 4 | Scaffolded in PR CI (`pr-validate.yml`); Topic 16 for apply notes |
-| SBOM + cosign attestations | Supply-chain depth | L | Phase 19 / Package 5 | Was deferred in v1 |
-| Runtime security (Falco/Defender) | Blind runtime | L | Phase 20 / Package 6 | GitOps/TF stubs |
-| Optional DAST (ZAP) | Storefront gaps | M | Phase 22 / Package 8 ✅ | Manual pipeline; advisory by default |
-| Grafana synthetic probe CronJob | Gaps between alerts | M | Ops (optional) | Not a Phase 15+ package |
-| Quarterly teardown + rebuild drill calendar | DR muscle | S | Ops | Uses Setup + [05](05-disaster-recovery.md) |
-
-**Validation:** Each item still points back to a human-readable runbook.
-
-**Expected outcome:** Ordered Phase **15+** backlog (see [phase15-plus.md](../implementation/phase15-plus.md)).
-
-**Recovery steps:** If automation fails, fall back to this docs tree.
-
-**Best practices:** Automate detection and validation before mutating cluster state.
-
-## End-to-end validation
-
-N/A until an item is implemented — then add its ops notes.
-
-## Rollback (section-level)
-
-Disable failing automation; keep manual path.
-
-## Related alerts and dashboards
-
-N/A.
+**Best practices:** Automate detection and validation before mutating cluster state. If automation fails, fall back to setup and runbooks — do not replace documented procedures with a single `fix-prod.sh`.
 
 ## Security notes
 
 Automation identities must stay least-privilege (OIDC patterns).
 
-## Automation opportunities
+## Maintenance
 
-This document *is* the backlog — update when items ship.
+When a backlog item ships, move it to the scaffolded table (or link the new runbook) and trim duplicate mentions elsewhere.

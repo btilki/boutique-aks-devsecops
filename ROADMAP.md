@@ -4,12 +4,15 @@
 **Numbering note:** Setup **Topic 13** = teardown (`docs/setup/13-teardown.md`). Roadmap **Phase 13** = hardening/integration (skipped; superseded by Phase 15+). **Phase 14** = teardown. Setup Topics **14–20** = Phase 15+ apply guides (scaffold packages 2–8).
 **Detailed plan:** [docs/implementation/plan.md](docs/implementation/plan.md) · [docs/implementation/phase15-plus.md](docs/implementation/phase15-plus.md)
 **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
+**What was operated (lived proof):** [docs/reference-claims.md](docs/reference-claims.md) — Topics **00–13** only.
 
 ## Vision
 
 Build a production-style reference platform that proves secure delivery end-to-end: Terraform foundation → GitOps platform services → signed digest promotion → Kyverno enforcement → observability and runbooks — on one AKS cluster in **Germany West Central**. Phase 15+ deepens shift-left CI, network isolation, SBOM/attestations, runtime detection, and namespace/KV hardening — **scaffolded in-repo first**, applied when Azure is rebuilt.
 
 ## Milestones
+
+**M1–M7** = closed reference (Topics 00–13, then teardown). **M8a–M8e** = Phase 15+ packages **scaffolded in Git** — not lived Azure validation unless you rebuild and complete each topic’s Apply-later checks ([reference claims](docs/reference-claims.md)).
 
 | Milestone | Phases | Definition of done | Status |
 |-----------|--------|-------------------|--------|
@@ -49,6 +52,8 @@ Build a production-style reference platform that proves secure delivery end-to-e
 | 14 | Teardown | ✅ | 13-teardown | No billable AKS/ACR |
 
 ### Phase 15+ — Fuller DevSecOps (scaffold-first)
+
+> **Skim guard:** ✅ in **Scaffold** = files and setup guides exist in Git. It is **not** proof from the closed Topics 00–13 run unless you complete **Apply-later validation** after a rebuild ([reference claims](docs/reference-claims.md)).
 
 | Phase | Title | Scaffold | Setup topic (future) | Package | Apply-later validation (not closed-run proof) |
 |-------|-------|----------|----------------------|---------|-----------------------------------------------|

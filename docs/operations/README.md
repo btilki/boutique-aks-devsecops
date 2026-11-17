@@ -1,13 +1,8 @@
 # Operations — boutique-aks-devsecops
 
-Audience: Operator / on-call (solo maintainer: you)
-Maturity: Production reference. Enterprise multi-region on-call is out of scope.
-Authority: Day-2 procedures. Bootstrap stays in [`docs/setup/`](../setup/). Deep promotion and teardown stay in [`docs/runbooks/`](../runbooks/). Symptom indexes stay in [`docs/troubleshooting/`](../troubleshooting/).
-[Doc index](../README.md) · [Architecture](../../ARCHITECTURE.md) · [Promotion](../promotion.md) · [Rollback](../rollback.md)
+Day-2 ops index for a **rebuilt** cluster (closed reference has no live AKS). Bootstrap: [`docs/setup/`](../setup/). Symptoms: [`docs/runbooks/`](../runbooks/) and [`docs/troubleshooting/`](../troubleshooting/). [Doc index](../README.md) · [ARCHITECTURE.md](../../ARCHITECTURE.md) · [promotion](../promotion.md) · [rollback](../rollback.md)
 
-> No live cluster. Topic 13 tore down the reference. Use this index for day-2 ops after a rebuild ([`setup/README.md`](../setup/README.md) Topics 00–13). Symptom steps live in [`runbooks/`](../runbooks/README.md).
-
-Precedence: setup for bootstrap, runbooks for symptoms, this index for routing.
+> Topics **00–13** were operated, then torn down. These guides apply after you rebuild; they are not proof of the closed run by themselves ([reference-claims.md](../reference-claims.md)).
 
 ---
 

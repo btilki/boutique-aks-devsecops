@@ -30,6 +30,7 @@ Without PR CI, broken Terraform, policy, or YAML can merge and only fail on `mai
 
 - [ ] Repo on GitHub; ADO project can checkout this GitHub repo (same as Topic 09)
 - [ ] Local tools for dry-run: `pre-commit`, `terraform` (>= 1.6), `checkov`, `kyverno` CLI (~1.12.6) — pins in `versions.yaml` `ci.*`
+- [ ] **ADO PR agents** install Terraform **`ci.terraform`** from `versions.yaml` (currently **1.9.8**), which may be newer than your laptop; local `>= 1.6` is still valid for manual validate
 - [ ] Scaffold files present (Package 2):
 
 ```bash

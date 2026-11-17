@@ -19,7 +19,7 @@ This is a learning/reference repository. If you discover a security issue in pro
 
 - Images are mirrored from upstream Online Boutique v0.10.5, scanned with **Trivy** (fail on CRITICAL), and signed with **cosign**.
 - **Kyverno** enforces ACR allowlist, denies `:latest`, and verifies signatures at admission.
-- See [docs/security/supply-chain.md](docs/security/supply-chain.md) (authored in Phase 9).
+- See [docs/security/supply-chain.md](docs/security/supply-chain.md).
 
 ## Least privilege
 

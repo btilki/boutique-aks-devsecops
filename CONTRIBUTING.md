@@ -33,6 +33,10 @@ Before merging README or top-level marketing copy:
 - Terraform modules document: Purpose, Inputs, Outputs, Dependencies, Usage.
 - Setup changes must update the matching `docs/setup/NN-topic.md`.
 
+### Markdown links (optional)
+
+Broken **relative** links are caught in review; optional local checks: `markdown-link-check` or similar on `docs/` and top-level `*.md` before large doc edits. External URLs are not continuously verified in CI.
+
 ### Abbreviations and bolding
 
 Use the short form only (`CI`, `AKS`, `ADO`, `OIDC`). Do **not** write `CI (Continuous Integration)` or `**AKS** (**Azure Kubernetes Service**)`.

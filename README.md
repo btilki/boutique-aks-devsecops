@@ -32,6 +32,7 @@ Setup Topics **00–13** ran end to end, then the platform was torn down. The li
 | Hard rule | **Unsigned or floating tags should not reach the cluster** |
 | CI model | GitHub = source of truth · Azure DevOps = pipelines (OIDC) · no GitHub Actions |
 | Scope | Production reference — one subscription, one region; not multi-region HA |
+| Topics 14–20 | Scaffold in Git only — not lived proof unless rebuilt and applied ([`reference-claims`](docs/reference-claims.md)) |
 | Stack | Terraform · AKS · ACR · Key Vault · Argo CD · Kyverno · Trivy · cosign · Prometheus / Loki / Grafana |
 
 ---

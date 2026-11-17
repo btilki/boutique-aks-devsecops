@@ -21,3 +21,7 @@ Kyverno admission policies and test fixtures, separated from GitOps install mani
 ## Timing
 
 SETUP_REQUIRED — Phase 8 (controller + policies).
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../ROADMAP.md) and [docs/setup/README.md](../docs/setup/README.md).

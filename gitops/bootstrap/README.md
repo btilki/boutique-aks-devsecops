@@ -23,3 +23,7 @@ kubectl apply -f gitops/bootstrap/root-app.yaml
 Full steps: [docs/setup/05-gitops-bootstrap.md](../../docs/setup/05-gitops-bootstrap.md)
 
 **Timing:** SETUP_REQUIRED — Phase 5.
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../ROADMAP.md) and [docs/setup/README.md](../../docs/setup/README.md).

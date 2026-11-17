@@ -10,6 +10,7 @@ If this file disagrees with [`setup/`](setup/README.md) on bootstrap steps, the 
 
 | I want to… | Read |
 |------------|------|
+| Recruiter-style skim (~10 min) | [`../README.md`](../README.md) · [`reference-claims.md`](reference-claims.md) · [`../assets/images/README.md`](../assets/images/README.md) |
 | Understand the project quickly | [`../ARCHITECTURE.md`](../ARCHITECTURE.md) · [ADR-0005](adr/0005-cosign-key-based-signing.md) |
 | See reference proof | [`reference-claims.md`](reference-claims.md) · [`../assets/images/README.md`](../assets/images/README.md) |
 | Review design and delivery | [`architecture/`](architecture/README.md) · [`ci.md`](ci.md) · [`promotion.md`](promotion.md) · [`rollback.md`](rollback.md) · [`security/threat-model.md`](security/threat-model.md) |
