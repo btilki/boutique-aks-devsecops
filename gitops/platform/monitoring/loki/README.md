@@ -5,3 +5,7 @@ In-cluster log store (SingleBinary) deployed via Argo CD. Replaces Azure Log Ana
 - **Chart:** `grafana/loki` — version in [versions.yaml](../../../../versions.yaml)
 - **Sync wave:** 38 (before Promtail and kube-prometheus-stack)
 - **Grafana datasource:** configured in `kube-prometheus-stack/values.yaml`
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../../ROADMAP.md) and [docs/setup/README.md](../../../../docs/setup/README.md).

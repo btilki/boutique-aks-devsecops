@@ -24,3 +24,7 @@ Syscall-level runtime detection on AKS via Falco (**modern eBPF**). Logs JSON to
 ## Timing
 
 Topic 18 (Package 6). The Application is **not** on the `platform-root` sync path until you add `falco/Application.yaml` to `gitops/platform/kustomization.yaml` during apply. Sync-wave **40** (after Kyverno 35, with monitoring ~38–45).
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../ROADMAP.md) and [docs/setup/README.md](../../../docs/setup/README.md).

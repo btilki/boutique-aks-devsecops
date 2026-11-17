@@ -14,3 +14,7 @@ Shared cluster services deployed via Argo CD (`platform-root` Application):
 See [docs/setup/06-ingress-tls.md](../../docs/setup/06-ingress-tls.md) for ingress + TLS bootstrap.
 
 Admission **policies** live in repo-root `policies/`, not here.
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../ROADMAP.md) and [docs/setup/README.md](../../docs/setup/README.md).

@@ -71,6 +71,8 @@ Status: ⬜ not started · 🔄 in progress · ✅ complete · ⏭️ skipped
 
 ## Incremental value
 
+Phases **0–14** map to the closed Topics **00–13** reference (operated, then torn down). Phases **15–22** describe what you gain after **rebuild + apply** of the matching setup topics — YAML and local gates exist in Git for many of them, but they are **not** lived proof from the closed run ([reference claims](docs/reference-claims.md)).
+
 | After phase | You can… |
 |-------------|----------|
 | 0 | Use a documented, linted repo skeleton |
@@ -89,9 +91,9 @@ Status: ⬜ not started · 🔄 in progress · ✅ complete · ⏭️ skipped
 | 13 | _(skipped — see Phase 15+)_ |
 | 14 | Tear down test resources; ACR destroyed |
 | 15 | Follow a package backlog for fuller DevSecOps without Azure |
-| 16 | Fail PRs on lint / TF validate / Kyverno unit tests |
+| 16 | Fail PRs on lint / TF validate / Checkov / Kyverno unit tests (local via `make pr-validate`; ADO after Topic 14) |
 | 17 | Limit east-west traffic between Boutique services |
-| 18 | Catch Terraform misconfigs in CI |
+| 18 | Catch Terraform misconfigs in CI (Checkov baseline/skips; PR job also Phase 16 / Topic 16) |
 | 19 | Attach SBOM/attestations to mirrored digests |
 | 20 | Detect suspicious runtime behavior |
 | 21 | Tighten KV exposure and namespace blast radius |

@@ -8,3 +8,7 @@
 PSA labels are on `overlays/*/namespace.yaml` (`pod-security.kubernetes.io/*`).
 
 Setup: [docs/setup/19-namespace-hardening.md](../../../../../docs/setup/19-namespace-hardening.md)
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../../../ROADMAP.md) and [docs/setup/README.md](../../../../../docs/setup/README.md).

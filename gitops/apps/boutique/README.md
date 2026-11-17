@@ -27,3 +27,7 @@ Topic 10: `base/`, `overlays/dev/`, `dev-application.yaml`, smoke test.
 Topic 12: `overlays/stage/`, `overlays/prod/`, promotion pipeline, smoke tests.
 Topic 15: NetworkPolicies in `base/networkpolicies/` (enforce with AKS `network_policy=azure`).
 Topic 19: PSA labels on namespaces + ResourceQuota/LimitRange; optional KV ACL/purge.
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../ROADMAP.md) and [docs/setup/README.md](../../../docs/setup/README.md).

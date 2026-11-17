@@ -8,3 +8,7 @@ Helm chart **0.95.0** — deployment mode collector with OTLP gRPC/HTTP receiver
 Traces export to `debug` exporter in test (no Tempo/Jaeger backend in v1).
 
 Instrument Boutique services by setting `OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector.monitoring.svc:4318` (future enhancement).
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../../ROADMAP.md) and [docs/setup/README.md](../../../../docs/setup/README.md).

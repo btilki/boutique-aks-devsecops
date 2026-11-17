@@ -3,7 +3,7 @@
 **Maturity target:** Production reference (single AKS cluster test)
 **Authority:** [ROADMAP.md](../ROADMAP.md), [docs/implementation/plan.md](../docs/implementation/plan.md), [docs/architecture/01-requirements.md](../docs/architecture/01-requirements.md)
 
-This directory holds **runnable** validation. Empty folders are intentional placeholders until scripts exist (do not invent greenwash tests).
+This directory holds **runnable** validation. Placeholder READMEs (no scripts yet) are intentional until tools are pinned and wired (do not invent greenwash tests).
 
 ---
 
@@ -48,7 +48,7 @@ Post-apply foundation (Topic 03+) — needs `az` login + Terraform outputs:
 | `integration/dev-smoke.sh` | Dev HTTPS + pods | **Runnable** (needs cluster) |
 | `integration/promotion-smoke.sh` | Stage/prod HTTPS | **Runnable** (needs cluster) |
 | `integration/rollback-smoke.sh` | Post-revert HTTPS | **Runnable** (needs cluster) |
-| `kubernetes/` | kubeconform / schema | **Empty** — backlog |
+| `kubernetes/` | kubeconform / schema | **Placeholder** — [kubernetes/README.md](kubernetes/README.md) only (TEST-GAP-K8S-001) |
 | `policies/` | wrapper → Kyverno | **Empty** — use `policies/tests/` |
 | [policies/tests/](../policies/tests/) | Kyverno CLI unit tests | **Runnable** |
 
@@ -97,7 +97,7 @@ There is **no GitHub Actions** CI for this repo. Gates:
 | Category | Reference bar | This repo |
 |----------|-----------|-----------|
 | Terraform validate/fmt | Required | Yes |
-| Manifest schema (kubeconform) | Required | **Missing** |
+| Manifest schema (kubeconform) | Required | **Placeholder** — [kubernetes/README.md](kubernetes/README.md) (TEST-GAP-K8S-001); not in PR gates |
 | Policy checks (Kyverno) | Required | Yes (unit); live dry-run ad hoc |
 | Integration / smoke | Required | Yes (dev/stage/prod) |
 | Basic load | Reference | **Waived** — loadgenerator scaled to 0 for capacity |

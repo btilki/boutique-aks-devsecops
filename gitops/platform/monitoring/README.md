@@ -33,3 +33,7 @@ All custom alerts live under `extras/alerts/` and are applied by Argo app **`mon
 ## Usage
 
 [docs/setup/11-observability.md](../../../docs/setup/11-observability.md) · [docs/operations/10-alerting.md](../../../docs/operations/10-alerting.md)
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../ROADMAP.md) and [docs/setup/README.md](../../../docs/setup/README.md).

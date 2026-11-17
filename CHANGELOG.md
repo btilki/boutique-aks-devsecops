@@ -28,6 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Post-audit P2: Topic 16 skip table tradeoffs link; `tests/README.md` kubeconform maturity row; ROADMAP phase 18 ↔ Checkov; Numbering footers on gitops platform/apps READMEs.
+- Post-audit P1: ROADMAP incremental-value scaffold qualifier (phases 15–22) and Checkov on phase 16; `tests/README.md` kubernetes placeholder wording.
 - Documentation audit follow-up (P1–P3): ROADMAP skim-guard + reference-claims links; automation backlog split scaffold vs true backlog; Topic 16 tradeoffs cross-refs; README Topics 14–20 row; Phase/Topic numbering footers on terraform/gitops/policy/script READMEs; PR Terraform pin note; ops index trim; examples quick-run; CONTRIBUTING optional link-check note.
 - Docs quality pass (post-audit): Falco kept off default `platform-root` sync; CI/SBOM/ROADMAP honesty; repository map section Repository Navigation Flow; ops overview rebuild-first wording; Argo screenshot captions note filtered Synced + Healthy view vs current GitOps apps; light setup intro trim + decorative bold cleanup in setup/ADRs.
 - Claim boundary: `docs/security/supply-chain.md` separates lived mirror→Trivy→cosign from optional Topic 17 SBOM/attest; `enableSbomAttest` / `versions.yaml` `enable_sbom_attest` default **false**; reference-claims notes scaffold present in Git ≠ lived proof.

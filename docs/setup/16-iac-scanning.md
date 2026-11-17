@@ -57,7 +57,7 @@ cat tests/terraform/.checkov.yaml
 
 | Area | Examples | Why skipped |
 |------|----------|-------------|
-| AKS | private cluster, authorized IPs, paid SLA | Cost / reference Limitations |
+| AKS | private cluster, authorized IPs, paid SLA | Cost / reference tradeoffs ([ARCHITECTURE §15](../../ARCHITECTURE.md#15-tradeoffs)) |
 | ACR | public network, quarantine | Cosign+Kyverno+Trivy instead; private ACR deferred |
 | Key Vault | firewall, purge protection | Topic 19 / cheap teardown |
 | NSG HTTP:80 | CKV_AZURE_160 | Ingress redirect / ACME |

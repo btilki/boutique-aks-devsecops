@@ -40,3 +40,7 @@ Included from [../kustomization.yaml](../kustomization.yaml). Overlays inherit a
 ## Related
 
 [docs/setup/15-network-policies.md](../../../../../docs/setup/15-network-policies.md)
+
+## Numbering
+
+Roadmap **Phase** numbers differ from Setup **Topic** numbers (for example Roadmap Phase 14 teardown = Setup Topic 13). See [ROADMAP.md](../../../../../ROADMAP.md) and [docs/setup/README.md](../../../../../docs/setup/README.md).
