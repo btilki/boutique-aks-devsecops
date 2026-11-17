@@ -34,7 +34,7 @@
 | G-06 | Teachable reference | Setup 00–13 complete |
 | G-07 | PR-time gates | ADO PR pipeline fails on lint / TF / Checkov / Kyverno test |
 | G-08 | East-west isolation | NetworkPolicies for Boutique graph |
-| G-09 | IaC scanning | Checkov (or tfsec) in CI |
+| G-09 | IaC scanning | Checkov baseline and Topic 16 depth (G-07 already runs Checkov on PRs) |
 | G-10 | SBOM + attestations | Artifacts + policy path documented |
 | G-11 | Runtime detection | Falco and/or Defender for Containers |
 | G-12 | Namespace / KV hardening | PSA, quotas, KV network ACL |

@@ -27,7 +27,7 @@ Trivy, cosign, and Kustomize in the supply-chain and promote jobs are pinned rel
 | `templates/variables.yml` | Versions, ACR/KV names, service list |
 | `templates/dast-variables.yml` | ZAP image + target defaults |
 | `templates/dast-zap.yml` | ZAP baseline job |
-| `templates/pr-variables.yml` | PR pipeline tool pins (Terraform / Kyverno CLI / Python) |
+| `templates/pr-variables.yml` | PR pipeline tool pins (Terraform / Checkov / Kyverno CLI / Python) |
 | `templates/pr-validate.yml` | PR validation jobs |
 | `templates/build-scan-sign.yml` | Mirror / scan / sign; SPDX attest when `enableSbomAttest=true` (Topic 17; default off) |
 | `templates/promote-digest.yml` | GitOps overlay digest updates |

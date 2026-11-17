@@ -40,9 +40,9 @@ Items absorbed from [docs/operations/20-automation-opportunities.md](../operatio
 
 | ID | Goal | Success indicator (after apply) |
 |----|------|----------------------------------|
-| G-07 | PR-time quality/security gates | ADO PR pipeline fails on lint / TF validate / Kyverno test |
+| G-07 | PR-time quality/security gates | ADO PR pipeline fails on lint / TF validate / Checkov / Kyverno test |
 | G-08 | East-west isolation | Default-deny NetworkPolicies; Boutique graph allows only needed paths |
-| G-09 | IaC security scanning | Checkov (or tfsec) blocks CRITICAL misconfigs on PRs |
+| G-09 | IaC security scanning | Checkov baseline, skip policy, and Topic 16 apply notes (same Checkov job as G-07 PR gate) |
 | G-10 | SBOM + attestations | SBOM artifact + cosign attestation; Kyverno can require attestation |
 | G-11 | Runtime detection | Falco (and/or Defender for Containers) deployed via GitOps/TF |
 | G-12 | Namespace / KV hardening | PSA labels, quotas; KV network ACL documented and applied |

@@ -254,4 +254,4 @@ Keep `pr-variables.yml` and `versions.yaml` aligned when bumping tools.
 | [pipelines/README.md](../../pipelines/README.md) | Pipeline index |
 | [tests/README.md](../../tests/README.md) | TEST IDs / CI matrix |
 | [docs/troubleshooting/pipeline-failures.md](../troubleshooting/pipeline-failures.md) | ADO failure patterns |
-| [16-iac-scanning.md](16-iac-scanning.md) | Next: Checkov on PRs (Package 4) — scaffolded; apply after rebuild |
+| [16-iac-scanning.md](16-iac-scanning.md) | Topic 16 — Checkov baseline, skips, and `.checkov.yaml` (already runs in this PR pipeline) |
